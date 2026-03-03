@@ -1174,10 +1174,10 @@
         }
 
         
-        /* Hero背景LOGO - 超大，五角星顶部对接导航栏，中心对齐XREBOOKING */
+        /* Hero背景LOGO - 中心与XRE BOOKING标题中心对齐 */
         .hero-logo-bg {
             position: absolute;
-            top: 280px;
+            top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             z-index: -1;
@@ -1185,64 +1185,52 @@
         }
 
         .hero-logo-bg img {
-            width: 700px;
-            height: 700px;
+            width: 600px;
+            height: 600px;
             object-fit: contain;
-            animation: heroLogoBreathe 3s ease-in-out infinite;
-            filter: drop-shadow(0 0 50px rgba(139, 0, 0, 1));
-            opacity: 0.8;
+            animation: heroLogoBreathe 5s ease-in-out infinite;
+            filter: drop-shadow(0 0 40px rgba(139, 0, 0, 0.8));
+            opacity: 0.6;
         }
 
         @keyframes heroLogoBreathe {
             0%, 100% { 
-                opacity: 0.2;
+                opacity: 0.3;
                 transform: scale(1);
                 filter: drop-shadow(0 0 20px rgba(139, 0, 0, 0.5));
             }
             50% { 
-                opacity: 1;
-                transform: scale(1.15);
-                filter: drop-shadow(0 0 100px rgba(255, 0, 0, 1)) drop-shadow(0 0 150px rgba(139, 0, 0, 1));
+                opacity: 0.9;
+                transform: scale(1.1);
+                filter: drop-shadow(0 0 60px rgba(255, 0, 0, 0.9)) drop-shadow(0 0 100px rgba(139, 0, 0, 0.8));
             }
         }
 
         @media (max-width: 1024px) {
-            .hero-logo-bg {
-                top: 260px;
-            }
             .hero-logo-bg img {
-                width: 550px;
-                height: 550px;
+                width: 500px;
+                height: 500px;
             }
         }
 
         @media (max-width: 768px) {
-            .hero-logo-bg {
-                top: 220px;
-            }
             .hero-logo-bg img {
-                width: 420px;
-                height: 420px;
+                width: 400px;
+                height: 400px;
             }
         }
 
         @media (max-width: 480px) {
-            .hero-logo-bg {
-                top: 180px;
-            }
             .hero-logo-bg img {
-                width: 320px;
-                height: 320px;
+                width: 300px;
+                height: 300px;
             }
         }
 
         @media (max-width: 375px) {
-            .hero-logo-bg {
-                top: 160px;
-            }
             .hero-logo-bg img {
-                width: 280px;
-                height: 280px;
+                width: 260px;
+                height: 260px;
             }
         }
 
@@ -1266,7 +1254,7 @@
             .nav-links .neon-btn { padding: 8px 16px; font-size: 10px; }
             .hero-content { margin-top: 80px; }
             .hero-title { font-size: clamp(55px, 14vw, 80px); letter-spacing: 5px; margin-bottom: 35px; }
-            .hero-subtitle { font-size: clamp(16px, 3.5vw, 22px); letter-spacing: 2px; margin-top: 50px; line-height: 1.4; }
+            .hero-subtitle { font-size: clamp(16px, 3.5vw, 22px); letter-spacing: 2px; margin-top: 30px; line-height: 1.4; }
             .artists-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 0 15px; }
             .artist-name-overlay { font-size: 18px; }
             .artist-booking-text { font-size: 10px; }
@@ -1290,8 +1278,8 @@
             .nav-links .neon-btn { padding: 6px 14px; font-size: 9px; }
             .hero-content { margin-top: 60px; }
             .hero-title { font-size: clamp(45px, 13vw, 65px); letter-spacing: 4px; margin-bottom: 30px; }
-            .hero-subtitle { font-size: clamp(14px, 3.5vw, 18px); letter-spacing: 2px; margin-top: 40px; line-height: 1.3; }
-            .hero-subtitle .line1 { margin-bottom: 5px; }
+            .hero-subtitle { font-size: clamp(12px, 3vw, 16px); letter-spacing: 1.5px; margin-top: 20px; line-height: 1.4; }
+            .hero-subtitle .line1 { margin-bottom: 2px; }
             .smoke-container { opacity: 0.35; }
             .artists-grid { gap: 12px; padding: 0 10px; }
             .artist-name-overlay { font-size: 14px; letter-spacing: 2px; }
@@ -1362,9 +1350,9 @@
                 <img src="images/webtop.png" alt="XRE">
             </div>
             <p class="hero-subtitle">
-                <span class="line1">Booking Agency in Punkrock, Garage, Mod,</span>
-                <span class="line2">Powerpop, Surf, Poppunk, RocknRoll,</span>
-                <span class="line3">Hardcore, Metal.</span>
+                <span class="line1">Booking Agency in Punkrock, Garage,</span>
+                <span class="line2">Mod, Powerpop, Surf, Poppunk,</span>
+                <span class="line3">RocknRoll, Hardcore, Metal.</span>
             </p>
         </div>
     </section>
