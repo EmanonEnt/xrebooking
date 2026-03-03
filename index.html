@@ -459,6 +459,7 @@
             align-items: center;
             flex-wrap: wrap;
             gap: 40px;
+            margin: 0;
         }
         .footer-spacer {
             display: none;
@@ -1076,7 +1077,24 @@
 
         /* 响应式 */
                 /* 响应式 - 1024px */
-        @media (max-width: 1024px) {
+        
+        @keyframes shimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+        .title-underline.shimmer::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            background-size: 200% 100%;
+            animation: shimmer 2s infinite;
+        }
+
+@media (max-width: 1024px) {
             nav { padding: 0 30px; height: 70px; }
             .logo-img { height: 40px; max-width: 180px; }
             .nav-links { gap: 25px; }
@@ -1106,8 +1124,16 @@
         @media (max-width: 768px) {
             .footer-bottom {
                 flex-direction: column;
-                gap: 8px;
+                gap: 10px;
                 padding: 15px;
+                margin: 0;
+            }
+            .footer-legal {
+                order: 1;
+                gap: 15px;
+            }
+            .copyright {
+                order: 2;
             }
             .footer-legal {
                 order: 1;
@@ -1129,6 +1155,11 @@
             .hero-content { margin-top: 80px; }
             .hero-title { font-size: clamp(55px, 14vw, 80px); letter-spacing: 5px; }
             .hero-subtitle { font-size: clamp(16px, 3.5vw, 22px); letter-spacing: 2px; }
+            .hero-subtitle .line1, .hero-subtitle .line2, .hero-subtitle .line3 {
+                display: block;
+                margin-bottom: 0;
+            }
+
             .artists-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 0 15px; }
             .artist-name-below { font-size: 14px; }
             .footer-gap { height: 100px; }
@@ -1191,6 +1222,11 @@
             .hero-content { margin-top: 60px; }
             .hero-title { font-size: clamp(45px, 13vw, 65px); letter-spacing: 4px; }
             .hero-subtitle { font-size: clamp(12px, 3vw, 16px); letter-spacing: 1.5px; }
+            .hero-subtitle .line1, .hero-subtitle .line2, .hero-subtitle .line3 {
+                display: block;
+                margin-bottom: 0;
+            }
+
             .artists-grid { gap: 12px; padding: 0 10px; }
             .artist-name-below { font-size: 12px; }
             .footer-gap { height: 80px; }
@@ -1224,7 +1260,158 @@
         }
 
         /* 响应式 - 375px */
-        @media (max-width: 375px) {
+        
+        /* POSTER AD 响应式 - 768px */
+        @media (max-width: 768px) {
+            .poster-ad-container {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto auto;
+            }
+            .poster-ad-left {
+                padding: 30px 20px;
+                min-height: auto;
+                height: auto;
+                order: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .poster-wrapper {
+                width: 100%;
+                max-width: 320px;
+                height: auto;
+                aspect-ratio: 3/4;
+                margin: 0 auto;
+            }
+            .poster-ad-image {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+            .poster-ad-middle {
+                min-height: auto;
+                order: 2;
+            }
+            .middle-top, .middle-bottom {
+                padding: 40px 30px;
+                align-items: center;
+                text-align: center;
+            }
+            .content-left, .content-right {
+                align-items: center;
+                text-align: center;
+                max-width: 100%;
+            }
+            .ad-underline {
+                margin: 0 auto 25px auto;
+            }
+            .ad-buttons {
+                justify-content: center;
+            }
+            .ad-title {
+                font-size: 24px;
+            }
+            .ad-description {
+                font-size: 14px;
+            }
+            .poster-ad-right {
+                min-height: 400px;
+                order: 3;
+                flex-direction: column;
+            }
+            .player-spotify {
+                flex: 0 0 200px;
+                height: 200px;
+            }
+            .player-bottom-container {
+                flex: 1;
+                flex-direction: row;
+            }
+            .player-btn, .player-netease-embed {
+                flex: 0 0 50%;
+                height: 100%;
+            }
+        }
+
+
+        /* POSTER AD 响应式 - 480px */
+        @media (max-width: 480px) {
+            .poster-ad-left {
+                padding: 20px 15px;
+                min-height: auto;
+                height: auto;
+                order: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .poster-wrapper {
+                width: 100%;
+                max-width: 280px;
+                height: auto;
+                aspect-ratio: 3/4;
+                margin: 0 auto;
+            }
+            .poster-ad-image {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+            .middle-top, .middle-bottom {
+                padding: 30px 20px;
+                align-items: center;
+                text-align: center;
+            }
+            .content-left, .content-right {
+                align-items: center;
+                text-align: center;
+            }
+            .ad-underline {
+                margin: 0 auto 20px auto;
+            }
+            .ad-title {
+                font-size: 20px;
+                letter-spacing: 2px;
+            }
+            .ad-description {
+                font-size: 12px;
+            }
+            .ad-buttons {
+                flex-direction: column;
+                width: 100%;
+                align-items: center;
+            }
+            .ad-btn {
+                width: 100%;
+                padding: 12px 20px;
+                font-size: 11px;
+            }
+            .poster-ad-right {
+                min-height: 350px;
+                order: 3;
+            }
+            .player-spotify {
+                flex: 0 0 180px;
+                height: 180px;
+            }
+            .player-bottom-container {
+                flex: 1;
+                flex-direction: row;
+            }
+            .player-btn, .player-netease-embed {
+                flex: 0 0 50%;
+                height: 100%;
+            }
+            .player-platform {
+                font-size: 12px;
+            }
+            .player-platform-logo {
+                width: 16px;
+                height: 16px;
+            }
+        }
+
+@media (max-width: 375px) {
             .hero-title { font-size: 38px; letter-spacing: 3px; }
             .hero-subtitle { font-size: 11px; }
             .artists-grid { gap: 10px; padding: 0 8px; }
