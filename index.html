@@ -252,14 +252,14 @@
 
         .hero-subtitle {
             font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            font-size: clamp(20px, 3vw, 32px);
-            letter-spacing: clamp(6px, 1.5vw, 12px);
+            font-size: clamp(22px, 3.5vw, 42px);
+            letter-spacing: clamp(4px, 1vw, 10px);
             text-transform: uppercase;
             color: rgba(255, 255, 255, 0.9);
-            max-width: 1200px;
-            margin: 20px auto 0;
+            max-width: 1400px;
+            margin: 80px auto 0;
             padding: 0 20px;
-            line-height: 1.2;
+            line-height: 1.4;
             animation: textFlash 8s ease-in-out infinite;
             animation-delay: 0.3s;
             text-align: center;
@@ -269,7 +269,7 @@
         .hero-subtitle .line2,
         .hero-subtitle .line3 {
             display: block;
-            margin-bottom: 2px;
+            margin-bottom: 0;
         }
 
         /* 内容包装器 - 抽屉效果 */
@@ -1174,51 +1174,49 @@
         }
 
         
-        /* webtop呼吸闪烁效果 */
-        .webtop-breathe {
-            margin-top: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        /* Hero背景LOGO - 在标题后方，很大，呼吸渐隐效果 */
+        .hero-logo-bg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+            pointer-events: none;
         }
 
-        .webtop-breathe img {
-            width: 150px;
-            height: 150px;
+        .hero-logo-bg img {
+            width: 400px;
+            height: 400px;
             object-fit: contain;
-            animation: webtopBreatheFade 4s ease-in-out infinite;
-            filter: drop-shadow(0 0 15px rgba(139, 0, 0, 0.6));
+            animation: heroLogoBreathe 4s ease-in-out infinite;
+            filter: drop-shadow(0 0 30px rgba(139, 0, 0, 0.8));
+            opacity: 0.6;
         }
 
-        @keyframes webtopBreatheFade {
+        @keyframes heroLogoBreathe {
             0%, 100% { 
-                opacity: 0.4;
+                opacity: 0.3;
                 transform: scale(1);
+                filter: drop-shadow(0 0 20px rgba(139, 0, 0, 0.6));
             }
             50% { 
-                opacity: 1;
-                transform: scale(1.1);
-                filter: drop-shadow(0 0 30px rgba(255, 0, 0, 0.8));
+                opacity: 0.8;
+                transform: scale(1.15);
+                filter: drop-shadow(0 0 60px rgba(255, 0, 0, 1)) drop-shadow(0 0 100px rgba(139, 0, 0, 0.8));
             }
         }
 
         @media (max-width: 768px) {
-            .webtop-breathe {
-                margin-top: 50px;
-            }
-            .webtop-breathe img {
-                width: 90px;
-                height: 90px;
+            .hero-logo-bg img {
+                width: 250px;
+                height: 250px;
             }
         }
 
         @media (max-width: 480px) {
-            .webtop-breathe {
-                margin-top: 40px;
-            }
-            .webtop-breathe img {
-                width: 70px;
-                height: 70px;
+            .hero-logo-bg img {
+                width: 180px;
+                height: 180px;
             }
         }
 
@@ -1242,7 +1240,7 @@
             .nav-links .neon-btn { padding: 8px 16px; font-size: 10px; }
             .hero-content { margin-top: 80px; }
             .hero-title { font-size: clamp(55px, 14vw, 80px); letter-spacing: 5px; margin-bottom: 35px; }
-            .hero-subtitle { font-size: clamp(16px, 3.5vw, 22px); letter-spacing: 2.5px; margin-top: 50px; }
+            .hero-subtitle { font-size: clamp(16px, 3.5vw, 22px); letter-spacing: 2px; margin-top: 50px; line-height: 1.4; }
             .artists-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 0 15px; }
             .artist-name-overlay { font-size: 18px; }
             .artist-booking-text { font-size: 10px; }
@@ -1266,7 +1264,7 @@
             .nav-links .neon-btn { padding: 6px 14px; font-size: 9px; }
             .hero-content { margin-top: 60px; }
             .hero-title { font-size: clamp(45px, 13vw, 65px); letter-spacing: 4px; margin-bottom: 30px; }
-            .hero-subtitle { font-size: clamp(13px, 3.5vw, 16px); letter-spacing: 2px; margin-top: 40px; line-height: 1.6; }
+            .hero-subtitle { font-size: clamp(14px, 3.5vw, 18px); letter-spacing: 2px; margin-top: 40px; line-height: 1.3; }
             .hero-subtitle .line1 { margin-bottom: 5px; }
             .smoke-container { opacity: 0.35; }
             .artists-grid { gap: 12px; padding: 0 10px; }
@@ -1334,17 +1332,14 @@
             <h1 class="hero-title">
                 <span class="gray">XRE</span><span class="red">BOOKING</span>
             </h1>
-            <div class="webtop-breathe">
+            <div class="hero-logo-bg">
                 <img src="images/webtop.png" alt="XRE">
             </div>
             <p class="hero-subtitle">
-                <span class="line1">Booking Agency in Punkrock, Garage, Mod,</span><br>
-                <span class="line2">Powerpop, Surf, Poppunk, RocknRoll,</span><br>
+                <span class="line1">Booking Agency in Punkrock, Garage, Mod,</span>
+                <span class="line2">Powerpop, Surf, Poppunk, RocknRoll,</span>
                 <span class="line3">Hardcore, Metal.</span>
             </p>
-            <div class="webtop-breathe">
-                <img src="images/webtop.png" alt="XRE">
-            </div>
         </div>
     </section>
 
@@ -1526,7 +1521,7 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label for="bookingDate">Preferred Date</label>
-                        <input type="text" id="bookingDate" name="preferred_date" required placeholder="MM/DD/YYYY" onfocus="(this.type='date')">
+                        <input type="text" id="bookingDate" name="preferred_date" required placeholder="MM/DD/YYYY" pattern="(0[1-9]|1[0-2])/(0[1-9]|[12][0-9]|3[01])/\d{4}" title="Please enter date in MM/DD/YYYY format">
                     </div>
                     <div class="form-group">
                         <label for="bookingCountry">Country</label>
