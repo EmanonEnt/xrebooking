@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>XRE BOOKING - Artist Agency</title>
-    <link rel="icon" type="image/png" href="./image/webtop.png">
-    <link rel="shortcut icon" type="image/png" href="./image/webtop.png">
-    <link rel="apple-touch-icon" href="./image/webtop.png">
+    <link rel="icon" type="image/png" href="./images/webtop.png">
+    <link rel="shortcut icon" type="image/png" href="./images/webtop.png">
+    <link rel="apple-touch-icon" href="./images/webtop.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <style>
@@ -85,7 +85,7 @@
         /* Neon按钮效果 */
         .neon-btn {
             background: rgba(139, 0, 0, 0.3);
-            color: #fff;
+            color: #ffffff !important;
             border: 2px solid var(--xre-dark-red);
             padding: 10px 25px;
             font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
@@ -116,6 +116,7 @@
         .neon-btn:hover {
             background: var(--xre-dark-red);
             border-color: var(--xre-dark-red);
+            color: #ffffff !important;
             box-shadow: 0 0 30px rgba(139, 0, 0, 0.8), 0 0 60px rgba(139, 0, 0, 0.4);
             transform: scale(1.05);
             letter-spacing: 3px;
@@ -253,21 +254,24 @@
 
         .hero-subtitle {
             font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            font-size: clamp(22px, 3.5vw, 42px);
-            letter-spacing: clamp(4px, 1vw, 10px);
+            font-size: clamp(18px, 3vw, 36px);
+            letter-spacing: clamp(3px, 0.8vw, 8px);
             text-transform: uppercase;
             color: rgba(255, 255, 255, 0.9);
-            max-width: 1400px;
-            margin: 80px auto 0;
+            max-width: 1200px;
+            margin: 60px auto 0;
             padding: 0 20px;
-            line-height: 1.8;
+            line-height: 1.6;
             animation: textFlash 8s ease-in-out infinite;
             animation-delay: 0.3s;
+            text-align: center;
         }
 
-        .hero-subtitle .line1 {
+        .hero-subtitle .line1,
+        .hero-subtitle .line2,
+        .hero-subtitle .line3 {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 5px;
         }
 
         /* 内容包装器 - 抽屉效果 */
@@ -409,7 +413,7 @@
             width: 100%;
             min-height: 100vh;
             padding: 80px 0;
-            background-image: url('./image/xre-adbg.jpg');
+            background-image: url('./images/xre-adbg.jpg');
             background-size: cover;
             background-position: center center;
             background-repeat: no-repeat;
@@ -1313,8 +1317,8 @@
             <span style="color: var(--xre-red); text-shadow: 0 0 20px rgba(255, 0, 0, 0.5);">XRE</span><span style="color: #fff;">BOOKING</span>
         </div>
         <div class="nav-links">
-            <a href="../index.html">LIVEGIGS ASIA</a>
-            <a href="./artists.html">ARTISTS</a>
+            <a href="../events.html">EVENTS</a>
+            <a href="../partners.html">Partners</a>
             <button class="neon-btn" onclick="openModal()">BOOKING NOW</button>
         </div>
     </nav>
@@ -1336,10 +1340,12 @@
                 <span class="gray">XRE</span><span class="red">BOOKING</span>
             </h1>
             <p class="hero-subtitle">
-                <span class="line1">Booking Agency in Punkrock, Garage, Mod, Powerpop, Surf, Poppunk, RocknRoll, Hardcore, Metal</span>
+                <span class="line1">Booking Agency in Punkrock, Garage, Mod,</span><br>
+                <span class="line2">Powerpop, Surf, Poppunk, RocknRoll,</span><br>
+                <span class="line3">Hardcore, Metal.</span>
             </p>
             <div class="webtop-breathe">
-                <img src="./image/webtop.png" alt="XRE">
+                <img src="./images/webtop.png" alt="XRE">
             </div>
         </div>
     </section>
@@ -1522,7 +1528,7 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label for="bookingDate">Preferred Date</label>
-                        <input type="date" id="bookingDate" name="preferred_date" required>
+                        <input type="date" id="bookingDate" name="preferred_date" required lang="en" placeholder="MM/DD/YYYY">
                     </div>
                     <div class="form-group">
                         <label for="bookingCountry">Country</label>
