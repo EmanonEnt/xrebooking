@@ -288,9 +288,17 @@
         /* FEATURED ARTISTS区域 */
         .artists-section {
             width: 100%;
-            padding: 100px 0;
+            padding: 100px 0 0 0;
             background: linear-gradient(180deg, var(--mad-silver) 0%, var(--mad-light) 50%, var(--mad-silver) 100%);
             position: relative;
+        }
+
+        .artists-section::after {
+            content: '';
+            display: block;
+            height: 150px;
+            background: linear-gradient(180deg, var(--mad-silver) 0%, #ff0000 50%, #8b0000 100%);
+            margin-top: 80px;
         }
 
         .section-title {
@@ -773,7 +781,10 @@
 .branded-tours-section {
     width: 100%;
     padding: 80px 0;
-    background: linear-gradient(180deg, var(--mad-silver) 0%, var(--mad-light) 30%, var(--xre-dark-red) 100%);
+    background: linear-gradient(180deg, rgba(5,5,5,0.9) 0%, rgba(10,10,10,0.85) 50%, rgba(5,5,5,0.9) 100%), url('./images/xre-adbg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
     position: relative;
 }
 
@@ -1141,7 +1152,7 @@
 
 .hero-logo-bg {
             position: absolute;
-            top: 15%;
+            top: 0%;
             left: 50%;
             transform: translateX(-50%);
             z-index: 1;
@@ -1149,8 +1160,8 @@
         }
 
         .hero-logo-bg img {
-            width: 600px;
-            height: 600px;
+            width: 400px;
+            height: 400px;
             object-fit: contain;
             animation: heroLogoBreathe 4s ease-in-out infinite;
             filter: drop-shadow(0 0 30px rgba(139, 0, 0, 0.6));
@@ -1171,18 +1182,18 @@
         }
 
         @media (max-width: 1024px) {
-            .hero-logo-bg { top: 1%; }
-            .hero-logo-bg img { width: 500px; height: 500px; }
+            .hero-logo-bg { top: 0%; }
+            .hero-logo-bg img { width: 400px; height: 400px; }
         }
 
         @media (max-width: 768px) {
-            .hero-logo-bg { top: 1%; }
+            .hero-logo-bg { top: 0%; }
             .hero-logo-bg img { width: 400px; height: 400px; }
         }
 
         @media (max-width: 480px) {
             .hero-logo-bg { top: 0%; }
-            .hero-logo-bg img { width: 320px; height: 320px; }
+            .hero-logo-bg img { width: 400px; height: 400px; }
         }
 
 
@@ -1328,8 +1339,6 @@
 }
 
 </style>
-<link rel="preload" href="./images/webtop.png" as="image">
-    <link rel="preload" href="https://livegigsasia.com/image/p-p-3.png" as="image">
 </head>
 <body>
     <nav>
@@ -1353,7 +1362,7 @@
         <div class="hero-overlay"></div>
 
         <div class="hero-logo-bg">
-            <img src="./images/webtop.png" alt="XRE" style="display:block;visibility:visible;opacity:0.7;">
+            <img src="./images/webtop.png" alt="XRE">
         </div>
 
         
@@ -1379,15 +1388,13 @@
 
         <!-- BRANDED TOURS区域 -->
         <section class="branded-tours-section">
-            <h2 class="section-title" style="color: #000;">BRANDED TOURS</h2>
-            <div class="title-underline"></div>
+            <h2 class="section-title" style="color: #000; position: relative; z-index: 10;">BRANDED TOURS</h2>
+            <div class="title-underline" style="position: relative; z-index: 10;"></div>
             <div class="branded-tours-container" id="brandedToursContainer"></div>
-            <div class="branded-tours-load-more" id="brandedToursLoadMore">
+            <div class="branded-tours-load-more" id="brandedToursLoadMore" style="text-align: center; margin-top: 40px; position: relative; z-index: 10;">
                 <button class="neon-btn" onclick="loadMoreBrandedTours()">LOAD MORE</button>
             </div>
         </section>
-
-        <div class="footer-gap"></div>
 
         <footer class="site-footer">
             <div class="footer-main">
@@ -1464,29 +1471,44 @@
         </footer>
     </div>
 
+    <div class="modal-overlay" id="bookingModal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <h2>BOOKING NOW</h2>
+            <p>Inquire for dates, rates and full booking deals</p>
+            <form id="bookingForm" action="https://api.web3forms.com/submit" method="POST" onsubmit="handleBookingSubmit(event)">
+                <input type="hidden" name="access_key" value="021d1b10-1c62-4334-90f0-acff63be93c5">
+                <input type="hidden" name="subject" value="New Booking Inquiry - XRE BOOKING">
+                <input type="hidden" name="from_name" value="XRE BOOKING Website">
+
+                <div class="form-group">
+                    <label for="bookingName">Name</label>
+                    <input type="text" id="bookingName" name="name" required placeholder="Enter your name">
+                </div>
+
+                <div class="form-group">
+                    <label for="bookingEmail">Email</label>
+                    <input type="email" id="bookingEmail" name="email" required placeholder="Enter your email">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="bookingDate">Preferred Date</label>
+                        <input type="text" id="bookingDate" name="preferred_date" required placeholder="MM/DD/YYYY" pattern="(0[1-9]|1[0-2])/(0[1-9]|[12][0-9]|3[01])/\d{4}" title="Please enter date in MM/DD/YYYY format">
+                    </div>
+                    <div class="form-group">
+                        <label for="bookingCountry">Country</label>
+                        <input type="text" id="bookingCountry" name="country" placeholder="Country" required>
+                    </div>
+                </div>
+
     <script>
         // 防止页面刷新后自动滚动
         if ('scrollRestoration' in history) {
             history.scrollRestoration = 'manual';
         }
-
-        // 页面加载前立即滚动到顶部
         window.scrollTo(0, 0);
 
-        // 页面加载完成后再次确保在顶部
-        window.onload = function() {
-            window.scrollTo(0, 0);
-            document.body.scrollTop = 0;
-            document.documentElement.scrollTop = 0;
-        };
-
-        // DOM加载完成后也滚动到顶部
-        document.addEventListener('DOMContentLoaded', function() {
-            window.scrollTo(0, 0);
-        });
-    </script>
-
-    <script>
         // 艺人数据
         const artistsData = [
             { name: "ACIDEZ (MX)", image: "./assets/artists/ACIDEZ.jpg", slug: "acidez" },
@@ -1508,12 +1530,13 @@
 
         function renderArtists() {
             const grid = document.getElementById('artistsGrid');
+            if (!grid) return;
             grid.innerHTML = artistsData.map(artist => {
                 const link = artist.slug === '#' ? '#' : './artist/' + artist.slug + '.html';
                 return `
                 <div class="artist-card-wrapper">
                     <div class="artist-card">
-                        <img src="${artist.image}" alt="${artist.name}" onerror="this.src='https://via.placeholder.com/750x360/333/fff?text=${encodeURIComponent(artist.name)}'">
+                        <img src="${artist.image}" alt="${artist.name}" loading="eager" onerror="this.src='https://via.placeholder.com/750x360/333/fff?text=${encodeURIComponent(artist.name)}'">
                         <div class="artist-overlay"></div>
                     </div>
                     <div class="artist-name-below" onclick="window.open('${link}', '_blank')" style="cursor: pointer;">${artist.name}</div>
@@ -1521,23 +1544,6 @@
                 `;
             }).join('');
         }
-
-        function openModal() {
-            document.getElementById('bookingModal').classList.add('active');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeModal() {
-            document.getElementById('bookingModal').classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-
-        document.addEventListener('DOMContentLoaded', () => {
-            renderArtists();
-            setTimeout(loadBrandedTours, 500);
-        
-            loadBrandedTours();});
-    
 
         // Branded Tours 功能
         let allBrandedTours = [];
@@ -1550,7 +1556,7 @@
             if (!container) return;
 
             try {
-                container.innerHTML = '<div style="text-align:center;color:#666;padding:40px;">LOADING...</div>';
+                container.innerHTML = '<div style="text-align: center; color: #666; padding: 40px; font-size: 14px; letter-spacing: 2px; grid-column: 1 / -1;">LOADING BRANDED TOURS...</div>';
 
                 const response = await fetch('./events.html', {
                     method: 'GET',
@@ -1558,141 +1564,6 @@
                 });
 
                 if (!response.ok) throw new Error('Failed to fetch');
-
-                const htmlText = await response.text();
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(htmlText, 'text/html');
-
-                let events = [];
-                const eventCards = doc.querySelectorAll('.event-card');
-
-                eventCards.forEach(card => {
-                    const statusEl = card.querySelector('.event-status');
-                    const status = statusEl ? statusEl.textContent.trim().toLowerCase() : '';
-
-                    if (status.includes('on tour')) {
-                        const nameEl = card.querySelector('.event-name');
-                        let title = '', subtitle = '';
-                        if (nameEl) {
-                            const fullText = nameEl.innerHTML;
-                            if (fullText.includes('<br>')) {
-                                const parts = fullText.split('<br>');
-                                title = parts[0].trim();
-                                subtitle = parts[1] ? parts[1].trim() : '';
-                            } else {
-                                title = nameEl.textContent.trim();
-                            }
-                        }
-
-                        const detailsEl = card.querySelector('.event-details');
-                        let dateRange = '', city = '';
-                        if (detailsEl) {
-                            const detailsText = detailsEl.textContent.trim();
-                            const parts = detailsText.split('|');
-                            if (parts.length >= 2) {
-                                dateRange = parts[0].trim();
-                                city = parts[1].trim();
-                            } else {
-                                dateRange = detailsText;
-                            }
-                        }
-
-                        const posterEl = card.querySelector('.event-poster');
-                        const posterUrl = posterEl ? posterEl.src : '';
-
-                        const btnEl = card.querySelector('.event-btn:not(.disabled)');
-                        const link = btnEl ? btnEl.href : '';
-                        const btnText = btnEl ? btnEl.textContent.trim() : 'INFO';
-
-                        events.push({ title, subtitle, dateRange, city, posterUrl, link, btnText });
-                    }
-                });
-
-                allBrandedTours = events;
-                displayedBrandedTours = 0;
-
-                if (allBrandedTours.length === 0) {
-                    container.innerHTML = '<div style="text-align:center;color:#666;padding:60px 20px;">NO ON TOUR EVENTS CURRENTLY.<br>CHECK BACK SOON!</div>';
-                    if (loadMoreContainer) loadMoreContainer.style.display = 'none';
-                    return;
-                }
-
-                renderBrandedTours();
-
-            } catch (error) {
-                console.error('Error loading branded tours:', error);
-                container.innerHTML = '<div style="text-align:center;color:#666;padding:60px 20px;">UNABLE TO LOAD TOURS.<br>PLEASE REFRESH OR CHECK BACK LATER.</div>';
-            }
-        }
-
-        function renderBrandedTours() {
-            const container = document.getElementById('brandedToursContainer');
-            const loadMoreContainer = document.getElementById('brandedToursLoadMore');
-
-            const toursToShow = allBrandedTours.slice(0, displayedBrandedTours + BRANDED_TOURS_PER_PAGE);
-
-            container.innerHTML = toursToShow.map((event, index) => {
-                const hasLink = event.link && event.link.trim() !== '';
-                const titleHtml = event.subtitle 
-                    ? `${event.title}<br><span style="font-size:0.85em;opacity:0.9;">${event.subtitle}</span>`
-                    : event.title;
-
-                return `
-                <div class="branded-tour-card" data-event-id="${index}">
-                    <img src="${event.posterUrl}" alt="${event.title}" class="branded-tour-poster" onerror="this.src='./images/asia-asiaad.jpg'">
-                    <div class="branded-tour-status">ON TOUR</div>
-                    <div class="branded-tour-content">
-                        <h3 class="branded-tour-name">${titleHtml}</h3>
-                        <div class="branded-tour-details">${event.dateRange} | ${event.city}</div>
-                        ${hasLink 
-                            ? `<a href="${event.link}" class="branded-tour-btn" target="_blank">${event.btnText}</a>`
-                            : `<span class="branded-tour-btn disabled">COMING SOON</span>`
-                        }
-                    </div>
-                </div>
-                `;
-            }).join('');
-
-            displayedBrandedTours = toursToShow.length;
-
-            if (loadMoreContainer) {
-                if (allBrandedTours.length >= 4 && displayedBrandedTours < allBrandedTours.length) {
-                    loadMoreContainer.style.display = 'block';
-                } else {
-                    loadMoreContainer.style.display = 'none';
-                }
-            }
-        }
-
-        function loadMoreBrandedTours() {
-            renderBrandedTours();
-        }
-
-    </script>
-
-    <script>
-        // Branded Tours 全局变量
-        let allBrandedTours = [];
-        let displayedBrandedTours = 0;
-        const BRANDED_TOURS_PER_PAGE = 3;
-
-        // 从本地 ./events.html 抓取并解析ON TOUR活动数据
-        async function loadBrandedTours() {
-            const container = document.getElementById('brandedToursContainer');
-            const loadMoreContainer = document.getElementById('brandedToursLoadMore');
-            if (!container) return;
-
-            try {
-                container.innerHTML = '<div class="branded-tours-loading">LOADING BRANDED TOURS...</div>';
-                if (loadMoreContainer) loadMoreContainer.style.display = 'none';
-
-                // 从本地 events.html 获取数据
-                const response = await fetch('./events.html', {
-                    method: 'GET',
-                    headers: { 'Cache-Control': 'no-cache' }
-                });
-
-                if (!response.ok) throw new Error('Failed to fetch events.html');
 
                 const htmlText = await response.text();
                 const parser = new DOMParser();
@@ -1748,7 +1619,6 @@
                             subtitle: subtitle,
                             dateRange: dateRange,
                             city: city,
-                            status: 'ON TOUR',
                             poster1: posterUrl,
                             link: link,
                             btn_text: btnText
@@ -1756,9 +1626,7 @@
                     }
                 });
 
-                allBrandedTours = events.filter(event => {
-                    return event.status.toLowerCase().includes('on tour');
-                }).sort((a, b) => {
+                allBrandedTours = events.sort((a, b) => {
                     const dateA = parseBrandedDate(a.dateRange);
                     const dateB = parseBrandedDate(b.dateRange);
                     return dateA - dateB;
@@ -1767,15 +1635,17 @@
                 displayedBrandedTours = 0;
 
                 if (allBrandedTours.length === 0) {
-                    container.innerHTML = '<div class="branded-tours-empty">NO ON TOUR EVENTS CURRENTLY.<br>CHECK BACK SOON!</div>';
+                    container.innerHTML = '<div style="text-align: center; color: #666; padding: 60px 20px; font-size: 16px; letter-spacing: 2px; grid-column: 1 / -1;">NO ON TOUR EVENTS CURRENTLY.<br>CHECK BACK SOON!</div>';
+                    if (loadMoreContainer) loadMoreContainer.style.display = 'none';
                     return;
                 }
 
                 renderBrandedTours();
 
             } catch (error) {
-                console.error('Error loading branded tours:', error);
-                container.innerHTML = '<div class="branded-tours-empty">UNABLE TO LOAD TOURS.<br>PLEASE REFRESH OR CHECK BACK LATER.</div>';
+                console.error('Error:', error);
+                container.innerHTML = '<div style="text-align: center; color: #666; padding: 60px 20px; font-size: 16px; letter-spacing: 2px; grid-column: 1 / -1;">UNABLE TO LOAD TOURS.<br>PLEASE REFRESH OR CHECK BACK LATER.</div>';
+                if (loadMoreContainer) loadMoreContainer.style.display = 'none';
             }
         }
 
@@ -1790,6 +1660,107 @@
 
         function renderBrandedTours() {
             const container = document.getElementById('brandedToursContainer');
+            const loadMoreContainer = document.getElementById('brandedToursLoadMore');
+
+            const toursToShow = allBrandedTours.slice(0, displayedBrandedTours + BRANDED_TOURS_PER_PAGE);
+
+            container.innerHTML = toursToShow.map((event, index) => {
+                const hasLink = event.link && event.link.trim() !== '';
+                const title = event.title || 'ON TOUR EVENT';
+                const subtitle = event.subtitle || '';
+                const dateRange = event.dateRange || 'TBA';
+                const city = event.city || 'TBA';
+                const posterUrl = event.poster1 || './images/asia-asiaad.jpg';
+                const titleHtml = subtitle ? `${title}<br><span style="font-size: 0.85em; opacity: 0.9;">${subtitle}</span>` : title;
+
+                return `
+                <div class="branded-tour-card ${!hasLink ? 'no-link' : ''}" data-event-id="${index}">
+                    <img src="${posterUrl}" alt="${title}" class="branded-tour-poster" loading="eager" onerror="this.src='./images/asia-asiaad.jpg'">
+                    <div class="branded-tour-status">ON TOUR</div>
+                    <button class="branded-tour-share" onclick="event.stopPropagation(); shareEvent('${title.replace(/'/g, "\'")}', '${city.replace(/'/g, "\'")}', '${dateRange.replace(/'/g, "\'")}', '${posterUrl.replace(/'/g, "\'")}', '${(event.link || '').replace(/'/g, "\'")}')" title="Share">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="18" cy="5" r="3"></circle>
+                            <circle cx="6" cy="12" r="3"></circle>
+                            <circle cx="18" cy="19" r="3"></circle>
+                            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                        </svg>
+                    </button>
+                    <div class="branded-tour-content">
+                        <h3 class="branded-tour-name">${titleHtml}</h3>
+                        <div class="branded-tour-details">${dateRange} | ${city}</div>
+                        <div class="branded-tour-venue"></div>
+                        ${hasLink 
+                            ? `<a href="${event.link}" class="branded-tour-btn" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation();">${event.btn_text || 'INFO'}</a>`
+                            : `<span class="branded-tour-btn disabled">${event.btn_text || 'COMING SOON'}</span>`
+                        }
+                    </div>
+                </div>
+                `;
+            }).join('');
+
+            displayedBrandedTours = toursToShow.length;
+
+            if (loadMoreContainer) {
+                if (allBrandedTours.length > BRANDED_TOURS_PER_PAGE && displayedBrandedTours < allBrandedTours.length) {
+                    loadMoreContainer.style.display = 'block';
+                } else {
+                    loadMoreContainer.style.display = 'none';
+                }
+            }
+        }
+
+        function loadMoreBrandedTours() {
+            renderBrandedTours();
+        }
+
+        function shareEvent(title, city, date, image, link) {
+            const shareText = `${title} - ${city} (${date})`;
+            if (navigator.share) {
+                navigator.share({
+                    title: title,
+                    text: shareText,
+                    url: link || window.location.href
+                }).catch(err => console.log('Share cancelled'));
+            } else {
+                navigator.clipboard.writeText(shareText + '\n' + (link || window.location.href)).then(() => {
+                    alert('Copied to clipboard!');
+                }).catch(() => {
+                    alert('Share: ' + title);
+                });
+            }
+        }
+
+        // Booking Modal Functions
+        function openModal() {
+            const modal = document.getElementById('bookingModal');
+            if (modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('bookingModal');
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            renderArtists();
+            setTimeout(loadBrandedTours, 500);
+        });
+
+        // ESC键关闭弹窗
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeModal();
+        });
+    </script>
+</body>
+</html>iner');
             const loadMoreContainer = document.getElementById('brandedToursLoadMore');
 
             const toursToShow = allBrandedTours.slice(0, displayedBrandedTours + BRANDED_TOURS_PER_PAGE);
