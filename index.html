@@ -773,10 +773,7 @@
 .branded-tours-section {
     width: 100%;
     padding: 80px 0;
-    background: linear-gradient(180deg, rgba(5,5,5,0.9) 0%, rgba(10,10,10,0.85) 50%, rgba(5,5,5,0.9) 100%), url('./images/xre-adbg.jpg');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
+    background: linear-gradient(180deg, var(--mad-silver) 0%, var(--mad-light) 30%, var(--xre-dark-red) 100%);
     position: relative;
 }
 
@@ -1152,8 +1149,8 @@
         }
 
         .hero-logo-bg img {
-            width: 400px;
-            height: 400px;
+            width: 600px;
+            height: 600px;
             object-fit: contain;
             animation: heroLogoBreathe 4s ease-in-out infinite;
             filter: drop-shadow(0 0 30px rgba(139, 0, 0, 0.6));
@@ -1175,7 +1172,7 @@
 
         @media (max-width: 1024px) {
             .hero-logo-bg { top: 14%; }
-            .hero-logo-bg img { width: 400px; height: 400px; }
+            .hero-logo-bg img { width: 500px; height: 500px; }
         }
 
         @media (max-width: 768px) {
@@ -1185,7 +1182,7 @@
 
         @media (max-width: 480px) {
             .hero-logo-bg { top: 12%; }
-            .hero-logo-bg img { width: 400px; height: 400px; }
+            .hero-logo-bg img { width: 320px; height: 320px; }
         }
 
 
@@ -1405,7 +1402,6 @@
         </section>
 
         
-        <!-- BRANDED TOURS区域 - 与LiveGigs自主活动区域一致 -->
         <section class="branded-tours-section">
             <h2 class="section-title" style="color: #000; position: relative; z-index: 10;">BRANDED TOURS</h2>
             <div class="title-underline"></div>
@@ -1417,7 +1413,19 @@
             </div>
         </section>
 
-        <!-- 广告区 -->
+        
+        <!-- BRANDED TOURS区域 - 与LiveGigs自主活动区域一致 -->
+        <section class="branded-tours-section">
+            <h2 class="section-title" style="color: #000; position: relative; z-index: 10;">BRANDED TOURS</h2>
+            <div class="title-underline"></div>
+            <div class="branded-tours-container" id="brandedToursContainer">
+                <!-- 动态加载ON TOUR活动 -->
+            </div>
+            <div class="branded-tours-load-more" id="brandedToursLoadMore">
+                <button class="neon-btn" onclick="loadMoreBrandedTours()">LOAD MORE</button>
+            </div>
+        </section>
+<!-- 广告区 -->
         
 
         <!-- 间隙区域 -->
@@ -1951,23 +1959,6 @@ function shareToPlatform(platform) {
             break;
     }
     modal.classList.remove('active');
-}
-\n${date} | ${city}\n\nCheck out more at XRE BOOKING`;
-
-    if (navigator.share) {
-        navigator.share({
-            title: title,
-            text: shareText,
-            url: link || window.location.href
-        }).catch(err => console.log('Share cancelled'));
-    } else {
-        // 复制到剪贴板
-        navigator.clipboard.writeText(shareText + '\n' + (link || window.location.href)).then(() => {
-            alert('Event info copied to clipboard!');
-        }).catch(() => {
-            alert('Share: ' + title + ' at ' + city);
-        });
-    }
 }
 
 </script>
