@@ -601,7 +601,7 @@
         }
 
         /* BRANDED TOURS区域 */
-        .branded-tours-section {
+                .branded-tours-section {
             width: 100%;
             padding: 80px 0;
             background: linear-gradient(180deg, var(--mad-silver) 0%, var(--mad-light) 30%, #8b0000 100%);
@@ -677,18 +677,6 @@
             pointer-events: auto;
         }
         .branded-tour-card:hover .branded-tour-share {
-            opacity: 1;
-        }
-        @media (max-width: 768px) {
-            .branded-tour-share {
-                opacity: 0;
-            }
-            .branded-tour-card.active .branded-tour-share {
-                opacity: 1;
-            }
-        }
-        .branded-tour-card:hover .branded-tour-share,
-        .branded-tour-card.active .branded-tour-share {
             opacity: 1;
         }
         .branded-tour-share:hover {
@@ -843,9 +831,7 @@
             font-size: 16px;
             letter-spacing: 2px;
         }
-
-        /* 分享弹窗 - 修复版 */
-        .share-modal {
+.share-modal {
             display: none;
             position: fixed;
             top: 0;
@@ -1089,6 +1075,7 @@
         }
 
         /* 响应式 */
+                /* 响应式 - 1024px */
         @media (max-width: 1024px) {
             nav { padding: 0 30px; height: 70px; }
             .logo-img { height: 40px; max-width: 180px; }
@@ -1103,7 +1090,6 @@
             .hero-logo-bg img { width: 600px; height: 600px; }
             .branded-tours-container { grid-template-columns: repeat(2, 1fr); }
             .branded-tour-card { max-width: none; }
-            /* 平板底部适配 */
             .footer-bottom {
                 flex-direction: column;
                 gap: 10px;
@@ -1115,6 +1101,8 @@
                 order: 2;
             }
         }
+
+        /* 响应式 - 768px */
         @media (max-width: 768px) {
             .footer-bottom {
                 flex-direction: column;
@@ -1149,6 +1137,8 @@
             .footer-contact-left, .footer-contact-right { text-align: center; flex: 1; width: 100%; }
             .form-row { grid-template-columns: 1fr; }
             .hero-logo-bg img { width: 450px; height: 450px; }
+
+            /* BRANDED TOURS - 768px */
             .branded-tours-container { grid-template-columns: 1fr; padding: 0 20px; }
             .branded-tour-card { max-width: none; aspect-ratio: 2/3; }
             .branded-tour-content { padding: 60px 20px 30px; }
@@ -1157,114 +1147,24 @@
             .branded-tour-venue { font-size: 11px; }
             .branded-tour-btn { padding: 10px 25px; font-size: 11px; }
             .branded-tour-status { top: 15px; right: 15px; padding: 6px 12px; font-size: 11px; }
-            .branded-tour-share { width: 36px; height: 36px; top: 15px; left: 15px; opacity: 1; }
+            /* 移动端分享按钮默认隐藏，active状态显示 */
+            .branded-tour-share { 
+                width: 36px; 
+                height: 36px; 
+                top: 15px; 
+                left: 15px; 
+                opacity: 0;
+            }
+            .branded-tour-card.active .branded-tour-share {
+                opacity: 1;
+            }
             .share-platforms { grid-template-columns: repeat(3, 1fr); gap: 10px; }
             .share-platform-btn { padding: 10px 5px; }
             .share-platform-icon { width: 24px; height: 24px; }
             .share-platform-name { font-size: 9px; }
-            /* 移动端海报区域单列布局 */
-            .poster-ad-container {
-                grid-template-columns: 1fr;
-                grid-template-rows: auto auto auto;
-            }
-            .poster-ad-left {
-                padding: 20px;
-                min-height: auto;
-                aspect-ratio: 3/4;
-                max-height: 70vh;
-                height: auto;
-                order: 1;
-            }
-            .poster-wrapper {
-                max-width: 400px;
-                width: 100%;
-                aspect-ratio: 3/4;
-                margin: 0 auto;
-            }
-            .poster-ad-image {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
-            .poster-ad-middle {
-                min-height: auto;
-                order: 2;
-            }
-            .middle-top, .middle-bottom {
-                padding: 40px 30px;
-                align-items: center;
-                text-align: center;
-            }
-            .content-left, .content-right {
-                align-items: center;
-                text-align: center;
-                max-width: 100%;
-            }
-            .ad-underline {
-                margin: 0 auto 25px auto;
-            }
-            .ad-title {
-                font-size: 24px;
-            }
-            .ad-description {
-                font-size: 14px;
-            }
-            .poster-ad-right {
-                min-height: 400px;
-                order: 3;
-                flex-direction: column;
-            }
-            .player-spotify {
-                flex: 0 0 200px;
-                height: 200px;
-            }
-            .player-bottom-container {
-                flex: 1;
-                flex-direction: row;
-            }
-            .player-btn, .player-netease-embed {
-                flex: 0 0 50%;
-                height: 100%;
-            }
-            /* 移动端海报区域适配 */
-            .poster-ad-left {
-                padding: 15px;
-                min-height: auto;
-                aspect-ratio: 3/4;
-                max-height: 60vh;
-                height: auto;
-                order: 1;
-            }
-            .poster-wrapper {
-                max-width: 280px;
-                width: 100%;
-                aspect-ratio: 3/4;
-                margin: 0 auto;
-            }
-            .poster-ad-image {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
-            .poster-ad-middle {
-                min-height: auto;
-                order: 2;
-            }
-            .poster-ad-right {
-                min-height: 350px;
-                order: 3;
-                gap: 0;
-            }
-            .player-spotify {
-                flex: 0 0 180px;
-                height: 180px;
-            }
-            .player-bottom-container {
-                flex: 1;
-                flex-direction: row;
-                gap: 0;
-            }
         }
+
+        /* 响应式 - 480px */
         @media (max-width: 480px) {
             .footer-bottom {
                 flex-direction: column;
@@ -1302,14 +1202,28 @@
             .modal-content { padding: 30px 20px; }
             .modal-content h2 { font-size: 22px; }
             .hero-logo-bg img { width: 320px; height: 320px; }
+
+            /* BRANDED TOURS - 480px */
             .branded-tours-section { padding: 60px 0; }
             .branded-tour-card { aspect-ratio: 2/3; }
             .branded-tour-content { padding: 50px 15px 25px; }
             .branded-tour-name { font-size: 16px; }
             .branded-tour-btn { padding: 10px 25px; font-size: 11px; }
             .branded-tour-status { font-size: 10px; padding: 5px 10px; top: 10px; right: 10px; }
-            .branded-tour-share { width: 32px; height: 32px; top: 10px; left: 10px; opacity: 1; }
+            /* 移动端分享按钮默认隐藏，active状态显示 */
+            .branded-tour-share { 
+                width: 32px; 
+                height: 32px; 
+                top: 10px; 
+                left: 10px; 
+                opacity: 0;
+            }
+            .branded-tour-card.active .branded-tour-share {
+                opacity: 1;
+            }
         }
+
+        /* 响应式 - 375px */
         @media (max-width: 375px) {
             .hero-title { font-size: 38px; letter-spacing: 3px; }
             .hero-subtitle { font-size: 11px; }
@@ -1319,8 +1233,6 @@
             .contact-item { font-size: 10px; }
             .branded-tour-name { font-size: 16px; }
         }
-    
-
         /* POSTER AD SECTION - 使用背景图 */
         .poster-ad-section {
             width: 100%;
@@ -1629,7 +1541,7 @@
             margin-left: 2px;
         }
 
-        /* 响应式 */
+        /* POSTER AD 响应式 - 1024px */
         @media (max-width: 1024px) {
             .poster-ad-container {
                 grid-template-columns: 1fr 1fr;
@@ -1660,17 +1572,23 @@
             }
         }
 
+        /* POSTER AD 响应式 - 768px */
         @media (max-width: 768px) {
             .poster-ad-container {
                 grid-template-columns: 1fr;
                 grid-template-rows: auto auto auto;
             }
-            /* 移动端海报与ON TOUR一样大小 */
+            /* 移动端海报区域 - 修复居中问题 */
             .poster-ad-left {
                 padding: 20px;
                 min-height: auto;
                 aspect-ratio: 3/4;
                 max-height: 70vh;
+                height: auto;
+                order: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
             .poster-wrapper {
                 max-width: 400px;
@@ -1683,9 +1601,9 @@
                 height: 100%;
                 object-fit: cover;
             }
-            /* 中间文字区域 */
             .poster-ad-middle {
                 min-height: auto;
+                order: 2;
             }
             .middle-top, .middle-bottom {
                 padding: 40px 30px;
@@ -1709,9 +1627,9 @@
             .ad-description {
                 font-size: 14px;
             }
-            /* 播放器区域 */
             .poster-ad-right {
                 min-height: 400px;
+                order: 3;
                 flex-direction: column;
             }
             .player-spotify {
@@ -1726,7 +1644,10 @@
                 flex: 0 0 50%;
                 height: 100%;
             }
-            /* 移动端海报区域适配 */
+        }
+
+        /* POSTER AD 响应式 - 480px */
+        @media (max-width: 480px) {
             .poster-ad-left {
                 padding: 15px;
                 min-height: auto;
@@ -1734,9 +1655,12 @@
                 max-height: 60vh;
                 height: auto;
                 order: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
             .poster-wrapper {
-                max-width: 280px;
+                max-width: 100%;
                 width: 100%;
                 aspect-ratio: 3/4;
                 margin: 0 auto;
@@ -1746,45 +1670,6 @@
                 height: 100%;
                 object-fit: cover;
             }
-            .poster-ad-middle {
-                min-height: auto;
-                order: 2;
-            }
-            .poster-ad-right {
-                min-height: 350px;
-                order: 3;
-                gap: 0;
-            }
-            .player-spotify {
-                flex: 0 0 180px;
-                height: 180px;
-            }
-            .player-bottom-container {
-                flex: 1;
-                flex-direction: row;
-                gap: 0;
-            }
-        }
-
-        @media (max-width: 480px) {
-            /* 移动端海报与ON TOUR一样大小 */
-            .poster-ad-left {
-                padding: 15px;
-                min-height: auto;
-                aspect-ratio: 3/4;
-                max-height: 60vh;
-            }
-            .poster-wrapper {
-                max-width: 100%;
-                width: 100%;
-                aspect-ratio: 3/4;
-            }
-            .poster-ad-image {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
-            /* 中间文字区域 */
             .middle-top, .middle-bottom {
                 padding: 30px 20px;
                 align-items: center;
@@ -1814,9 +1699,9 @@
                 padding: 12px 20px;
                 font-size: 11px;
             }
-            /* 播放器区域 */
             .poster-ad-right {
                 min-height: 350px;
+                order: 3;
             }
             .player-spotify {
                 flex: 0 0 180px;
@@ -1830,43 +1715,15 @@
                 flex: 0 0 50%;
                 height: 100%;
             }
-            /* 移动端海报区域适配 */
+        }
+
+        /* POSTER AD 响应式 - 375px */
+        @media (max-width: 375px) {
             .poster-ad-left {
-                padding: 15px;
-                min-height: auto;
-                aspect-ratio: 3/4;
-                max-height: 60vh;
-                height: auto;
-                order: 1;
+                padding: 10px;
             }
             .poster-wrapper {
-                max-width: 280px;
-                width: 100%;
-                aspect-ratio: 3/4;
-                margin: 0 auto;
-            }
-            .poster-ad-image {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
-            .poster-ad-middle {
-                min-height: auto;
-                order: 2;
-            }
-            .poster-ad-right {
-                min-height: 350px;
-                order: 3;
-                gap: 0;
-            }
-            .player-spotify {
-                flex: 0 0 180px;
-                height: 180px;
-            }
-            .player-bottom-container {
-                flex: 1;
-                flex-direction: row;
-                gap: 0;
+                max-width: 100%;
             }
         }
 </style>
