@@ -769,572 +769,380 @@
         }
 
         
-        /* BRANDED TOURS区域 - 自主活动结构 */
-        .branded-tours-section {
-            width: 100%;
-            padding: 100px 0;
-            background: linear-gradient(180deg, var(--mad-silver) 0%, var(--mad-light) 30%, var(--xre-red) 100%);
-            position: relative;
-        }
+        /* BRANDED TOURS区域 - 与LiveGigs自主活动区域样式完全一致 */
+.branded-tours-section {
+    width: 100%;
+    padding: 80px 0;
+    background: linear-gradient(180deg, rgba(5,5,5,0.9) 0%, rgba(10,10,10,0.85) 50%, rgba(5,5,5,0.9) 100%), url('./images/xre-adbg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    position: relative;
+}
 
-        .branded-title {
-            color: var(--black);
-        }
+.branded-tours-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, var(--mad-silver) 0%, var(--mad-light) 30%, transparent 100%);
+    pointer-events: none;
+}
 
-        .branded-tours-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 25px;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
+.branded-tours-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+    padding: 0 20px;
+    position: relative;
+    z-index: 1;
+}
 
-        .branded-tours-load-more {
-            text-align: center;
-            margin-top: 50px;
-        }
+@media (min-width: 768px) {
+    .branded-tours-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
 
-        .branded-tours-load-more .neon-btn {
-            display: inline-block;
-            padding: 15px 40px;
-            font-size: 14px;
-        }
+@media (min-width: 1025px) {
+    .branded-tours-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
 
-        .branded-tour-card {
-            position: relative;
-            aspect-ratio: 3/4;
-            overflow: hidden;
-            cursor: pointer;
-            background: #000;
-            border: 2px solid transparent;
-            transition: all 0.4s;
-        }
+/* Branded Tour卡片 - 与自主活动卡片完全一致 */
+.branded-tour-card {
+    position: relative;
+    background: linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 100%);
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    border: 1px solid rgba(139, 0, 0, 0.3);
+    aspect-ratio: 3/4;
+    max-width: 400px;
+    margin: 0 auto;
+    width: 100%;
+}
 
-        .branded-tour-card:hover {
-            border-color: var(--xre-red);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-        }
+.branded-tour-card:hover {
+    transform: translateY(-10px);
+    border-color: rgba(139, 0, 0, 0.8);
+    box-shadow: 0 0 30px rgba(139, 0, 0, 0.3), inset 0 0 20px rgba(139, 0, 0, 0.1);
+}
 
-        .branded-tour-card img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            filter: brightness(0.7);
-            transition: all 0.4s;
-        }
+.branded-tour-poster {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    filter: brightness(0.7);
+    transition: all 0.4s;
+    z-index: 1;
+}
 
-        .branded-tour-card:hover img {
-            filter: brightness(1);
-            transform: scale(1.05);
-        }
+.branded-tour-card:hover .branded-tour-poster {
+    filter: brightness(1);
+    transform: scale(1.05);
+}
 
-        .branded-tour-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 50%, transparent 100%);
-            opacity: 0;
-            transition: opacity 0.4s;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            padding: 20px;
-        }
+/* ON TOUR状态标签 */
+.branded-tour-status {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 10;
+    padding: 8px 16px;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: bold;
+    border-radius: 4px;
+    animation: statusPulse 2s ease-in-out infinite;
+    background: rgba(0, 0, 0, 0.7) !important;
+    border: 1px solid rgba(139, 0, 0, 0.5);
+    color: #ffaa00;
+}
 
-        .branded-tour-card:hover .branded-tour-overlay {
-            opacity: 1;
-        }
+@keyframes statusPulse {
+    0%, 100% { box-shadow: 0 0 10px rgba(139, 0, 0, 0.5); }
+    50% { box-shadow: 0 0 20px rgba(139, 0, 0, 0.8); }
+}
 
-        .branded-tour-title {
-            font-size: 18px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: #fff;
-            margin-bottom: 8px;
-            text-shadow: 0 0 10px rgba(139, 0, 0, 0.8);
-        }
+/* 分享按钮 - 默认隐藏，hover显示 */
+.branded-tour-share {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 36px;
+    height: 36px;
+    background: rgba(0, 0, 0, 0.7);
+    border: 1px solid var(--xre-dark-red);
+    border-radius: 50%;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 15;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
 
-        .branded-tour-date {
-            font-size: 12px;
-            color: var(--mad-silver);
-            margin-bottom: 5px;
-            font-family: Arial, sans-serif;
-        }
+.branded-tour-card:hover .branded-tour-share {
+    opacity: 1;
+}
 
-        .branded-tour-location {
-            font-size: 11px;
-            color: #888;
-            font-family: Arial, sans-serif;
-        }
+.branded-tour-share:hover {
+    background: var(--xre-dark-red);
+    box-shadow: 0 0 15px rgba(139, 0, 0, 0.8);
+    transform: scale(1.1);
+}
 
-        .branded-tour-status {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: var(--xre-red);
-            color: #fff;
-            padding: 5px 10px;
-            font-size: 10px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
+/* 内容覆盖层 - 默认显示 */
+.branded-tour-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 80px 20px 40px;
+    z-index: 5;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.2) 40%, rgba(0,0,0,0.6) 70%, rgba(0,0,0,0.8) 100%);
+    transition: all 0.4s ease;
+}
 
-        @media (max-width: 1024px) {
-            .branded-tours-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 20px;
-            }
-        }
+/* hover时隐藏内容（与events.html一致） */
+.branded-tour-card:hover .branded-tour-content {
+    background: transparent;
+}
 
-        @media (max-width: 768px) {
-            .branded-tours-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 15px;
-                padding: 0 15px;
-            }
-            .branded-tour-title {
-                font-size: 14px;
-            }
-        }
+.branded-tour-card:hover .branded-tour-name,
+.branded-tour-card:hover .branded-tour-details,
+.branded-tour-card:hover .branded-tour-venue {
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
 
-        @media (max-width: 480px) {
-            .branded-tours-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 10px;
-                padding: 0 10px;
-            }
-            .branded-tour-title {
-                font-size: 12px;
-                letter-spacing: 1px;
-            }
-            .branded-tour-date, .branded-tour-location {
-                font-size: 10px;
-            }
-        }
+.branded-tour-name {
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: clamp(20px, 2.5vw, 28px);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #fff;
+    margin-bottom: 15px;
+    text-shadow: 0 0 30px rgba(139, 0, 0, 1), 0 2px 4px rgba(0,0,0,0.8);
+    line-height: 1.2;
+    text-align: center;
+}
 
-        
-        
+.branded-tour-details {
+    font-size: 14px;
+    color: #c0c0c0;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+    text-align: center;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+}
 
-        
-            50% { 
-                opacity: 0.9;
-                transform: scale(1.1);
-                filter: drop-shadow(0 0 40px rgba(255, 0, 0, 0.7));
-            }
-        }
+.branded-tour-venue {
+    font-size: 13px;
+    color: rgba(255,255,255,0.8);
+    letter-spacing: 1px;
+    margin-bottom: auto;
+    text-align: center;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+}
 
-        
+.branded-tour-btn {
+    display: inline-block;
+    background: rgba(139, 0, 0, 0.9);
+    color: #fff;
+    border: 2px solid var(--xre-dark-red);
+    padding: 12px 30px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 13px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.4s;
+    position: relative;
+    overflow: hidden;
+    margin-top: auto;
+    box-shadow: none;
+    outline: none;
+}
 
-        
+.branded-tour-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    transition: left 0.5s;
+}
 
-        
+.branded-tour-btn:hover::before {
+    left: 100%;
+}
 
-        
+.branded-tour-btn:hover {
+    background: var(--xre-dark-red);
+    border-color: var(--xre-dark-red);
+    box-shadow: 0 0 30px rgba(139, 0, 0, 0.8), 0 0 60px rgba(139, 0, 0, 0.4);
+    transform: scale(1.05);
+    letter-spacing: 3px;
+}
 
-        /* 响应式 */
-        @media (max-width: 1024px) {
-            nav { padding: 0 30px; height: 70px; }
-            .logo-img { height: 40px; max-width: 180px; }
-            .nav-links { gap: 25px; }
-            .hero-content { margin-top: 100px; }
-            .hero-title { font-size: clamp(70px, 13vw, 120px); }
-            .hero-subtitle { font-size: clamp(20px, 3vw, 32px); margin-top: 60px; }
-            .artists-grid { grid-template-columns: repeat(3, 1fr); gap: 15px; }
-            .promo-container { grid-template-columns: 1fr; gap: 30px; }
-            .footer-container { gap: 30px; }
-        }
+.branded-tour-btn.disabled {
+    opacity: 0.9;
+    cursor: default;
+    background: rgba(139, 0, 0, 0.7);
+}
 
-        @media (max-width: 768px) {
-            nav { padding: 0 20px; height: 65px; }
-            .logo-img { height: 35px; max-width: 160px; }
-            .nav-links a { font-size: 11px; letter-spacing: 2px; }
-            .nav-links .neon-btn { padding: 8px 16px; font-size: 10px; }
-            .hero-content { margin-top: 80px; }
-            .hero-title { font-size: clamp(55px, 14vw, 80px); letter-spacing: 5px; margin-bottom: 35px; }
-            .hero-subtitle { font-size: clamp(16px, 3.5vw, 22px); letter-spacing: 2px; margin-top: 30px; line-height: 1.4; }
-            .artists-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 0 15px; }
-            .artist-name-overlay { font-size: 18px; }
-            .artist-booking-text { font-size: 10px; }
-            .promo-container { padding: 0 30px; }
-            .footer-gap { height: 100px; }
-            .footer-main { padding: 40px 30px 30px; }
-            .footer-container { flex-direction: column; gap: 30px; text-align: center; }
-            .footer-contact-left, .footer-contact-right { text-align: center; flex: 1; width: 100%; }
-            .social-links { margin-bottom: 20px; }
-            .producer-section { text-align: center; }
-            .footer-bottom { flex-direction: column; gap: 15px; padding: 20px 30px; text-align: center; }
-            .footer-legal { flex-wrap: wrap; justify-content: center; gap: 20px; }
-            .form-row { grid-template-columns: 1fr; }
-        }
+.branded-tour-btn.disabled:hover {
+    transform: none;
+    letter-spacing: 2px;
+    box-shadow: none;
+}
 
-        @media (max-width: 480px) {
-            nav { padding: 0 15px; height: 60px; background: rgba(0, 0, 0, 0.5); }
-            .logo-img { height: 32px; max-width: 140px; }
-            .nav-links { gap: 12px; }
-            .nav-links a { font-size: 10px; letter-spacing: 1px; }
-            .nav-links .neon-btn { padding: 6px 14px; font-size: 9px; }
-            .hero-content { margin-top: 60px; }
-            .hero-title { font-size: clamp(45px, 13vw, 65px); letter-spacing: 4px; margin-bottom: 30px; }
-            .hero-subtitle { font-size: clamp(12px, 3vw, 16px); letter-spacing: 1.5px; margin-top: 20px; line-height: 1.4; }
-            .hero-subtitle .line1 { margin-bottom: 2px; }
-            .smoke-container { opacity: 0.35; }
-            .artists-grid { gap: 12px; padding: 0 10px; }
-            .artist-name-overlay { font-size: 14px; letter-spacing: 2px; }
-            .artist-booking-text { font-size: 9px; letter-spacing: 1px; }
-            .artist-name-below { font-size: 12px; }
-            .promo-container { padding: 0 20px; }
-            .promo-title { font-size: 22px; }
-            .promo-desc { font-size: 12px; }
-            .playlist-title { font-size: 24px; }
-            .playlist-embed { height: 250px; }
-            .footer-gap { height: 80px; }
-            .footer-main { padding: 35px 25px 25px; }
-            .footer-logo { font-size: 28px; letter-spacing: 3px; margin-bottom: 15px; }
-            .social-links { gap: 12px; margin-bottom: 20px; }
-            .social-icon { width: 36px; height: 36px; }
-            .social-icon svg { width: 14px; height: 14px; }
-            .contact-item { font-size: 11px; margin-bottom: 8px; }
-            .producer-label { font-size: 9px; letter-spacing: 2px; }
-            .producer-logo { height: 30px; }
-            .footer-bottom { padding: 15px 20px; gap: 12px; }
-            .footer-legal { gap: 15px; }
-            .footer-legal a { font-size: 10px; }
-            .copyright { font-size: 10px; }
-            .modal-content { padding: 30px 20px; }
-            .modal-content h2 { font-size: 22px; }
-        }
+/* Load More按钮 */
+.branded-tours-load-more {
+    text-align: center;
+    margin-top: 60px;
+    display: none;
+    position: relative;
+    z-index: 1;
+}
 
-        @media (max-width: 375px) {
-            .hero-title { font-size: 38px; letter-spacing: 3px; }
-            .hero-subtitle { font-size: 11px; }
-            .artists-grid { gap: 10px; padding: 0 8px; }
-            .artist-name-overlay { font-size: 12px; }
-            .footer-logo { font-size: 24px; letter-spacing: 2px; }
-            .social-icon { width: 34px; height: 34px; }
-            .contact-item { font-size: 10px; }
-        }
-    
-        /* BRANDED TOURS区域 - 与LiveGigs自主活动区域样式一致 */
-        .branded-tours-section {
-            width: 100%;
-            padding: 80px 0;
-            background: linear-gradient(180deg, rgba(5,5,5,0.9) 0%, rgba(10,10,10,0.85) 50%, rgba(5,5,5,0.9) 100%), url('./image/xre-adbg.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            position: relative;
-        }
+.branded-tours-load-more.visible {
+    display: block;
+}
 
-        .branded-tours-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(180deg, var(--mad-silver) 0%, var(--mad-light) 30%, transparent 100%);
-            pointer-events: none;
-        }
+.branded-tours-load-more .neon-btn {
+    background: rgba(139, 0, 0, 0.3);
+    color: #fff;
+    border: 2px solid var(--xre-dark-red);
+    padding: 15px 40px;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    font-size: 14px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.4s;
+    position: relative;
+    overflow: hidden;
+}
 
-        .branded-tours-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 30px;
-            padding: 0 20px;
-            position: relative;
-            z-index: 1;
-        }
+.branded-tours-load-more .neon-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    transition: left 0.5s;
+}
 
-        @media (min-width: 768px) {
-            .branded-tours-container {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
+.branded-tours-load-more .neon-btn:hover::before {
+    left: 100%;
+}
 
-        @media (min-width: 1025px) {
-            .branded-tours-container {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
+.branded-tours-load-more .neon-btn:hover {
+    background: var(--xre-dark-red);
+    border-color: var(--xre-dark-red);
+    box-shadow: 0 0 30px rgba(139, 0, 0, 0.8), 0 0 60px rgba(139, 0, 0, 0.4);
+    transform: scale(1.05);
+    letter-spacing: 4px;
+}
 
-        /* Branded Tour卡片 - 与自主活动卡片完全一致 */
-        .branded-tour-card {
-            position: relative;
-            background: linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 100%);
-            overflow: hidden;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            border: 1px solid rgba(139, 0, 0, 0.3);
-            aspect-ratio: 3/4;
-            max-width: 400px;
-            margin: 0 auto;
-            width: 100%;
-        }
+/* 加载状态 */
+.branded-tours-loading {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: #666;
+    padding: 40px;
+    font-size: 14px;
+    letter-spacing: 2px;
+}
 
-        .branded-tour-card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(139, 0, 0, 0.8);
-            box-shadow: 0 0 30px rgba(139, 0, 0, 0.3), inset 0 0 20px rgba(139, 0, 0, 0.1);
-        }
+.branded-tours-empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    color: #666;
+    padding: 60px 20px;
+    font-size: 16px;
+    letter-spacing: 2px;
+}
 
-        .branded-tour-poster {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
-            filter: brightness(0.7);
-            transition: all 0.4s;
-            z-index: 1;
-        }
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .branded-tours-container {
+        grid-template-columns: 1fr;
+        padding: 0 20px;
+    }
+    .branded-tour-card {
+        max-width: none;
+    }
+    .branded-tour-content {
+        padding: 60px 20px 30px;
+    }
+    .branded-tour-name {
+        font-size: 18px;
+    }
+    .branded-tour-details {
+        font-size: 12px;
+    }
+    .branded-tour-venue {
+        font-size: 11px;
+    }
+    .branded-tour-btn {
+        padding: 10px 25px;
+        font-size: 11px;
+    }
+    .branded-tour-status {
+        top: 15px;
+        right: 15px;
+        padding: 6px 12px;
+        font-size: 11px;
+    }
+    .branded-tour-share {
+        top: 15px;
+        left: 15px;
+        width: 32px;
+        height: 32px;
+    }
+}
 
-        .branded-tour-card:hover .branded-tour-poster {
-            filter: brightness(1);
-            transform: scale(1.05);
-        }
+@media (max-width: 480px) {
+    .branded-tours-section {
+        padding: 60px 0;
+    }
+    .branded-tour-content {
+        padding: 50px 15px 25px;
+    }
+    .branded-tour-name {
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+}
 
-        /* ON TOUR状态标签 */
-        .branded-tour-status {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            z-index: 10;
-            padding: 8px 16px;
-            font-size: 12px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            font-weight: bold;
-            border-radius: 4px;
-            animation: statusPulse 2s ease-in-out infinite;
-            background: rgba(0, 0, 0, 0.7) !important;
-            border: 1px solid rgba(139, 0, 0, 0.5);
-            color: #ffaa00;
-        }
-
-        @keyframes statusPulse {
-            0%, 100% { box-shadow: 0 0 10px rgba(139, 0, 0, 0.5); }
-            50% { box-shadow: 0 0 20px rgba(139, 0, 0, 0.8); }
-        }
-
-        /* 内容覆盖层 */
-        .branded-tour-content {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: center;
-            padding: 80px 20px 40px;
-            z-index: 5;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.2) 40%, rgba(0,0,0,0.6) 70%, rgba(0,0,0,0.8) 100%);
-            transition: all 0.4s ease;
-        }
-
-        .branded-tour-card:hover .branded-tour-content {
-            background: transparent;
-        }
-
-        .branded-tour-name {
-            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            font-size: clamp(20px, 2.5vw, 28px);
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: #fff;
-            margin-bottom: 15px;
-            text-shadow: 0 0 30px rgba(139, 0, 0, 1), 0 2px 4px rgba(0,0,0,0.8);
-            line-height: 1.2;
-            text-align: center;
-        }
-
-        .branded-tour-details {
-            font-size: 14px;
-            color: var(--silver);
-            letter-spacing: 1px;
-            margin-bottom: 8px;
-            text-align: center;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-        }
-
-        .branded-tour-venue {
-            font-size: 13px;
-            color: rgba(255,255,255,0.8);
-            letter-spacing: 1px;
-            margin-bottom: auto;
-            text-align: center;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-        }
-
-        .branded-tour-btn {
-            display: inline-block;
-            background: rgba(139, 0, 0, 0.9);
-            color: #fff;
-            border: 2px solid var(--xre-dark-red);
-            padding: 12px 30px;
-            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            font-size: 13px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            text-decoration: none;
-            cursor: pointer;
-            transition: all 0.4s;
-            position: relative;
-            overflow: hidden;
-            margin-top: auto;
-            box-shadow: none;
-            outline: none;
-        }
-
-        .branded-tour-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            transition: left 0.5s;
-        }
-
-        .branded-tour-btn:hover::before {
-            left: 100%;
-        }
-
-        .branded-tour-btn:hover {
-            background: var(--xre-dark-red);
-            border-color: var(--xre-dark-red);
-            box-shadow: 0 0 30px rgba(139, 0, 0, 0.8), 0 0 60px rgba(139, 0, 0, 0.4);
-            transform: scale(1.05);
-            letter-spacing: 3px;
-        }
-
-        /* Load More按钮 */
-        .branded-tours-load-more {
-            text-align: center;
-            margin-top: 60px;
-            display: none;
-            position: relative;
-            z-index: 1;
-        }
-
-        .branded-tours-load-more.visible {
-            display: block;
-        }
-
-        .branded-tours-load-more .neon-btn {
-            background: rgba(139, 0, 0, 0.3);
-            color: #fff;
-            border: 2px solid var(--xre-dark-red);
-            padding: 15px 40px;
-            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            font-size: 14px;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: all 0.4s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .branded-tours-load-more .neon-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            transition: left 0.5s;
-        }
-
-        .branded-tours-load-more .neon-btn:hover::before {
-            left: 100%;
-        }
-
-        .branded-tours-load-more .neon-btn:hover {
-            background: var(--xre-dark-red);
-            border-color: var(--xre-dark-red);
-            box-shadow: 0 0 30px rgba(139, 0, 0, 0.8), 0 0 60px rgba(139, 0, 0, 0.4);
-            transform: scale(1.05);
-            letter-spacing: 4px;
-        }
-
-        /* 加载状态 */
-        .branded-tours-loading {
-            grid-column: 1 / -1;
-            text-align: center;
-            color: #666;
-            padding: 40px;
-            font-size: 14px;
-            letter-spacing: 2px;
-        }
-
-        .branded-tours-empty {
-            grid-column: 1 / -1;
-            text-align: center;
-            color: #666;
-            padding: 60px 20px;
-            font-size: 16px;
-            letter-spacing: 2px;
-        }
-
-        /* 响应式调整 */
-        @media (max-width: 768px) {
-            .branded-tours-container {
-                grid-template-columns: 1fr;
-                padding: 0 20px;
-            }
-            .branded-tour-card {
-                max-width: none;
-            }
-            .branded-tour-content {
-                padding: 60px 20px 30px;
-            }
-            .branded-tour-name {
-                font-size: 18px;
-            }
-            .branded-tour-details {
-                font-size: 12px;
-            }
-            .branded-tour-venue {
-                font-size: 11px;
-            }
-            .branded-tour-btn {
-                padding: 10px 25px;
-                font-size: 11px;
-            }
-            .branded-tour-status {
-                top: 15px;
-                right: 15px;
-                padding: 6px 12px;
-                font-size: 11px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .branded-tours-section {
-                padding: 60px 0;
-            }
-            .branded-tour-content {
-                padding: 50px 15px 25px;
-            }
-            .branded-tour-name {
-                font-size: 16px;
-                margin-bottom: 10px;
-            }
-        }
-
-        /* Hero背景LOGO - 五角星呼吸效果 */
-        .hero-logo-bg {
+.hero-logo-bg {
             position: absolute;
             top: 15%;
             left: 50%;
@@ -1428,7 +1236,7 @@
         <div class="hero-overlay"></div>
 
         <div class="hero-logo-bg">
-            <img src="./image/webtop.png" alt="XRE">
+            <img src="./images/webtop.png" alt="XRE">
         </div>
 
         
@@ -1457,7 +1265,7 @@
         
         <!-- BRANDED TOURS区域 - 与LiveGigs自主活动区域一致 -->
         <section class="branded-tours-section">
-            <h2 class="section-title branded-title">BRANDED TOURS</h2>
+            <h2 class="section-title" style="color: var(--black);">BRANDED TOURS</h2>
             <div class="title-underline"></div>
             <div class="branded-tours-container" id="brandedToursContainer">
                 <!-- 动态加载ON TOUR活动 -->
@@ -1889,7 +1697,7 @@
                 const subtitle = event.subtitle || '';
                 const dateRange = event.dateRange || 'TBA';
                 const city = event.city || 'TBA';
-                const posterUrl = event.poster1 || './image/asia-asiaad.jpg';
+                const posterUrl = event.poster1 || './images/asia-asiaad.jpg';
 
                 // 构建标题HTML（有副标题则换行）
                 const titleHtml = subtitle 
@@ -1898,7 +1706,7 @@
 
                 return `
                 <div class="branded-tour-card ${!hasLink ? 'no-link' : ''}" data-event-id="${index}">
-                    <img src="${posterUrl}" alt="${title}" class="branded-tour-poster" onerror="this.src='./image/asia-asiaad.jpg'">
+                    <img src="${posterUrl}" alt="${title}" class="branded-tour-poster" onerror="this.src='./images/asia-asiaad.jpg'">
                     <div class="branded-tour-status">ON TOUR</div>
                     <div class="branded-tour-content">
                         <h3 class="branded-tour-name">${titleHtml}</h3>
@@ -1906,11 +1714,11 @@
                         <div class="branded-tour-venue"></div>
                         ${hasLink 
                             ? `<a href="${event.link}" class="branded-tour-btn" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation();">${event.btn_text || 'INFO'}</a>`
-                            : `<span class="branded-tour-btn disabled" style="opacity: 0.9; cursor: default; background: rgba(139, 0, 0, 0.7);">${event.btn_text || 'COMING SOON'}</span>`
+                            : `<span class="branded-tour-btn disabled">${event.btn_text || 'COMING SOON'}</span>`
                         }
                     </div>
                     <!-- 分享按钮 -->
-                    <button class="branded-tour-share" onclick="event.stopPropagation(); openShareModal('${title}', '${city}', '${dateRange}', '${posterUrl}', '${event.link || ''}')" title="Share">
+                    <button class="branded-tour-share" onclick="event.stopPropagation(); openShareModal('${title.replace(/'/g, "\'")}', '${city.replace(/'/g, "\'")}', '${dateRange.replace(/'/g, "\'")}', '${posterUrl.replace(/'/g, "\'")}', '${(event.link || '').replace(/'/g, "\'")}')" title="Share">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <circle cx="18" cy="5" r="3"></circle>
                             <circle cx="6" cy="12" r="3"></circle>
@@ -1935,7 +1743,6 @@
             }
         }
 
-        // LOAD MORE功能
         function loadMoreBrandedTours() {
             renderBrandedTours();
         }
@@ -1953,7 +1760,29 @@
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') closeModal();
         });
-    </script>
+    
+// 分享功能
+function openShareModal(title, city, date, image, link) {
+    // 简单的分享提示
+    const shareText = `${title}\n${date} | ${city}\n\nCheck out more at XRE BOOKING`;
+
+    if (navigator.share) {
+        navigator.share({
+            title: title,
+            text: shareText,
+            url: link || window.location.href
+        }).catch(err => console.log('Share cancelled'));
+    } else {
+        // 复制到剪贴板
+        navigator.clipboard.writeText(shareText + '\n' + (link || window.location.href)).then(() => {
+            alert('Event info copied to clipboard!');
+        }).catch(() => {
+            alert('Share: ' + title + ' at ' + city);
+        });
+    }
+}
+
+</script>
 
 </body>
 </html>
