@@ -455,19 +455,18 @@
             border-top: 1px solid #333;
             padding: 20px 40px;
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            flex-wrap: nowrap;
+            flex-wrap: wrap;
+            gap: 40px;
         }
         .footer-spacer {
-            flex: 1;
+            display: none;
         }
         .footer-legal {
             display: flex;
             gap: 25px;
             align-items: center;
-            flex: 1;
-            justify-content: flex-start;
         }
         .footer-legal a {
             color: #888;
@@ -487,7 +486,6 @@
             letter-spacing: 1px;
             font-family: 'Courier New', monospace;
             text-align: center;
-            flex: 1;
         }
 
         /* Booking弹窗 */
@@ -1082,15 +1080,19 @@
         }
         @media (max-width: 768px) {
             .footer-bottom {
-                flex-direction: row;
-                flex-wrap: wrap;
-                gap: 15px;
-                padding: 20px;
+                flex-direction: column;
+                gap: 10px;
+                padding: 15px;
             }
-            .footer-legal, .copyright, .footer-spacer {
-                flex: 1 1 auto;
-                text-align: center;
+            .footer-legal {
+                order: 2;
                 justify-content: center;
+            }
+            .copyright {
+                order: 1;
+            }
+            .footer-spacer {
+                display: none;
             }
             .artist-card { aspect-ratio: 750/360 !important; overflow: hidden; }
             .artist-card img { width: 100% !important; height: 100% !important; object-fit: cover !important; }
@@ -1107,7 +1109,6 @@
             .footer-main { padding: 40px 30px 30px; }
             .footer-container { flex-direction: column; gap: 30px; text-align: center; }
             .footer-contact-left, .footer-contact-right { text-align: center; flex: 1; width: 100%; }
-            .footer-bottom { flex-direction: column; gap: 15px; padding: 20px 30px; }
             .form-row { grid-template-columns: 1fr; }
             .hero-logo-bg img { width: 450px; height: 450px; }
             .branded-tours-container { grid-template-columns: 1fr; padding: 0 20px; }
@@ -1123,6 +1124,70 @@
             .share-platform-btn { padding: 10px 5px; }
             .share-platform-icon { width: 24px; height: 24px; }
             .share-platform-name { font-size: 9px; }
+            /* 移动端海报区域单列布局 */
+            .poster-ad-container {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto auto;
+            }
+            .poster-ad-left {
+                padding: 20px;
+                min-height: auto;
+                aspect-ratio: 3/4;
+                max-height: 70vh;
+                height: auto;
+                order: 1;
+            }
+            .poster-wrapper {
+                max-width: 400px;
+                width: 100%;
+                aspect-ratio: 3/4;
+                margin: 0 auto;
+            }
+            .poster-ad-image {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+            .poster-ad-middle {
+                min-height: auto;
+                order: 2;
+            }
+            .middle-top, .middle-bottom {
+                padding: 40px 30px;
+                align-items: center;
+                text-align: center;
+            }
+            .content-left, .content-right {
+                align-items: center;
+                text-align: center;
+                max-width: 100%;
+            }
+            .ad-underline {
+                margin: 0 auto 25px auto;
+            }
+            .ad-title {
+                font-size: 24px;
+            }
+            .ad-description {
+                font-size: 14px;
+            }
+            .poster-ad-right {
+                min-height: 400px;
+                order: 3;
+                flex-direction: column;
+            }
+            .player-spotify {
+                flex: 0 0 200px;
+                height: 200px;
+            }
+            .player-bottom-container {
+                flex: 1;
+                flex-direction: row;
+            }
+            .player-btn, .player-netease-embed {
+                flex: 0 0 50%;
+                height: 100%;
+            }
         }
         @media (max-width: 480px) {
             .footer-bottom {
