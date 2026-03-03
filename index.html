@@ -1124,7 +1124,331 @@
             .contact-item { font-size: 10px; }
             .branded-tour-name { font-size: 16px; }
         }
-    </style>
+    
+
+        /* POSTER AD SECTION */
+        .poster-ad-section {
+            width: 100%;
+            padding: 80px 0;
+            background-image: url('images/xre-adbg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+        }
+
+        .poster-ad-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(5, 5, 5, 0.7);
+            z-index: 1;
+        }
+
+        .poster-ad-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 30px;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+            min-height: 600px;
+        }
+
+        /* 左侧海报 - 固定无HOVER效果 */
+        .poster-ad-left {
+            position: relative;
+            overflow: hidden;
+            border: 2px solid rgba(139, 0, 0, 0.3);
+            height: 100%;
+            min-height: 600px;
+        }
+
+        .poster-ad-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+        }
+
+        /* 中间内容区 */
+        .poster-ad-middle {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            min-height: 600px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid rgba(139, 0, 0, 0.3);
+        }
+
+        .middle-top, .middle-bottom {
+            flex: 1;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .middle-top {
+            border-bottom: 1px solid rgba(139, 0, 0, 0.3);
+        }
+
+        .middle-divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--xre-dark-red), transparent);
+        }
+
+        .ad-title {
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            font-size: clamp(20px, 2.5vw, 28px);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #fff;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(139, 0, 0, 0.5);
+        }
+
+        .ad-underline {
+            margin: 0 0 20px 0;
+            width: 60px;
+            height: 2px;
+        }
+
+        .ad-description {
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 25px;
+            letter-spacing: 0.5px;
+        }
+
+        .ad-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .ad-btn {
+            padding: 12px 25px;
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .ad-btn.disabled-btn {
+            opacity: 0.6;
+            cursor: not-allowed;
+            background: rgba(139, 0, 0, 0.2);
+        }
+
+        .ad-btn.disabled-btn:hover {
+            background: rgba(139, 0, 0, 0.2);
+            box-shadow: none;
+            transform: none;
+            letter-spacing: 2px;
+        }
+
+        /* 右侧播放器区 */
+        .poster-ad-right {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            min-height: 600px;
+            gap: 10px;
+        }
+
+        /* Spotify 播放器 - 70%高度 */
+        .player-spotify {
+            flex: 0 0 70%;
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid rgba(139, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .player-spotify iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* 底部播放器容器 - 30%高度，两个各占15% */
+        .player-bottom-container {
+            flex: 0 0 30%;
+            display: flex;
+            gap: 10px;
+        }
+
+        /* QQ音乐和网易云播放器样式 */
+        .player-qq, .player-netease {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid rgba(139, 0, 0, 0.3);
+            text-decoration: none;
+            display: block;
+            transition: all 0.4s ease;
+        }
+
+        .player-qq {
+            background: linear-gradient(135deg, #31c27c 0%, #2aa869 100%);
+        }
+
+        .player-netease {
+            background: linear-gradient(135deg, #c20c0c 0%, #9a0a0a 100%);
+        }
+
+        .player-qq:hover, .player-netease:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(139, 0, 0, 0.4);
+            border-color: rgba(139, 0, 0, 0.8);
+        }
+
+        .player-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .player-qq:hover .player-overlay, .player-netease:hover .player-overlay {
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .player-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .player-qq:hover .player-icon, .player-netease:hover .player-icon {
+            transform: scale(1.1);
+            background: #fff;
+        }
+
+        .player-icon svg {
+            width: 20px;
+            height: 20px;
+            fill: #000;
+            margin-left: 2px;
+        }
+
+        .player-info {
+            text-align: center;
+        }
+
+        .player-name {
+            display: block;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            font-size: 12px;
+            letter-spacing: 2px;
+            color: #fff;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .player-song {
+            display: block;
+            font-family: 'Courier New', monospace;
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.8);
+            letter-spacing: 1px;
+        }
+
+        /* 响应式 */
+        @media (max-width: 1024px) {
+            .poster-ad-container {
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
+            }
+            .poster-ad-right {
+                grid-column: 1 / -1;
+                min-height: 400px;
+            }
+            .player-spotify {
+                flex: 0 0 60%;
+            }
+            .player-bottom-container {
+                flex: 0 0 40%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .poster-ad-section {
+                padding: 60px 0;
+            }
+            .poster-ad-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            .poster-ad-left, .poster-ad-middle, .poster-ad-right {
+                min-height: auto;
+            }
+            .poster-ad-left {
+                max-height: 400px;
+            }
+            .poster-ad-middle {
+                min-height: 500px;
+            }
+            .poster-ad-right {
+                min-height: 500px;
+            }
+            .ad-title {
+                font-size: 20px;
+            }
+            .ad-description {
+                font-size: 12px;
+            }
+            .ad-btn {
+                padding: 10px 20px;
+                font-size: 11px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .poster-ad-container {
+                padding: 0 15px;
+            }
+            .middle-top, .middle-bottom {
+                padding: 20px;
+            }
+            .ad-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .ad-btn {
+                width: 100%;
+            }
+            .player-name {
+                font-size: 10px;
+            }
+            .player-song {
+                font-size: 9px;
+            }
+        }
+</style>
 
     <!-- Service Worker 注册 -->
     <script>
@@ -1196,6 +1520,100 @@
                 <button class="neon-btn" onclick="loadMoreBrandedTours()">LOAD MORE</button>
             </div>
         </section>
+
+        <!-- POSTER AD SECTION -->
+        <section class="poster-ad-section">
+            <div class="poster-ad-container">
+                <!-- 左侧海报 - 固定无HOVER -->
+                <div class="poster-ad-left">
+                    <img src="https://livegigsasia.com/image/punkheartbanner.jpg" alt="Punk Heart Fest" class="poster-ad-image">
+                </div>
+
+                <!-- 中间内容区 -->
+                <div class="poster-ad-middle">
+                    <!-- 上半部分 - Punk Heart Fest -->
+                    <div class="middle-top">
+                        <h3 class="ad-title">PUNK HEART FEST</h3>
+                        <div class="title-underline ad-underline"></div>
+                        <p class="ad-description">
+                            China's indoor punk festival IP, founded in 2023. We connect local & international punk bands, bringing raw live energy and community spirit. UP THE PUNX – Freedom, Rebellion, Authenticity & Unity.
+                        </p>
+                        <div class="ad-buttons">
+                            <a href="http://punkheartfest.com" class="neon-btn ad-btn" target="_blank">朋克心音樂節</a>
+                            <button class="neon-btn ad-btn disabled-btn">Tickets</button>
+                        </div>
+                    </div>
+
+                    <!-- 分割线 -->
+                    <div class="middle-divider"></div>
+
+                    <!-- 下半部分 - Chinese Rocks Charts -->
+                    <div class="middle-bottom">
+                        <h3 class="ad-title">CHINESE ROCKS CHARTS</h3>
+                        <div class="title-underline ad-underline"></div>
+                        <p class="ad-description">
+                            A platform dedicated to Chinese rock and punk music. Showcasing best tracks, bands and latest scene updates.
+                        </p>
+                        <div class="ad-buttons">
+                            <a href="http://chineserocks.net" class="neon-btn ad-btn" target="_blank">ChineseRocks.net</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 右侧播放器区 -->
+                <div class="poster-ad-right">
+                    <!-- Spotify 播放器 - 占70% -->
+                    <div class="player-spotify">
+                        <iframe src="https://open.spotify.com/embed/playlist/6xZPXG1qFVxlxZf8v63S0W" 
+                                width="100%" 
+                                height="100%" 
+                                frameborder="0" 
+                                allowtransparency="true" 
+                                allow="encrypted-media"
+                                loading="lazy">
+                        </iframe>
+                    </div>
+
+                    <!-- 底部两个播放器 - 各占15% -->
+                    <div class="player-bottom-container">
+                        <!-- QQ音乐 -->
+                        <a href="https://i2.y.qq.com/n3/other/pages/details/playlist.html?id=9674279142&hosteuin=" 
+                           class="player-qq" 
+                           target="_blank">
+                            <div class="player-overlay">
+                                <div class="player-icon">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/>
+                                    </svg>
+                                </div>
+                                <div class="player-info">
+                                    <span class="player-name">QQ音乐</span>
+                                    <span class="player-song">Chinese Rocks</span>
+                                </div>
+                            </div>
+                        </a>
+
+                        <!-- 网易云音乐 -->
+                        <a href="https://163cn.tv/2tWDD7j" 
+                           class="player-netease" 
+                           target="_blank">
+                            <div class="player-overlay">
+                                <div class="player-icon">
+                                    <svg viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/>
+                                    </svg>
+                                </div>
+                                <div class="player-info">
+                                    <span class="player-name">网易云</span>
+                                    <span class="player-song">Chinese Rocks</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
 
         <!-- 间隙区域 -->
         <div class="footer-gap"></div>
