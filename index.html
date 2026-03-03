@@ -320,6 +320,7 @@
             color: #c0c0c0;
             position: relative;
             z-index: 100;
+            border-top: none;
         }
         .footer-main {
             padding: 50px 40px 40px;
@@ -437,7 +438,6 @@
             align-items: center;
             gap: 40px;
             flex-wrap: wrap;
-            text-align: center;
         }
         .footer-legal {
             display: flex;
@@ -570,8 +570,8 @@
         /* BRANDED TOURS区域 */
         .branded-tours-section {
             width: 100%;
-            padding: 80px 0 0 0;
-            background: linear-gradient(180deg, var(--mad-silver) 0%, var(--mad-light) 30%, var(--xre-red) 70%, #8b0000 100%);
+            padding: 80px 0;
+            background: linear-gradient(180deg, var(--mad-silver) 0%, var(--mad-light) 30%, var(--xre-red) 100%);
             position: relative;
         }
         .branded-tours-container {
@@ -1126,38 +1126,7 @@
         }
     
 
-        /* LOAD MORE过渡区域 */
-        .loadmore-transition {
-            width: 100%;
-            padding: 40px 0;
-            background: linear-gradient(180deg, #8b0000 0%, #5c0000 100%);
-            position: relative;
-            text-align: center;
-        }
-
-        .loadmore-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .loadmore-btn {
-            padding: 15px 40px;
-            font-size: 14px;
-            letter-spacing: 3px;
-        }
-
-        @media (max-width: 768px) {
-            .loadmore-transition {
-                padding: 30px 0;
-            }
-            .loadmore-btn {
-                padding: 12px 30px;
-                font-size: 12px;
-            }
-        }
-
-        /* POSTER AD SECTION */
+        /* POSTER AD SECTION - 使用全站统一红色 */
         .poster-ad-section {
             width: 100%;
             padding: 0;
@@ -1165,10 +1134,8 @@
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            background-color: #8b0000;
             position: relative;
             border-top: none;
-            margin-top: -2px;
         }
 
         .poster-ad-container {
@@ -1183,30 +1150,33 @@
             min-height: 100vh;
         }
 
-        /* 左侧海报 - 满屏高度 */
+        /* 左侧海报 - 2:3比例，固定无HOVER */
         .poster-ad-left {
             position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 0;
+            padding: 40px;
             background: rgba(0, 0, 0, 0.2);
-            height: 100vh;
-            min-height: 600px;
         }
 
         .poster-wrapper {
             position: relative;
             width: 100%;
-            height: 100%;
+            max-width: 500px;
+            aspect-ratio: 2/3;
             overflow: hidden;
+            border: 3px solid rgba(139, 0, 0, 0.5);
+            box-shadow: 0 0 40px rgba(139, 0, 0, 0.3);
         }
 
-        .poster-wrapper img {
+        .poster-ad-image {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
             object-position: center;
+            display: block;
+            background: #000;
         }
 
         /* 中间内容区 */
@@ -1228,32 +1198,18 @@
 
         .middle-top {
             justify-content: center;
-            align-items: center;
-            text-align: center;
+            align-items: flex-start;
             border-bottom: 1px solid rgba(139, 0, 0, 0.3);
         }
 
         .middle-bottom {
-                padding: 40px 30px;
-                align-items: center;
-                text-align: center;
-            text-align: center;
+            justify-content: center;
+            align-items: flex-end;
+            text-align: right;
         }
 
         .content-left, .content-right {
             max-width: 90%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .middle-bottom .ad-underline {
-                    margin-left: auto;
-                    margin-right: auto;
-                }
-
-        .middle-bottom .ad-buttons {
-            justify-content: center;
         }
 
         .middle-divider {
@@ -1281,11 +1237,10 @@
         }
 
         .middle-bottom .ad-underline {
-                    margin-left: auto;
-                    margin-right: auto;
-                }
+            margin-left: auto;
+        }
 
-        /* 红线闪光效果 */
+        /* 红线闪光效果 - 统一使用 */
         .title-underline.shimmer::after,
         .ad-underline.shimmer::after {
             content: '';
@@ -1369,20 +1324,107 @@
             flex: 0 0 40%;
             display: flex;
             flex-direction: column;
-            background: #000;
+            gap: 10px;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.8);
         }
 
-        .player-embed {
+        .player-btn {
             flex: 1;
-            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 20px;
+            text-decoration: none;
+            border: 2px solid rgba(139, 0, 0, 0.5);
+            transition: all 0.4s ease;
+            position: relative;
             overflow: hidden;
-            border-top: 2px solid rgba(139, 0, 0, 0.3);
         }
 
-        .player-embed iframe {
+        .player-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
             width: 100%;
             height: 100%;
-            border: none;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .player-btn:hover::before {
+            left: 100%;
+        }
+
+        .player-qq {
+            background: linear-gradient(135deg, rgba(49, 194, 124, 0.2) 0%, rgba(42, 168, 105, 0.2) 100%);
+        }
+
+        .player-qq:hover {
+            border-color: #31c27c;
+            box-shadow: 0 0 20px rgba(49, 194, 124, 0.4);
+            transform: translateX(5px);
+        }
+
+        .player-netease {
+            background: linear-gradient(135deg, rgba(194, 12, 12, 0.2) 0%, rgba(154, 10, 10, 0.2) 100%);
+        }
+
+        .player-netease:hover {
+            border-color: #c20c0c;
+            box-shadow: 0 0 20px rgba(194, 12, 12, 0.4);
+            transform: translateX(5px);
+        }
+
+        .player-btn-content {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .player-platform {
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            font-size: 14px;
+            letter-spacing: 2px;
+            color: #fff;
+            text-transform: uppercase;
+        }
+
+        .player-song {
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: bold;
+        }
+
+        .player-artist {
+            font-family: 'Courier New', monospace;
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .player-play-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .player-btn:hover .player-play-icon {
+            transform: scale(1.1);
+            background: #fff;
+        }
+
+        .player-play-icon svg {
+            width: 20px;
+            height: 20px;
+            fill: #000;
+            margin-left: 2px;
         }
 
         /* 响应式 */
@@ -1401,50 +1443,51 @@
                 flex: 0 0 50%;
                 flex-direction: row;
             }
-            .player-embed {
-                border-top: none;
-                border-left: 2px solid rgba(139, 0, 0, 0.3);
+            .player-bottom-container {
+                flex-direction: row;
+                padding: 10px;
             }
-            .player-embed:first-child {
-                border-left: none;
+
+            .player-btn {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 10px;
+            }
+
+            .player-play-icon {
+                width: 35px;
+                height: 35px;
             }
         }
 
         @media (max-width: 768px) {
             .poster-ad-container {
                 grid-template-columns: 1fr;
+            }
+            .poster-ad-left, .poster-ad-middle, .poster-ad-right {
                 min-height: auto;
             }
             .poster-ad-left {
-                height: 60vh;
-                min-height: 400px;
+                padding: 30px;
             }
-            .poster-ad-middle {
-                min-height: auto;
-            }
-            .poster-ad-right {
-                min-height: auto;
-                height: auto;
-            }
-            .player-spotify {
-                flex: 0 0 300px;
-                height: 300px;
-            }
-            .player-bottom-container {
-                flex: 0 0 auto;
-                flex-direction: column;
-                height: 400px;
-            }
-            .player-embed {
-                border-top: 2px solid rgba(139, 0, 0, 0.3);
-                border-left: none;
-                height: 200px;
+            .poster-wrapper {
+                max-width: 300px;
             }
             .middle-top, .middle-bottom {
                 padding: 40px 30px;
                 align-items: center;
                 text-align: center;
+            }
+            .middle-bottom {
+                align-items: center;
                 text-align: center;
+            }
+            .middle-bottom .ad-underline {
+                margin-left: 0;
+            }
+            .middle-bottom .ad-buttons {
+                justify-content: center;
             }
             .ad-title {
                 font-size: 22px;
@@ -1455,24 +1498,20 @@
             .ad-buttons {
                 justify-content: center;
             }
+            .poster-ad-right {
+                min-height: 600px;
+            }
         }
 
         @media (max-width: 480px) {
             .poster-ad-left {
-                height: auto;
-                aspect-ratio: 2/3;
-                min-height: 350px;
+                padding: 20px;
+            }
+            .poster-wrapper {
+                max-width: 250px;
             }
             .middle-top, .middle-bottom {
                 padding: 30px 20px;
-            }
-            .middle-bottom {
-                align-items: center;
-                text-align: center;
-            }
-            .middle-bottom .ad-underline {
-                margin-left: auto;
-                margin-right: auto;
             }
             .ad-title {
                 font-size: 20px;
@@ -1491,19 +1530,6 @@
             }
             .ad-btn {
                 width: 100%;
-            }
-            .player-spotify {
-                flex: 0 0 250px;
-                height: 250px;
-            }
-            .player-bottom-container {
-                height: auto;
-            }
-            .player-link {
-                height: 90px;
-            }
-            .player-netease-embed {
-                height: 110px;
             }
         }
 </style>
@@ -1579,20 +1605,13 @@
             </div>
         </section>
 
-        <!-- LOAD MORE过渡区域 -->
-        <section class="loadmore-transition">
-            <div class="loadmore-container">
-                <button class="neon-btn loadmore-btn" onclick="loadMoreBrandedTours()">LOAD MORE</button>
-            </div>
-        </section>
-
         <!-- POSTER AD SECTION -->
         <section class="poster-ad-section">
             <div class="poster-ad-container">
-                <!-- 左侧海报 - 满屏高度 -->
+                <!-- 左侧海报 - 2:3比例，固定无HOVER -->
                 <div class="poster-ad-left">
                     <div class="poster-wrapper">
-                        <img src="https://livegigsasia.com/image/1-b-2.jpg" alt="Punk Heart Fest" class="poster-ad-image">
+                        <img src="https://livegigsasia.com/image/punkheartbanner.jpg" alt="Punk Heart Fest" class="poster-ad-image">
                     </div>
                 </div>
 
@@ -1633,7 +1652,7 @@
 
                 <!-- 右侧播放器区 -->
                 <div class="poster-ad-right">
-                    <!-- Spotify 播放器 - 黑色主题 -->
+                    <!-- Spotify 播放器 -->
                     <div class="player-spotify">
                         <iframe src="https://open.spotify.com/embed/playlist/6xZPXG1qFVxlxZf8v63S0W?utm_source=generator&theme=0" 
                                 width="100%" 
@@ -1645,35 +1664,39 @@
                         </iframe>
                     </div>
 
-                    <!-- 底部两个播放器 -->
+                    <!-- 底部两个播放器按钮 -->
                     <div class="player-bottom-container">
-                        <!-- QQ音乐跳转链接 -->
+                        <!-- QQ音乐播放器 -->
                         <a href="https://i2.y.qq.com/n3/other/pages/details/playlist.html?id=9674279142&hosteuin=" 
-                           class="player-link player-qq" 
+                           class="player-btn player-qq" 
                            target="_blank">
-                            <div class="player-link-bg"></div>
-                            <div class="player-link-content">
+                            <div class="player-btn-content">
                                 <div class="player-platform">QQ音乐</div>
                                 <div class="player-song">Chinese Rocks Chart</div>
                                 <div class="player-artist">Various Artists</div>
                             </div>
-                            <div class="player-link-icon">
+                            <div class="player-play-icon">
                                 <svg viewBox="0 0 24 24" fill="currentColor">
                                     <path d="M8 5v14l11-7z"/>
                                 </svg>
                             </div>
                         </a>
 
-                        <!-- 网易云音乐内嵌播放器 -->
-                        <div class="player-netease-embed">
-                            <iframe 
-                                src="https://music.163.com/outchain/player?type=4&id=12641851947&auto=0&height=90"
-                                width="100%"
-                                height="100%"
-                                frameborder="0"
-                                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
-                            </iframe>
-                        </div>
+                        <!-- 网易云音乐播放器 -->
+                        <a href="https://163cn.tv/2tWDD7j" 
+                           class="player-btn player-netease" 
+                           target="_blank">
+                            <div class="player-btn-content">
+                                <div class="player-platform">网易云音乐</div>
+                                <div class="player-song">Chinese Rocks Chart</div>
+                                <div class="player-artist">Various Artists</div>
+                            </div>
+                            <div class="player-play-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M8 5v14l11-7z"/>
+                                </svg>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -1714,18 +1737,6 @@
                             </a>
                             <a href="https://weibo.com/u/2069556322" class="social-icon" title="微博" target="_blank">
                                 <svg viewBox="0 0 24 24"><path d="M10.098 20.323c-3.977.391-7.414-1.406-7.672-4.02-.259-2.609 2.759-5.047 6.74-5.441 3.979-.394 7.413 1.404 7.671 4.018.259 2.6-2.759 5.049-6.737 5.439l-.002.004zM9.05 17.219c-.384.616-1.208.884-1.829.602-.612-.279-.793-.991-.406-1.593.379-.595 1.176-.861 1.793-.601.622.263.82.972.442 1.592zm1.27-1.627c-.141.237-.449.353-.689.253-.236-.09-.313-.361-.177-.586.138-.227.436-.346.672-.24.239.09.315.36.18.573h.014zm.176-2.719c-1.893-.493-4.033.45-4.857 2.118-.836 1.704-.026 3.591 1.886 4.21 1.983.64 4.318-.341 5.132-2.179.8-1.793-.201-3.642-2.161-4.149zm7.563-1.224c-.346-.105-.579-.18-.405-.649.381-1.025.421-1.905.001-2.535-.789-1.188-2.924-1.109-5.382-.031 0 0-.768.334-.571-.271.383-1.217.324-2.229-.268-2.816-1.344-1.336-4.918.045-7.985 3.088C2.013 10.878.784 13.447.784 15.658c0 4.226 5.407 6.804 10.695 6.804 6.936 0 11.551-4.021 11.551-7.21 0-1.925-1.628-3.013-2.971-3.403z"/></svg>
-                            </a>
-                            <!-- 小红书 -->
-                            <a href="https://www.xiaohongshu.com/user/profile/64a076b2000000001c0292cc" class="social-icon" title="小红书" target="_blank">
-                                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.615 14.615h-2.77v-3.077h-3.69v3.077h-2.77V7.385h2.77v3.077h3.69V7.385h2.77v9.23z"/></svg>
-                            </a>
-                            <!-- 微信公众号 -->
-                            <span class="social-icon" title="微信公众号: livegigspro" style="cursor: default;">
-                                <svg viewBox="0 0 24 24"><path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 0 1 .213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 0 0 .167-.054l1.903-1.114a.864.864 0 0 1 .717-.098 10.16 10.16 0 0 0 2.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348zM5.785 5.991c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178A1.17 1.17 0 0 1 4.623 7.17c0-.651.52-1.18 1.162-1.18zm5.813 0c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178 1.17 1.17 0 0 1-1.162-1.178c0-.651.52-1.18 1.162-1.18zm5.34 2.867c-1.797-.052-3.746.512-5.28 1.786-1.72 1.428-2.687 3.72-1.78 6.22.942 2.453 3.666 4.229 6.884 4.229.826 0 1.622-.12 2.361-.336a.722.722 0 0 1 .598.082l1.584.926a.272.272 0 0 0 .14.047c.134 0 .24-.111.24-.247 0-.06-.023-.12-.038-.177l-.327-1.233a.582.582 0 0 1-.023-.156.49.49 0 0 1 .201-.398C23.024 18.48 24 16.82 24 14.98c0-3.21-2.931-5.837-6.656-6.088V8.89c-.135-.01-.27-.027-.407-.032zm-2.53 3.274c.535 0 .969.44.969.982a.976.976 0 0 1-.969.983.976.976 0 0 1-.969-.983c0-.542.434-.982.97-.982zm4.844 0c.535 0 .969.44.969.982a.976.976 0 0 1-.969.983.976.976 0 0 1-.969-.983c0-.542.434-.982.969-.982z"/></svg>
-                            </span>
-                            <!-- 小程序 -->
-                            <a href="https://wxaurl.cn/HMcAK6R7fou" class="social-icon" title="小程序" target="_blank">
-                                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-2h2v2zm0-4h-2V7h2v6zm4 4h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
                             </a>
                         </div>
                         <div class="producer-section">
@@ -2450,6 +2461,15 @@
                     }
                 }
             }, { passive: true });
+        }
+
+        function loadMoreBrandedTours() {
+            renderBrandedTours();
+        }
+    </script>
+</body>
+</html>
+           }, { passive: true });
         }
 
         function loadMoreBrandedTours() {
