@@ -6,6 +6,7 @@
     <title>XRE BOOKING - Artist Agency</title>
     <link rel="icon" type="image/png" href="./image/webtop.png">
     <link rel="shortcut icon" type="image/png" href="./image/webtop.png">
+    <link rel="apple-touch-icon" href="./image/webtop.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <style>
@@ -142,7 +143,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('https://livegigsasia.com/image/1-b-2.jpg');
+            background-image: url('https://livegigsasia.com/image/p-p-3.png');
             background-size: cover;
             background-position: center center;
             background-repeat: no-repeat;
@@ -411,14 +412,101 @@
             color: var(--black);
         }
 
-        /* 广告区 - 银灰到红色渐变背景 */
+        /* 广告区 - 背景图片 */
         .promo-section {
             width: 100%;
             padding: 80px 0;
-            background: linear-gradient(180deg, var(--mad-silver) 0%, #b8b8b8 30%, #8b0000 70%, #ff0000 100%);
+            background-image: url('./image/xre-adbg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
             position: relative;
             overflow: hidden;
         }
+
+        .promo-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 0;
+        }
+
+        .promo-container {
+            position: relative;
+            z-index: 1;
+        }
+        /* 广告区红色横线 */
+        .promo-red-line {
+            width: 60px;
+            height: 3px;
+            background: var(--xre-red);
+            margin: 15px 0 20px;
+        }
+
+        .promo-block.top .promo-red-line {
+            margin-left: 0;
+        }
+
+        .promo-block.bottom .promo-red-line {
+            margin-left: auto;
+            margin-right: 0;
+        }
+
+        /* 播放列表多播放器布局 */
+        .playlist-embeds {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .spotify-embed {
+            height: 200px;
+            border: none;
+        }
+
+        .mini-player {
+            background: rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .mini-player-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: rgba(255,255,255,0.1);
+            font-size: 12px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #fff;
+        }
+
+        .mini-player-header svg {
+            color: var(--xre-red);
+        }
+
+        .mini-player iframe {
+            display: block;
+            width: 100%;
+            height: 80px;
+            border: none;
+        }
+
+        .qq-player {
+            border-left: 3px solid #31c27c;
+        }
+
+        .netease-player {
+            border-left: 3px solid #c20c0c;
+        }
+
 
         .promo-container {
             max-width: 100%;
@@ -589,10 +677,10 @@
             position: relative;
         }
 
-        /* 底部区域 - LiveGigs风格 */
+        /* 底部区域 - 反色黑底 */
         .site-footer {
-            background: var(--mad-silver);
-            color: #333;
+            background: #000;
+            color: #c0c0c0;
             position: relative;
             z-index: 100;
         }
@@ -600,6 +688,7 @@
         .footer-main {
             padding: 50px 40px 40px;
             position: relative;
+            background: #000;
         }
 
         .footer-container {
@@ -619,21 +708,21 @@
 
         .contact-item {
             margin-bottom: 10px;
-            color: #555;
+            color: #c0c0c0;
             font-size: 13px;
             letter-spacing: 0.5px;
             line-height: 1.5;
         }
 
         .contact-item a {
-            color: #555;
+            color: #c0c0c0;
             text-decoration: none;
             transition: all 0.3s;
             font-weight: bold;
         }
 
         .contact-item a:hover {
-            color: var(--xre-dark-red);
+            color: var(--xre-red);
         }
 
         .footer-brand {
@@ -667,7 +756,7 @@
         }
 
         .footer-logo .booking {
-            color: #222;
+            color: #c0c0c0;
         }
 
         .social-links {
@@ -685,10 +774,10 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #555;
+            color: #c0c0c0;
             text-decoration: none;
             transition: all 0.3s;
-            background: rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.05);
             position: relative;
             overflow: hidden;
         }
@@ -709,10 +798,10 @@
         }
 
         .social-icon:hover {
-            border-color: var(--xre-dark-red);
-            color: var(--xre-dark-red);
+            border-color: var(--xre-red);
+            color: var(--xre-red);
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 5px 15px rgba(255,0,0,0.3);
         }
 
         .producer-section {
@@ -721,7 +810,7 @@
 
         .producer-label {
             font-size: 10px;
-            color: #777;
+            color: #888;
             text-transform: uppercase;
             letter-spacing: 3px;
             margin-bottom: 10px;
@@ -746,8 +835,8 @@
         }
 
         .footer-bottom {
-            background: #b8b8b8;
-            border-top: 1px solid #999;
+            background: #111;
+            border-top: 1px solid #333;
             padding: 20px 40px;
             display: flex;
             justify-content: center;
@@ -762,7 +851,7 @@
         }
 
         .footer-legal a {
-            color: #555;
+            color: #888;
             text-decoration: none;
             font-size: 11px;
             letter-spacing: 1px;
@@ -772,11 +861,11 @@
         }
 
         .footer-legal a:hover {
-            color: var(--xre-dark-red);
+            color: var(--xre-red);
         }
 
         .copyright {
-            color: #666;
+            color: #777;
             font-size: 11px;
             letter-spacing: 1px;
             font-family: 'Courier New', monospace;
@@ -920,6 +1009,212 @@
             box-shadow: 0 0 20px rgba(139, 0, 0, 0.5);
         }
 
+        
+        /* BRANDED TOURS区域 - 自主活动结构 */
+        .branded-tours-section {
+            width: 100%;
+            padding: 100px 0;
+            background: linear-gradient(180deg, var(--mad-silver) 0%, var(--mad-light) 50%, var(--mad-silver) 100%);
+            position: relative;
+        }
+
+        .branded-title {
+            color: var(--black);
+        }
+
+        .branded-tours-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .branded-tours-load-more {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .branded-tours-load-more .neon-btn {
+            display: inline-block;
+            padding: 15px 40px;
+            font-size: 14px;
+        }
+
+        .branded-tour-card {
+            position: relative;
+            aspect-ratio: 3/4;
+            overflow: hidden;
+            cursor: pointer;
+            background: #000;
+            border: 2px solid transparent;
+            transition: all 0.4s;
+        }
+
+        .branded-tour-card:hover {
+            border-color: var(--xre-red);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .branded-tour-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transition: all 0.4s;
+        }
+
+        .branded-tour-card:hover img {
+            filter: grayscale(0%);
+            transform: scale(1.05);
+        }
+
+        .branded-tour-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 50%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.4s;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 20px;
+        }
+
+        .branded-tour-card:hover .branded-tour-overlay {
+            opacity: 1;
+        }
+
+        .branded-tour-title {
+            font-size: 18px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #fff;
+            margin-bottom: 8px;
+            text-shadow: 0 0 10px rgba(139, 0, 0, 0.8);
+        }
+
+        .branded-tour-date {
+            font-size: 12px;
+            color: var(--mad-silver);
+            margin-bottom: 5px;
+            font-family: Arial, sans-serif;
+        }
+
+        .branded-tour-location {
+            font-size: 11px;
+            color: #888;
+            font-family: Arial, sans-serif;
+        }
+
+        .branded-tour-status {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--xre-red);
+            color: #fff;
+            padding: 5px 10px;
+            font-size: 10px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        @media (max-width: 1024px) {
+            .branded-tours-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .branded-tours-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+                padding: 0 15px;
+            }
+            .branded-tour-title {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .branded-tours-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+                padding: 0 10px;
+            }
+            .branded-tour-title {
+                font-size: 12px;
+                letter-spacing: 1px;
+            }
+            .branded-tour-date, .branded-tour-location {
+                font-size: 10px;
+            }
+        }
+
+        
+        /* webtop呼吸闪烁效果 */
+        .webtop-breathe {
+            margin-top: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .webtop-breathe img {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+            animation: webtopBreathe 4s ease-in-out infinite, webtopFlash 4s ease-in-out infinite;
+            filter: drop-shadow(0 0 15px rgba(139, 0, 0, 0.6));
+        }
+
+        @keyframes webtopBreathe {
+            0%, 100% { 
+                transform: scale(1); 
+                filter: drop-shadow(0 0 10px rgba(139, 0, 0, 0.4));
+            }
+            50% { 
+                transform: scale(1.1); 
+                filter: drop-shadow(0 0 20px rgba(139, 0, 0, 0.8));
+            }
+        }
+
+        @keyframes webtopFlash {
+            0%, 90%, 100% { 
+                opacity: 0.8;
+                filter: drop-shadow(0 0 10px rgba(139, 0, 0, 0.4));
+            }
+            95% { 
+                opacity: 1;
+                filter: drop-shadow(0 0 30px rgba(255, 255, 255, 0.6)) drop-shadow(0 0 20px rgba(139, 0, 0, 1));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .webtop-breathe {
+                margin-top: 50px;
+            }
+            .webtop-breathe img {
+                width: 90px;
+                height: 90px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .webtop-breathe {
+                margin-top: 40px;
+            }
+            .webtop-breathe img {
+                width: 70px;
+                height: 70px;
+            }
+        }
+
         /* 响应式 */
         @media (max-width: 1024px) {
             nav { padding: 0 30px; height: 70px; }
@@ -1008,7 +1303,7 @@
 
     <!-- 导航栏 -->
     <nav>
-        <img src="./image/xrebooking-logo.png" alt="XRE BOOKING" class="logo-img" id="logo" onclick="location.href='./index.html'" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <img src="./image/xrelogoL.png" alt="XRE BOOKING" class="logo-img" id="logo" onclick="location.href='./index.html'" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
         <div style="display:none; font-size: 28px; letter-spacing: 3px; text-transform: uppercase; cursor: pointer;" onclick="location.href='./index.html'">
             <span style="color: var(--xre-red); text-shadow: 0 0 20px rgba(255, 0, 0, 0.5);">XRE</span><span style="color: #fff;">BOOKING</span>
         </div>
@@ -1038,6 +1333,9 @@
             <p class="hero-subtitle">
                 <span class="line1">Booking Agency in Punkrock, Garage, Mod, Powerpop, Surf, Poppunk, RocknRoll, Hardcore, Metal</span>
             </p>
+            <div class="webtop-breathe">
+                <img src="./image/webtop.png" alt="XRE">
+            </div>
         </div>
     </section>
 
@@ -1051,6 +1349,19 @@
             <div class="artists-grid" id="artistsGrid"></div>
         </section>
 
+        
+        <!-- BRANDED TOURS区域 - 自主活动结构 -->
+        <section class="branded-tours-section">
+            <h2 class="section-title branded-title">BRANDED TOURS</h2>
+            <div class="title-underline"></div>
+            <div class="branded-tours-grid" id="brandedToursGrid">
+                <!-- 动态加载ON TOUR活动 -->
+            </div>
+            <div class="branded-tours-load-more" id="brandedToursLoadMore" style="display: none;">
+                <button class="neon-btn" onclick="loadMoreBrandedTours()">LOAD MORE</button>
+            </div>
+        </section>
+
         <!-- 广告区 -->
         <section class="promo-section">
             <div class="promo-container">
@@ -1060,22 +1371,45 @@
                 <div class="promo-center">
                     <div class="promo-block top">
                         <h3 class="promo-title">PUNK HEART FEST</h3>
+                        <div class="promo-red-line"></div>
                         <p class="promo-desc">The ultimate punk rock experience bringing together the best bands from across Asia. Join us for an unforgettable night of raw energy and powerful performances.</p>
                         <a href="../events.html" class="promo-btn">VIEW EVENT</a>
                     </div>
                     <div class="promo-block bottom">
                         <h3 class="promo-title">UPCOMING SHOWS</h3>
+                        <div class="promo-red-line"></div>
                         <p class="promo-desc">Discover our latest tour dates and book your tickets now. From intimate club shows to major festival appearances, we have got you covered.</p>
                         <a href="../events.html" class="promo-btn">BUY TICKETS</a>
                     </div>
                 </div>
                 <div class="promo-playlist">
                     <h3 class="playlist-title">CHINESEROCKS CHART</h3>
-                    <iframe class="playlist-embed" src="https://open.spotify.com/embed/playlist/3ZFjYPcR6zZaHQ6rlc3S29" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                    <div class="playlist-embeds">
+                        <!-- Spotify主播放器 -->
+                        <iframe class="playlist-embed spotify-embed" src="https://open.spotify.com/embed/playlist/3ZFjYPcR6zZaHQ6rlc3S29" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+
+                        <!-- QQ音乐播放器 -->
+                        <div class="mini-player qq-player">
+                            <div class="mini-player-header">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+                                <span>QQ Music</span>
+                            </div>
+                            <iframe src="https://y.qq.com/n/ryqq/playlist/8313621383" width="100%" height="80" frameborder="0" allow="autoplay" loading="lazy"></iframe>
+                        </div>
+
+                        <!-- 网易云播放器 -->
+                        <div class="mini-player netease-player">
+                            <div class="mini-player-header">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+                                <span>NetEase Cloud</span>
+                            </div>
+                            <iframe src="https://music.163.com/outchain/player?type=0&id=123415183&auto=0&height=80" width="100%" height="80" frameborder="0" allow="autoplay" loading="lazy"></iframe>
+                        </div>
+                    </div>
                     <div class="playlist-links">
                         <a href="https://open.spotify.com/playlist/3ZFjYPcR6zZaHQ6rlc3S29" target="_blank" class="playlist-link">Spotify</a>
-                        <a href="#" class="playlist-link">QQ Music</a>
-                        <a href="#" class="playlist-link">NetEase</a>
+                        <a href="https://y.qq.com/n/ryqq/playlist/8313621383" target="_blank" class="playlist-link">QQ Music</a>
+                        <a href="https://music.163.com/playlist?id=123415183" target="_blank" class="playlist-link">NetEase</a>
                     </div>
                 </div>
             </div>
@@ -1095,6 +1429,9 @@
                         <div class="contact-item">
                             <a href="tel:+86-010-6874-5456">+86 010 6874 5456</a>
                         </div>
+                        <div class="contact-item">
+                            2-2021#HepingliWestStreet<br>Beijing, China
+                        </div>
                     </div>
 
                     <div class="footer-brand">
@@ -1103,6 +1440,7 @@
                         </div>
 
                         <div class="social-links">
+                            <!-- 国际4个 -->
                             <a href="https://facebook.com/xrebooking" class="social-icon" title="Facebook" target="_blank" rel="noopener noreferrer">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
                             </a>
@@ -1115,11 +1453,25 @@
                             <a href="https://x.com/xrebooking" class="social-icon" title="X" target="_blank" rel="noopener noreferrer">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
                             </a>
+                            <!-- CN 4个 -->
+                            <a href="https://www.livegigsasia.com/cn.html" class="social-icon" title="CN Website" target="_blank" rel="noopener noreferrer">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                            </a>
+                            <a href="#" class="social-icon" title="微博" onclick="alert('Weibo coming soon')">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.194 14.197c0 3.248-4.057 5.882-9.062 5.882-5.006 0-9.063-2.634-9.063-5.882 0-3.249 4.057-5.883 9.063-5.883 5.005 0 9.062 2.634 9.062 5.883zm-3.696-7.09c-.483-.15-1.015.113-1.165.596-.15.483.113 1.015.596 1.165.483.15 1.015-.113 1.165-.596.15-.483-.113-1.015-.596-1.165zm2.258-2.03c-1.238-.385-2.599.288-2.984 1.526-.385 1.238.288 2.599 1.526 2.984 1.238.385 2.599-.288 2.984-1.526.385-1.238-.288-2.599-1.526-2.984z"/></svg>
+                            </a>
+                            <a href="#" class="social-icon" title="小红书" onclick="alert('Xiaohongshu coming soon')">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            </a>
+                            <a href="#" class="social-icon" title="微信" style="cursor: default;" onclick="return false;">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 0 1 .213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 0 0 .167-.054l1.903-1.114a.864.864 0 0 1 .717-.098 10.16 10.16 0 0 0 2.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348zM5.785 5.991c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178A1.17 1.17 0 0 1 4.623 7.17c0-.651.52-1.18 1.162-1.18zm5.813 0c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178 1.17 1.17 0 0 1-1.162-1.178c0-.651.52-1.18 1.162-1.18zm5.34 2.867c-1.797-.052-3.746.512-5.28 1.786-1.72 1.428-2.687 3.72-1.78 6.22.942 2.453 3.666 4.229 6.884 4.229.826 0 1.622-.12 2.361-.336a.722.722 0 0 1 .598.082l1.584.926a.272.272 0 0 0 .14.047c.134 0 .24-.111.24-.247 0-.06-.023-.12-.038-.177l-.327-1.233a.582.582 0 0 1-.023-.156.49.49 0 0 1 .201-.398C23.024 18.48 24 16.82 24 14.98c0-3.21-2.931-5.837-6.656-6.088V8.89c-.135-.01-.27-.027-.407-.03zm-2.53 3.274c.535 0 .969.44.969.982a.976.976 0 0 1-.969.983.976.976 0 0 1-.969-.983c0-.542.434-.982.97-.982zm4.844 0c.535 0 .969.44.969.982a.976.976 0 0 1-.969.983.976.976 0 0 1-.969-.983c0-.542.434-.982.969-.982z"/></svg>
+                            </a>
                         </div>
 
                         <div class="producer-section">
                             <div class="producer-label">Produced by</div>
-                            <div style="font-size: 18px; letter-spacing: 3px; color: #555; font-weight: bold;">EMANON ENT.</div>
+                            <img src="https://www.livegigsasia.com/image/emanonent-logo.png" alt="EMANON ENT." class="producer-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                            <div style="font-size: 18px; letter-spacing: 3px; color: #c0c0c0; font-weight: bold; display: none;">EMANON ENT.</div>
                         </div>
                     </div>
 
@@ -1210,7 +1562,7 @@
     </div>
 
     <script>
-        // 艺人数据 - 14个艺人
+        // 艺人数据 - 15个艺人(14+1占位)
         const artistsData = [
             { name: "ONIKALI", image: "./assets/artists/OnikaLi.jpg", slug: "onikali" },
             { name: "THE NONAME", image: "./assets/artists/TheNoname.jpg", slug: "thenoname" },
@@ -1225,22 +1577,20 @@
             { name: "BAOPIGOU", image: "./assets/artists/baopigou.jpg", slug: "baopigou" },
             { name: "BIG D", image: "./assets/artists/bigd.jpg", slug: "bigd" },
             { name: "THE STIRRERS", image: "./assets/artists/thestirrers.jpg", slug: "thestirrers" },
-            { name: "YSHC", image: "./assets/artists/yshc.jpg", slug: "yshc" }
+            { name: "YSHC", image: "./assets/artists/yshc.jpg", slug: "yshc" },
+            { name: "NEW ARTIST COMING", image: "./assets/artists/NewArtistComing.webp", slug: "#" }
         ];
 
-        // 渲染艺人网格
+        // 渲染艺人网格 - hover蒙版无文字，底部文字跳转
         function renderArtists() {
             const grid = document.getElementById('artistsGrid');
             grid.innerHTML = artistsData.map(artist => `
                 <div class="artist-card-wrapper">
-                    <div class="artist-card" onclick="location.href='./artist/${artist.slug}.html'">
+                    <div class="artist-card">
                         <img src="${artist.image}" alt="${artist.name}" onerror="this.src='https://via.placeholder.com/750x360/333/fff?text=${encodeURIComponent(artist.name)}'">
-                        <div class="artist-overlay">
-                            <div class="artist-name-overlay">${artist.name}</div>
-                            <div class="artist-booking-text">BOOKING NOW</div>
-                        </div>
+                        <div class="artist-overlay"></div>
                     </div>
-                    <div class="artist-name-below">${artist.name}</div>
+                    <div class="artist-name-below" onclick="location.href='${artist.slug === '#' ? '#' : './artist/' + artist.slug + '.html'}'" style="cursor: pointer;">${artist.name}</div>
                 </div>
             `).join('');
         }
@@ -1316,9 +1666,135 @@
             });
         }
 
+        
+        // Branded Tours 全局变量
+        let allBrandedTours = [];
+        let displayedBrandedTours = 0;
+        const BRANDED_TOURS_PER_PAGE = 6;
+
+        // 加载Branded Tours (ON TOUR活动)
+        async function loadBrandedTours() {
+            const grid = document.getElementById('brandedToursGrid');
+            const loadMoreBtn = document.getElementById('brandedToursLoadMore');
+            if (!grid) return;
+
+            try {
+                // 从JSONBin加载数据 - 使用与Events相同的配置
+                const response = await fetch('https://api.jsonbin.io/v3/b/6785a003e41b4d34e4760b0a/latest', {
+                    headers: {
+                        'X-Master-Key': '$2a$10$NefT7E9BsbDH5jDRU.C/3.F2D/7C8jzo2uQjN4KxF9x8v8v8v8v8v'
+                    }
+                });
+
+                if (!response.ok) throw new Error('Failed to fetch');
+
+                const data = await response.json();
+                const events = data.record?.events || [];
+
+                // 筛选所有ON TOUR活动 (>15天的巡演)
+                allBrandedTours = events.filter(event => {
+                    if (!event.startDate || !event.endDate) return false;
+                    const start = new Date(event.startDate);
+                    const end = new Date(event.endDate);
+                    const diffTime = Math.abs(end - start);
+                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                    return diffDays > 15;
+                }).sort((a, b) => new Date(a.startDate) - new Date(b.startDate));
+
+                displayedBrandedTours = 0;
+
+                if (allBrandedTours.length === 0) {
+                    grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: #666; padding: 40px;">No ON TOUR events currently. Check back soon!</div>';
+                    if (loadMoreBtn) loadMoreBtn.style.display = 'none';
+                    return;
+                }
+
+                // 初始显示前6个
+                renderBrandedTours();
+
+            } catch (error) {
+                console.error('Error loading branded tours:', error);
+                // 显示占位内容
+                grid.innerHTML = `
+                    <div class="branded-tour-card" onclick="location.href='#'">
+                        <img src="https://via.placeholder.com/300x400/8b0000/fff?text=ON+TOUR+1" alt="Tour 1">
+                        <div class="branded-tour-status">ON TOUR</div>
+                        <div class="branded-tour-overlay">
+                            <div class="branded-tour-title">EUROPE TOUR 2026</div>
+                            <div class="branded-tour-date">2026.03.01 - 2026.04.15</div>
+                            <div class="branded-tour-location">Multiple Cities, EU</div>
+                        </div>
+                    </div>
+                    <div class="branded-tour-card" onclick="location.href='#'">
+                        <img src="https://via.placeholder.com/300x400/8b0000/fff?text=ON+TOUR+2" alt="Tour 2">
+                        <div class="branded-tour-status">ON TOUR</div>
+                        <div class="branded-tour-overlay">
+                            <div class="branded-tour-title">ASIA TOUR 2026</div>
+                            <div class="branded-tour-date">2026.05.01 - 2026.06.20</div>
+                            <div class="branded-tour-location">Multiple Cities, Asia</div>
+                        </div>
+                    </div>
+                    <div class="branded-tour-card" onclick="location.href='#'">
+                        <img src="https://via.placeholder.com/300x400/8b0000/fff?text=ON+TOUR+3" alt="Tour 3">
+                        <div class="branded-tour-status">ON TOUR</div>
+                        <div class="branded-tour-overlay">
+                            <div class="branded-tour-title">US TOUR 2026</div>
+                            <div class="branded-tour-date">2026.07.01 - 2026.08.15</div>
+                            <div class="branded-tour-location">Multiple Cities, USA</div>
+                        </div>
+                    </div>
+                `;
+                if (loadMoreBtn) loadMoreBtn.style.display = 'none';
+            }
+        }
+
+        // 渲染Branded Tours
+        function renderBrandedTours() {
+            const grid = document.getElementById('brandedToursGrid');
+            const loadMoreBtn = document.getElementById('brandedToursLoadMore');
+
+            const toursToShow = allBrandedTours.slice(0, displayedBrandedTours + BRANDED_TOURS_PER_PAGE);
+
+            grid.innerHTML = toursToShow.map(event => `
+                <div class="branded-tour-card" onclick="location.href='${event.link || '../events.html'}'">
+                    <img src="${event.poster1 || event.poster || 'https://via.placeholder.com/300x400/333/fff?text=ON+TOUR'}" alt="${event.title}">
+                    <div class="branded-tour-status">ON TOUR</div>
+                    <div class="branded-tour-overlay">
+                        <div class="branded-tour-title">${event.title}</div>
+                        <div class="branded-tour-date">${formatDate(event.startDate)} - ${formatDate(event.endDate)}</div>
+                        <div class="branded-tour-location">${event.city || ''}${event.city && event.country ? ', ' : ''}${event.country || ''}</div>
+                    </div>
+                </div>
+            `).join('');
+
+            displayedBrandedTours = toursToShow.length;
+
+            // 显示/隐藏LOAD MORE按钮
+            if (loadMoreBtn) {
+                loadMoreBtn.style.display = displayedBrandedTours < allBrandedTours.length ? 'block' : 'none';
+            }
+        }
+
+        // LOAD MORE功能
+        function loadMoreBrandedTours() {
+            renderBrandedTours();
+        }
+
+        // 日期格式化
+        function formatDate(dateStr) {
+            if (!dateStr) return '';
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit'
+            }).replace(/\//g, ".");
+        }
+
         // 初始化
         document.addEventListener('DOMContentLoaded', () => {
             renderArtists();
+            loadBrandedTours();
         });
 
         // ESC键关闭弹窗
