@@ -1126,7 +1126,7 @@
         }
     
 
-        /* POSTER AD SECTION - 满屏版本 */
+        /* POSTER AD SECTION - 使用全站统一红色 */
         .poster-ad-section {
             width: 100%;
             padding: 0;
@@ -1135,9 +1135,7 @@
             background-position: center;
             background-repeat: no-repeat;
             position: relative;
-            /* 上方与TOUR区域相连，保持红色调 */
             border-top: none;
-            /* 下方直接连接黑色，无渐变 */
         }
 
         .poster-ad-container {
@@ -1152,7 +1150,7 @@
             min-height: 100vh;
         }
 
-        /* 左侧海报 - 2:3比例，无拉伸 */
+        /* 左侧海报 - 2:3比例，固定无HOVER */
         .poster-ad-left {
             position: relative;
             display: flex;
@@ -1210,11 +1208,7 @@
             text-align: right;
         }
 
-        .content-left {
-            max-width: 90%;
-        }
-
-        .content-right {
+        .content-left, .content-right {
             max-width: 90%;
         }
 
@@ -1246,7 +1240,7 @@
             margin-left: auto;
         }
 
-        /* 红线闪光效果 */
+        /* 红线闪光效果 - 统一使用 */
         .title-underline.shimmer::after,
         .ad-underline.shimmer::after {
             content: '';
@@ -1258,6 +1252,9 @@
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
             animation: shimmer 2s infinite;
         }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
             50% { left: 100%; }
             100% { left: 100%; }
         }
@@ -1311,7 +1308,6 @@
             background: rgba(0, 0, 0, 0.2);
         }
 
-        /* Spotify 播放器 */
         .player-spotify {
             flex: 0 0 60%;
             background: #000;
@@ -1324,7 +1320,6 @@
             border: none;
         }
 
-        /* 底部内嵌播放器容器 */
         .player-bottom-container {
             flex: 0 0 40%;
             display: flex;
@@ -1500,14 +1495,14 @@
         <section class="artists-section">
             <h2 class="section-title">FEATURED ARTISTS</h2>
             <div class="title-underline shimmer"></div>
-            <div class= shimmer"artists-grid" id="artistsGrid"></div>
+            <div class="artists-grid" id="artistsGrid"></div>
         </section>
 
         <!-- BRANDED TOURS区域 -->
         <section class="branded-tours-section">
             <h2 class="section-title branded-title">BRANDED TOURS</h2>
             <div class="title-underline shimmer"></div>
-            <div class= shimmer"branded-tours-container" id="brandedToursContainer"></div>
+            <div class="branded-tours-container" id="brandedToursContainer"></div>
             <div class="branded-tours-load-more" id="brandedToursLoadMore">
                 <button class="neon-btn" onclick="loadMoreBrandedTours()">LOAD MORE</button>
             </div>
@@ -2359,6 +2354,15 @@
                     }
                 }
             }, { passive: true });
+        }
+
+        function loadMoreBrandedTours() {
+            renderBrandedTours();
+        }
+    </script>
+</body>
+</html>
+           }, { passive: true });
         }
 
         function loadMoreBrandedTours() {
