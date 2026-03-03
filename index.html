@@ -570,7 +570,7 @@
         /* BRANDED TOURS区域 */
         .branded-tours-section {
             width: 100%;
-            padding: 80px 0 60px 0;
+            padding: 80px 0 0 0;
             background: linear-gradient(180deg, var(--mad-silver) 0%, var(--mad-light) 30%, var(--xre-red) 70%, #8b0000 100%);
             position: relative;
         }
@@ -1068,21 +1068,7 @@
             .footer-main { padding: 40px 30px 30px; }
             .footer-container { flex-direction: column; gap: 30px; text-align: center; }
             .footer-contact-left, .footer-contact-right { text-align: center; flex: 1; width: 100%; }
-            .footer-bottom { 
-                flex-direction: column; 
-                gap: 15px; 
-                padding: 20px 30px;
-                text-align: center;
-                align-items: center;
-            }
-            .footer-bottom .copyright {
-                text-align: center;
-                width: 100%;
-            }
-            .footer-bottom .footer-legal {
-                justify-content: center;
-                width: 100%;
-            }
+            .footer-bottom { flex-direction: column; gap: 15px; padding: 20px 30px; }
             .form-row { grid-template-columns: 1fr; }
             .hero-logo-bg img { width: 450px; height: 450px; }
             .branded-tours-container { grid-template-columns: 1fr; padding: 0 20px; }
@@ -1223,21 +1209,18 @@
 
         .middle-top {
             justify-content: center;
-            align-items: center;
-            text-align: center;
+            align-items: flex-start;
             border-bottom: 1px solid rgba(139, 0, 0, 0.3);
         }
 
         .middle-bottom {
             justify-content: center;
-            align-items: center;
-            text-align: center;
+            align-items: flex-end;
+            text-align: right;
         }
 
         .content-left, .content-right {
             max-width: 90%;
-            margin-left: auto;
-            margin-right: auto;
         }
 
         .middle-divider {
@@ -1266,12 +1249,6 @@
 
         .middle-bottom .ad-underline {
             margin-left: auto;
-            margin-right: auto;
-        }
-
-        .middle-top .ad-underline {
-            margin-left: auto;
-            margin-right: auto;
         }
 
         /* 红线闪光效果 - 统一使用 */
@@ -1309,11 +1286,7 @@
         }
 
         .middle-bottom .ad-buttons {
-            justify-content: center;
-        }
-
-        .middle-top .ad-buttons {
-            justify-content: center;
+            justify-content: flex-end;
         }
 
         .ad-btn {
@@ -1479,150 +1452,6 @@
                 width: 100%;
             }
         }
-
-        /* MetingJS Player Styles */
-        .player-embed {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            background: #000;
-        }
-
-        .player-embed .aplayer {
-            background: rgba(0, 0, 0, 0.95);
-            border-radius: 0;
-            margin: 0;
-            box-shadow: none;
-            font-family: 'Courier New', monospace;
-        }
-
-        .player-embed .aplayer .aplayer-info {
-            background: transparent;
-            padding: 10px 15px;
-        }
-
-        .player-embed .aplayer .aplayer-pic {
-            width: 80px;
-            height: 80px;
-            border-radius: 4px;
-            overflow: hidden;
-        }
-
-        .player-embed .aplayer .aplayer-pic img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .player-embed .aplayer .aplayer-info .aplayer-music {
-            margin-bottom: 8px;
-        }
-
-        .player-embed .aplayer .aplayer-info .aplayer-music .aplayer-title {
-            color: #fff;
-            font-size: 14px;
-            font-weight: bold;
-        }
-
-        .player-embed .aplayer .aplayer-info .aplayer-music .aplayer-author {
-            color: #c0c0c0;
-            font-size: 12px;
-        }
-
-        .player-embed .aplayer .aplayer-list {
-            background: rgba(0, 0, 0, 0.95);
-            border-top: 1px solid rgba(139, 0, 0, 0.3);
-            max-height: 250px !important;
-        }
-
-        .player-embed .aplayer .aplayer-list ol li {
-            color: #c0c0c0;
-            border-bottom: 1px solid rgba(139, 0, 0, 0.2);
-            font-size: 12px;
-            padding: 8px 15px;
-        }
-
-        .player-embed .aplayer .aplayer-list ol li:hover {
-            background: rgba(139, 0, 0, 0.3);
-            color: #fff;
-        }
-
-        .player-embed .aplayer .aplayer-list ol li.aplayer-list-light {
-            background: rgba(139, 0, 0, 0.5);
-            color: #fff;
-        }
-
-        .player-embed .aplayer .aplayer-list ol li .aplayer-list-author {
-            color: #888;
-            font-size: 11px;
-        }
-
-        .player-embed .aplayer .aplayer-controller {
-            background: transparent;
-        }
-
-        .player-embed .aplayer .aplayer-bar-wrap {
-            margin: 0;
-        }
-
-        .player-embed .aplayer .aplayer-bar {
-            background: rgba(255, 255, 255, 0.2);
-            height: 4px;
-        }
-
-        .player-embed .aplayer .aplayer-bar .aplayer-loaded {
-            background: rgba(255, 255, 255, 0.3);
-        }
-
-        .player-embed .aplayer .aplayer-bar .aplayer-played {
-            background: var(--xre-dark-red) !important;
-        }
-
-        .player-embed .aplayer .aplayer-bar .aplayer-thumb {
-            background: #fff;
-            border: 2px solid var(--xre-dark-red);
-        }
-
-        .player-embed .aplayer .aplayer-time {
-            color: #c0c0c0;
-            font-size: 11px;
-        }
-
-        .player-embed .aplayer .aplayer-time .aplayer-icon path {
-            fill: #c0c0c0;
-        }
-
-        .player-embed .aplayer .aplayer-time .aplayer-icon:hover path {
-            fill: #fff;
-        }
-
-        .player-embed .aplayer .aplayer-volume-wrap .aplayer-volume-bar-wrap {
-            background: rgba(0, 0, 0, 0.9);
-        }
-
-        .player-embed .aplayer .aplayer-volume-wrap .aplayer-volume-bar {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .player-embed .aplayer .aplayer-volume-wrap .aplayer-volume-bar .aplayer-volume {
-            background: var(--xre-dark-red);
-        }
-
-        .player-embed .aplayer .aplayer-lrc {
-            text-shadow: none;
-            display: none;
-        }
-
-        .player-embed.qq-player,
-        .player-embed.netease-player {
-            height: 100%;
-            min-height: 200px;
-        }
-
-        .player-embed .aplayer {
-            height: 100% !important;
-        }
 </style>
 
     <!-- Service Worker 注册 -->
@@ -1639,10 +1468,6 @@
             });
         }
     </script>
-    <!-- MetingJS for music players -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/meting@2.0.1/dist/Meting.min.js"></script>
 </head>
 
 <body>
@@ -1762,39 +1587,29 @@
                     <!-- 底部两个嵌入式播放器 -->
                     <div class="player-bottom-container">
                         <!-- QQ音乐嵌入式播放器 -->
-                        <div class="player-embed qq-player">
-                            <meting-js
-                                server="tencent"
-                                type="playlist"
-                                id="9674279142"
-                                fixed="false"
-                                mini="false"
-                                autoplay="false"
-                                theme="#8b0000"
-                                list-folded="true"
-                                list-max-height="250px"
-                                preload="metadata"
-                                mutex="true"
-                                lrc-type="0">
-                            </meting-js>
+                        <div class="player-embed">
+                            <iframe src="https://y.qq.com/n3/other/pages/details/playlist.html?id=9674279142&hosteuin=" 
+                                    width="100%" 
+                                    height="100%" 
+                                    frameborder="0"
+                                    allow="autoplay; encrypted-media"
+                                    loading="lazy">
+                            </iframe>
                         </div>
 
                         <!-- 网易云音乐嵌入式播放器 -->
-                        <div class="player-embed netease-player">
-                            <meting-js
-                                server="netease"
-                                type="playlist"
-                                id="9674279142"
-                                fixed="false"
-                                mini="false"
-                                autoplay="false"
-                                theme="#8b0000"
-                                list-folded="true"
-                                list-max-height="250px"
-                                preload="metadata"
-                                mutex="true"
-                                lrc-type="0">
-                            </meting-js>
+                        <div class="player-embed">
+                            <iframe src="https://music.163.com/outchain/player?type=0&id=9674279142&auto=0&height=430" 
+                                    width="100%" 
+                                    height="100%" 
+                                    frameborder="no"
+                                    border="0"
+                                    marginwidth="0"
+                                    marginheight="0"
+                                    scrolling="no"
+                                    allow="autoplay; encrypted-media"
+                                    loading="lazy">
+                            </iframe>
                         </div>
                     </div>
                 </div>
