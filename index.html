@@ -570,7 +570,7 @@
         /* BRANDED TOURS区域 */
         .branded-tours-section {
             width: 100%;
-            padding: 80px 0 0 0;
+            padding: 80px 0 60px 0;
             background: linear-gradient(180deg, var(--mad-silver) 0%, var(--mad-light) 30%, var(--xre-red) 70%, #8b0000 100%);
             position: relative;
         }
@@ -1137,7 +1137,7 @@
             background-color: #8b0000;
             position: relative;
             border-top: none;
-            margin-top: -1px;
+            margin-top: 0;
         }
 
         .poster-ad-container {
@@ -1215,8 +1215,8 @@
 
         .middle-bottom {
             justify-content: center;
-            align-items: flex-end;
-            text-align: right;
+            align-items: center;
+            text-align: center;
         }
 
         .content-left, .content-right {
@@ -1249,6 +1249,7 @@
 
         .middle-bottom .ad-underline {
             margin-left: auto;
+            margin-right: auto;
         }
 
         /* 红线闪光效果 - 统一使用 */
@@ -1286,7 +1287,7 @@
         }
 
         .middle-bottom .ad-buttons {
-            justify-content: flex-end;
+            justify-content: center;
         }
 
         .ad-btn {
@@ -1384,15 +1385,30 @@
         @media (max-width: 768px) {
             .poster-ad-container {
                 grid-template-columns: 1fr;
-            }
-            .poster-ad-left, .poster-ad-middle, .poster-ad-right {
                 min-height: auto;
             }
             .poster-ad-left {
+                min-height: auto;
+                height: auto;
                 padding: 30px;
+                order: 1;
+            }
+            .poster-ad-middle {
+                min-height: auto;
+                order: 2;
+            }
+            .poster-ad-right {
+                min-height: 500px;
+                order: 3;
             }
             .poster-wrapper {
                 max-width: 300px;
+                height: auto;
+                min-height: 400px;
+            }
+            .poster-ad-image {
+                max-height: 500px;
+                object-fit: contain;
             }
             .middle-top, .middle-bottom {
                 padding: 40px 30px;
@@ -1418,17 +1434,33 @@
             .ad-buttons {
                 justify-content: center;
             }
-            .poster-ad-right {
-                min-height: 600px;
+            .player-spotify {
+                flex: 0 0 50%;
+            }
+            .player-bottom-container {
+                flex: 0 0 50%;
+                flex-direction: column;
+            }
+            .player-embed {
+                border-left: none;
+                border-top: 2px solid rgba(139, 0, 0, 0.3);
+            }
+            .player-embed:first-child {
+                border-top: none;
             }
         }
 
         @media (max-width: 480px) {
             .poster-ad-left {
                 padding: 20px;
+                min-height: auto;
             }
             .poster-wrapper {
                 max-width: 250px;
+                min-height: 350px;
+            }
+            .poster-ad-image {
+                max-height: 400px;
             }
             .middle-top, .middle-bottom {
                 padding: 30px 20px;
@@ -1451,6 +1483,132 @@
             .ad-btn {
                 width: 100%;
             }
+            .poster-ad-right {
+                min-height: 400px;
+            }
+        }
+
+        /* MetingJS Player Styles */
+        .player-embed {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .player-embed .aplayer {
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 0;
+            margin: 0;
+            box-shadow: none;
+        }
+
+        .player-embed .aplayer .aplayer-info {
+            background: transparent;
+        }
+
+        .player-embed .aplayer .aplayer-list {
+            background: rgba(0, 0, 0, 0.9);
+            border-top: 1px solid rgba(139, 0, 0, 0.3);
+        }
+
+        .player-embed .aplayer .aplayer-list ol li {
+            color: #c0c0c0;
+            border-bottom: 1px solid rgba(139, 0, 0, 0.2);
+        }
+
+        .player-embed .aplayer .aplayer-list ol li:hover {
+            background: rgba(139, 0, 0, 0.3);
+            color: #fff;
+        }
+
+        .player-embed .aplayer .aplayer-list ol li.aplayer-list-light {
+            background: rgba(139, 0, 0, 0.5);
+            color: #fff;
+        }
+
+        .player-embed .aplayer .aplayer-lrc {
+            text-shadow: none;
+        }
+
+        .player-embed .aplayer .aplayer-lrc p {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .player-embed .aplayer .aplayer-lrc p.aplayer-lrc-current {
+            color: #fff;
+        }
+
+        /* 移动端播放器适配 */
+        @media (max-width: 1024px) {
+            .player-bottom-container {
+                flex-direction: column;
+            }
+
+            .player-embed {
+                min-height: 200px;
+            }
+
+            .player-embed .aplayer {
+                height: 100% !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .player-embed {
+                min-height: 180px;
+            }
+
+            .player-embed .aplayer .aplayer-pic {
+                width: 60px;
+                height: 60px;
+            }
+
+            .player-embed .aplayer .aplayer-info {
+                margin-left: 70px;
+                height: 60px;
+            }
+
+            .player-embed .aplayer .aplayer-list {
+                max-height: 150px !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .player-embed {
+                min-height: 160px;
+            }
+
+            .player-embed .aplayer .aplayer-pic {
+                width: 50px;
+                height: 50px;
+            }
+
+            .player-embed .aplayer .aplayer-info {
+                margin-left: 60px;
+                height: 50px;
+            }
+
+            .player-embed .aplayer .aplayer-info .aplayer-music {
+                margin-bottom: 5px;
+            }
+
+            .player-embed .aplayer .aplayer-info .aplayer-music .aplayer-title {
+                font-size: 12px;
+            }
+
+            .player-embed .aplayer .aplayer-info .aplayer-music .aplayer-author {
+                font-size: 10px;
+            }
+
+            .player-embed .aplayer .aplayer-list {
+                max-height: 120px !important;
+            }
+
+            .player-embed .aplayer .aplayer-list ol li {
+                font-size: 11px;
+                padding: 5px 10px;
+            }
         }
 </style>
 
@@ -1468,6 +1626,11 @@
             });
         }
     </script>
+
+    <!-- MetingJS for music players -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
 </head>
 
 <body>
@@ -1588,28 +1751,34 @@
                     <div class="player-bottom-container">
                         <!-- QQ音乐嵌入式播放器 -->
                         <div class="player-embed">
-                            <iframe src="https://y.qq.com/n3/other/pages/details/playlist.html?id=9674279142&hosteuin=" 
-                                    width="100%" 
-                                    height="100%" 
-                                    frameborder="0"
-                                    allow="autoplay; encrypted-media"
-                                    loading="lazy">
-                            </iframe>
+                            <meting-js
+                                server="tencent"
+                                type="playlist"
+                                id="9674279142"
+                                fixed="false"
+                                mini="false"
+                                autoplay="false"
+                                theme="#8b0000"
+                                list-folded="true"
+                                list-max-height="200px"
+                                preload="none">
+                            </meting-js>
                         </div>
 
                         <!-- 网易云音乐嵌入式播放器 -->
                         <div class="player-embed">
-                            <iframe src="https://music.163.com/outchain/player?type=0&id=9674279142&auto=0&height=430" 
-                                    width="100%" 
-                                    height="100%" 
-                                    frameborder="no"
-                                    border="0"
-                                    marginwidth="0"
-                                    marginheight="0"
-                                    scrolling="no"
-                                    allow="autoplay; encrypted-media"
-                                    loading="lazy">
-                            </iframe>
+                            <meting-js
+                                server="netease"
+                                type="playlist"
+                                id="9674279142"
+                                fixed="false"
+                                mini="false"
+                                autoplay="false"
+                                theme="#8b0000"
+                                list-folded="true"
+                                list-max-height="200px"
+                                preload="none">
+                            </meting-js>
                         </div>
                     </div>
                 </div>
