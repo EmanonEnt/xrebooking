@@ -1177,7 +1177,7 @@
         /* Hero背景LOGO - 超大，五角星顶部对接导航栏，中心对齐XREBOOKING */
         .hero-logo-bg {
             position: absolute;
-            top: 35%;
+            top: 280px;
             left: 50%;
             transform: translate(-50%, -50%);
             z-index: -1;
@@ -1185,51 +1185,64 @@
         }
 
         .hero-logo-bg img {
-            width: 550px;
-            height: 550px;
+            width: 700px;
+            height: 700px;
             object-fit: contain;
-            animation: heroLogoBreathe 4s ease-in-out infinite;
-            filter: drop-shadow(0 0 40px rgba(139, 0, 0, 0.9));
-            opacity: 0.7;
+            animation: heroLogoBreathe 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 50px rgba(139, 0, 0, 1));
+            opacity: 0.8;
         }
 
         @keyframes heroLogoBreathe {
             0%, 100% { 
-                opacity: 0.4;
+                opacity: 0.2;
                 transform: scale(1);
-                filter: drop-shadow(0 0 30px rgba(139, 0, 0, 0.7));
+                filter: drop-shadow(0 0 20px rgba(139, 0, 0, 0.5));
             }
             50% { 
-                opacity: 0.9;
-                transform: scale(1.12);
-                filter: drop-shadow(0 0 80px rgba(255, 0, 0, 1)) drop-shadow(0 0 120px rgba(139, 0, 0, 0.9));
+                opacity: 1;
+                transform: scale(1.15);
+                filter: drop-shadow(0 0 100px rgba(255, 0, 0, 1)) drop-shadow(0 0 150px rgba(139, 0, 0, 1));
             }
         }
 
         @media (max-width: 1024px) {
+            .hero-logo-bg {
+                top: 260px;
+            }
             .hero-logo-bg img {
-                width: 450px;
-                height: 450px;
+                width: 550px;
+                height: 550px;
             }
         }
 
         @media (max-width: 768px) {
             .hero-logo-bg {
-                top: 38%;
+                top: 220px;
             }
             .hero-logo-bg img {
-                width: 350px;
-                height: 350px;
+                width: 420px;
+                height: 420px;
             }
         }
 
         @media (max-width: 480px) {
             .hero-logo-bg {
-                top: 40%;
+                top: 180px;
             }
             .hero-logo-bg img {
-                width: 260px;
-                height: 260px;
+                width: 320px;
+                height: 320px;
+            }
+        }
+
+        @media (max-width: 375px) {
+            .hero-logo-bg {
+                top: 160px;
+            }
+            .hero-logo-bg img {
+                width: 280px;
+                height: 280px;
             }
         }
 
