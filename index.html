@@ -354,6 +354,15 @@
             border: 2px solid transparent;
         }
 
+        .artist-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            filter: grayscale(0%);
+            transition: all 0.4s;
+        }
+
         .artist-card:hover {
             border-color: var(--xre-red);
         }
@@ -1323,6 +1332,54 @@
                 margin-bottom: 10px;
             }
         }
+
+        /* Hero背景LOGO - 五角星呼吸效果 */
+        .hero-logo-bg {
+            position: absolute;
+            top: 15%;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .hero-logo-bg img {
+            width: 280px;
+            height: 280px;
+            object-fit: contain;
+            animation: heroLogoBreathe 4s ease-in-out infinite;
+            filter: drop-shadow(0 0 30px rgba(139, 0, 0, 0.6));
+            opacity: 0.7;
+        }
+
+        @keyframes heroLogoBreathe {
+            0%, 100% { 
+                opacity: 0.5;
+                transform: scale(1);
+                filter: drop-shadow(0 0 20px rgba(139, 0, 0, 0.4));
+            }
+            50% { 
+                opacity: 0.9;
+                transform: scale(1.08);
+                filter: drop-shadow(0 0 50px rgba(255, 0, 0, 0.8));
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .hero-logo-bg { top: 14%; }
+            .hero-logo-bg img { width: 240px; height: 240px; }
+        }
+
+        @media (max-width: 768px) {
+            .hero-logo-bg { top: 13%; }
+            .hero-logo-bg img { width: 200px; height: 200px; }
+        }
+
+        @media (max-width: 480px) {
+            .hero-logo-bg { top: 12%; }
+            .hero-logo-bg img { width: 160px; height: 160px; }
+        }
+
 </style>
     <script>
         // 防止页面刷新后自动滚动
@@ -1697,62 +1754,88 @@
                 const parser = new DOMParser();
                 const doc = parser.parseFromString(htmlText, 'text/html');
 
-                // 尝试从页面中的JavaScript变量提取events数据
                 let events = [];
 
-                // 方法1：查找页面中的eventsData变量
-                const scripts = doc.querySelectorAll('script');
-                for (let script of scripts) {
-                    const text = script.textContent || '';
+                // 方法：从DOM解析event-card（适配LiveGigs的events.html结构）
+                const eventCards = doc.querySelectorAll('.event-card');
+                console.log('Found event cards:', eventCards.length);
 
-                    // 尝试匹配 eventsData 或 similar 变量
-                    const eventsMatch = text.match(/eventsData\s*=\s*(\[.*?\]);/s) || 
-                                       text.match(/events\s*=\s*(\[.*?\]);/s) ||
-                                       text.match(/const\s+events\s*=\s*(\[.*?\]);/s);
+                eventCards.forEach((card, index) => {
+                    // 检查状态是否为ON TOUR
+                    const statusEl = card.querySelector('.event-status');
+                    const status = statusEl ? statusEl.textContent.trim().toLowerCase() : '';
 
-                    if (eventsMatch) {
-                        try {
-                            events = JSON.parse(eventsMatch[1]);
-                            break;
-                        } catch (e) {
-                            console.log('Failed to parse events from script');
+                    console.log('Card', index, 'status:', status);
+
+                    // 只要包含"on tour"就显示（不区分大小写）
+                    if (status.includes('on tour') || status.includes('ontour')) {
+                        // 提取标题和副标题
+                        const nameEl = card.querySelector('.event-name');
+                        let title = '';
+                        let subtitle = '';
+
+                        if (nameEl) {
+                            const fullText = nameEl.innerHTML;
+                            // 处理<br>标签分割的标题和副标题
+                            if (fullText.includes('<br>')) {
+                                const parts = fullText.split('<br>');
+                                title = parts[0].trim();
+                                subtitle = parts[1] ? parts[1].trim() : '';
+                            } else {
+                                title = nameEl.textContent.trim();
+                            }
                         }
+
+                        // 提取日期 - 从event-details
+                        const detailsEl = card.querySelector('.event-details');
+                        let dateRange = '';
+                        let city = '';
+
+                        if (detailsEl) {
+                            const detailsText = detailsEl.textContent.trim();
+                            // 格式: "2026.07.18~30 | THAILAND" 或 "2026.10.18~28 | HONG KONG"
+                            const parts = detailsText.split('|');
+                            if (parts.length >= 2) {
+                                dateRange = parts[0].trim();
+                                city = parts[1].trim();
+                            } else {
+                                dateRange = detailsText;
+                            }
+                        }
+
+                        // 提取海报
+                        const posterEl = card.querySelector('.event-poster');
+                        const posterUrl = posterEl ? posterEl.src : '';
+
+                        // 提取链接
+                        const btnEl = card.querySelector('.event-btn:not(.disabled)');
+                        const link = btnEl ? btnEl.href : '';
+                        const btnText = btnEl ? btnEl.textContent.trim() : 'INFO';
+
+                        console.log('Extracted event:', { title, subtitle, dateRange, city, status });
+
+                        events.push({
+                            title: title,
+                            subtitle: subtitle,
+                            dateRange: dateRange,
+                            city: city,
+                            status: 'ON TOUR',
+                            poster1: posterUrl,
+                            link: link,
+                            btn_text: btnText
+                        });
                     }
-                }
+                });
 
-                // 方法2：如果无法从JS提取，从DOM解析（适配LiveGigs的events.html结构）
-                if (events.length === 0) {
-                    // 查找所有活动卡片
-                    const eventCards = doc.querySelectorAll('.event-card, [data-event-id], .carousel-slide, .managed-event-card');
-                    eventCards.forEach(card => {
-                        const titleEl = card.querySelector('.event-title, h3, h2, .title');
-                        const dateEl = card.querySelector('.event-date, .date, time');
-                        const statusEl = card.querySelector('.event-status, .status');
-                        const posterEl = card.querySelector('img');
-                        const linkEl = card.querySelector('a');
+                console.log('Total ON TOUR events found:', events.length);
 
-                        const status = statusEl ? statusEl.textContent.trim() : '';
-
-                        if (status.toLowerCase().includes('on tour')) {
-                            events.push({
-                                title: titleEl ? titleEl.textContent.trim() : 'ON TOUR EVENT',
-                                startDate: dateEl ? dateEl.getAttribute('datetime') || dateEl.textContent : '',
-                                status: 'ON TOUR',
-                                poster1: posterEl ? posterEl.src : '',
-                                link: linkEl ? linkEl.href : ''
-                            });
-                        }
-                    });
-                }
-
-                // 筛选所有ON TOUR状态的活动
+                // 筛选所有ON TOUR状态的活动（确保只要ON TOUR就显示）
                 allBrandedTours = events.filter(event => {
-                    const status = (event.status || event.type || '').toLowerCase();
-                    return status === 'on tour' || status === 'ontour' || status === 'managed';
+                    return event.status.toLowerCase().includes('on tour');
                 }).sort((a, b) => {
-                    // 按开始日期排序（最近的在前）
-                    const dateA = new Date(a.startDate || a.date || 0);
-                    const dateB = new Date(b.startDate || b.date || 0);
+                    // 按日期排序（最近的在前）
+                    const dateA = parseBrandedDate(a.dateRange);
+                    const dateB = parseBrandedDate(b.dateRange);
                     return dateA - dateB;
                 });
 
@@ -1774,6 +1857,19 @@
             }
         }
 
+        // 解析日期字符串
+        function parseBrandedDate(dateStr) {
+            if (!dateStr) return new Date(0);
+            try {
+                // 提取年份和月份
+                const match = dateStr.match(/(\d{4})\.(\d{2})/);
+                if (match) {
+                    return new Date(parseInt(match[1]), parseInt(match[2]) - 1, 1);
+                }
+            } catch (e) {}
+            return new Date(0);
+        }
+
         // 渲染Branded Tours - 与LiveGigs自主活动卡片结构一致
         function renderBrandedTours() {
             const container = document.getElementById('brandedToursContainer');
@@ -1783,38 +1879,51 @@
 
             container.innerHTML = toursToShow.map((event, index) => {
                 const hasLink = event.link && event.link.trim() !== '';
-                const startDate = formatBrandedDate(event.startDate);
-                const endDate = formatBrandedDate(event.endDate);
-                const dateRange = endDate && endDate !== startDate ? `${startDate}~${endDate}` : startDate;
-                const city = event.city || event.venue || 'TBA';
-                const country = event.country || '';
-                const location = country ? `${city}, ${country}` : city;
 
-                // 使用poster1或poster字段，如果没有则使用默认图
-                const posterUrl = event.poster1 || event.poster || event.image || './image/asia-asiaad.jpg';
+                // 使用从events.html提取的数据
+                const title = event.title || 'ON TOUR EVENT';
+                const subtitle = event.subtitle || '';
+                const dateRange = event.dateRange || 'TBA';
+                const city = event.city || 'TBA';
+                const posterUrl = event.poster1 || './image/asia-asiaad.jpg';
+
+                // 构建标题HTML（有副标题则换行）
+                const titleHtml = subtitle 
+                    ? `${title}<br><span style="font-size: 0.85em; opacity: 0.9;">${subtitle}</span>`
+                    : title;
 
                 return `
-                <div class="branded-tour-card ${!hasLink ? 'no-link' : ''}" data-event-id="${event.id || index}">
-                    <img src="${posterUrl}" alt="${event.title || 'ON TOUR'}" class="branded-tour-poster" onerror="this.src='./image/asia-asiaad.jpg'">
+                <div class="branded-tour-card ${!hasLink ? 'no-link' : ''}" data-event-id="${index}">
+                    <img src="${posterUrl}" alt="${title}" class="branded-tour-poster" onerror="this.src='./image/asia-asiaad.jpg'">
                     <div class="branded-tour-status">ON TOUR</div>
                     <div class="branded-tour-content">
-                        <h3 class="branded-tour-name">${event.title || 'ON TOUR EVENT'}<br>${event.subtitle || ''}</h3>
-                        <div class="branded-tour-details">${dateRange} | ${location}</div>
+                        <h3 class="branded-tour-name">${titleHtml}</h3>
+                        <div class="branded-tour-details">${dateRange} | ${city}</div>
                         <div class="branded-tour-venue"></div>
                         ${hasLink 
                             ? `<a href="${event.link}" class="branded-tour-btn" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation();">${event.btn_text || 'INFO'}</a>`
-                            : `<span class="branded-tour-btn disabled" style="opacity: 0.6; cursor: default;">${event.btn_text || 'COMING SOON'}</span>`
+                            : `<span class="branded-tour-btn disabled" style="opacity: 0.9; cursor: default; background: rgba(139, 0, 0, 0.7);">${event.btn_text || 'COMING SOON'}</span>`
                         }
                     </div>
+                    <!-- 分享按钮 -->
+                    <button class="branded-tour-share" onclick="event.stopPropagation(); openShareModal('${title}', '${city}', '${dateRange}', '${posterUrl}', '${event.link || ''}')" title="Share">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="18" cy="5" r="3"></circle>
+                            <circle cx="6" cy="12" r="3"></circle>
+                            <circle cx="18" cy="19" r="3"></circle>
+                            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                        </svg>
+                    </button>
                 </div>
                 `;
             }).join('');
 
             displayedBrandedTours = toursToShow.length;
 
-            // 控制LOAD MORE按钮显示（如果还有更多）
+            // 控制LOAD MORE按钮显示（如果还有更多，且总数>=4）
             if (loadMoreContainer) {
-                if (displayedBrandedTours < allBrandedTours.length) {
+                if (allBrandedTours.length >= 4 && displayedBrandedTours < allBrandedTours.length) {
                     loadMoreContainer.classList.add('visible');
                 } else {
                     loadMoreContainer.classList.remove('visible');
@@ -1827,20 +1936,7 @@
             renderBrandedTours();
         }
 
-        // 日期格式化 - 统一格式为 YYYY.MM.DD
-        function formatBrandedDate(dateStr) {
-            if (!dateStr) return '';
-            try {
-                const date = new Date(dateStr);
-                if (isNaN(date.getTime())) return dateStr; // 如果解析失败返回原字符串
-                const year = date.getFullYear();
-                const month = String(date.getMonth() + 1).padStart(2, '0');
-                const day = String(date.getDate()).padStart(2, '0');
-                return `${year}.${month}.${day}`;
-            } catch (e) {
-                return dateStr;
-            }
-        }
+        
 
         // 初始化
         document.addEventListener('DOMContentLoaded', () => {
