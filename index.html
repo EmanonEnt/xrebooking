@@ -3,27 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XRE BOOKING</title>
+    <title>XRE BOOKING - Artist Agency</title>
     <link rel="icon" type="image/png" href="./image/webtop.png">
     <link rel="shortcut icon" type="image/png" href="./image/webtop.png">
+    <link rel="apple-touch-icon" href="./image/webtop.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <style>
         :root {
-            --dark-red: #8b0000;
-            --darker-red: #4a0000;
-            --silver: #c0c0c0;
+            --xre-red: #ff0000;
+            --xre-dark-red: #8b0000;
+            --mad-silver: #e8e8e8;
+            --mad-light: #f5f5f5;
             --black: #050505;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
         body {
             font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
             background-color: var(--black);
@@ -31,7 +27,7 @@
             overflow-x: hidden;
         }
 
-        /* ==================== 导航栏 ==================== */
+        /* 导航栏 - LiveGigs风格 */
         nav {
             position: fixed;
             top: 0;
@@ -42,25 +38,27 @@
             justify-content: space-between;
             align-items: center;
             z-index: 9999;
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, 0.5);
         }
 
+        /* Logo样式 - 呼吸+闪光效果 */
         .logo-img {
-            height: 50px;
+            height: 45px;
             width: auto;
+            max-width: 200px;
             object-fit: contain;
             cursor: pointer;
-            animation: logoBreathe 4s ease-in-out infinite, logoFlash 4s ease-in-out infinite;
+            animation: logoBreathe 8s ease-in-out infinite, logoFlash 8s ease-in-out infinite;
         }
 
         @keyframes logoBreathe {
             0%, 100% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(139, 0, 0, 0.4)); }
-            50% { transform: scale(1.05); filter: drop-shadow(0 0 15px rgba(139, 0, 0, 0.8)); }
+            50% { transform: scale(1.03); filter: drop-shadow(0 0 15px rgba(139, 0, 0, 0.8)); }
         }
 
         @keyframes logoFlash {
-            0%, 90%, 100% { opacity: 1; }
-            95% { opacity: 0.7; }
+            0%, 90%, 100% { filter: drop-shadow(0 0 5px rgba(139, 0, 0, 0.4)); }
+            95% { filter: drop-shadow(0 0 25px rgba(255, 255, 255, 0.8)) drop-shadow(0 0 15px rgba(139, 0, 0, 1)); }
         }
 
         .nav-links {
@@ -80,14 +78,15 @@
         }
 
         .nav-links a:hover {
-            color: var(--dark-red);
+            color: var(--xre-dark-red);
             text-shadow: 0 0 10px rgba(139, 0, 0, 0.8);
         }
 
-        .nav-links .neon-btn {
+        /* Neon按钮效果 */
+        .neon-btn {
             background: rgba(139, 0, 0, 0.3);
             color: #fff;
-            border: 2px solid var(--dark-red);
+            border: 2px solid var(--xre-dark-red);
             padding: 10px 25px;
             font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
             font-size: 12px;
@@ -99,264 +98,597 @@
             overflow: hidden;
         }
 
-        .nav-links .neon-btn:hover {
-            background: var(--dark-red);
-            box-shadow: 0 0 30px rgba(139, 0, 0, 0.8);
-            transform: scale(1.05);
+        .neon-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s;
         }
 
-        /* ==================== Hero Section ==================== */
+        .neon-btn:hover::before {
+            left: 100%;
+        }
+
+        .neon-btn:hover {
+            background: var(--xre-dark-red);
+            border-color: var(--xre-dark-red);
+            box-shadow: 0 0 30px rgba(139, 0, 0, 0.8), 0 0 60px rgba(139, 0, 0, 0.4);
+            transform: scale(1.05);
+            letter-spacing: 3px;
+        }
+
+        /* HERO区域 - 固定背景+抽屉效果 */
         .hero {
-            position: relative;
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100vh;
-            min-height: 700px;
+            min-height: 600px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            z-index: 1;
             overflow: hidden;
-            background: url('https://livegigsasia.com/image/p-p-3.png') center/cover no-repeat;
         }
 
-        .hero::before {
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://livegigsasia.com/image/p-p-3.png');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            filter: grayscale(100%) brightness(0.35);
+            z-index: 0;
+            animation: bgFlash 8s ease-in-out infinite;
+        }
+
+        @keyframes bgFlash {
+            0%, 85%, 100% { filter: grayscale(100%) brightness(0.35); }
+            90%, 95% { filter: grayscale(80%) brightness(0.5); }
+        }
+
+        .smoke-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 3;
+            overflow: hidden;
+            pointer-events: none;
+            opacity: 0.5;
+            animation: breathe 8s ease-in-out infinite;
+        }
+
+        .smoke {
+            position: absolute;
+            width: 150%;
+            height: 150%;
+            background: radial-gradient(ellipse at center, rgba(255,255,255,0.04) 0%, transparent 50%);
+            filter: blur(60px);
+        }
+
+        .smoke:nth-child(1) { top: -30%; left: -30%; animation: smokeFloat1 18s ease-in-out infinite; }
+        .smoke:nth-child(2) { top: 10%; right: -30%; animation: smokeFloat2 22s ease-in-out infinite; opacity: 0.6; }
+        .smoke:nth-child(3) { bottom: -30%; left: 10%; animation: smokeFloat3 20s ease-in-out infinite; opacity: 0.4; }
+
+        @keyframes breathe {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.02); }
+        }
+
+        @keyframes smokeFloat1 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(5%, 3%) scale(1.1); }
+        }
+
+        @keyframes smokeFloat2 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-5%, -3%) scale(1.05); }
+        }
+
+        @keyframes smokeFloat3 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(3%, -5%) scale(1.08); }
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.3) 100%);
+            z-index: 2;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            width: 100%;
+            padding: 0 20px;
+            margin-top: 120px;
+        }
+
+        .hero-title {
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            font-size: clamp(80px, 14vw, 220px);
+            font-weight: 400;
+            letter-spacing: clamp(8px, 2vw, 20px);
+            line-height: 0.85;
+            margin-bottom: 40px;
+            max-width: 1900px;
+            margin-left: auto;
+            margin-right: auto;
+            text-transform: uppercase;
+            animation: textFlash 8s ease-in-out infinite;
+        }
+
+        @keyframes textFlash {
+            0%, 90%, 100% { opacity: 0.9; text-shadow: 0 0 30px rgba(139, 0, 0, 0.3); }
+            95% { opacity: 1; text-shadow: 0 0 60px rgba(139, 0, 0, 0.8), 0 0 100px rgba(255, 255, 255, 0.3); }
+        }
+
+        .hero-title .gray {
+            color: rgba(100, 100, 100, 0.95);
+        }
+
+        .hero-title .red {
+            color: rgba(139, 0, 0, 0.95);
+        }
+
+        .hero-subtitle {
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            font-size: clamp(22px, 3.5vw, 42px);
+            letter-spacing: clamp(4px, 1vw, 10px);
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 1400px;
+            margin: 80px auto 0;
+            padding: 0 20px;
+            line-height: 1.8;
+            animation: textFlash 8s ease-in-out infinite;
+            animation-delay: 0.3s;
+        }
+
+        .hero-subtitle .line1 {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        /* 内容包装器 - 抽屉效果 */
+        .content-wrapper {
+            position: relative;
+            z-index: 10;
+            margin-top: 100vh;
+            background: var(--black);
+            min-height: 100vh;
+        }
+
+        /* FEATURED ARTISTS区域 */
+        .artists-section {
+            width: 100%;
+            padding: 100px 0;
+            background: linear-gradient(180deg, var(--mad-silver) 0%, var(--mad-light) 50%, var(--mad-silver) 100%);
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: clamp(36px, 6vw, 72px);
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: var(--black);
+            margin-bottom: 20px;
+            font-weight: 900;
+        }
+
+        .title-underline {
+            width: 100px;
+            height: 3px;
+            background: var(--xre-red);
+            margin: 0 auto 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .title-underline::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            50% { left: 100%; }
+            100% { left: 100%; }
+        }
+
+        /* 艺人网格 - 接近满屏 */
+        .artists-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            max-width: 95%;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .artist-card-wrapper { 
+            text-align: center; 
+            position: relative;
+        }
+
+        .artist-card {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 750/360;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.4s;
+            border: 2px solid transparent;
+        }
+
+        .artist-card:hover {
+            border-color: var(--xre-red);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .artist-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transition: all 0.4s;
+        }
+
+        .artist-card:hover img { 
+            filter: grayscale(0%); 
+            transform: scale(1.05); 
+        }
+
+        /* 艺人蒙版效果 - 类似海报hover */
+        .artist-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 30px 20px 20px;
+            background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 50%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.4s;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            height: 100%;
+        }
+
+        .artist-card:hover .artist-overlay { 
+            opacity: 1; 
+        }
+
+        .artist-name-overlay {
+            font-size: 24px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #fff;
+            text-align: center;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(139, 0, 0, 0.8);
+        }
+
+        .artist-booking-text {
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--mad-silver);
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+
+        .artist-name-below {
+            margin-top: 15px;
+            font-size: 16px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--black);
+        }
+
+        /* 广告区 - 背景图片 */
+        .promo-section {
+            width: 100%;
+            padding: 80px 0;
+            background-image: url('./image/xre-adbg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .promo-section::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.2);
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 0;
+        }
+
+        .promo-container {
+            position: relative;
             z-index: 1;
         }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            text-align: center;
-            width: 100%;
-            padding: 0 20px;
+        /* 广告区红色横线 */
+        .promo-red-line {
+            width: 60px;
+            height: 3px;
+            background: var(--xre-red);
+            margin: 15px 0 20px;
         }
 
-        .hero-title {
-            font-size: clamp(60px, 10vw, 150px);
-            font-weight: 400;
-            letter-spacing: clamp(8px, 2vw, 20px);
-            line-height: 0.9;
-            margin-bottom: 30px;
+        .promo-block.top .promo-red-line {
+            margin-left: 0;
+        }
+
+        .promo-block.bottom .promo-red-line {
+            margin-left: auto;
+            margin-right: 0;
+        }
+
+        /* 播放列表多播放器布局 */
+        .playlist-embeds {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .spotify-embed {
+            height: 200px;
+            border: none;
+        }
+
+        .mini-player {
+            background: rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .mini-player-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: rgba(255,255,255,0.1);
+            font-size: 12px;
+            letter-spacing: 1px;
             text-transform: uppercase;
-        }
-
-        .hero-title .gray {
-            color: rgba(150, 150, 150, 0.9);
-        }
-
-        .hero-title .red {
-            color: rgba(180, 0, 0, 0.95);
-        }
-
-        .hero-subtitle {
-            font-size: clamp(16px, 2.5vw, 28px);
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.95);
-            line-height: 1.8;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .hero-subtitle .line {
-            display: block;
-            margin: 5px 0;
-        }
-
-        /* ==================== Artists Section ==================== */
-        .artists-section {
-            padding: 80px 0;
-            background: var(--black);
-        }
-
-        .section-title {
-            text-align: center;
-            font-size: clamp(32px, 5vw, 48px);
-            letter-spacing: 5px;
-            text-transform: uppercase;
-            margin-bottom: 50px;
             color: #fff;
         }
 
-        .artists-grid {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 20px;
-            padding: 0 40px;
-            max-width: 1600px;
-            margin: 0 auto;
+        .mini-player-header svg {
+            color: var(--xre-red);
         }
 
-        .artist-item {
+        .mini-player iframe {
+            display: block;
+            width: 100%;
+            height: 80px;
+            border: none;
+        }
+
+        .qq-player {
+            border-left: 3px solid #31c27c;
+        }
+
+        .netease-player {
+            border-left: 3px solid #c20c0c;
+        }
+
+
+        .promo-container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        .promo-poster {
             position: relative;
             overflow: hidden;
-            cursor: default;
-            background: #000;
-            aspect-ratio: 1;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
         }
 
-        .artist-item img {
+        .promo-poster img {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
+            height: auto;
             display: block;
-            transition: all 0.4s;
+            transition: transform 0.4s;
         }
 
-        .artist-item:hover img {
-            filter: brightness(0.5);
-        }
+        .promo-poster:hover img { transform: scale(1.02); }
 
-        .artist-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 20px;
-            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%);
-            opacity: 0;
-            transition: opacity 0.4s;
-        }
-
-        .artist-item:hover .artist-overlay {
-            opacity: 1;
-        }
-
-        .artist-name {
-            font-size: 16px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: #fff;
-            text-align: center;
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-
-        .artist-name:hover {
-            color: var(--dark-red);
-            text-shadow: 0 0 20px rgba(139, 0, 0, 0.8);
-        }
-
-        /* ==================== Branded Tours Section ==================== */
-        .branded-tours {
-            background: linear-gradient(to bottom, var(--silver) 0%, var(--dark-red) 100%);
-            padding: 0;
-            position: relative;
-        }
-
-        .tours-bg {
-            width: 100%;
-            min-height: 600px;
-            background: url('./image/xre-adbg.jpg') center/cover no-repeat;
+        .promo-center {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 60px 40px;
-        }
-
-        .tours-content {
-            display: flex;
             gap: 30px;
-            max-width: 1400px;
-            width: 100%;
-            align-items: stretch;
         }
 
-        .tour-box {
-            flex: 1;
-            border: 2px solid var(--dark-red);
-            background: rgba(0,0,0,0.8);
+        .promo-block {
+            background: rgba(0,0,0,0.3);
             padding: 30px;
-            display: flex;
-            flex-direction: column;
-            min-height: 400px;
+            border: 1px solid rgba(255,255,255,0.2);
         }
 
-        .tour-box h3 {
-            font-size: 24px;
+        .promo-block.top { text-align: left; }
+        .promo-block.bottom { text-align: right; }
+
+        .promo-title {
+            font-size: 28px;
             letter-spacing: 3px;
             text-transform: uppercase;
-            margin-bottom: 20px;
             color: #fff;
-            text-align: center;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
         }
 
-        .tour-box p {
+        .promo-desc {
+            font-family: Arial, sans-serif;
             font-size: 14px;
-            line-height: 1.6;
-            color: var(--silver);
+            line-height: 1.8;
+            color: rgba(255,255,255,0.9);
             margin-bottom: 20px;
-            flex: 1;
         }
 
-        .tour-btn {
-            background: rgba(139, 0, 0, 0.3);
+        .promo-btn {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
             color: #fff;
-            border: 2px solid var(--dark-red);
+            border: 2px solid #fff;
             padding: 12px 30px;
             font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
             font-size: 12px;
             letter-spacing: 2px;
             text-transform: uppercase;
+            text-decoration: none;
             cursor: pointer;
             transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .promo-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .promo-btn:hover::before {
+            left: 100%;
+        }
+
+        .promo-btn:hover {
+            background: #fff;
+            color: var(--xre-red);
+            box-shadow: 0 0 30px rgba(255,255,255,0.4);
+        }
+
+        .promo-playlist {
+            background: rgba(0,0,0,0.4);
+            padding: 30px;
+            border: 1px solid rgba(255,255,255,0.2);
             text-align: center;
-            text-decoration: none;
-            display: inline-block;
         }
 
-        .tour-btn:hover {
-            background: var(--dark-red);
-            box-shadow: 0 0 30px rgba(139, 0, 0, 0.8);
-        }
-
-        .music-players {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-top: auto;
-        }
-
-        .player-btn {
-            background: rgba(192, 192, 192, 0.1);
-            border: 1px solid var(--silver);
+        .playlist-title {
+            font-size: 32px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
             color: #fff;
-            padding: 10px;
-            text-align: center;
-            text-decoration: none;
+            margin-bottom: 20px;
+        }
+
+        .playlist-embed {
+            width: 100%;
+            height: 380px;
+            border: none;
+            margin-bottom: 20px;
+        }
+
+        .playlist-links {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .playlist-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 10px 20px;
             font-size: 12px;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-decoration: none;
+            cursor: pointer;
             transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
         }
 
-        .player-btn:hover {
-            background: var(--dark-red);
-            border-color: var(--dark-red);
+        .playlist-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s;
         }
 
-        /* ==================== Events Section ==================== */
-        .events-section {
-            padding: 80px 40px;
-            background: var(--black);
+        .playlist-link:hover::before {
+            left: 100%;
         }
 
-        /* ==================== Footer ==================== */
+        .playlist-link:hover {
+            background: rgba(255,255,255,0.2);
+            border-color: #fff;
+        }
+
+        /* 间隙区域 */
+        .footer-gap {
+            height: 150px;
+            background: linear-gradient(180deg, #ff0000 0%, #8b0000 50%, var(--mad-silver) 100%);
+            position: relative;
+        }
+
+        /* 底部区域 - 反色黑底 */
         .site-footer {
-            background: var(--black);
-            color: var(--silver);
-            border-top: 2px solid var(--dark-red);
+            background: #000;
+            color: #c0c0c0;
+            position: relative;
+            z-index: 100;
         }
 
         .footer-main {
-            padding: 50px 40px;
+            padding: 50px 40px 40px;
+            position: relative;
+            background: #000;
         }
 
         .footer-container {
@@ -368,89 +700,178 @@
             gap: 40px;
         }
 
-        .footer-address {
-            text-align: right;
+        .footer-contact-left {
+            flex: 1;
+            text-align: left;
             font-family: 'Courier New', monospace;
+        }
+
+        .contact-item {
+            margin-bottom: 10px;
+            color: #c0c0c0;
             font-size: 13px;
-            line-height: 1.8;
-            color: var(--silver);
+            letter-spacing: 0.5px;
+            line-height: 1.5;
+        }
+
+        .contact-item a {
+            color: #c0c0c0;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        .contact-item a:hover {
+            color: var(--xre-red);
         }
 
         .footer-brand {
+            flex: 0 0 auto;
             text-align: center;
         }
 
         .footer-logo {
-            font-size: 36px;
+            font-size: clamp(32px, 6vw, 48px);
+            font-weight: 400;
             letter-spacing: 4px;
+            line-height: 1;
+            text-transform: uppercase;
             margin-bottom: 20px;
+            animation: simpleGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes simpleGlow {
+            0%, 100% { 
+                text-shadow: 0 0 10px rgba(139, 0, 0, 0.3);
+                opacity: 0.95;
+            }
+            50% { 
+                text-shadow: 0 0 20px rgba(139, 0, 0, 0.6), 0 0 30px rgba(139, 0, 0, 0.3);
+                opacity: 1;
+            }
         }
 
         .footer-logo .xre {
-            color: var(--silver);
+            color: var(--xre-dark-red);
         }
 
         .footer-logo .booking {
-            color: var(--dark-red);
+            color: #c0c0c0;
         }
 
         .social-links {
             display: flex;
             gap: 15px;
             justify-content: center;
+            margin-bottom: 25px;
         }
 
         .social-icon {
-            width: 44px;
-            height: 44px;
+            width: 40px;
+            height: 40px;
             border: 2px solid #666;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: var(--silver);
+            color: #c0c0c0;
             text-decoration: none;
             transition: all 0.3s;
+            background: rgba(255,255,255,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social-icon::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .social-icon:hover::before {
+            left: 100%;
         }
 
         .social-icon:hover {
-            border-color: var(--dark-red);
-            color: var(--dark-red);
+            border-color: var(--xre-red);
+            color: var(--xre-red);
             transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255,0,0,0.3);
         }
 
         .producer-section {
             text-align: center;
-            margin-top: 20px;
         }
 
         .producer-label {
             font-size: 10px;
-            color: #777;
+            color: #888;
             text-transform: uppercase;
             letter-spacing: 3px;
             margin-bottom: 10px;
+            font-family: 'Courier New', monospace;
         }
 
         .producer-logo {
             height: 35px;
+            width: auto;
             opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .producer-logo:hover {
+            opacity: 1;
+        }
+
+        .footer-contact-right {
+            flex: 1;
+            text-align: right;
+            font-family: 'Courier New', monospace;
         }
 
         .footer-bottom {
-            background: #0a0a0a;
+            background: #111;
             border-top: 1px solid #333;
             padding: 20px 40px;
-            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .footer-legal {
+            display: flex;
+            gap: 25px;
+        }
+
+        .footer-legal a {
+            color: #888;
+            text-decoration: none;
+            font-size: 11px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        .footer-legal a:hover {
+            color: var(--xre-red);
         }
 
         .copyright {
-            color: #666;
+            color: #777;
             font-size: 11px;
             letter-spacing: 1px;
+            font-family: 'Courier New', monospace;
         }
 
-        /* ==================== Modal ==================== */
+        /* Booking弹窗 - Membership样式 */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -462,17 +883,21 @@
             z-index: 10000;
             justify-content: center;
             align-items: center;
+            padding: 20px;
         }
 
         .modal-overlay.active { display: flex; }
 
         .modal-content {
             background: linear-gradient(135deg, #0a0000 0%, #050505 100%);
-            border: 1px solid var(--darker-red);
-            padding: 40px;
-            max-width: 500px;
-            width: 90%;
+            border: 1px solid var(--xre-dark-red);
+            padding: 40px 35px;
+            max-width: 480px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
             position: relative;
+            box-shadow: 0 0 50px rgba(74, 0, 0, 0.5);
         }
 
         .modal-close {
@@ -482,17 +907,25 @@
             font-size: 28px;
             color: #666;
             cursor: pointer;
+            transition: all 0.3s;
         }
 
-        .modal-close:hover { color: var(--dark-red); }
+        .modal-close:hover { color: var(--xre-red); transform: scale(1.2); }
 
         .modal-content h2 {
             font-size: 28px;
             letter-spacing: 3px;
             text-transform: uppercase;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             color: #fff;
             text-align: center;
+        }
+
+        .modal-content p {
+            font-size: 13px;
+            color: var(--mad-silver);
+            text-align: center;
+            margin-bottom: 25px;
         }
 
         .form-group { margin-bottom: 18px; }
@@ -502,309 +935,667 @@
             font-size: 11px;
             letter-spacing: 2px;
             text-transform: uppercase;
-            color: var(--silver);
+            color: var(--mad-silver);
             margin-bottom: 6px;
         }
 
         .form-group input,
-        .form-group textarea {
+        .form-group textarea,
+        .form-group select {
             width: 100%;
             padding: 12px;
             background: rgba(0, 0, 0, 0.6);
-            border: 1px solid var(--darker-red);
+            border: 1px solid var(--xre-dark-red);
             color: #fff;
             font-size: 14px;
+            letter-spacing: 1px;
+            transition: all 0.3s;
             font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
         }
 
         .form-group input:focus,
-        .form-group textarea:focus {
+        .form-group textarea:focus,
+        .form-group select:focus {
             outline: none;
-            border-color: var(--dark-red);
+            border-color: var(--xre-red);
+            box-shadow: 0 0 15px rgba(139, 0, 0, 0.3);
         }
 
-        .submit-btn {
+        .form-group textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .modal-content .neon-btn {
             width: 100%;
+            margin-top: 10px;
             padding: 14px;
             font-size: 13px;
             background: transparent;
             color: #fff;
-            border: 2px solid var(--dark-red);
+            border: 2px solid var(--xre-dark-red);
             cursor: pointer;
+            transition: all 0.3s;
             font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
             letter-spacing: 2px;
             text-transform: uppercase;
-            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
         }
 
-        .submit-btn:hover {
-            background: var(--dark-red);
+        .modal-content .neon-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .modal-content .neon-btn:hover::before {
+            left: 100%;
+        }
+
+        .modal-content .neon-btn:hover {
+            background: var(--xre-dark-red);
             box-shadow: 0 0 20px rgba(139, 0, 0, 0.5);
         }
 
-        /* ==================== Responsive ==================== */
+        
+        /* BRANDED TOURS区域 - 自主活动结构 */
+        .branded-tours-section {
+            width: 100%;
+            padding: 100px 0;
+            background: linear-gradient(180deg, var(--mad-silver) 0%, var(--mad-light) 50%, var(--mad-silver) 100%);
+            position: relative;
+        }
+
+        .branded-title {
+            color: var(--black);
+        }
+
+        .branded-tours-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .branded-tours-load-more {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .branded-tours-load-more .neon-btn {
+            display: inline-block;
+            padding: 15px 40px;
+            font-size: 14px;
+        }
+
+        .branded-tour-card {
+            position: relative;
+            aspect-ratio: 3/4;
+            overflow: hidden;
+            cursor: pointer;
+            background: #000;
+            border: 2px solid transparent;
+            transition: all 0.4s;
+        }
+
+        .branded-tour-card:hover {
+            border-color: var(--xre-red);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .branded-tour-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transition: all 0.4s;
+        }
+
+        .branded-tour-card:hover img {
+            filter: grayscale(0%);
+            transform: scale(1.05);
+        }
+
+        .branded-tour-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.3) 50%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.4s;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 20px;
+        }
+
+        .branded-tour-card:hover .branded-tour-overlay {
+            opacity: 1;
+        }
+
+        .branded-tour-title {
+            font-size: 18px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #fff;
+            margin-bottom: 8px;
+            text-shadow: 0 0 10px rgba(139, 0, 0, 0.8);
+        }
+
+        .branded-tour-date {
+            font-size: 12px;
+            color: var(--mad-silver);
+            margin-bottom: 5px;
+            font-family: Arial, sans-serif;
+        }
+
+        .branded-tour-location {
+            font-size: 11px;
+            color: #888;
+            font-family: Arial, sans-serif;
+        }
+
+        .branded-tour-status {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--xre-red);
+            color: #fff;
+            padding: 5px 10px;
+            font-size: 10px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
         @media (max-width: 1024px) {
-            .artists-grid { grid-template-columns: repeat(3, 1fr); }
-            .tours-content { flex-direction: column; }
+            .branded-tours-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 20px;
+            }
         }
 
         @media (max-width: 768px) {
-            .artists-grid { grid-template-columns: repeat(2, 1fr); padding: 0 20px; }
-            .nav-links { gap: 20px; }
-            .nav-links a { font-size: 12px; }
-            .footer-container { flex-direction: column; text-align: center; }
-            .footer-address { text-align: center; }
+            .branded-tours-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+                padding: 0 15px;
+            }
+            .branded-tour-title {
+                font-size: 14px;
+            }
         }
 
         @media (max-width: 480px) {
-            .artists-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-            .artist-name { font-size: 12px; }
+            .branded-tours-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+                padding: 0 10px;
+            }
+            .branded-tour-title {
+                font-size: 12px;
+                letter-spacing: 1px;
+            }
+            .branded-tour-date, .branded-tour-location {
+                font-size: 10px;
+            }
+        }
+
+        
+        /* webtop呼吸闪烁效果 */
+        .webtop-breathe {
+            margin-top: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .webtop-breathe img {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+            animation: webtopBreathe 4s ease-in-out infinite, webtopFlash 4s ease-in-out infinite;
+            filter: drop-shadow(0 0 15px rgba(139, 0, 0, 0.6));
+        }
+
+        @keyframes webtopBreathe {
+            0%, 100% { 
+                transform: scale(1); 
+                filter: drop-shadow(0 0 10px rgba(139, 0, 0, 0.4));
+            }
+            50% { 
+                transform: scale(1.1); 
+                filter: drop-shadow(0 0 20px rgba(139, 0, 0, 0.8));
+            }
+        }
+
+        @keyframes webtopFlash {
+            0%, 90%, 100% { 
+                opacity: 0.8;
+                filter: drop-shadow(0 0 10px rgba(139, 0, 0, 0.4));
+            }
+            95% { 
+                opacity: 1;
+                filter: drop-shadow(0 0 30px rgba(255, 255, 255, 0.6)) drop-shadow(0 0 20px rgba(139, 0, 0, 1));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .webtop-breathe {
+                margin-top: 50px;
+            }
+            .webtop-breathe img {
+                width: 90px;
+                height: 90px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .webtop-breathe {
+                margin-top: 40px;
+            }
+            .webtop-breathe img {
+                width: 70px;
+                height: 70px;
+            }
+        }
+
+        /* 响应式 */
+        @media (max-width: 1024px) {
+            nav { padding: 0 30px; height: 70px; }
+            .logo-img { height: 40px; max-width: 180px; }
+            .nav-links { gap: 25px; }
+            .hero-content { margin-top: 100px; }
+            .hero-title { font-size: clamp(70px, 13vw, 120px); }
+            .hero-subtitle { font-size: clamp(20px, 3vw, 32px); margin-top: 60px; }
+            .artists-grid { grid-template-columns: repeat(3, 1fr); gap: 15px; }
+            .promo-container { grid-template-columns: 1fr; gap: 30px; }
+            .footer-container { gap: 30px; }
+        }
+
+        @media (max-width: 768px) {
+            nav { padding: 0 20px; height: 65px; }
+            .logo-img { height: 35px; max-width: 160px; }
+            .nav-links a { font-size: 11px; letter-spacing: 2px; }
+            .nav-links .neon-btn { padding: 8px 16px; font-size: 10px; }
+            .hero-content { margin-top: 80px; }
+            .hero-title { font-size: clamp(55px, 14vw, 80px); letter-spacing: 5px; margin-bottom: 35px; }
+            .hero-subtitle { font-size: clamp(16px, 3.5vw, 22px); letter-spacing: 2.5px; margin-top: 50px; }
+            .artists-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 0 15px; }
+            .artist-name-overlay { font-size: 18px; }
+            .artist-booking-text { font-size: 10px; }
+            .promo-container { padding: 0 30px; }
+            .footer-gap { height: 100px; }
+            .footer-main { padding: 40px 30px 30px; }
+            .footer-container { flex-direction: column; gap: 30px; text-align: center; }
+            .footer-contact-left, .footer-contact-right { text-align: center; flex: 1; width: 100%; }
+            .social-links { margin-bottom: 20px; }
+            .producer-section { text-align: center; }
+            .footer-bottom { flex-direction: column; gap: 15px; padding: 20px 30px; text-align: center; }
+            .footer-legal { flex-wrap: wrap; justify-content: center; gap: 20px; }
+            .form-row { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 480px) {
+            nav { padding: 0 15px; height: 60px; background: rgba(0, 0, 0, 0.5); }
+            .logo-img { height: 32px; max-width: 140px; }
+            .nav-links { gap: 12px; }
+            .nav-links a { font-size: 10px; letter-spacing: 1px; }
+            .nav-links .neon-btn { padding: 6px 14px; font-size: 9px; }
+            .hero-content { margin-top: 60px; }
+            .hero-title { font-size: clamp(45px, 13vw, 65px); letter-spacing: 4px; margin-bottom: 30px; }
+            .hero-subtitle { font-size: clamp(13px, 3.5vw, 16px); letter-spacing: 2px; margin-top: 40px; line-height: 1.6; }
+            .hero-subtitle .line1 { margin-bottom: 5px; }
+            .smoke-container { opacity: 0.35; }
+            .artists-grid { gap: 12px; padding: 0 10px; }
+            .artist-name-overlay { font-size: 14px; letter-spacing: 2px; }
+            .artist-booking-text { font-size: 9px; letter-spacing: 1px; }
+            .artist-name-below { font-size: 12px; }
+            .promo-container { padding: 0 20px; }
+            .promo-title { font-size: 22px; }
+            .promo-desc { font-size: 12px; }
+            .playlist-title { font-size: 24px; }
+            .playlist-embed { height: 250px; }
+            .footer-gap { height: 80px; }
+            .footer-main { padding: 35px 25px 25px; }
+            .footer-logo { font-size: 28px; letter-spacing: 3px; margin-bottom: 15px; }
+            .social-links { gap: 12px; margin-bottom: 20px; }
+            .social-icon { width: 36px; height: 36px; }
+            .social-icon svg { width: 14px; height: 14px; }
+            .contact-item { font-size: 11px; margin-bottom: 8px; }
+            .producer-label { font-size: 9px; letter-spacing: 2px; }
+            .producer-logo { height: 30px; }
+            .footer-bottom { padding: 15px 20px; gap: 12px; }
+            .footer-legal { gap: 15px; }
+            .footer-legal a { font-size: 10px; }
+            .copyright { font-size: 10px; }
+            .modal-content { padding: 30px 20px; }
+            .modal-content h2 { font-size: 22px; }
+        }
+
+        @media (max-width: 375px) {
+            .hero-title { font-size: 38px; letter-spacing: 3px; }
+            .hero-subtitle { font-size: 11px; }
+            .artists-grid { gap: 10px; padding: 0 8px; }
+            .artist-name-overlay { font-size: 12px; }
+            .footer-logo { font-size: 24px; letter-spacing: 2px; }
+            .social-icon { width: 34px; height: 34px; }
+            .contact-item { font-size: 10px; }
         }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
+
+    <!-- 导航栏 -->
     <nav>
-        <img src="./image/webtop.png" alt="XRE BOOKING" class="logo-img" onclick="window.location.href='./index.html'">
+        <img src="./image/xrelogoL.png" alt="XRE BOOKING" class="logo-img" id="logo" onclick="location.href='./index.html'" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div style="display:none; font-size: 28px; letter-spacing: 3px; text-transform: uppercase; cursor: pointer;" onclick="location.href='./index.html'">
+            <span style="color: var(--xre-red); text-shadow: 0 0 20px rgba(255, 0, 0, 0.5);">XRE</span><span style="color: #fff;">BOOKING</span>
+        </div>
         <div class="nav-links">
-            <a href="https://www.livegigsasia.com/events.html" target="_blank">EVENTS</a>
-            <a href="#" onclick="openModal()">Partners</a>
+            <a href="../index.html">LIVEGIGS ASIA</a>
+            <a href="./artists.html">ARTISTS</a>
+            <button class="neon-btn" onclick="openModal()">BOOKING NOW</button>
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- HERO区域 -->
     <section class="hero">
+        <div class="hero-bg"></div>
+
+        <div class="smoke-container">
+            <div class="smoke"></div>
+            <div class="smoke"></div>
+            <div class="smoke"></div>
+        </div>
+
+        <div class="hero-overlay"></div>
+
         <div class="hero-content">
             <h1 class="hero-title">
                 <span class="gray">XRE</span><span class="red">BOOKING</span>
             </h1>
             <p class="hero-subtitle">
-                <span class="line">Booking Agency in Punkrock, Garage, Mod,</span>
-                <span class="line">Powerpop, Surf, Poppunk, RocknRoll,</span>
-                <span class="line">Hardcore, Metal.</span>
+                <span class="line1">Booking Agency in Punkrock, Garage, Mod, Powerpop, Surf, Poppunk, RocknRoll, Hardcore, Metal</span>
             </p>
-        </div>
-    </section>
-
-    <!-- Artists Section -->
-    <section class="artists-section">
-        <h2 class="section-title">ARTISTS</h2>
-        <div class="artists-grid">
-            <div class="artist-item">
-                <img src="./image/artists/acidez.jpg" alt="ACIDEZ">
-                <div class="artist-overlay">
-                    <div class="artist-name" onclick="window.open('https://www.livegigsasia.com/artists/acidez.html', '_blank')">ACIDEZ (MX)</div>
-                </div>
-            </div>
-            <div class="artist-item">
-                <img src="./image/artists/brainfailure.jpg" alt="Brain Failure">
-                <div class="artist-overlay">
-                    <div class="artist-name" onclick="window.open('https://www.livegigsasia.com/artists/brainfailure.html', '_blank')">BRAIN FAILURE (CN)</div>
-                </div>
-            </div>
-            <div class="artist-item">
-                <img src="./image/artists/demolition.jpg" alt="Demolition">
-                <div class="artist-overlay">
-                    <div class="artist-name" onclick="window.open('https://www.livegigsasia.com/artists/demolition.html', '_blank')">DEMOLITION (CHN)</div>
-                </div>
-            </div>
-            <div class="artist-item">
-                <img src="./image/artists/noname.jpg" alt="Noname">
-                <div class="artist-overlay">
-                    <div class="artist-name" onclick="window.open('https://www.livegigsasia.com/artists/noname.html', '_blank')">NON SERVIUM (ES)</div>
-                </div>
-            </div>
-            <div class="artist-item">
-                <img src="./image/artists/omaira.jpg" alt="Omaira">
-                <div class="artist-overlay">
-                    <div class="artist-name" onclick="window.open('https://www.livegigsasia.com/artists/omaira.html', '_blank')">OMAIRA (J)</div>
-                </div>
-            </div>
-            <div class="artist-item">
-                <img src="./image/artists/snapface.jpg" alt="Snapface">
-                <div class="artist-overlay">
-                    <div class="artist-name" onclick="window.open('https://www.livegigsasia.com/artists/snapface.html', '_blank')">SNAPFACE (FR)</div>
-                </div>
-            </div>
-            <div class="artist-item">
-                <img src="./image/artists/thenoname.jpg" alt="The Noname">
-                <div class="artist-overlay">
-                    <div class="artist-name" onclick="window.open('https://www.livegigsasia.com/artists/thenoname.html', '_blank')">THE NONAME (CN)</div>
-                </div>
-            </div>
-            <div class="artist-item">
-                <img src="./image/artists/thesigs.jpg" alt="The Sigs">
-                <div class="artist-overlay">
-                    <div class="artist-name" onclick="window.open('https://www.livegigsasia.com/artists/thesigs.html', '_blank')">THE SIGS (TH)</div>
-                </div>
-            </div>
-            <div class="artist-item">
-                <img src="./image/artists/thenomads.jpg" alt="The Nomads">
-                <div class="artist-overlay">
-                    <div class="artist-name" onclick="window.open('https://www.livegigsasia.com/artists/thenomads.html', '_blank')">THE NOMADS (SWE)</div>
-                </div>
-            </div>
-            <div class="artist-item">
-                <img src="./image/artists/turboheart.jpg" alt="Turbo Heart">
-                <div class="artist-overlay">
-                    <div class="artist-name" onclick="window.open('https://www.livegigsasia.com/artists/turboheart.html', '_blank')">TURBO HEART (SWE)</div>
-                </div>
-            </div>
-            <div class="artist-item">
-                <img src="./image/artists/terror.jpg" alt="Terror">
-                <div class="artist-overlay">
-                    <div class="artist-name" onclick="window.open('https://www.livegigsasia.com/artists/terror.html', '_blank')">TERROR (US)</div>
-                </div>
-            </div>
-            <div class="artist-item">
-                <img src="./image/artists/dri.jpg" alt="DRI">
-                <div class="artist-overlay">
-                    <div class="artist-name" onclick="window.open('https://www.livegigsasia.com/artists/dri.html', '_blank')">D.R.I. & THE KIDS TABLE (US)</div>
-                </div>
-            </div>
-            <div class="artist-item">
-                <img src="./image/artists/stitches.jpg" alt="The Stitches">
-                <div class="artist-overlay">
-                    <div class="artist-name" onclick="window.open('https://www.livegigsasia.com/artists/stitches.html', '_blank')">THE STITCHES (US)</div>
-                </div>
-            </div>
-            <div class="artist-item">
-                <img src="./image/artists/jaya.jpg" alt="Jaya The Cat">
-                <div class="artist-overlay">
-                    <div class="artist-name" onclick="window.open('https://www.livegigsasia.com/artists/jaya.html', '_blank')">JAYA THE CAT (US)</div>
-                </div>
-            </div>
-            <div class="artist-item">
-                <img src="./image/artists/newartist.jpg" alt="New Artist Coming">
-                <div class="artist-overlay">
-                    <div class="artist-name">NEW ARTIST COMING</div>
-                </div>
+            <div class="webtop-breathe">
+                <img src="./image/webtop.png" alt="XRE">
             </div>
         </div>
     </section>
 
-    <!-- Branded Tours Section -->
-    <section class="branded-tours">
-        <div class="tours-bg">
-            <div class="tours-content">
-                <!-- Box 1: Punk Heart Fest -->
-                <div class="tour-box">
-                    <h3>PUNK HEART FEST</h3>
-                    <p>The ultimate punk rock experience bringing together the best bands from across Asia. Join us for an unforgettable night of raw energy and powerful performances.</p>
-                    <a href="#" class="tour-btn">MORE EVENTS</a>
-                </div>
+    <!-- 内容包装器 -->
+    <div class="content-wrapper">
 
-                <!-- Box 2: Chinese Rocks Chart -->
-                <div class="tour-box">
-                    <h3>CHINESE ROCKS CHART</h3>
-                    <p>Discover the latest and greatest in Chinese rock music. Our curated chart showcases the most exciting bands and tracks from the underground scene.</p>
-                    <a href="http://chineserocks.net" target="_blank" class="tour-btn">CHINESEROCKS.NET</a>
-                </div>
+        <!-- FEATURED ARTISTS区域 -->
+        <section class="artists-section">
+            <h2 class="section-title">FEATURED ARTISTS</h2>
+            <div class="title-underline"></div>
+            <div class="artists-grid" id="artistsGrid"></div>
+        </section>
 
-                <!-- Box 3: Music Players -->
-                <div class="tour-box">
-                    <h3>PLAYLISTS</h3>
-                    <p>Listen to our curated playlists featuring the best punk, rock, and metal tracks from our roster and beyond.</p>
-                    <div class="music-players">
-                        <a href="https://open.spotify.com" target="_blank" class="player-btn">SPOTIFY</a>
-                        <a href="https://i2.y.qq.com/n3/other/pages/details/playlist.html?id=9674279142&hosteuin=" target="_blank" class="player-btn">QQ MUSIC</a>
-                        <a href="https://163cn.tv/2tWDD7j" target="_blank" class="player-btn">NETEASE</a>
+        
+        <!-- BRANDED TOURS区域 - 自主活动结构 -->
+        <section class="branded-tours-section">
+            <h2 class="section-title branded-title">BRANDED TOURS</h2>
+            <div class="title-underline"></div>
+            <div class="branded-tours-grid" id="brandedToursGrid">
+                <!-- 动态加载ON TOUR活动 -->
+            </div>
+            <div class="branded-tours-load-more" id="brandedToursLoadMore" style="display: none;">
+                <button class="neon-btn" onclick="loadMoreBrandedTours()">LOAD MORE</button>
+            </div>
+        </section>
+
+        <!-- 广告区 -->
+        <section class="promo-section">
+            <div class="promo-container">
+                <div class="promo-poster">
+                    <img src="https://livegigsasia.com/image/1-b-2.jpg" alt="Event Poster" onerror="this.src='https://via.placeholder.com/400x600/8b0000/fff?text=EVENT+POSTER'">
+                </div>
+                <div class="promo-center">
+                    <div class="promo-block top">
+                        <h3 class="promo-title">PUNK HEART FEST</h3>
+                        <div class="promo-red-line"></div>
+                        <p class="promo-desc">The ultimate punk rock experience bringing together the best bands from across Asia. Join us for an unforgettable night of raw energy and powerful performances.</p>
+                        <a href="../events.html" class="promo-btn">VIEW EVENT</a>
+                    </div>
+                    <div class="promo-block bottom">
+                        <h3 class="promo-title">UPCOMING SHOWS</h3>
+                        <div class="promo-red-line"></div>
+                        <p class="promo-desc">Discover our latest tour dates and book your tickets now. From intimate club shows to major festival appearances, we have got you covered.</p>
+                        <a href="../events.html" class="promo-btn">BUY TICKETS</a>
+                    </div>
+                </div>
+                <div class="promo-playlist">
+                    <h3 class="playlist-title">CHINESEROCKS CHART</h3>
+                    <div class="playlist-embeds">
+                        <!-- Spotify主播放器 -->
+                        <iframe class="playlist-embed spotify-embed" src="https://open.spotify.com/embed/playlist/3ZFjYPcR6zZaHQ6rlc3S29" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+
+                        <!-- QQ音乐播放器 -->
+                        <div class="mini-player qq-player">
+                            <div class="mini-player-header">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+                                <span>QQ Music</span>
+                            </div>
+                            <iframe src="https://y.qq.com/n/ryqq/playlist/8313621383" width="100%" height="80" frameborder="0" allow="autoplay" loading="lazy"></iframe>
+                        </div>
+
+                        <!-- 网易云播放器 -->
+                        <div class="mini-player netease-player">
+                            <div class="mini-player-header">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+                                <span>NetEase Cloud</span>
+                            </div>
+                            <iframe src="https://music.163.com/outchain/player?type=0&id=123415183&auto=0&height=80" width="100%" height="80" frameborder="0" allow="autoplay" loading="lazy"></iframe>
+                        </div>
+                    </div>
+                    <div class="playlist-links">
+                        <a href="https://open.spotify.com/playlist/3ZFjYPcR6zZaHQ6rlc3S29" target="_blank" class="playlist-link">Spotify</a>
+                        <a href="https://y.qq.com/n/ryqq/playlist/8313621383" target="_blank" class="playlist-link">QQ Music</a>
+                        <a href="https://music.163.com/playlist?id=123415183" target="_blank" class="playlist-link">NetEase</a>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Events Section (Embedded from LiveGigs Asia) -->
-    <section class="events-section">
-        <h2 class="section-title">UPCOMING SHOWS</h2>
-        <div id="events-container">
-            <!-- Events will be loaded from LiveGigs Asia -->
-            <p style="text-align: center; color: #666;">Loading events...</p>
-        </div>
-    </section>
+        <!-- 间隙区域 -->
+        <div class="footer-gap"></div>
 
-    <!-- Footer -->
-    <footer class="site-footer">
-        <div class="footer-main">
-            <div class="footer-container">
-                <div></div>
-
-                <div class="footer-brand">
-                    <div class="footer-logo">
-                        <span class="xre">XRE</span><span class="booking">BOOKING</span>
+        <!-- 底部区域 -->
+        <footer class="site-footer">
+            <div class="footer-main">
+                <div class="footer-container">
+                    <div class="footer-contact-left">
+                        <div class="contact-item">
+                            <a href="mailto:xrebooking@hotmail.com">xrebooking@hotmail.com</a>
+                        </div>
+                        <div class="contact-item">
+                            <a href="tel:+86-010-6874-5456">+86 010 6874 5456</a>
+                        </div>
+                        <div class="contact-item">
+                            2-2021#HepingliWestStreet<br>Beijing, China
+                        </div>
                     </div>
-                    <div class="social-links">
-                        <a href="#" class="social-icon" title="YouTube" style="pointer-events: none; opacity: 0.5;">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg>
-                        </a>
-                        <a href="https://www.instagram.com/livegigsasia/" target="_blank" class="social-icon" title="Instagram">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-                        </a>
-                        <a href="https://www.facebook.com/livegigsasia" target="_blank" class="social-icon" title="Facebook">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg>
-                        </a>
-                        <a href="https://twitter.com/livegigsasia" target="_blank" class="social-icon" title="Twitter">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                        </a>
-                        <a href="https://weibo.com/u/2069556322" target="_blank" class="social-icon" title="Weibo">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M10.098 20.323c-3.977.391-7.414-1.406-7.672-4.02-.259-2.609 2.759-5.047 6.74-5.441 3.979-.394 7.413 1.404 7.671 4.018.259 2.6-2.759 5.049-6.737 5.439l-.002.004z"/></svg>
-                        </a>
-                        <a href="https://www.xiaohongshu.com/user/profile/64a076b2000000001c0292cc" target="_blank" class="social-icon" title="Xiaohongshu">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.615 14.615h-2.77v-3.077h-3.69v3.077h-2.77V7.385h2.77v3.077h3.69V7.385h2.77v9.23z"/></svg>
-                        </a>
-                        <span class="social-icon" title="WeChat" style="cursor: default;">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 0 1 .213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 0 0 .167-.054l1.903-1.114a.864.864 0 0 1 .717-.098 10.16 10.16 0 0 0 2.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348z"/></svg>
-                        </span>
-                        <a href="https://wxaurl.cn/HMcAK6R7fou" target="_blank" class="social-icon" title="Mini Program">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-2h2v2zm0-4h-2V7h2v6zm4 4h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
-                        </a>
-                    </div>
-                    <div class="producer-section">
-                        <div class="producer-label">Produced by</div>
-                        <img src="https://www.livegigsasia.com/image/emanonent-logo.png" alt="EMANON ENT." class="producer-logo">
-                    </div>
-                </div>
 
-                <div class="footer-address">
-                    2-2021# Hepingli West Street<br>
-                    Beijing, China. 100000
+                    <div class="footer-brand">
+                        <div class="footer-logo">
+                            <span class="xre">XRE</span><span class="booking">BOOKING</span>
+                        </div>
+
+                        <div class="social-links">
+                            <!-- 国际4个 -->
+                            <a href="https://facebook.com/xrebooking" class="social-icon" title="Facebook" target="_blank" rel="noopener noreferrer">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                            </a>
+                            <a href="https://instagram.com/xrebooking" class="social-icon" title="Instagram" target="_blank" rel="noopener noreferrer">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                            </a>
+                            <a href="https://youtube.com/@xrebooking" class="social-icon" title="YouTube" target="_blank" rel="noopener noreferrer">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                            </a>
+                            <a href="https://x.com/xrebooking" class="social-icon" title="X" target="_blank" rel="noopener noreferrer">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                            </a>
+                            <!-- CN 4个 -->
+                            <a href="https://www.livegigsasia.com/cn.html" class="social-icon" title="CN Website" target="_blank" rel="noopener noreferrer">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                            </a>
+                            <a href="#" class="social-icon" title="微博" onclick="alert('Weibo coming soon')">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.194 14.197c0 3.248-4.057 5.882-9.062 5.882-5.006 0-9.063-2.634-9.063-5.882 0-3.249 4.057-5.883 9.063-5.883 5.005 0 9.062 2.634 9.062 5.883zm-3.696-7.09c-.483-.15-1.015.113-1.165.596-.15.483.113 1.015.596 1.165.483.15 1.015-.113 1.165-.596.15-.483-.113-1.015-.596-1.165zm2.258-2.03c-1.238-.385-2.599.288-2.984 1.526-.385 1.238.288 2.599 1.526 2.984 1.238.385 2.599-.288 2.984-1.526.385-1.238-.288-2.599-1.526-2.984z"/></svg>
+                            </a>
+                            <a href="#" class="social-icon" title="小红书" onclick="alert('Xiaohongshu coming soon')">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                            </a>
+                            <a href="#" class="social-icon" title="微信" style="cursor: default;" onclick="return false;">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 0 1 .213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 0 0 .167-.054l1.903-1.114a.864.864 0 0 1 .717-.098 10.16 10.16 0 0 0 2.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348zM5.785 5.991c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178A1.17 1.17 0 0 1 4.623 7.17c0-.651.52-1.18 1.162-1.18zm5.813 0c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178 1.17 1.17 0 0 1-1.162-1.178c0-.651.52-1.18 1.162-1.18zm5.34 2.867c-1.797-.052-3.746.512-5.28 1.786-1.72 1.428-2.687 3.72-1.78 6.22.942 2.453 3.666 4.229 6.884 4.229.826 0 1.622-.12 2.361-.336a.722.722 0 0 1 .598.082l1.584.926a.272.272 0 0 0 .14.047c.134 0 .24-.111.24-.247 0-.06-.023-.12-.038-.177l-.327-1.233a.582.582 0 0 1-.023-.156.49.49 0 0 1 .201-.398C23.024 18.48 24 16.82 24 14.98c0-3.21-2.931-5.837-6.656-6.088V8.89c-.135-.01-.27-.027-.407-.03zm-2.53 3.274c.535 0 .969.44.969.982a.976.976 0 0 1-.969.983.976.976 0 0 1-.969-.983c0-.542.434-.982.97-.982zm4.844 0c.535 0 .969.44.969.982a.976.976 0 0 1-.969.983.976.976 0 0 1-.969-.983c0-.542.434-.982.969-.982z"/></svg>
+                            </a>
+                        </div>
+
+                        <div class="producer-section">
+                            <div class="producer-label">Produced by</div>
+                            <img src="https://www.livegigsasia.com/image/emanonent-logo.png" alt="EMANON ENT." class="producer-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                            <div style="font-size: 18px; letter-spacing: 3px; color: #c0c0c0; font-weight: bold; display: none;">EMANON ENT.</div>
+                        </div>
+                    </div>
+
+                    <div class="footer-contact-right">
+                        <div class="contact-item">
+                            Asia: ShuangYi - <a href="mailto:info@xrebooking.com">info@xrebooking.com</a><br>
+                            China: Linda - <a href="mailto:xrebooking@hotmail.com">xrebooking@hotmail.com</a><br>
+                            Media PR: RayYao - <a href="mailto:490401933@qq.com">490401933@qq.com</a>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="footer-bottom">
-            <div class="copyright">Copyright © 2001-2026 EMANON ENT. - All Rights Reserved</div>
-        </div>
-    </footer>
 
-    <!-- Booking Modal -->
+            <div class="footer-bottom">
+                <div class="footer-legal">
+                    <a href="../privacypolicy.html">Privacy Policy</a>
+                    <a href="../accessibilitystatement.html">Accessibility Statement</a>
+                </div>
+                <div class="copyright">Copyright © 2001-2026 EMANON ENT. - All Rights Reserved.</div>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- BOOKING NOW弹窗 -->
     <div class="modal-overlay" id="bookingModal">
         <div class="modal-content">
             <span class="modal-close" onclick="closeModal()">&times;</span>
-            <h2>Booking Request</h2>
-            <form id="bookingForm">
+            <h2>BOOKING NOW</h2>
+            <p>Inquire for dates, rates and full booking deals</p>
+            <form id="bookingForm" action="https://api.web3forms.com/submit" method="POST" onsubmit="handleBookingSubmit(event)">
+                <input type="hidden" name="access_key" value="021d1b10-1c62-4334-90f0-acff63be93c5">
+                <input type="hidden" name="subject" value="New Booking Inquiry - XRE BOOKING">
+                <input type="hidden" name="from_name" value="XRE BOOKING Website">
+
                 <div class="form-group">
-                    <label>Artist Name</label>
-                    <input type="text" name="artist" required>
+                    <label for="bookingName">Name</label>
+                    <input type="text" id="bookingName" name="name" required placeholder="Enter your name">
                 </div>
+
                 <div class="form-group">
-                    <label>Your Name</label>
-                    <input type="text" name="name" required>
+                    <label for="bookingEmail">Email</label>
+                    <input type="email" id="bookingEmail" name="email" required placeholder="Enter your email">
                 </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="bookingDate">Preferred Date</label>
+                        <input type="date" id="bookingDate" name="preferred_date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookingCountry">Country</label>
+                        <input type="text" id="bookingCountry" name="country" placeholder="Country" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="bookingCity">City</label>
+                        <input type="text" id="bookingCity" name="city" placeholder="City" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookingVenue">Venue</label>
+                        <input type="text" id="bookingVenue" name="venue" placeholder="Venue name" required>
+                    </div>
+                </div>
+
                 <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" name="email" required>
+                    <label for="bookingArtist">Artist Interested In</label>
+                    <input type="text" id="bookingArtist" name="artist" placeholder="Which artist are you interested in booking?">
                 </div>
+
                 <div class="form-group">
-                    <label>Message</label>
-                    <textarea name="message" rows="4"></textarea>
+                    <label for="bookingMessage">Message</label>
+                    <textarea id="bookingMessage" name="message" placeholder="Tell us more about your event..."></textarea>
                 </div>
-                <button type="submit" class="submit-btn">SUBMIT REQUEST</button>
+
+                <input type="hidden" name="source" value="XRE BOOKING Homepage">
+                <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+
+                <div id="bookingSuccess" style="display: none; text-align: center; padding: 15px; background: rgba(139, 0, 0, 0.2); border: 1px solid var(--xre-dark-red); margin-bottom: 20px;">
+                    <p style="color: #fff; margin: 0; font-size: 14px;">✓ Booking inquiry sent successfully! We'll contact you soon.</p>
+                </div>
+
+                <button type="submit" class="neon-btn">SUBMIT BOOKING REQUEST</button>
             </form>
         </div>
     </div>
 
     <script>
+        // 艺人数据 - 15个艺人(14+1占位)
+        const artistsData = [
+            { name: "ONIKALI", image: "./assets/artists/OnikaLi.jpg", slug: "onikali" },
+            { name: "THE NONAME", image: "./assets/artists/TheNoname.jpg", slug: "thenoname" },
+            { name: "ACIDEZ", image: "./assets/artists/ACIDEZ.jpg", slug: "acidez" },
+            { name: "BRAIN FAILURE", image: "./assets/artists/BrainFailure.jpg", slug: "brainfailure" },
+            { name: "MASSACHRIST", image: "./assets/artists/Massachrist.jpg", slug: "massachrist" },
+            { name: "NON SERVIUM", image: "./assets/artists/NonServium.jpg", slug: "nonservium" },
+            { name: "SKARFACE", image: "./assets/artists/SKARFACE.jpg", slug: "skarface" },
+            { name: "THE GT BITCHES", image: "./assets/artists/TheGT Bitches.jpg", slug: "thegt-bitches" },
+            { name: "THE GREED", image: "./assets/artists/TheGreed.jpg", slug: "thegreed" },
+            { name: "THE SINO HEART", image: "./assets/artists/TheSino Heart.jpg", slug: "thesinoheart" },
+            { name: "BAOPIGOU", image: "./assets/artists/baopigou.jpg", slug: "baopigou" },
+            { name: "BIG D", image: "./assets/artists/bigd.jpg", slug: "bigd" },
+            { name: "THE STIRRERS", image: "./assets/artists/thestirrers.jpg", slug: "thestirrers" },
+            { name: "YSHC", image: "./assets/artists/yshc.jpg", slug: "yshc" },
+            { name: "NEW ARTIST COMING", image: "./assets/artists/NewArtistComing.webp", slug: "#" }
+        ];
+
+        // 渲染艺人网格 - hover蒙版无文字，底部文字跳转
+        function renderArtists() {
+            const grid = document.getElementById('artistsGrid');
+            grid.innerHTML = artistsData.map(artist => `
+                <div class="artist-card-wrapper">
+                    <div class="artist-card">
+                        <img src="${artist.image}" alt="${artist.name}" onerror="this.src='https://via.placeholder.com/750x360/333/fff?text=${encodeURIComponent(artist.name)}'">
+                        <div class="artist-overlay"></div>
+                    </div>
+                    <div class="artist-name-below" onclick="location.href='${artist.slug === '#' ? '#' : './artist/' + artist.slug + '.html'}'" style="cursor: pointer;">${artist.name}</div>
+                </div>
+            `).join('');
+        }
+
+        // 弹窗控制
         function openModal() {
             document.getElementById('bookingModal').classList.add('active');
             document.body.style.overflow = 'hidden';
@@ -815,24 +1606,202 @@
             document.body.style.overflow = 'auto';
         }
 
+        // 点击弹窗外部关闭
         document.getElementById('bookingModal').addEventListener('click', function(e) {
             if (e.target === this) closeModal();
         });
 
-        // Load events from LiveGigs Asia
-        fetch('https://www.livegigsasia.com/events.html')
-            .then(response => response.text())
-            .then(html => {
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, 'text/html');
-                const events = doc.querySelector('#events-container');
-                if (events) {
-                    document.getElementById('events-container').innerHTML = events.innerHTML;
+        // 表单提交处理
+        function handleBookingSubmit(e) {
+            e.preventDefault();
+            const form = document.getElementById('bookingForm');
+            const formData = new FormData(form);
+            const successDiv = document.getElementById('bookingSuccess');
+
+            // 添加时间戳
+            formData.append('timestamp', new Date().toISOString());
+
+            // 添加收件人
+            formData.append('replyto', 'xrebooking@hotmail.com');
+
+            // 发送到 Web3Forms
+            fetch(form.action, {
+                method: 'POST',
+                body: formData
+            }).then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // 显示成功消息
+                    successDiv.style.display = 'block';
+
+                    // 保存到 localStorage 备份
+                    const submissionData = {
+                        name: document.getElementById('bookingName').value,
+                        email: document.getElementById('bookingEmail').value,
+                        preferred_date: document.getElementById('bookingDate').value,
+                        country: document.getElementById('bookingCountry').value,
+                        city: document.getElementById('bookingCity').value,
+                        venue: document.getElementById('bookingVenue').value,
+                        artist: document.getElementById('bookingArtist').value,
+                        message: document.getElementById('bookingMessage').value,
+                        timestamp: new Date().toISOString(),
+                        source: 'XRE BOOKING Homepage'
+                    };
+                    let submissions = JSON.parse(localStorage.getItem('bookingSubmissions') || '[]');
+                    submissions.push(submissionData);
+                    localStorage.setItem('bookingSubmissions', JSON.stringify(submissions));
+
+                    // 3秒后关闭弹窗并重置表单
+                    setTimeout(() => {
+                        closeModal();
+                        form.reset();
+                        successDiv.style.display = 'none';
+                    }, 3000);
+                } else {
+                    alert('There was an error submitting your booking request. Please try again.');
                 }
-            })
-            .catch(() => {
-                document.getElementById('events-container').innerHTML = '<p style="text-align: center;">View all events at <a href="https://www.livegigsasia.com/events.html" target="_blank" style="color: var(--dark-red);">LiveGigs Asia</a></p>';
+            }).catch(error => {
+                console.error('Error:', error);
+                alert('There was an error submitting your booking request. Please try again.');
             });
+        }
+
+        
+        // Branded Tours 全局变量
+        let allBrandedTours = [];
+        let displayedBrandedTours = 0;
+        const BRANDED_TOURS_PER_PAGE = 6;
+
+        // 加载Branded Tours (ON TOUR活动)
+        async function loadBrandedTours() {
+            const grid = document.getElementById('brandedToursGrid');
+            const loadMoreBtn = document.getElementById('brandedToursLoadMore');
+            if (!grid) return;
+
+            try {
+                // 从JSONBin加载数据 - 使用与Events相同的配置
+                const response = await fetch('https://api.jsonbin.io/v3/b/6785a003e41b4d34e4760b0a/latest', {
+                    headers: {
+                        'X-Master-Key': '$2a$10$NefT7E9BsbDH5jDRU.C/3.F2D/7C8jzo2uQjN4KxF9x8v8v8v8v8v'
+                    }
+                });
+
+                if (!response.ok) throw new Error('Failed to fetch');
+
+                const data = await response.json();
+                const events = data.record?.events || [];
+
+                // 筛选所有ON TOUR活动 (>15天的巡演)
+                allBrandedTours = events.filter(event => {
+                    if (!event.startDate || !event.endDate) return false;
+                    const start = new Date(event.startDate);
+                    const end = new Date(event.endDate);
+                    const diffTime = Math.abs(end - start);
+                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+                    return diffDays > 15;
+                }).sort((a, b) => new Date(a.startDate) - new Date(b.startDate));
+
+                displayedBrandedTours = 0;
+
+                if (allBrandedTours.length === 0) {
+                    grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: #666; padding: 40px;">No ON TOUR events currently. Check back soon!</div>';
+                    if (loadMoreBtn) loadMoreBtn.style.display = 'none';
+                    return;
+                }
+
+                // 初始显示前6个
+                renderBrandedTours();
+
+            } catch (error) {
+                console.error('Error loading branded tours:', error);
+                // 显示占位内容
+                grid.innerHTML = `
+                    <div class="branded-tour-card" onclick="location.href='#'">
+                        <img src="https://via.placeholder.com/300x400/8b0000/fff?text=ON+TOUR+1" alt="Tour 1">
+                        <div class="branded-tour-status">ON TOUR</div>
+                        <div class="branded-tour-overlay">
+                            <div class="branded-tour-title">EUROPE TOUR 2026</div>
+                            <div class="branded-tour-date">2026.03.01 - 2026.04.15</div>
+                            <div class="branded-tour-location">Multiple Cities, EU</div>
+                        </div>
+                    </div>
+                    <div class="branded-tour-card" onclick="location.href='#'">
+                        <img src="https://via.placeholder.com/300x400/8b0000/fff?text=ON+TOUR+2" alt="Tour 2">
+                        <div class="branded-tour-status">ON TOUR</div>
+                        <div class="branded-tour-overlay">
+                            <div class="branded-tour-title">ASIA TOUR 2026</div>
+                            <div class="branded-tour-date">2026.05.01 - 2026.06.20</div>
+                            <div class="branded-tour-location">Multiple Cities, Asia</div>
+                        </div>
+                    </div>
+                    <div class="branded-tour-card" onclick="location.href='#'">
+                        <img src="https://via.placeholder.com/300x400/8b0000/fff?text=ON+TOUR+3" alt="Tour 3">
+                        <div class="branded-tour-status">ON TOUR</div>
+                        <div class="branded-tour-overlay">
+                            <div class="branded-tour-title">US TOUR 2026</div>
+                            <div class="branded-tour-date">2026.07.01 - 2026.08.15</div>
+                            <div class="branded-tour-location">Multiple Cities, USA</div>
+                        </div>
+                    </div>
+                `;
+                if (loadMoreBtn) loadMoreBtn.style.display = 'none';
+            }
+        }
+
+        // 渲染Branded Tours
+        function renderBrandedTours() {
+            const grid = document.getElementById('brandedToursGrid');
+            const loadMoreBtn = document.getElementById('brandedToursLoadMore');
+
+            const toursToShow = allBrandedTours.slice(0, displayedBrandedTours + BRANDED_TOURS_PER_PAGE);
+
+            grid.innerHTML = toursToShow.map(event => `
+                <div class="branded-tour-card" onclick="location.href='${event.link || '../events.html'}'">
+                    <img src="${event.poster1 || event.poster || 'https://via.placeholder.com/300x400/333/fff?text=ON+TOUR'}" alt="${event.title}">
+                    <div class="branded-tour-status">ON TOUR</div>
+                    <div class="branded-tour-overlay">
+                        <div class="branded-tour-title">${event.title}</div>
+                        <div class="branded-tour-date">${formatDate(event.startDate)} - ${formatDate(event.endDate)}</div>
+                        <div class="branded-tour-location">${event.city || ''}${event.city && event.country ? ', ' : ''}${event.country || ''}</div>
+                    </div>
+                </div>
+            `).join('');
+
+            displayedBrandedTours = toursToShow.length;
+
+            // 显示/隐藏LOAD MORE按钮
+            if (loadMoreBtn) {
+                loadMoreBtn.style.display = displayedBrandedTours < allBrandedTours.length ? 'block' : 'none';
+            }
+        }
+
+        // LOAD MORE功能
+        function loadMoreBrandedTours() {
+            renderBrandedTours();
+        }
+
+        // 日期格式化
+        function formatDate(dateStr) {
+            if (!dateStr) return '';
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit'
+            }).replace(/\//g, ".");
+        }
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            renderArtists();
+            loadBrandedTours();
+        });
+
+        // ESC键关闭弹窗
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeModal();
+        });
     </script>
+
 </body>
 </html>
