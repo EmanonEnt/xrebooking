@@ -384,18 +384,20 @@
 
         .artist-name-below {
             margin-top: 15px;
-            font-size: 18px;
+            font-size: 20px;
             letter-spacing: 2px;
             text-transform: uppercase;
             color: var(--black);
             cursor: pointer;
             transition: all 0.3s;
             display: inline-block;
-            font-weight: bold;
+            font-weight: normal;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
         }
 
         .artist-name-below:hover {
             color: var(--xre-red);
+            font-weight: bold;
             text-shadow: 0 0 10px rgba(255, 0, 0, 0.8), 0 0 20px rgba(255, 0, 0, 0.4), 0 0 30px rgba(255, 0, 0, 0.6);
             animation: nameFlash 1s ease-in-out infinite;
         }
@@ -1329,6 +1331,16 @@
             .contact-item { font-size: 10px; }
         }
     </style>
+    <script>
+        // 防止页面刷新后自动滚动
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+        }
+        // 页面加载时强制滚动到顶部
+        window.onload = function() {
+            window.scrollTo(0, 0);
+        };
+    </script>
 </head>
 <body>
 
