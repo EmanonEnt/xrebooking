@@ -455,10 +455,10 @@
             border-top: 1px solid #333;
             padding: 20px 40px;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            gap: 10px;
+            flex-wrap: wrap;
+            gap: 40px;
         }
         .footer-spacer {
             display: none;
@@ -1293,7 +1293,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 40px 20px;
             background: transparent;
             min-height: auto;
             height: auto;
@@ -1301,8 +1301,8 @@
 
         .poster-wrapper {
             position: relative;
-            width: 100%;
-            max-width: 350px;
+            width: 90%;
+            max-width: 320px;
             aspect-ratio: 3/4;
             overflow: hidden;
             border: none;
@@ -1437,10 +1437,11 @@
             flex-direction: column;
             min-height: 100vh;
             background: rgba(0, 0, 0, 0.2);
+            gap: 0;
         }
 
         .player-spotify {
-            flex: 0 0 60%;
+            flex: 0 0 65%;
             background: #000;
             overflow: hidden;
             margin: 0;
@@ -1454,7 +1455,7 @@
         }
 
         .player-bottom-container {
-            flex: 0 0 40%;
+            flex: 0 0 35%;
             display: flex;
             flex-direction: column;
             gap: 0;
