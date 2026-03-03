@@ -358,23 +358,22 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: grayscale(100%);
+            filter: grayscale(0%);
             transition: all 0.4s;
         }
 
         .artist-card:hover img { 
-            filter: grayscale(0%); 
             transform: scale(1.05); 
         }
 
-        /* 艺人蒙版效果 - 类似海报hover */
+        /* 艺人蒙版效果 - 与海报区域一致，hover时显示 */
         .artist-overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.4);
+            background: rgba(0,0,0,0.5);
             opacity: 0;
             transition: opacity 0.4s;
         }
@@ -385,19 +384,20 @@
 
         .artist-name-below {
             margin-top: 15px;
-            font-size: 16px;
+            font-size: 18px;
             letter-spacing: 2px;
             text-transform: uppercase;
             color: var(--black);
             cursor: pointer;
             transition: all 0.3s;
             display: inline-block;
+            font-weight: bold;
         }
 
         .artist-name-below:hover {
             color: var(--xre-red);
-            text-shadow: 0 0 10px rgba(255, 0, 0, 0.8), 0 0 20px rgba(255, 0, 0, 0.4);
-            animation: nameFlash 1.5s ease-in-out infinite;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.8), 0 0 20px rgba(255, 0, 0, 0.4), 0 0 30px rgba(255, 0, 0, 0.6);
+            animation: nameFlash 1s ease-in-out infinite;
         }
 
         @keyframes nameFlash {
@@ -1589,37 +1589,40 @@
     </div>
 
     <script>
-        // 艺人数据 - 15个艺人(14+1占位)
+        // 艺人数据 - 15个艺人(14+1占位)，按A-Z排序
         const artistsData = [
-            { name: "ONIKALI", image: "./assets/artists/OnikaLi.jpg", slug: "onikali" },
-            { name: "THE NONAME", image: "./assets/artists/TheNoname.jpg", slug: "thenoname" },
-            { name: "ACIDEZ", image: "./assets/artists/ACIDEZ.jpg", slug: "acidez" },
-            { name: "BRAIN FAILURE", image: "./assets/artists/BrainFailure.jpg", slug: "brainfailure" },
-            { name: "MASSACHRIST", image: "./assets/artists/Massachrist.jpg", slug: "massachrist" },
-            { name: "NON SERVIUM", image: "./assets/artists/NonServium.jpg", slug: "nonservium" },
-            { name: "SKARFACE", image: "./assets/artists/SKARFACE.jpg", slug: "skarface" },
-            { name: "THE GT BITCHES", image: "./assets/artists/TheGT Bitches.jpg", slug: "thegt-bitches" },
-            { name: "THE GREED", image: "./assets/artists/TheGreed.jpg", slug: "thegreed" },
-            { name: "THE SINO HEART", image: "./assets/artists/TheSino Heart.jpg", slug: "thesinoheart" },
-            { name: "BAOPIGOU", image: "./assets/artists/baopigou.jpg", slug: "baopigou" },
-            { name: "BIG D", image: "./assets/artists/bigd.jpg", slug: "bigd" },
-            { name: "THE STIRRERS", image: "./assets/artists/thestirrers.jpg", slug: "thestirrers" },
-            { name: "YSHC", image: "./assets/artists/yshc.jpg", slug: "yshc" },
-            { name: "NEW ARTIST COMING", image: "./assets/artists/NewArtistComing.webp", slug: "#" }
+            { name: "ACIDEZ (MX)", image: "./image/ACIDEZ.jpg", slug: "acidez" },
+            { name: "BAOPIGOU爆皮狗", image: "./image/baopigou.jpg", slug: "baopigou" },
+            { name: "BIG D & THE KIDS TABLE (US)", image: "./image/bigd.jpg", slug: "bigd" },
+            { name: "BRAIN FAILURE腦濁", image: "./image/BrainFailure.jpg", slug: "brainfailure" },
+            { name: "MASSACHRIST (MX)", image: "./image/Massachrist.jpg", slug: "massachrist" },
+            { name: "NON SERVIUM (ES)", image: "./image/NonServium.jpg", slug: "nonservium" },
+            { name: "ÖNIKA LI", image: "./image/OnikaLi.jpg", slug: "onikali" },
+            { name: "SILVER ASH銀色灰塵", image: "./image/yshc.jpg", slug: "yshc" },
+            { name: "SKARFACE (FR)", image: "./image/SKARFACE.jpg", slug: "skarface" },
+            { name: "THE GREED (TH)", image: "./image/TheGreed.jpg", slug: "thegreed" },
+            { name: "THE GT BITCHES", image: "./image/TheGTBitches.jpg", slug: "thegtbitches" },
+            { name: "THE NONAME無名", image: "./image/TheNoname.jpg", slug: "thenoname" },
+            { name: "THE SINO HEART", image: "./image/TheSinoHeart.jpg", slug: "thesinoheart" },
+            { name: "THE STIRRERS", image: "./image/thestirrers.jpg", slug: "thestirrers" },
+            { name: "NEW ARTIST COMING...", image: "./image/NewArtistComing.webp", slug: "#" }
         ];
 
-        // 渲染艺人网格 - hover蒙版无文字，底部文字跳转
+        // 渲染艺人网格 - 图片彩色，hover蒙版，名字hover红色亮闪可点击
         function renderArtists() {
             const grid = document.getElementById('artistsGrid');
-            grid.innerHTML = artistsData.map(artist => `
+            grid.innerHTML = artistsData.map(artist => {
+                const link = artist.slug === '#' ? '#' : './artist/' + artist.slug + '.html';
+                return `
                 <div class="artist-card-wrapper">
                     <div class="artist-card">
                         <img src="${artist.image}" alt="${artist.name}" onerror="this.src='https://via.placeholder.com/750x360/333/fff?text=${encodeURIComponent(artist.name)}'">
                         <div class="artist-overlay"></div>
                     </div>
-                    <div class="artist-name-below" onclick="location.href='${artist.slug === '#' ? '#' : './artist/' + artist.slug + '.html'}'" style="cursor: pointer;">${artist.name}</div>
+                    <div class="artist-name-below" onclick="window.open('${link}', '_blank')" style="cursor: pointer;">${artist.name}</div>
                 </div>
-            `).join('');
+                `;
+            }).join('');
         }
 
         // 弹窗控制
