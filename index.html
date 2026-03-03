@@ -320,7 +320,6 @@
             color: #c0c0c0;
             position: relative;
             z-index: 100;
-            border-top: none;
         }
         .footer-main {
             padding: 50px 40px 40px;
@@ -1126,7 +1125,7 @@
         }
     
 
-        /* POSTER AD SECTION - 使用全站统一红色 */
+        /* POSTER AD SECTION */
         .poster-ad-section {
             width: 100%;
             padding: 0;
@@ -1137,7 +1136,7 @@
             background-color: #8b0000;
             position: relative;
             border-top: none;
-            margin-top: -1px;
+            margin-top: -2px;
         }
 
         .poster-ad-container {
@@ -1152,7 +1151,7 @@
             min-height: 100vh;
         }
 
-        /* 左侧海报 - 2:3比例，固定无HOVER */
+        /* 左侧海报 - 满屏高度 */
         .poster-ad-left {
             position: relative;
             display: flex;
@@ -1168,10 +1167,7 @@
             position: relative;
             width: 100%;
             height: 100%;
-            max-width: none;
             overflow: hidden;
-            border: none;
-            box-shadow: none;
         }
 
         .poster-wrapper img {
@@ -1179,15 +1175,6 @@
             height: 100%;
             object-fit: cover;
             object-position: center;
-        }
-
-        .poster-ad-image {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            object-position: center;
-            display: block;
-            background: #000;
         }
 
         /* 中间内容区 */
@@ -1251,7 +1238,7 @@
             margin-left: auto;
         }
 
-        /* 红线闪光效果 - 统一使用 */
+        /* 红线闪光效果 */
         .title-underline.shimmer::after,
         .ad-underline.shimmer::after {
             content: '';
@@ -1367,15 +1354,10 @@
                 flex: 0 0 50%;
                 flex-direction: row;
             }
-            .player-bottom-container {
-                flex-direction: row;
-            }
-
             .player-embed {
                 border-top: none;
                 border-left: 2px solid rgba(139, 0, 0, 0.3);
             }
-
             .player-embed:first-child {
                 border-left: none;
             }
@@ -1387,12 +1369,11 @@
             }
             .poster-ad-left, .poster-ad-middle, .poster-ad-right {
                 min-height: auto;
+                height: auto;
             }
             .poster-ad-left {
-                padding: 30px;
-            }
-            .poster-wrapper {
-                max-width: 300px;
+                height: 80vh;
+                min-height: 500px;
             }
             .middle-top, .middle-bottom {
                 padding: 40px 30px;
@@ -1424,12 +1405,6 @@
         }
 
         @media (max-width: 480px) {
-            .poster-ad-left {
-                padding: 20px;
-            }
-            .poster-wrapper {
-                max-width: 250px;
-            }
             .middle-top, .middle-bottom {
                 padding: 30px 20px;
             }
@@ -1528,7 +1503,7 @@
         <!-- POSTER AD SECTION -->
         <section class="poster-ad-section">
             <div class="poster-ad-container">
-                <!-- 左侧海报 - 2:3比例，固定无HOVER -->
+                <!-- 左侧海报 - 满屏高度 -->
                 <div class="poster-ad-left">
                     <div class="poster-wrapper">
                         <img src="https://livegigsasia.com/image/1-b-2.jpg" alt="Punk Heart Fest" class="poster-ad-image">
@@ -1572,7 +1547,7 @@
 
                 <!-- 右侧播放器区 -->
                 <div class="poster-ad-right">
-                    <!-- Spotify 播放器 -->
+                    <!-- Spotify 播放器 - 黑色主题 -->
                     <div class="player-spotify">
                         <iframe src="https://open.spotify.com/embed/playlist/6xZPXG1qFVxlxZf8v63S0W?utm_source=generator&theme=0" 
                                 width="100%" 
@@ -1588,7 +1563,7 @@
                     <div class="player-bottom-container">
                         <!-- QQ音乐嵌入式播放器 -->
                         <div class="player-embed">
-                            <iframe src="https://y.qq.com/n3/other/pages/details/playlist.html?id=9674279142&hosteuin=" 
+                            <iframe src="https://y.qq.com/n3/other/pages/details/playlist.html?id=9674279142" 
                                     width="100%" 
                                     height="100%" 
                                     frameborder="0"
@@ -2375,15 +2350,6 @@
                     }
                 }
             }, { passive: true });
-        }
-
-        function loadMoreBrandedTours() {
-            renderBrandedTours();
-        }
-    </script>
-</body>
-</html>
-           }, { passive: true });
         }
 
         function loadMoreBrandedTours() {
