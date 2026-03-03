@@ -12,7 +12,7 @@
     <link rel="apple-touch-icon" href="./images/webtop.png">
     <style>
         :root {
-            --xre-red: #8b0000;
+            --xre-red: #ff0000;
             --xre-dark-red: #8b0000;
             --mad-silver: #e8e8e8;
             --mad-light: #f5f5f5;
@@ -47,7 +47,7 @@
             animation: logoBreathe 4s ease-in-out infinite;
         }
         @keyframes logoBreathe {
-            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(139, 0, 0, 0.6)); }
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(139, 0, 0, 0.4)); }
             50% { transform: scale(1.03); filter: drop-shadow(0 0 15px rgba(139, 0, 0, 0.8)); }
         }
         .nav-links {
@@ -65,11 +65,11 @@
             text-shadow: 0 2px 4px rgba(0,0,0,0.8);
         }
         .nav-links a:hover {
-            color: #8b0000;
+            color: var(--xre-dark-red);
             text-shadow: 0 0 10px rgba(139, 0, 0, 0.8);
         }
         .neon-btn {
-            background: rgba(139, 0, 0, 0.5);
+            background: rgba(139, 0, 0, 0.3);
             color: #ffffff !important;
             border: 2px solid var(--xre-dark-red);
             padding: 10px 25px;
@@ -96,9 +96,9 @@
             left: 100%;
         }
         .neon-btn:hover {
-            background: #8b0000;
-            border-color: #8b0000;
-            box-shadow: 0 0 30px rgba(139, 0, 0, 0.8), 0 0 60px rgba(139, 0, 0, 0.6);
+            background: var(--xre-dark-red);
+            border-color: var(--xre-dark-red);
+            box-shadow: 0 0 30px rgba(139, 0, 0, 0.8), 0 0 60px rgba(139, 0, 0, 0.4);
             transform: scale(1.05);
             letter-spacing: 3px;
         }
@@ -237,7 +237,7 @@
         .title-underline {
             width: 100px;
             height: 3px;
-            background: #8b0000;
+            background: var(--xre-red);
             margin: 0 auto 60px;
             position: relative;
             overflow: hidden;
@@ -276,7 +276,7 @@
             transition: all 0.4s;
         }
         .artist-card:hover {
-            border-color: #8b0000;
+            border-color: var(--xre-red);
         }
         .artist-card:hover img { 
             transform: scale(1.05); 
@@ -306,9 +306,9 @@
             font-weight: normal;
         }
         .artist-name-below:hover {
-            color: #8b0000;
+            color: var(--xre-red);
             font-weight: bold;
-            text-shadow: 0 0 10px rgba(139, 0, 0, 0.8);
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
         }
 
         .footer-gap {
@@ -354,7 +354,7 @@
             font-weight: bold;
         }
         .contact-item a:hover {
-            color: #8b0000;
+            color: var(--xre-red);
         }
         .footer-brand {
             flex: 0 0 auto;
@@ -367,18 +367,6 @@
             line-height: 1;
             text-transform: uppercase;
             margin-bottom: 20px;
-            animation: footerLogoFlash 3s ease-in-out infinite;
-        }
-
-        @keyframes footerLogoFlash {
-            0%, 90%, 100% { 
-                text-shadow: 0 0 10px rgba(139, 0, 0, 0.3);
-                opacity: 0.95;
-            }
-            95% { 
-                text-shadow: 0 0 30px rgba(139, 0, 0, 0.8), 0 0 60px rgba(139, 0, 0, 0.4);
-                opacity: 1;
-            }
         }
         .footer-logo .xre {
             color: var(--xre-dark-red);
@@ -411,7 +399,7 @@
             fill: currentColor;
         }
         .social-icon:hover {
-            border-color: #8b0000;
+            border-color: var(--xre-red);
             color: var(--xre-red);
             transform: translateY(-3px);
             box-shadow: 0 5px 15px rgba(255,0,0,0.3);
@@ -446,9 +434,10 @@
             border-top: 1px solid #333;
             padding: 20px 40px;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            gap: 40px;
+            gap: 15px;
             flex-wrap: wrap;
         }
         .footer-legal {
@@ -465,14 +454,13 @@
             font-weight: bold;
         }
         .footer-legal a:hover {
-            color: #8b0000;
+            color: var(--xre-red);
         }
         .copyright {
             color: #777;
             font-size: 11px;
             letter-spacing: 1px;
             font-family: 'Courier New', monospace;
-            text-align: center;
         }
 
         /* Booking弹窗 */
@@ -492,14 +480,14 @@
         .modal-overlay.active { display: flex; }
         .modal-content {
             background: linear-gradient(135deg, #0a0000 0%, #050505 100%);
-            border: 2px solid #8b0000;
+            border: 2px solid var(--xre-red);
             padding: 40px 35px;
             max-width: 480px;
             width: 100%;
             max-height: 90vh;
             overflow-y: auto;
             position: relative;
-            box-shadow: 0 0 50px rgba(139, 0, 0, 0.5);
+            box-shadow: 0 0 50px rgba(74, 0, 0, 0.5);
         }
         .modal-close {
             position: absolute;
@@ -510,7 +498,7 @@
             cursor: pointer;
             transition: all 0.3s;
         }
-        .modal-close:hover { color: #8b0000; transform: scale(1.2); }
+        .modal-close:hover { color: var(--xre-red); transform: scale(1.2); }
         .modal-content h2 {
             font-size: 28px;
             letter-spacing: 3px;
@@ -550,8 +538,8 @@
         .form-group textarea:focus,
         .form-group select:focus {
             outline: none;
-            border-color: #8b0000;
-            box-shadow: 0 0 15px rgba(139, 0, 0, 0.5);
+            border-color: var(--xre-red);
+            box-shadow: 0 0 15px rgba(139, 0, 0, 0.3);
         }
         .form-group textarea {
             min-height: 80px;
@@ -576,7 +564,7 @@
             text-transform: uppercase;
         }
         .modal-content .neon-btn:hover {
-            background: #8b0000;
+            background: var(--xre-dark-red);
             box-shadow: 0 0 20px rgba(139, 0, 0, 0.5);
         }
 
@@ -584,7 +572,7 @@
         .branded-tours-section {
             width: 100%;
             padding: 80px 0;
-            background: #8b0000;
+            background: linear-gradient(180deg, var(--mad-silver) 0%, var(--mad-light) 30%, var(--xre-red) 100%);
             position: relative;
         }
         .branded-tours-container {
@@ -601,7 +589,7 @@
             overflow: hidden;
             cursor: pointer;
             transition: all 0.4s ease;
-            border: 1px solid rgba(139, 0, 0, 0.5);
+            border: 1px solid rgba(139, 0, 0, 0.3);
             aspect-ratio: 3/4;
             max-width: 400px;
             margin: 0 auto;
@@ -611,7 +599,7 @@
         .branded-tour-card:hover {
             transform: translateY(-10px);
             border-color: rgba(139, 0, 0, 0.8);
-            box-shadow: 0 0 30px rgba(139, 0, 0, 0.5);
+            box-shadow: 0 0 30px rgba(139, 0, 0, 0.3);
         }
         .branded-tour-card.active {
             transform: translateY(-5px);
@@ -658,7 +646,7 @@
             opacity: 1;
         }
         .branded-tour-share:hover {
-            background: #8b0000;
+            background: var(--xre-dark-red);
             box-shadow: 0 0 15px rgba(139, 0, 0, 0.8);
             transform: scale(1.1);
         }
@@ -674,7 +662,7 @@
             font-weight: bold;
             border-radius: 4px;
             background: rgba(0, 0, 0, 0.7);
-            border: 1px solid #8b0000;
+            border: 1px solid rgba(139, 0, 0, 0.5);
             color: #ffaa00;
             pointer-events: none;
         }
@@ -760,8 +748,8 @@
             z-index: 20;
         }
         .branded-tour-btn:hover {
-            background: #8b0000;
-            border-color: #8b0000;
+            background: var(--xre-dark-red);
+            border-color: var(--xre-dark-red);
             box-shadow: 0 0 30px rgba(139, 0, 0, 0.8);
             transform: scale(1.05);
             letter-spacing: 3px;
@@ -770,8 +758,7 @@
             pointer-events: none;
             cursor: default;
             opacity: 0.9;
-            background: rgba(139, 0, 0, 0.5);
-            border-color: #8b0000;
+            background: rgba(139, 0, 0, 0.7);
         }
         .branded-tour-card:hover .branded-tour-btn,
         .branded-tour-card.active .branded-tour-btn {
@@ -787,7 +774,7 @@
             display: block;
         }
         .branded-tours-load-more .neon-btn {
-            background: rgba(139, 0, 0, 0.5);
+            background: rgba(139, 0, 0, 0.3);
             color: #fff;
             border: 2px solid var(--xre-dark-red);
             padding: 15px 40px;
@@ -832,7 +819,7 @@
         }
         .share-modal-content {
             background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
-            border: 2px solid #8b0000;
+            border: 2px solid var(--xre-dark-red);
             border-radius: 12px;
             padding: 20px 25px;
             max-width: 500px;
@@ -863,7 +850,7 @@
             justify-content: center;
         }
         .share-modal-close:hover {
-            color: #8b0000;
+            color: var(--xre-red);
         }
         .share-modal-title {
             font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
@@ -878,7 +865,7 @@
             gap: 15px;
             margin-bottom: 20px;
             padding: 15px;
-            background: rgba(139, 0, 0, 0.15);
+            background: rgba(139, 0, 0, 0.1);
             border-radius: 8px;
         }
         .share-event-img {
@@ -906,7 +893,7 @@
         .share-tag {
             display: inline-block;
             padding: 2px 8px;
-            background: #8b0000;
+            background: var(--xre-dark-red);
             color: #fff;
             font-size: 10px;
             border-radius: 3px;
@@ -926,7 +913,7 @@
             gap: 8px;
             padding: 15px 10px;
             background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(139, 0, 0, 0.5);
+            border: 1px solid rgba(139, 0, 0, 0.3);
             border-radius: 8px;
             color: #fff;
             cursor: pointer;
@@ -934,7 +921,7 @@
         }
         .share-platform-btn:hover {
             background: rgba(139, 0, 0, 0.2);
-            border-color: #8b0000;
+            border-color: var(--xre-dark-red);
             transform: translateY(-3px);
         }
         .share-platform-icon {
@@ -962,7 +949,7 @@
             font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
         }
         .download-btn:hover {
-            background: #8b0000;
+            background: var(--xre-dark-red);
             transform: translateY(-3px);
         }
         .download-btn-icon {
@@ -1048,7 +1035,7 @@
             opacity: 0.7;
         }
         @keyframes heroLogoBreathe {
-            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 20px rgba(139, 0, 0, 0.6)); }
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 20px rgba(139, 0, 0, 0.4)); }
             50% { transform: scale(1.08); filter: drop-shadow(0 0 50px rgba(255, 0, 0, 0.8)); }
         }
 
@@ -1144,7 +1131,10 @@
         .poster-ad-section {
             width: 100%;
             padding: 0;
-            background: #8b0000;
+            background-image: url('images/xre-adbg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
             position: relative;
             border-top: none;
         }
@@ -1178,7 +1168,7 @@
             aspect-ratio: 2/3;
             overflow: hidden;
             border: 3px solid rgba(139, 0, 0, 0.5);
-            box-shadow: 0 0 40px rgba(139, 0, 0, 0.5);
+            box-shadow: 0 0 40px rgba(139, 0, 0, 0.3);
         }
 
         .poster-ad-image {
@@ -1196,8 +1186,8 @@
             flex-direction: column;
             min-height: 100vh;
             background: rgba(0, 0, 0, 0.4);
-            border-left: 1px solid rgba(139, 0, 0, 0.5);
-            border-right: 1px solid rgba(139, 0, 0, 0.5);
+            border-left: 1px solid rgba(139, 0, 0, 0.3);
+            border-right: 1px solid rgba(139, 0, 0, 0.3);
         }
 
         .middle-top, .middle-bottom {
@@ -1211,7 +1201,7 @@
         }
 
         .middle-top {
-            border-bottom: 1px solid rgba(139, 0, 0, 0.5);
+            border-bottom: 1px solid rgba(139, 0, 0, 0.3);
         }
 
         .content-left, .content-right {
@@ -1224,7 +1214,7 @@
 
         .middle-divider {
             height: 2px;
-            background: linear-gradient(90deg, transparent, #8b0000, transparent);
+            background: linear-gradient(90deg, transparent, var(--xre-dark-red), transparent);
         }
 
         .ad-title {
@@ -1241,7 +1231,7 @@
             margin: 0 auto 25px auto;
             width: 80px;
             height: 3px;
-            background: #8b0000;
+            background: var(--xre-dark-red);
             position: relative;
             overflow: hidden;
         }
@@ -1294,12 +1284,10 @@
             opacity: 0.5;
             cursor: not-allowed;
             background: rgba(139, 0, 0, 0.2);
-            border-color: #8b0000;
         }
 
         .ad-btn.disabled-btn:hover {
             background: rgba(139, 0, 0, 0.2);
-            border-color: #8b0000;
             box-shadow: none;
             transform: none;
             letter-spacing: 2px;
@@ -1340,28 +1328,10 @@
             justify-content: space-between;
             padding: 15px 20px;
             text-decoration: none;
-            border: 2px solid #8b0000;
+            border: 2px solid rgba(139, 0, 0, 0.5);
             transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
-        }
-
-        .player-logo-bg {
-            position: absolute;
-            right: 60px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 80px;
-            height: 80px;
-            opacity: 0.15;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .player-logo-bg svg {
-            width: 100%;
-            height: 100%;
-            fill: #fff;
         }
 
         .player-btn::before {
@@ -1381,7 +1351,7 @@
 
         .player-qq {
             background: linear-gradient(135deg, rgba(49, 194, 124, 0.2) 0%, rgba(42, 168, 105, 0.2) 100%);
-            border-bottom: 1px solid rgba(139, 0, 0, 0.5);
+            border-bottom: 1px solid rgba(139, 0, 0, 0.3);
         }
 
         .player-qq:hover {
