@@ -455,15 +455,19 @@
             border-top: 1px solid #333;
             padding: 20px 40px;
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
-            gap: 40px;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
+        }
+        .footer-spacer {
+            flex: 1;
         }
         .footer-legal {
             display: flex;
             gap: 25px;
             align-items: center;
+            flex: 1;
+            justify-content: flex-start;
         }
         .footer-legal a {
             color: #888;
@@ -482,6 +486,8 @@
             font-size: 11px;
             letter-spacing: 1px;
             font-family: 'Courier New', monospace;
+            text-align: center;
+            flex: 1;
         }
 
         /* Booking弹窗 */
@@ -1075,6 +1081,17 @@
             .branded-tour-card { max-width: none; }
         }
         @media (max-width: 768px) {
+            .footer-bottom {
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 15px;
+                padding: 20px;
+            }
+            .footer-legal, .copyright, .footer-spacer {
+                flex: 1 1 auto;
+                text-align: center;
+                justify-content: center;
+            }
             .artist-card { aspect-ratio: 750/360 !important; overflow: hidden; }
             .artist-card img { width: 100% !important; height: 100% !important; object-fit: cover !important; }
             nav { padding: 0 20px; height: 65px; }
@@ -1108,6 +1125,20 @@
             .share-platform-name { font-size: 9px; }
         }
         @media (max-width: 480px) {
+            .footer-bottom {
+                flex-direction: column;
+                gap: 10px;
+                padding: 15px;
+            }
+            .footer-legal {
+                order: 2;
+            }
+            .copyright {
+                order: 1;
+            }
+            .footer-spacer {
+                display: none;
+            }
             .artist-card { aspect-ratio: 750/360 !important; overflow: hidden; }
             .artist-card img { width: 100% !important; height: 100% !important; object-fit: cover !important; }
             nav { padding: 0 15px; height: 60px; }
@@ -1864,6 +1895,7 @@
                     <a href="https://www.livegigsasia.com/accessibilitystatement.html">Accessibility Statement</a>
                 </div>
                 <div class="copyright">Copyright 2001-2026 EMANON ENT. - All Rights Reserved.</div>
+                <div class="footer-spacer"></div>
             </div>
         </footer>
     </div>
@@ -2568,33 +2600,6 @@
                     }
                 }
             }, { passive: true });
-        }
-
-        function loadMoreBrandedTours() {
-            renderBrandedTours();
-        }
-    </script>
-</body>
-</html>
-           }, { passive: true });
-        }
-
-        function loadMoreBrandedTours() {
-            renderBrandedTours();
-        }
-    </script>
-</body>
-</html>
-      }, { passive: true });
-        }
-
-        function loadMoreBrandedTours() {
-            renderBrandedTours();
-        }
-    </script>
-</body>
-</html>
-           }, { passive: true });
         }
 
         function loadMoreBrandedTours() {
