@@ -1,0 +1,23 @@
+{
+    "name": "XRE BOOKING",
+    "short_name": "XRE",
+    "description": "Booking Agency in Punkrock, Garage, Mod, Powerpop, Surf, Poppunk, RocknRoll, Hardcore, Metal",
+    "start_url": "./index.html",
+    "display": "standalone",
+    "background_color": "#050505",
+    "theme_color": "#8b0000",
+    "orientation": "portrait-primary",
+    "scope": "./",
+    "icons": [
+        {
+            "src": "./images/webtop.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "./images/webtop.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
