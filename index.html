@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XRE BOOKING - Artist Agency</title>
+    <link rel="icon" type="image/png" href="./image/webtop.png">
+    <link rel="shortcut icon" type="image/png" href="./image/webtop.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <style>
+        :root {
+            --xre-red: #ff0000;
+            --xre-dark-red: #8b0000;
+            --mad-silver: #e8e8e8;
+            --mad-light: #f5f5f5;
+            --black: #050505;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            background-color: var(--black);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* 导航栏 - LiveGigs风格 */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 80px;
+            padding: 0 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 9999;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        /* Logo样式 - 呼吸+闪光效果 */
+        .logo-img {
+            height: 45px;
+            width: auto;
+            max-width: 200px;
+            object-fit: contain;
+            cursor: pointer;
+            animation: logoBreathe 8s ease-in-out infinite, logoFlash 8s ease-in-out infinite;
+        }
+
+        @keyframes logoBreathe {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(139, 0, 0, 0.4)); }
+            50% { transform: scale(1.03); filter: drop-shadow(0 0 15px rgba(139, 0, 0, 0.8)); }
+        }
+
+        @keyframes logoFlash {
+            0%, 90%, 100% { filter: drop-shadow(0 0 5px rgba(139, 0, 0, 0.4)); }
+            95% { filter: drop-shadow(0 0 25px rgba(255, 255, 255, 0.8)) drop-shadow(0 0 15px rgba(139, 0, 0, 1)); }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 14px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+        }
+
+        .nav-links a:hover {
+            color: var(--xre-dark-red);
+            text-shadow: 0 0 10px rgba(139, 0, 0, 0.8);
+        }
+
+        /* Neon按钮效果 */
+        .neon-btn {
+            background: rgba(139, 0, 0, 0.3);
+            color: #fff;
+            border: 2px solid var(--xre-dark-red);
+            padding: 10px 25px;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .neon-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .neon-btn:hover::before {
+            left: 100%;
+        }
+
+        .neon-btn:hover {
+            background: var(--xre-dark-red);
+            border-color: var(--xre-dark-red);
+            box-shadow: 0 0 30px rgba(139, 0, 0, 0.8), 0 0 60px rgba(139, 0, 0, 0.4);
+            transform: scale(1.05);
+            letter-spacing: 3px;
+        }
+
+        /* HERO区域 - 固定背景+抽屉效果 */
+        .hero {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            min-height: 600px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://livegigsasia.com/image/1-b-2.jpg');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            filter: grayscale(100%) brightness(0.35);
+            z-index: 0;
+            animation: bgFlash 8s ease-in-out infinite;
+        }
+
+        @keyframes bgFlash {
+            0%, 85%, 100% { filter: grayscale(100%) brightness(0.35); }
+            90%, 95% { filter: grayscale(80%) brightness(0.5); }
+        }
+
+        .smoke-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 3;
+            overflow: hidden;
+            pointer-events: none;
+            opacity: 0.5;
+            animation: breathe 8s ease-in-out infinite;
+        }
+
+        .smoke {
+            position: absolute;
+            width: 150%;
+            height: 150%;
+            background: radial-gradient(ellipse at center, rgba(255,255,255,0.04) 0%, transparent 50%);
+            filter: blur(60px);
+        }
+
+        .smoke:nth-child(1) { top: -30%; left: -30%; animation: smokeFloat1 18s ease-in-out infinite; }
+        .smoke:nth-child(2) { top: 10%; right: -30%; animation: smokeFloat2 22s ease-in-out infinite; opacity: 0.6; }
+        .smoke:nth-child(3) { bottom: -30%; left: 10%; animation: smokeFloat3 20s ease-in-out infinite; opacity: 0.4; }
+
+        @keyframes breathe {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.02); }
+        }
+
+        @keyframes smokeFloat1 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(5%, 3%) scale(1.1); }
+        }
+
+        @keyframes smokeFloat2 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(-5%, -3%) scale(1.05); }
+        }
+
+        @keyframes smokeFloat3 {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(3%, -5%) scale(1.08); }
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at center, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.3) 100%);
+            z-index: 2;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            width: 100%;
+            padding: 0 20px;
+            margin-top: 120px;
+        }
+
+        .hero-title {
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            font-size: clamp(80px, 14vw, 220px);
+            font-weight: 400;
+            letter-spacing: clamp(8px, 2vw, 20px);
+            line-height: 0.85;
+            margin-bottom: 40px;
+            max-width: 1900px;
+            margin-left: auto;
+            margin-right: auto;
+            text-transform: uppercase;
+            animation: textFlash 8s ease-in-out infinite;
+        }
+
+        @keyframes textFlash {
+            0%, 90%, 100% { opacity: 0.9; text-shadow: 0 0 30px rgba(139, 0, 0, 0.3); }
+            95% { opacity: 1; text-shadow: 0 0 60px rgba(139, 0, 0, 0.8), 0 0 100px rgba(255, 255, 255, 0.3); }
+        }
+
+        .hero-title .gray {
+            color: rgba(100, 100, 100, 0.95);
+        }
+
+        .hero-title .red {
+            color: rgba(139, 0, 0, 0.95);
+        }
+
+        .hero-subtitle {
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            font-size: clamp(22px, 3.5vw, 42px);
+            letter-spacing: clamp(4px, 1vw, 10px);
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 1400px;
+            margin: 80px auto 0;
+            padding: 0 20px;
+            line-height: 1.8;
+            animation: textFlash 8s ease-in-out infinite;
+            animation-delay: 0.3s;
+        }
+
+        .hero-subtitle .line1 {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        /* 内容包装器 - 抽屉效果 */
+        .content-wrapper {
+            position: relative;
+            z-index: 10;
+            margin-top: 100vh;
+            background: var(--black);
+            min-height: 100vh;
+        }
+
+        /* FEATURED ARTISTS区域 */
+        .artists-section {
+            width: 100%;
+            padding: 100px 0;
+            background: linear-gradient(180deg, var(--mad-silver) 0%, var(--mad-light) 50%, var(--mad-silver) 100%);
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: clamp(36px, 6vw, 72px);
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: var(--black);
+            margin-bottom: 20px;
+            font-weight: 900;
+        }
+
+        .title-underline {
+            width: 100px;
+            height: 3px;
+            background: var(--xre-red);
+            margin: 0 auto 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .title-underline::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            50% { left: 100%; }
+            100% { left: 100%; }
+        }
+
+        /* 艺人网格 - 接近满屏 */
+        .artists-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            max-width: 95%;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .artist-card-wrapper { 
+            text-align: center; 
+            position: relative;
+        }
+
+        .artist-card {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 750/360;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.4s;
+            border: 2px solid transparent;
+        }
+
+        .artist-card:hover {
+            border-color: var(--xre-red);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .artist-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transition: all 0.4s;
+        }
+
+        .artist-card:hover img { 
+            filter: grayscale(0%); 
+            transform: scale(1.05); 
+        }
+
+        /* 艺人蒙版效果 - 类似海报hover */
+        .artist-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 30px 20px 20px;
+            background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.6) 50%, transparent 100%);
+            opacity: 0;
+            transition: opacity 0.4s;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            height: 100%;
+        }
+
+        .artist-card:hover .artist-overlay { 
+            opacity: 1; 
+        }
+
+        .artist-name-overlay {
+            font-size: 24px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #fff;
+            text-align: center;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(139, 0, 0, 0.8);
+        }
+
+        .artist-booking-text {
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--mad-silver);
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+
+        .artist-name-below {
+            margin-top: 15px;
+            font-size: 16px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--black);
+        }
+
+        /* 广告区 - 银灰到红色渐变背景 */
+        .promo-section {
+            width: 100%;
+            padding: 80px 0;
+            background: linear-gradient(180deg, var(--mad-silver) 0%, #b8b8b8 30%, #8b0000 70%, #ff0000 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .promo-container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        .promo-poster {
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .promo-poster img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.4s;
+        }
+
+        .promo-poster:hover img { transform: scale(1.02); }
+
+        .promo-center {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .promo-block {
+            background: rgba(0,0,0,0.3);
+            padding: 30px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .promo-block.top { text-align: left; }
+        .promo-block.bottom { text-align: right; }
+
+        .promo-title {
+            font-size: 28px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #fff;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .promo-desc {
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.8;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 20px;
+        }
+
+        .promo-btn {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            color: #fff;
+            border: 2px solid #fff;
+            padding: 12px 30px;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .promo-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .promo-btn:hover::before {
+            left: 100%;
+        }
+
+        .promo-btn:hover {
+            background: #fff;
+            color: var(--xre-red);
+            box-shadow: 0 0 30px rgba(255,255,255,0.4);
+        }
+
+        .promo-playlist {
+            background: rgba(0,0,0,0.4);
+            padding: 30px;
+            border: 1px solid rgba(255,255,255,0.2);
+            text-align: center;
+        }
+
+        .playlist-title {
+            font-size: 32px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        .playlist-embed {
+            width: 100%;
+            height: 380px;
+            border: none;
+            margin-bottom: 20px;
+        }
+
+        .playlist-links {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .playlist-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.3);
+            padding: 10px 20px;
+            font-size: 12px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .playlist-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .playlist-link:hover::before {
+            left: 100%;
+        }
+
+        .playlist-link:hover {
+            background: rgba(255,255,255,0.2);
+            border-color: #fff;
+        }
+
+        /* 间隙区域 */
+        .footer-gap {
+            height: 150px;
+            background: linear-gradient(180deg, #ff0000 0%, #8b0000 50%, var(--mad-silver) 100%);
+            position: relative;
+        }
+
+        /* 底部区域 - LiveGigs风格 */
+        .site-footer {
+            background: var(--mad-silver);
+            color: #333;
+            position: relative;
+            z-index: 100;
+        }
+
+        .footer-main {
+            padding: 50px 40px 40px;
+            position: relative;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .footer-contact-left {
+            flex: 1;
+            text-align: left;
+            font-family: 'Courier New', monospace;
+        }
+
+        .contact-item {
+            margin-bottom: 10px;
+            color: #555;
+            font-size: 13px;
+            letter-spacing: 0.5px;
+            line-height: 1.5;
+        }
+
+        .contact-item a {
+            color: #555;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        .contact-item a:hover {
+            color: var(--xre-dark-red);
+        }
+
+        .footer-brand {
+            flex: 0 0 auto;
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-size: clamp(32px, 6vw, 48px);
+            font-weight: 400;
+            letter-spacing: 4px;
+            line-height: 1;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            animation: simpleGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes simpleGlow {
+            0%, 100% { 
+                text-shadow: 0 0 10px rgba(139, 0, 0, 0.3);
+                opacity: 0.95;
+            }
+            50% { 
+                text-shadow: 0 0 20px rgba(139, 0, 0, 0.6), 0 0 30px rgba(139, 0, 0, 0.3);
+                opacity: 1;
+            }
+        }
+
+        .footer-logo .xre {
+            color: var(--xre-dark-red);
+        }
+
+        .footer-logo .booking {
+            color: #222;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 25px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border: 2px solid #666;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #555;
+            text-decoration: none;
+            transition: all 0.3s;
+            background: rgba(255,255,255,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social-icon::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .social-icon:hover::before {
+            left: 100%;
+        }
+
+        .social-icon:hover {
+            border-color: var(--xre-dark-red);
+            color: var(--xre-dark-red);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .producer-section {
+            text-align: center;
+        }
+
+        .producer-label {
+            font-size: 10px;
+            color: #777;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .producer-logo {
+            height: 35px;
+            width: auto;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .producer-logo:hover {
+            opacity: 1;
+        }
+
+        .footer-contact-right {
+            flex: 1;
+            text-align: right;
+            font-family: 'Courier New', monospace;
+        }
+
+        .footer-bottom {
+            background: #b8b8b8;
+            border-top: 1px solid #999;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .footer-legal {
+            display: flex;
+            gap: 25px;
+        }
+
+        .footer-legal a {
+            color: #555;
+            text-decoration: none;
+            font-size: 11px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+
+        .footer-legal a:hover {
+            color: var(--xre-dark-red);
+        }
+
+        .copyright {
+            color: #666;
+            font-size: 11px;
+            letter-spacing: 1px;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* Booking弹窗 - Membership样式 */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.active { display: flex; }
+
+        .modal-content {
+            background: linear-gradient(135deg, #0a0000 0%, #050505 100%);
+            border: 1px solid var(--xre-dark-red);
+            padding: 40px 35px;
+            max-width: 480px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 0 50px rgba(74, 0, 0, 0.5);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .modal-close:hover { color: var(--xre-red); transform: scale(1.2); }
+
+        .modal-content h2 {
+            font-size: 28px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            color: #fff;
+            text-align: center;
+        }
+
+        .modal-content p {
+            font-size: 13px;
+            color: var(--mad-silver);
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .form-group { margin-bottom: 18px; }
+
+        .form-group label {
+            display: block;
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--mad-silver);
+            margin-bottom: 6px;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid var(--xre-dark-red);
+            color: #fff;
+            font-size: 14px;
+            letter-spacing: 1px;
+            transition: all 0.3s;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--xre-red);
+            box-shadow: 0 0 15px rgba(139, 0, 0, 0.3);
+        }
+
+        .form-group textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .modal-content .neon-btn {
+            width: 100%;
+            margin-top: 10px;
+            padding: 14px;
+            font-size: 13px;
+            background: transparent;
+            color: #fff;
+            border: 2px solid var(--xre-dark-red);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .modal-content .neon-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .modal-content .neon-btn:hover::before {
+            left: 100%;
+        }
+
+        .modal-content .neon-btn:hover {
+            background: var(--xre-dark-red);
+            box-shadow: 0 0 20px rgba(139, 0, 0, 0.5);
+        }
+
+        /* 响应式 */
+        @media (max-width: 1024px) {
+            nav { padding: 0 30px; height: 70px; }
+            .logo-img { height: 40px; max-width: 180px; }
+            .nav-links { gap: 25px; }
+            .hero-content { margin-top: 100px; }
+            .hero-title { font-size: clamp(70px, 13vw, 120px); }
+            .hero-subtitle { font-size: clamp(20px, 3vw, 32px); margin-top: 60px; }
+            .artists-grid { grid-template-columns: repeat(3, 1fr); gap: 15px; }
+            .promo-container { grid-template-columns: 1fr; gap: 30px; }
+            .footer-container { gap: 30px; }
+        }
+
+        @media (max-width: 768px) {
+            nav { padding: 0 20px; height: 65px; }
+            .logo-img { height: 35px; max-width: 160px; }
+            .nav-links a { font-size: 11px; letter-spacing: 2px; }
+            .nav-links .neon-btn { padding: 8px 16px; font-size: 10px; }
+            .hero-content { margin-top: 80px; }
+            .hero-title { font-size: clamp(55px, 14vw, 80px); letter-spacing: 5px; margin-bottom: 35px; }
+            .hero-subtitle { font-size: clamp(16px, 3.5vw, 22px); letter-spacing: 2.5px; margin-top: 50px; }
+            .artists-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 0 15px; }
+            .artist-name-overlay { font-size: 18px; }
+            .artist-booking-text { font-size: 10px; }
+            .promo-container { padding: 0 30px; }
+            .footer-gap { height: 100px; }
+            .footer-main { padding: 40px 30px 30px; }
+            .footer-container { flex-direction: column; gap: 30px; text-align: center; }
+            .footer-contact-left, .footer-contact-right { text-align: center; flex: 1; width: 100%; }
+            .social-links { margin-bottom: 20px; }
+            .producer-section { text-align: center; }
+            .footer-bottom { flex-direction: column; gap: 15px; padding: 20px 30px; text-align: center; }
+            .footer-legal { flex-wrap: wrap; justify-content: center; gap: 20px; }
+            .form-row { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 480px) {
+            nav { padding: 0 15px; height: 60px; background: rgba(0, 0, 0, 0.5); }
+            .logo-img { height: 32px; max-width: 140px; }
+            .nav-links { gap: 12px; }
+            .nav-links a { font-size: 10px; letter-spacing: 1px; }
+            .nav-links .neon-btn { padding: 6px 14px; font-size: 9px; }
+            .hero-content { margin-top: 60px; }
+            .hero-title { font-size: clamp(45px, 13vw, 65px); letter-spacing: 4px; margin-bottom: 30px; }
+            .hero-subtitle { font-size: clamp(13px, 3.5vw, 16px); letter-spacing: 2px; margin-top: 40px; line-height: 1.6; }
+            .hero-subtitle .line1 { margin-bottom: 5px; }
+            .smoke-container { opacity: 0.35; }
+            .artists-grid { gap: 12px; padding: 0 10px; }
+            .artist-name-overlay { font-size: 14px; letter-spacing: 2px; }
+            .artist-booking-text { font-size: 9px; letter-spacing: 1px; }
+            .artist-name-below { font-size: 12px; }
+            .promo-container { padding: 0 20px; }
+            .promo-title { font-size: 22px; }
+            .promo-desc { font-size: 12px; }
+            .playlist-title { font-size: 24px; }
+            .playlist-embed { height: 250px; }
+            .footer-gap { height: 80px; }
+            .footer-main { padding: 35px 25px 25px; }
+            .footer-logo { font-size: 28px; letter-spacing: 3px; margin-bottom: 15px; }
+            .social-links { gap: 12px; margin-bottom: 20px; }
+            .social-icon { width: 36px; height: 36px; }
+            .social-icon svg { width: 14px; height: 14px; }
+            .contact-item { font-size: 11px; margin-bottom: 8px; }
+            .producer-label { font-size: 9px; letter-spacing: 2px; }
+            .producer-logo { height: 30px; }
+            .footer-bottom { padding: 15px 20px; gap: 12px; }
+            .footer-legal { gap: 15px; }
+            .footer-legal a { font-size: 10px; }
+            .copyright { font-size: 10px; }
+            .modal-content { padding: 30px 20px; }
+            .modal-content h2 { font-size: 22px; }
+        }
+
+        @media (max-width: 375px) {
+            .hero-title { font-size: 38px; letter-spacing: 3px; }
+            .hero-subtitle { font-size: 11px; }
+            .artists-grid { gap: 10px; padding: 0 8px; }
+            .artist-name-overlay { font-size: 12px; }
+            .footer-logo { font-size: 24px; letter-spacing: 2px; }
+            .social-icon { width: 34px; height: 34px; }
+            .contact-item { font-size: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 导航栏 -->
+    <nav>
+        <img src="./image/xrebooking-logo.png" alt="XRE BOOKING" class="logo-img" id="logo" onclick="location.href='./index.html'" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div style="display:none; font-size: 28px; letter-spacing: 3px; text-transform: uppercase; cursor: pointer;" onclick="location.href='./index.html'">
+            <span style="color: var(--xre-red); text-shadow: 0 0 20px rgba(255, 0, 0, 0.5);">XRE</span><span style="color: #fff;">BOOKING</span>
+        </div>
+        <div class="nav-links">
+            <a href="../index.html">LIVEGIGS ASIA</a>
+            <a href="./artists.html">ARTISTS</a>
+            <button class="neon-btn" onclick="openModal()">BOOKING NOW</button>
+        </div>
+    </nav>
+
+    <!-- HERO区域 -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+
+        <div class="smoke-container">
+            <div class="smoke"></div>
+            <div class="smoke"></div>
+            <div class="smoke"></div>
+        </div>
+
+        <div class="hero-overlay"></div>
+
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <span class="gray">XRE</span><span class="red">BOOKING</span>
+            </h1>
+            <p class="hero-subtitle">
+                <span class="line1">Booking Agency in Punkrock, Garage, Mod, Powerpop, Surf, Poppunk, RocknRoll, Hardcore, Metal</span>
+            </p>
+        </div>
+    </section>
+
+    <!-- 内容包装器 -->
+    <div class="content-wrapper">
+
+        <!-- FEATURED ARTISTS区域 -->
+        <section class="artists-section">
+            <h2 class="section-title">FEATURED ARTISTS</h2>
+            <div class="title-underline"></div>
+            <div class="artists-grid" id="artistsGrid"></div>
+        </section>
+
+        <!-- 广告区 -->
+        <section class="promo-section">
+            <div class="promo-container">
+                <div class="promo-poster">
+                    <img src="https://livegigsasia.com/image/1-b-2.jpg" alt="Event Poster" onerror="this.src='https://via.placeholder.com/400x600/8b0000/fff?text=EVENT+POSTER'">
+                </div>
+                <div class="promo-center">
+                    <div class="promo-block top">
+                        <h3 class="promo-title">PUNK HEART FEST</h3>
+                        <p class="promo-desc">The ultimate punk rock experience bringing together the best bands from across Asia. Join us for an unforgettable night of raw energy and powerful performances.</p>
+                        <a href="../events.html" class="promo-btn">VIEW EVENT</a>
+                    </div>
+                    <div class="promo-block bottom">
+                        <h3 class="promo-title">UPCOMING SHOWS</h3>
+                        <p class="promo-desc">Discover our latest tour dates and book your tickets now. From intimate club shows to major festival appearances, we have got you covered.</p>
+                        <a href="../events.html" class="promo-btn">BUY TICKETS</a>
+                    </div>
+                </div>
+                <div class="promo-playlist">
+                    <h3 class="playlist-title">CHINESEROCKS CHART</h3>
+                    <iframe class="playlist-embed" src="https://open.spotify.com/embed/playlist/3ZFjYPcR6zZaHQ6rlc3S29" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                    <div class="playlist-links">
+                        <a href="https://open.spotify.com/playlist/3ZFjYPcR6zZaHQ6rlc3S29" target="_blank" class="playlist-link">Spotify</a>
+                        <a href="#" class="playlist-link">QQ Music</a>
+                        <a href="#" class="playlist-link">NetEase</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 间隙区域 -->
+        <div class="footer-gap"></div>
+
+        <!-- 底部区域 -->
+        <footer class="site-footer">
+            <div class="footer-main">
+                <div class="footer-container">
+                    <div class="footer-contact-left">
+                        <div class="contact-item">
+                            <a href="mailto:xrebooking@hotmail.com">xrebooking@hotmail.com</a>
+                        </div>
+                        <div class="contact-item">
+                            <a href="tel:+86-010-6874-5456">+86 010 6874 5456</a>
+                        </div>
+                    </div>
+
+                    <div class="footer-brand">
+                        <div class="footer-logo">
+                            <span class="xre">XRE</span><span class="booking">BOOKING</span>
+                        </div>
+
+                        <div class="social-links">
+                            <a href="https://facebook.com/xrebooking" class="social-icon" title="Facebook" target="_blank" rel="noopener noreferrer">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                            </a>
+                            <a href="https://instagram.com/xrebooking" class="social-icon" title="Instagram" target="_blank" rel="noopener noreferrer">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                            </a>
+                            <a href="https://youtube.com/@xrebooking" class="social-icon" title="YouTube" target="_blank" rel="noopener noreferrer">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                            </a>
+                            <a href="https://x.com/xrebooking" class="social-icon" title="X" target="_blank" rel="noopener noreferrer">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                            </a>
+                        </div>
+
+                        <div class="producer-section">
+                            <div class="producer-label">Produced by</div>
+                            <div style="font-size: 18px; letter-spacing: 3px; color: #555; font-weight: bold;">EMANON ENT.</div>
+                        </div>
+                    </div>
+
+                    <div class="footer-contact-right">
+                        <div class="contact-item">
+                            Asia: ShuangYi - <a href="mailto:info@xrebooking.com">info@xrebooking.com</a><br>
+                            China: Linda - <a href="mailto:xrebooking@hotmail.com">xrebooking@hotmail.com</a><br>
+                            Media PR: RayYao - <a href="mailto:490401933@qq.com">490401933@qq.com</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="footer-legal">
+                    <a href="../privacypolicy.html">Privacy Policy</a>
+                    <a href="../accessibilitystatement.html">Accessibility Statement</a>
+                </div>
+                <div class="copyright">Copyright © 2001-2026 EMANON ENT. - All Rights Reserved.</div>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- BOOKING NOW弹窗 -->
+    <div class="modal-overlay" id="bookingModal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <h2>BOOKING NOW</h2>
+            <p>Inquire for dates, rates and full booking deals</p>
+            <form id="bookingForm" action="https://api.web3forms.com/submit" method="POST" onsubmit="handleBookingSubmit(event)">
+                <input type="hidden" name="access_key" value="021d1b10-1c62-4334-90f0-acff63be93c5">
+                <input type="hidden" name="subject" value="New Booking Inquiry - XRE BOOKING">
+                <input type="hidden" name="from_name" value="XRE BOOKING Website">
+
+                <div class="form-group">
+                    <label for="bookingName">Name</label>
+                    <input type="text" id="bookingName" name="name" required placeholder="Enter your name">
+                </div>
+
+                <div class="form-group">
+                    <label for="bookingEmail">Email</label>
+                    <input type="email" id="bookingEmail" name="email" required placeholder="Enter your email">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="bookingDate">Preferred Date</label>
+                        <input type="date" id="bookingDate" name="preferred_date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookingCountry">Country</label>
+                        <input type="text" id="bookingCountry" name="country" placeholder="Country" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="bookingCity">City</label>
+                        <input type="text" id="bookingCity" name="city" placeholder="City" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookingVenue">Venue</label>
+                        <input type="text" id="bookingVenue" name="venue" placeholder="Venue name" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="bookingArtist">Artist Interested In</label>
+                    <input type="text" id="bookingArtist" name="artist" placeholder="Which artist are you interested in booking?">
+                </div>
+
+                <div class="form-group">
+                    <label for="bookingMessage">Message</label>
+                    <textarea id="bookingMessage" name="message" placeholder="Tell us more about your event..."></textarea>
+                </div>
+
+                <input type="hidden" name="source" value="XRE BOOKING Homepage">
+                <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+
+                <div id="bookingSuccess" style="display: none; text-align: center; padding: 15px; background: rgba(139, 0, 0, 0.2); border: 1px solid var(--xre-dark-red); margin-bottom: 20px;">
+                    <p style="color: #fff; margin: 0; font-size: 14px;">✓ Booking inquiry sent successfully! We'll contact you soon.</p>
+                </div>
+
+                <button type="submit" class="neon-btn">SUBMIT BOOKING REQUEST</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // 艺人数据 - 14个艺人
+        const artistsData = [
+            { name: "ONIKALI", image: "./assets/artists/OnikaLi.jpg", slug: "onikali" },
+            { name: "THE NONAME", image: "./assets/artists/TheNoname.jpg", slug: "thenoname" },
+            { name: "ACIDEZ", image: "./assets/artists/ACIDEZ.jpg", slug: "acidez" },
+            { name: "BRAIN FAILURE", image: "./assets/artists/BrainFailure.jpg", slug: "brainfailure" },
+            { name: "MASSACHRIST", image: "./assets/artists/Massachrist.jpg", slug: "massachrist" },
+            { name: "NON SERVIUM", image: "./assets/artists/NonServium.jpg", slug: "nonservium" },
+            { name: "SKARFACE", image: "./assets/artists/SKARFACE.jpg", slug: "skarface" },
+            { name: "THE GT BITCHES", image: "./assets/artists/TheGT Bitches.jpg", slug: "thegt-bitches" },
+            { name: "THE GREED", image: "./assets/artists/TheGreed.jpg", slug: "thegreed" },
+            { name: "THE SINO HEART", image: "./assets/artists/TheSino Heart.jpg", slug: "thesinoheart" },
+            { name: "BAOPIGOU", image: "./assets/artists/baopigou.jpg", slug: "baopigou" },
+            { name: "BIG D", image: "./assets/artists/bigd.jpg", slug: "bigd" },
+            { name: "THE STIRRERS", image: "./assets/artists/thestirrers.jpg", slug: "thestirrers" },
+            { name: "YSHC", image: "./assets/artists/yshc.jpg", slug: "yshc" }
+        ];
+
+        // 渲染艺人网格
+        function renderArtists() {
+            const grid = document.getElementById('artistsGrid');
+            grid.innerHTML = artistsData.map(artist => `
+                <div class="artist-card-wrapper">
+                    <div class="artist-card" onclick="location.href='./artist/${artist.slug}.html'">
+                        <img src="${artist.image}" alt="${artist.name}" onerror="this.src='https://via.placeholder.com/750x360/333/fff?text=${encodeURIComponent(artist.name)}'">
+                        <div class="artist-overlay">
+                            <div class="artist-name-overlay">${artist.name}</div>
+                            <div class="artist-booking-text">BOOKING NOW</div>
+                        </div>
+                    </div>
+                    <div class="artist-name-below">${artist.name}</div>
+                </div>
+            `).join('');
+        }
+
+        // 弹窗控制
+        function openModal() {
+            document.getElementById('bookingModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('bookingModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // 点击弹窗外部关闭
+        document.getElementById('bookingModal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+
+        // 表单提交处理
+        function handleBookingSubmit(e) {
+            e.preventDefault();
+            const form = document.getElementById('bookingForm');
+            const formData = new FormData(form);
+            const successDiv = document.getElementById('bookingSuccess');
+
+            // 添加时间戳
+            formData.append('timestamp', new Date().toISOString());
+
+            // 添加收件人
+            formData.append('replyto', 'xrebooking@hotmail.com');
+
+            // 发送到 Web3Forms
+            fetch(form.action, {
+                method: 'POST',
+                body: formData
+            }).then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // 显示成功消息
+                    successDiv.style.display = 'block';
+
+                    // 保存到 localStorage 备份
+                    const submissionData = {
+                        name: document.getElementById('bookingName').value,
+                        email: document.getElementById('bookingEmail').value,
+                        preferred_date: document.getElementById('bookingDate').value,
+                        country: document.getElementById('bookingCountry').value,
+                        city: document.getElementById('bookingCity').value,
+                        venue: document.getElementById('bookingVenue').value,
+                        artist: document.getElementById('bookingArtist').value,
+                        message: document.getElementById('bookingMessage').value,
+                        timestamp: new Date().toISOString(),
+                        source: 'XRE BOOKING Homepage'
+                    };
+                    let submissions = JSON.parse(localStorage.getItem('bookingSubmissions') || '[]');
+                    submissions.push(submissionData);
+                    localStorage.setItem('bookingSubmissions', JSON.stringify(submissions));
+
+                    // 3秒后关闭弹窗并重置表单
+                    setTimeout(() => {
+                        closeModal();
+                        form.reset();
+                        successDiv.style.display = 'none';
+                    }, 3000);
+                } else {
+                    alert('There was an error submitting your booking request. Please try again.');
+                }
+            }).catch(error => {
+                console.error('Error:', error);
+                alert('There was an error submitting your booking request. Please try again.');
+            });
+        }
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            renderArtists();
+        });
+
+        // ESC键关闭弹窗
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeModal();
+        });
+    </script>
+
+</body>
+</html>
