@@ -1173,11 +1173,11 @@
         }
 
         
-        /* Hero背景LOGO - 中心与XRE BOOKING标题中心对齐 */
+        /* Hero背景LOGO - 中心与XRE BOOKING标题中心对齐，位于副标题上方 */
         .hero-logo-bg {
             will-change: opacity, transform;
             position: absolute;
-            top: 50%;
+            top: 35%;
             left: 50%;
             transform: translate(-50%, -50%);
             z-index: -1;
@@ -1207,6 +1207,9 @@
         }
 
         @media (max-width: 1024px) {
+            .hero-logo-bg {
+                top: 33%;
+            }
             .hero-logo-bg img {
                 width: 500px;
                 height: 500px;
@@ -1214,6 +1217,9 @@
         }
 
         @media (max-width: 768px) {
+            .hero-logo-bg {
+                top: 32%;
+            }
             .hero-logo-bg img {
                 width: 400px;
                 height: 400px;
@@ -1221,6 +1227,9 @@
         }
 
         @media (max-width: 480px) {
+            .hero-logo-bg {
+                top: 30%;
+            }
             .hero-logo-bg img {
                 width: 300px;
                 height: 300px;
@@ -1228,6 +1237,9 @@
         }
 
         @media (max-width: 375px) {
+            .hero-logo-bg {
+                top: 28%;
+            }
             .hero-logo-bg img {
                 width: 260px;
                 height: 260px;
