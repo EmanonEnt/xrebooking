@@ -25,6 +25,8 @@
             background-color: var(--black);
             color: #fff;
             overflow-x: hidden;
+            margin: 0;
+            padding: 0;
         }
         nav {
             position: fixed;
@@ -315,22 +317,15 @@
             height: 0;
             display: none;
         }
-
-        /* 确保内容区域到底部无空隙 */
-        .content-wrapper {
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
         .site-footer {
             background: #000;
             color: #c0c0c0;
             position: relative;
             z-index: 100;
             border-top: none;
-            margin-bottom: 0;
         }
         .footer-main {
-            padding: 50px 40px 30px;
+            padding: 50px 40px 40px;
             position: relative;
             background: #000;
         }
@@ -451,19 +446,16 @@
         .footer-bottom {
             background: #111;
             border-top: 1px solid #333;
-            padding: 15px 40px;
+            padding: 20px 40px;
             display: flex;
-            flex-direction: row;
             justify-content: center;
             align-items: center;
-            gap: 30px;
-            flex-wrap: nowrap;
+            gap: 40px;
+            flex-wrap: wrap;
         }
         .footer-legal {
             display: flex;
             gap: 25px;
-            align-items: center;
-            flex-shrink: 0;
         }
         .footer-legal a {
             color: #888;
@@ -482,9 +474,6 @@
             font-size: 11px;
             letter-spacing: 1px;
             font-family: 'Courier New', monospace;
-            white-space: nowrap;
-            margin: 0;
-            flex-shrink: 0;
         }
 
         /* Booking弹窗 */
@@ -596,7 +585,7 @@
         .branded-tours-section {
             width: 100%;
             padding: 80px 0;
-            background: linear-gradient(180deg, var(--mad-silver) 0%, var(--mad-light) 50%, transparent 100%);
+            background: linear-gradient(180deg, var(--mad-silver) 0%, var(--mad-light) 30%, #8b0000 100%);
             position: relative;
         }
         .branded-tours-container {
@@ -2553,6 +2542,24 @@
                     }
                 }
             }, { passive: true });
+        }
+
+        function loadMoreBrandedTours() {
+            renderBrandedTours();
+        }
+    </script>
+</body>
+</html>
+           }, { passive: true });
+        }
+
+        function loadMoreBrandedTours() {
+            renderBrandedTours();
+        }
+    </script>
+</body>
+</html>
+      }, { passive: true });
         }
 
         function loadMoreBrandedTours() {
