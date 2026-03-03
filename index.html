@@ -1098,32 +1098,7 @@
             .share-platform-btn { padding: 10px 5px; }
             .share-platform-icon { width: 24px; height: 24px; }
             .share-platform-name { font-size: 9px; }
-        
-            .poster-ad-left {
-                min-height: auto;
-                height: auto;
-                padding: 20px;
-                order: 1;
-                aspect-ratio: 3/4;
-                max-height: 500px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-            .poster-wrapper {
-                max-width: 350px;
-                width: 100%;
-                height: auto;
-                aspect-ratio: 3/4;
-                max-height: 500px;
-            }
-            .poster-ad-image {
-                width: 100%;
-                height: auto;
-                max-height: 500px;
-                object-fit: contain;
-                aspect-ratio: 3/4;
-            }}
+        }
         @media (max-width: 480px) {
             .artist-card { aspect-ratio: 750/360 !important; overflow: hidden; }
             .artist-card img { width: 100% !important; height: 100% !important; object-fit: cover !important; }
@@ -1506,7 +1481,7 @@
             }
         }
 
-        /* Player Styles */
+        /* MetingJS Player Styles */
         .player-embed {
             position: relative;
             width: 100%;
@@ -1515,7 +1490,6 @@
             background: #000;
         }
 
-        /* QQ Music APlayer */
         .player-embed .aplayer {
             background: rgba(0, 0, 0, 0.95);
             border-radius: 0;
@@ -1533,6 +1507,13 @@
             width: 80px;
             height: 80px;
             border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .player-embed .aplayer .aplayer-pic img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .player-embed .aplayer .aplayer-info .aplayer-music {
@@ -1553,7 +1534,7 @@
         .player-embed .aplayer .aplayer-list {
             background: rgba(0, 0, 0, 0.95);
             border-top: 1px solid rgba(139, 0, 0, 0.3);
-            max-height: 350px !important;
+            max-height: 250px !important;
         }
 
         .player-embed .aplayer .aplayer-list ol li {
@@ -1573,15 +1554,78 @@
             color: #fff;
         }
 
-        /* Netease iframe */
-        .player-embed iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            background: #000;
+        .player-embed .aplayer .aplayer-list ol li .aplayer-list-author {
+            color: #888;
+            font-size: 11px;
         }
 
-/* MetingJS Responsive Styles */
+        .player-embed .aplayer .aplayer-controller {
+            background: transparent;
+        }
+
+        .player-embed .aplayer .aplayer-bar-wrap {
+            margin: 0;
+        }
+
+        .player-embed .aplayer .aplayer-bar {
+            background: rgba(255, 255, 255, 0.2);
+            height: 4px;
+        }
+
+        .player-embed .aplayer .aplayer-bar .aplayer-loaded {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .player-embed .aplayer .aplayer-bar .aplayer-played {
+            background: var(--xre-dark-red) !important;
+        }
+
+        .player-embed .aplayer .aplayer-bar .aplayer-thumb {
+            background: #fff;
+            border: 2px solid var(--xre-dark-red);
+        }
+
+        .player-embed .aplayer .aplayer-time {
+            color: #c0c0c0;
+            font-size: 11px;
+        }
+
+        .player-embed .aplayer .aplayer-time .aplayer-icon path {
+            fill: #c0c0c0;
+        }
+
+        .player-embed .aplayer .aplayer-time .aplayer-icon:hover path {
+            fill: #fff;
+        }
+
+        .player-embed .aplayer .aplayer-volume-wrap .aplayer-volume-bar-wrap {
+            background: rgba(0, 0, 0, 0.9);
+        }
+
+        .player-embed .aplayer .aplayer-volume-wrap .aplayer-volume-bar {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .player-embed .aplayer .aplayer-volume-wrap .aplayer-volume-bar .aplayer-volume {
+            background: var(--xre-dark-red);
+        }
+
+        .player-embed .aplayer .aplayer-lrc {
+            text-shadow: none;
+            display: none;
+        }
+
+        .player-embed.qq-player,
+        .player-embed.netease-player {
+            height: 100%;
+            min-height: 200px;
+        }
+
+        .player-embed .aplayer {
+            height: 100% !important;
+        }
+
+        /* MetingJS Responsive Styles */
         @media (max-width: 1024px) {
             .player-embed .aplayer .aplayer-pic {
                 width: 70px;
@@ -1653,62 +1697,6 @@
                 font-size: 9px;
             }
         }
-
-        /* Mobile Player Styles */
-        @media (max-width: 1024px) {
-            .player-embed .aplayer .aplayer-pic {
-                width: 70px;
-                height: 70px;
-            }
-            .player-embed .aplayer .aplayer-info {
-                margin-left: 80px;
-                padding: 5px 10px;
-            }
-            .player-embed .aplayer .aplayer-list {
-                max-height: 300px !important;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .player-embed .aplayer .aplayer-pic {
-                width: 60px;
-                height: 60px;
-            }
-            .player-embed .aplayer .aplayer-info {
-                margin-left: 70px;
-                height: 60px;
-                padding: 5px;
-            }
-            .player-embed .aplayer .aplayer-info .aplayer-music .aplayer-title {
-                font-size: 12px;
-            }
-            .player-embed .aplayer .aplayer-info .aplayer-music .aplayer-author {
-                font-size: 10px;
-            }
-            .player-embed .aplayer .aplayer-list {
-                max-height: 250px !important;
-            }
-            .player-embed iframe {
-                height: 380px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .player-embed .aplayer .aplayer-pic {
-                width: 50px;
-                height: 50px;
-            }
-            .player-embed .aplayer .aplayer-info {
-                margin-left: 60px;
-                height: 50px;
-            }
-            .player-embed .aplayer .aplayer-list {
-                max-height: 200px !important;
-            }
-            .player-embed iframe {
-                height: 350px;
-            }
-        }
 </style>
 
     <!-- Service Worker 注册 -->
@@ -1725,10 +1713,10 @@
             });
         }
     </script>
-    <!-- APlayer for QQ Music -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/meting/dist/Meting.min.js"></script>
+    <!-- MetingJS for music players -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/meting@2.0.1/dist/Meting.min.js"></script>
 </head>
 
 <body>
@@ -1847,28 +1835,40 @@
 
                     <!-- 底部两个嵌入式播放器 -->
                     <div class="player-bottom-container">
-                        <!-- QQ音乐播放器 (MetingJS + APlayer) -->
+                        <!-- QQ音乐嵌入式播放器 -->
                         <div class="player-embed qq-player">
-                            <div id="aplayer-qq" class="aplayer"
-                                data-id="9674279142"
-                                data-server="tencent"
-                                data-type="playlist"
-                                data-autoplay="0"
-                                data-fixed="false"
-                                data-listmaxheight="350px"
-                                data-preload="auto">
-                            </div>
+                            <meting-js
+                                server="tencent"
+                                type="playlist"
+                                id="9674279142"
+                                fixed="false"
+                                mini="false"
+                                autoplay="false"
+                                theme="#8b0000"
+                                list-folded="true"
+                                list-max-height="250px"
+                                preload="metadata"
+                                mutex="true"
+                                lrc-type="0">
+                            </meting-js>
                         </div>
 
-                        <!-- 网易云音乐播放器 (官方iframe) -->
+                        <!-- 网易云音乐嵌入式播放器 -->
                         <div class="player-embed netease-player">
-                            <iframe
-                                src="https://music.163.com/outchain/player?type=0&id=8190304143&auto=0&height=430"
-                                width="100%"
-                                height="430"
-                                frameborder="no"
-                                scrolling="no">
-                            </iframe>
+                            <meting-js
+                                server="netease"
+                                type="playlist"
+                                id="9674279142"
+                                fixed="false"
+                                mini="false"
+                                autoplay="false"
+                                theme="#8b0000"
+                                list-folded="true"
+                                list-max-height="250px"
+                                preload="metadata"
+                                mutex="true"
+                                lrc-type="0">
+                            </meting-js>
                         </div>
                     </div>
                 </div>
