@@ -1591,21 +1591,21 @@
     <script>
         // 艺人数据 - 15个艺人(14+1占位)，按A-Z排序
         const artistsData = [
-            { name: "ACIDEZ (MX)", image: "./image/ACIDEZ.jpg", slug: "acidez" },
-            { name: "BAOPIGOU爆皮狗", image: "./image/baopigou.jpg", slug: "baopigou" },
-            { name: "BIG D & THE KIDS TABLE (US)", image: "./image/bigd.jpg", slug: "bigd" },
-            { name: "BRAIN FAILURE腦濁", image: "./image/BrainFailure.jpg", slug: "brainfailure" },
-            { name: "MASSACHRIST (MX)", image: "./image/Massachrist.jpg", slug: "massachrist" },
-            { name: "NON SERVIUM (ES)", image: "./image/NonServium.jpg", slug: "nonservium" },
-            { name: "ÖNIKA LI", image: "./image/OnikaLi.jpg", slug: "onikali" },
-            { name: "SILVER ASH銀色灰塵", image: "./image/yshc.jpg", slug: "yshc" },
-            { name: "SKARFACE (FR)", image: "./image/SKARFACE.jpg", slug: "skarface" },
-            { name: "THE GREED (TH)", image: "./image/TheGreed.jpg", slug: "thegreed" },
-            { name: "THE GT BITCHES", image: "./image/TheGTBitches.jpg", slug: "thegtbitches" },
-            { name: "THE NONAME無名", image: "./image/TheNoname.jpg", slug: "thenoname" },
-            { name: "THE SINO HEART", image: "./image/TheSinoHeart.jpg", slug: "thesinoheart" },
-            { name: "THE STIRRERS", image: "./image/thestirrers.jpg", slug: "thestirrers" },
-            { name: "NEW ARTIST COMING...", image: "./image/NewArtistComing.webp", slug: "#" }
+            { name: "ACIDEZ (MX)", image: "./assets/artists/ACIDEZ.jpg", slug: "acidez" },
+            { name: "BAOPIGOU爆皮狗", image: "./assets/artists/baopigou.jpg", slug: "baopigou" },
+            { name: "BIG D & THE KIDS TABLE (US)", image: "./assets/artists/bigd.jpg", slug: "bigd" },
+            { name: "BRAIN FAILURE腦濁", image: "./assets/artists/BrainFailure.jpg", slug: "brainfailure" },
+            { name: "MASSACHRIST (MX)", image: "./assets/artists/Massachrist.jpg", slug: "massachrist" },
+            { name: "NON SERVIUM (ES)", image: "./assets/artists/NonServium.jpg", slug: "nonservium" },
+            { name: "ÖNIKA LI", image: "./assets/artists/OnikaLi.jpg", slug: "onikali" },
+            { name: "SILVER ASH銀色灰塵", image: "./assets/artists/yshc.jpg", slug: "yshc" },
+            { name: "SKARFACE (FR)", image: "./assets/artists/SKARFACE.jpg", slug: "skarface" },
+            { name: "THE GREED (TH)", image: "./assets/artists/TheGreed.jpg", slug: "thegreed" },
+            { name: "THE GT BITCHES", image: "./assets/artists/TheGTBitches.jpg", slug: "thegtbitches" },
+            { name: "THE NONAME無名", image: "./assets/artists/TheNoname.jpg", slug: "thenoname" },
+            { name: "THE SINO HEART", image: "./assets/artists/TheSinoHeart.jpg", slug: "thesinoheart" },
+            { name: "THE STIRRERS", image: "./assets/artists/thestirrers.jpg", slug: "thestirrers" },
+            { name: "NEW ARTIST COMING...", image: "./assets/artists/NewArtistComing.webp", slug: "#" }
         ];
 
         // 渲染艺人网格 - 图片彩色，hover蒙版，名字hover红色亮闪可点击
@@ -1714,7 +1714,16 @@
                     headers: {
                         'X-Master-Key': '$2a$10$NefT7E9BsbDH5jDRU.C/3.F2D/7C8jzo2uQjN4KxF9x8v8v8v8v8v'
                     }
+                }).catch(err => {
+                    console.log('Branded Tours load failed:', err);
+                    return null;
                 });
+
+                if (!response) {
+                    grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: #666; padding: 40px;">Branded Tours loading...</div>';
+                    if (loadMoreBtn) loadMoreBtn.style.display = 'none';
+                    return;
+                }
 
                 if (!response.ok) throw new Error('Failed to fetch');
 
