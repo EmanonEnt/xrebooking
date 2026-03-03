@@ -315,6 +315,15 @@
             height: 0;
             display: none;
         }
+
+        /* 确保内容区域到底部无空隙 */
+        .content-wrapper {
+            margin-bottom: 0;
+        }
+
+        .site-footer {
+            margin-top: 0;
+        }
         .site-footer {
             background: #000;
             color: #c0c0c0;
@@ -432,17 +441,18 @@
         .footer-bottom {
             background: #111;
             border-top: 1px solid #333;
-            padding: 20px 40px;
+            padding: 15px 40px;
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             justify-content: center;
             align-items: center;
-            gap: 15px;
+            gap: 30px;
             flex-wrap: wrap;
         }
         .footer-legal {
             display: flex;
             gap: 25px;
+            align-items: center;
         }
         .footer-legal a {
             color: #888;
@@ -461,6 +471,8 @@
             font-size: 11px;
             letter-spacing: 1px;
             font-family: 'Courier New', monospace;
+            white-space: nowrap;
+            margin: 0;
         }
 
         /* Booking弹窗 */
@@ -572,7 +584,7 @@
         .branded-tours-section {
             width: 100%;
             padding: 80px 0;
-            background: linear-gradient(180deg, var(--mad-silver) 0%, var(--mad-light) 30%, var(--xre-red) 100%);
+            background: linear-gradient(180deg, var(--mad-silver) 0%, var(--mad-light) 30%, #8b0000 100%);
             position: relative;
         }
         .branded-tours-container {
@@ -1131,10 +1143,7 @@
         .poster-ad-section {
             width: 100%;
             padding: 0;
-            background-image: url('images/xre-adbg.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
+            background: #8b0000;
             position: relative;
             border-top: none;
         }
@@ -1151,33 +1160,34 @@
             min-height: 100vh;
         }
 
-        /* 左侧海报 - 2:3比例，固定无HOVER */
+        /* 左侧海报 - 满屏高度 */
         .poster-ad-left {
             position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 40px;
+            padding: 0;
             background: rgba(0, 0, 0, 0.2);
+            height: 100%;
+            min-height: 100vh;
         }
 
         .poster-wrapper {
             position: relative;
             width: 100%;
-            max-width: 500px;
-            aspect-ratio: 2/3;
+            height: 100%;
+            max-height: 100vh;
             overflow: hidden;
-            border: 3px solid rgba(139, 0, 0, 0.5);
-            box-shadow: 0 0 40px rgba(139, 0, 0, 0.3);
+            border: none;
+            box-shadow: none;
         }
 
         .poster-ad-image {
             width: 100%;
             height: 100%;
-            object-fit: contain;
+            object-fit: cover;
             object-position: center;
             display: block;
-            background: #000;
         }
 
         /* 中间内容区 */
@@ -1359,6 +1369,11 @@
             box-shadow: 0 0 20px rgba(49, 194, 124, 0.4);
         }
 
+        .player-netease:hover {
+            border-color: #c62f2f;
+            box-shadow: 0 0 20px rgba(198, 47, 47, 0.4);
+        }
+
         .player-netease-embed {
             flex: 0 0 50%;
             background: #000;
@@ -1463,14 +1478,16 @@
             }
             /* 移动端海报尺寸与ON TOUR海报一致 */
             .poster-ad-left {
-                padding: 20px;
+                padding: 0;
                 aspect-ratio: 2/3;
                 max-height: 70vh;
+                min-height: 50vh;
             }
             .poster-wrapper {
                 max-width: 100%;
                 width: 100%;
                 height: 100%;
+                max-height: 70vh;
             }
             .poster-ad-image {
                 width: 100%;
@@ -1514,14 +1531,16 @@
         @media (max-width: 480px) {
             /* 移动端海报尺寸与ON TOUR海报一致 */
             .poster-ad-left {
-                padding: 15px;
+                padding: 0;
                 aspect-ratio: 2/3;
                 max-height: 60vh;
+                min-height: 40vh;
             }
             .poster-wrapper {
                 max-width: 100%;
                 width: 100%;
                 height: 100%;
+                max-height: 60vh;
             }
             .poster-ad-image {
                 width: 100%;
@@ -1719,13 +1738,27 @@
                             </div>
                         </a>
 
-                        <!-- 网易云音乐 - iframe嵌入 -->
-                        <div class="player-netease-embed">
-                            <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" 
-                                    width="100%" height="100%" 
-                                    src="https://music.163.com/outchain/player?type=0&id=8190304143&auto=0&height=450">
-                            </iframe>
-                        </div>
+                        <!-- 网易云音乐 - 与QQ音乐统一风格 -->
+                        <a href="https://music.163.com/#/playlist?id=8190304143" 
+                           class="player-btn player-netease" 
+                           target="_blank"
+                           style="background: linear-gradient(135deg, rgba(198, 47, 47, 0.2) 0%, rgba(168, 42, 42, 0.2) 100%); border-top: 1px solid rgba(139, 0, 0, 0.3);">
+                            <div class="player-btn-content">
+                                <div class="player-platform">
+                                    <svg style="width: 16px; height: 16px; vertical-align: middle; margin-right: 6px; opacity: 0.8;" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-2h2v2zm0-4h-2V7h2v6zm4 4h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                                    </svg>
+                                    网易云音乐
+                                </div>
+                                <div class="player-song">Chinese Rocks Chart</div>
+                                <div class="player-artist">Various Artists</div>
+                            </div>
+                            <div class="player-play-icon">
+                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M8 5v14l11-7z"/>
+                                </svg>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </div>
