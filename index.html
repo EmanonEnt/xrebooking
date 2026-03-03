@@ -1141,7 +1141,7 @@
 
 .hero-logo-bg {
             position: absolute;
-            top: 15%;
+            top: 5%;
             left: 50%;
             transform: translateX(-50%);
             z-index: 1;
@@ -1171,17 +1171,17 @@
         }
 
         @media (max-width: 1024px) {
-            .hero-logo-bg { top: 14%; }
+            .hero-logo-bg { top: 4%; }
             .hero-logo-bg img { width: 500px; height: 500px; }
         }
 
         @media (max-width: 768px) {
-            .hero-logo-bg { top: 13%; }
+            .hero-logo-bg { top: 3%; }
             .hero-logo-bg img { width: 400px; height: 400px; }
         }
 
         @media (max-width: 480px) {
-            .hero-logo-bg { top: 12%; }
+            .hero-logo-bg { top: 2%; }
             .hero-logo-bg img { width: 320px; height: 320px; }
         }
 
@@ -1391,29 +1391,6 @@
         </div>
     </section>
 
-    <!-- 内容包装器 -->
-    <div class="content-wrapper">
-
-        <!-- FEATURED ARTISTS区域 -->
-        <section class="artists-section">
-            <h2 class="section-title">FEATURED ARTISTS</h2>
-            <div class="title-underline"></div>
-            <div class="artists-grid" id="artistsGrid"></div>
-        </section>
-
-        
-        <section class="branded-tours-section">
-            <h2 class="section-title" style="color: #000; position: relative; z-index: 10;">BRANDED TOURS</h2>
-            <div class="title-underline"></div>
-            <div class="branded-tours-container" id="brandedToursContainer">
-                <!-- 动态加载ON TOUR活动 -->
-            </div>
-            <div class="branded-tours-load-more" id="brandedToursLoadMore">
-                <button class="neon-btn" onclick="loadMoreBrandedTours()">LOAD MORE</button>
-            </div>
-        </section>
-
-        
         <!-- BRANDED TOURS区域 - 与LiveGigs自主活动区域一致 -->
         <section class="branded-tours-section">
             <h2 class="section-title" style="color: #000; position: relative; z-index: 10;">BRANDED TOURS</h2>
@@ -1425,6 +1402,21 @@
                 <button class="neon-btn" onclick="loadMoreBrandedTours()">LOAD MORE</button>
             </div>
         </section>
+
+
+
+    <!-- 内容包装器 -->
+    <div class="content-wrapper">
+
+        <!-- FEATURED ARTISTS区域 -->
+        <section class="artists-section">
+            <h2 class="section-title">FEATURED ARTISTS</h2>
+            <div class="title-underline"></div>
+            <div class="artists-grid" id="artistsGrid"></div>
+        </section>
+
+        
+        
 <!-- 广告区 -->
         
 
