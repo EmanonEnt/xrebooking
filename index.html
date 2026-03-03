@@ -772,10 +772,7 @@
 .branded-tours-section {
     width: 100%;
     padding: 80px 0;
-    background: linear-gradient(180deg, rgba(5,5,5,0.9) 0%, rgba(10,10,10,0.85) 50%, rgba(5,5,5,0.9) 100%), url('./images/xre-adbg.jpg');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
+    background: linear-gradient(180deg, var(--mad-silver) 0%, var(--mad-light) 30%, var(--xre-dark-red) 100%);
     position: relative;
 }
 
@@ -1151,8 +1148,8 @@
         }
 
         .hero-logo-bg img {
-            width: 400px;
-            height: 400px;
+            width: 600px;
+            height: 600px;
             object-fit: contain;
             animation: heroLogoBreathe 4s ease-in-out infinite;
             filter: drop-shadow(0 0 30px rgba(139, 0, 0, 0.6));
@@ -1173,18 +1170,18 @@
         }
 
         @media (max-width: 1024px) {
-            .hero-logo-bg { top: 14%; }
-            .hero-logo-bg img { width: 400px; height: 400px; }
+            .hero-logo-bg { top: 4%; }
+            .hero-logo-bg img { width: 500px; height: 500px; }
         }
 
         @media (max-width: 768px) {
-            .hero-logo-bg { top: 13%; }
+            .hero-logo-bg { top: 3%; }
             .hero-logo-bg img { width: 400px; height: 400px; }
         }
 
         @media (max-width: 480px) {
-            .hero-logo-bg { top: 12%; }
-            .hero-logo-bg img { width: 400px; height: 400px; }
+            .hero-logo-bg { top: 2%; }
+            .hero-logo-bg img { width: 320px; height: 320px; }
         }
 
 
@@ -1533,6 +1530,11 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            renderArtists();
+        });
+    </script>
+</body>
+</html> document.addEventListener('DOMContentLoaded', () => {
             renderArtists();
         });
     </script>
