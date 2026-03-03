@@ -48,7 +48,7 @@
             max-width: 200px;
             object-fit: contain;
             cursor: pointer;
-            animation: logoBreathe 8s ease-in-out infinite, logoFlash 8s ease-in-out infinite;
+            animation: logoBreathe 4s ease-in-out infinite;
         }
 
         @keyframes logoBreathe {
@@ -249,7 +249,8 @@
         }
 
         .hero-title .red {
-            color: rgba(139, 0, 0, 0.95);
+            color: #c0c0c0;
+            text-shadow: 0 0 30px rgba(192, 192, 192, 0.3);
         }
 
         .hero-subtitle {
@@ -1313,12 +1314,10 @@
 
     <!-- 导航栏 -->
     <nav>
-        <div class="logo-text" onclick="location.href='./index.html'" style="cursor: pointer; font-size: 28px; letter-spacing: 3px; text-transform: uppercase; font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;">
-            <span style="color: var(--xre-red); text-shadow: 0 0 20px rgba(255, 0, 0, 0.5);">XRE</span><span style="color: #fff;">BOOKING</span>
-        </div>
+        <img src="images/xrelogoL.png" alt="XRE BOOKING" class="logo-img" id="logo" onclick="location.href='./index.html'" style="animation: logoBreathe 4s ease-in-out infinite;">
         <div class="nav-links">
-            <a href="../events.html">EVENTS</a>
-            <a href="../partners.html">Partners</a>
+            <a href="https://www.livegigsasia.com/events.html">EVENTS</a>
+            <a href="https://www.livegigsasia.com/partners.html">Partners</a>
             <button class="neon-btn" onclick="openModal()">BOOKING NOW</button>
         </div>
     </nav>
@@ -1384,13 +1383,13 @@
                         <h3 class="promo-title">PUNK HEART FEST</h3>
                         <div class="promo-red-line"></div>
                         <p class="promo-desc">The ultimate punk rock experience bringing together the best bands from across Asia. Join us for an unforgettable night of raw energy and powerful performances.</p>
-                        <a href="../events.html" class="promo-btn">VIEW EVENT</a>
+                        <a href="https://www.livegigsasia.com/events.html" class="promo-btn">VIEW EVENT</a>
                     </div>
                     <div class="promo-block bottom">
                         <h3 class="promo-title">UPCOMING SHOWS</h3>
                         <div class="promo-red-line"></div>
                         <p class="promo-desc">Discover our latest tour dates and book your tickets now. From intimate club shows to major festival appearances, we have got you covered.</p>
-                        <a href="../events.html" class="promo-btn">BUY TICKETS</a>
+                        <a href="https://www.livegigsasia.com/events.html" class="promo-btn">BUY TICKETS</a>
                     </div>
                 </div>
                 <div class="promo-playlist">
@@ -1528,7 +1527,7 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label for="bookingDate">Preferred Date</label>
-                        <input type="date" id="bookingDate" name="preferred_date" required lang="en" placeholder="MM/DD/YYYY">
+                        <input type="date" id="bookingDate" name="preferred_date" required lang="en-US" placeholder="MM/DD/YYYY" style="color-scheme: dark;">
                     </div>
                     <div class="form-group">
                         <label for="bookingCountry">Country</label>
