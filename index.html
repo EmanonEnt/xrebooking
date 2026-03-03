@@ -11,43 +11,6 @@
     <link rel="shortcut icon" type="image/png" href="./images/webtop.png">
     <link rel="apple-touch-icon" href="./images/webtop.png">
     <style>
-        /* Hero副标题 - 确保3行显示 */
-        .hero-subtitle {
-            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            font-size: clamp(22px, 3.5vw, 42px);
-            letter-spacing: clamp(4px, 1vw, 10px);
-            text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.9);
-            max-width: 1400px;
-            margin: 40px auto 0;
-            padding: 0 20px;
-            line-height: 1.4;
-            text-align: center;
-        }
-        .hero-subtitle .line1,
-        .hero-subtitle .line2,
-        .hero-subtitle .line3 {
-            display: block;
-            white-space: nowrap;
-        }
-        @media (max-width: 768px) {
-            .hero-subtitle {
-                font-size: clamp(16px, 3.5vw, 22px);
-                letter-spacing: 2px;
-            }
-        }
-        @media (max-width: 480px) {
-            .hero-subtitle {
-                font-size: clamp(12px, 3vw, 16px);
-                letter-spacing: 1.5px;
-            }
-        }
-        @media (max-width: 375px) {
-            .hero-subtitle {
-                font-size: 11px;
-            }
-        }
-
         :root {
             --xre-red: #ff0000;
             --xre-dark-red: #8b0000;
@@ -111,7 +74,7 @@
         .neon-btn {
             background: rgba(139, 0, 0, 0.3);
             color: #ffffff !important;
-            border: 2px solid #8b0000;
+            border: 2px solid var(--xre-dark-red);
             padding: 10px 25px;
             font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
             font-size: 12px;
@@ -121,26 +84,6 @@
             transition: all 0.4s;
             position: relative;
             overflow: hidden;
-        }
-        .neon-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,0,0,0.2), transparent);
-            transition: left 0.5s;
-        }
-        .neon-btn:hover::before {
-            left: 100%;
-        }
-        .neon-btn:hover {
-            background: #8b0000;
-            border-color: #ff0000;
-            box-shadow: 0 0 30px rgba(139, 0, 0, 0.8), 0 0 60px rgba(255, 0, 0, 0.4);
-            transform: scale(1.05);
-            letter-spacing: 3px;
         }
         .neon-btn::before {
             content: '';
@@ -256,8 +199,22 @@
             color: #c0c0c0;
             text-shadow: 0 0 30px rgba(192, 192, 192, 0.3);
         }
-        
-        .hero-subtitle .line1, .hero-subtitle .line2, 
+        .hero-subtitle {
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            font-size: clamp(22px, 3.5vw, 42px);
+            letter-spacing: clamp(4px, 1vw, 10px);
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 1400px;
+            margin: 40px auto 0;
+            padding: 0 20px;
+            line-height: 1.4;
+            text-align: center;
+        }
+        .hero-subtitle .line1, .hero-subtitle .line2, .hero-subtitle .line3 {
+            display: block;
+            margin-bottom: 0;
+        }
         .content-wrapper {
             position: relative;
             z-index: 10;
@@ -285,21 +242,10 @@
         .title-underline {
             width: 100px;
             height: 3px;
-            background: #8b0000;
+            background: var(--xre-red);
             margin: 0 auto 60px;
             position: relative;
             overflow: hidden;
-        }
-        .title-underline::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,0,0,0.6), transparent);
-            background-size: 200% 100%;
-            animation: shimmer 2s infinite;
         }
         .artists-grid {
             display: grid;
@@ -455,10 +401,30 @@
             justify-content: center;
             margin-bottom: 25px;
         }
-        
-        
-        
-        
+        .social-icon {
+            width: 44px;
+            height: 44px;
+            border: 2px solid #888;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #c0c0c0;
+            text-decoration: none;
+            transition: all 0.3s;
+            background: rgba(255,255,255,0.05);
+        }
+        .social-icon svg {
+            width: 22px;
+            height: 22px;
+            fill: currentColor;
+        }
+        .social-icon:hover {
+            border-color: var(--xre-red);
+            color: var(--xre-red);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255,0,0,0.3);
+        }
         .producer-section {
             text-align: center;
         }
@@ -493,6 +459,7 @@
             align-items: center;
             flex-wrap: wrap;
             gap: 40px;
+            margin: 0;
         }
         .footer-spacer {
             display: none;
@@ -528,47 +495,84 @@
         }
 
         /* Booking弹窗 */
-        
-        
-        
-        
-        
-        
-        
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            touch-action: pan-y;
+            overscroll-behavior: contain;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-content {
+            background: linear-gradient(135deg, #0a0000 0%, #050505 100%);
+            border: 2px solid var(--xre-red);
+            padding: 40px 35px;
+            max-width: 480px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 0 50px rgba(74, 0, 0, 0.5);
+        }
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 28px;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .modal-close:hover { color: var(--xre-red); transform: scale(1.2); }
+        .modal-content h2 {
+            font-size: 28px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            color: #fff;
+            text-align: center;
+        }
+        .modal-content p {
+            font-size: 13px;
+            color: var(--mad-silver);
+            text-align: center;
+            margin-bottom: 25px;
+        }
         .form-group { margin-bottom: 18px; }
         .form-group label {
             display: block;
             font-size: 11px;
             letter-spacing: 2px;
             text-transform: uppercase;
-            color: #c0c0c0;
+            color: var(--mad-silver);
             margin-bottom: 6px;
-            font-weight: bold;
         }
         .form-group input,
         .form-group textarea,
         .form-group select {
             width: 100%;
-            padding: 12px 15px;
-            background: rgba(0, 0, 0, 0.8);
-            border: 2px solid #8b0000;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid var(--xre-red);
             color: #fff;
             font-size: 14px;
             letter-spacing: 1px;
             font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            transition: all 0.3s ease;
         }
         .form-group input:focus,
         .form-group textarea:focus,
         .form-group select:focus {
             outline: none;
-            border-color: #ff0000;
-            box-shadow: 0 0 15px rgba(139, 0, 0, 0.4), inset 0 0 10px rgba(139, 0, 0, 0.1);
-            background: rgba(0, 0, 0, 0.9);
-        }
-        .form-group input::placeholder,
-        .form-group textarea::placeholder {
-            color: #666;
+            border-color: var(--xre-red);
+            box-shadow: 0 0 15px rgba(139, 0, 0, 0.3);
         }
         .form-group textarea {
             min-height: 80px;
@@ -579,8 +583,23 @@
             grid-template-columns: 1fr 1fr;
             gap: 15px;
         }
-        
-        
+        .modal-content .neon-btn {
+            width: 100%;
+            margin-top: 10px;
+            padding: 14px;
+            font-size: 13px;
+            background: transparent;
+            color: #fff;
+            border: 2px solid var(--xre-dark-red);
+            cursor: pointer;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .modal-content .neon-btn:hover {
+            background: var(--xre-dark-red);
+            box-shadow: 0 0 20px rgba(139, 0, 0, 0.5);
+        }
 
         /* BRANDED TOURS区域 */
                 .branded-tours-section {
@@ -746,9 +765,9 @@
         }
         .branded-tour-btn {
             display: inline-block;
-            background: rgba(139, 0, 0, 0.3);
-            color: #ffffff;
-            border: 2px solid #8b0000;
+            background: rgba(139, 0, 0, 0.9);
+            color: #fff;
+            border: 2px solid var(--xre-dark-red);
             padding: 12px 30px;
             font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
             font-size: 13px;
@@ -763,23 +782,10 @@
             pointer-events: auto;
             z-index: 20;
         }
-        .branded-tour-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            transition: left 0.5s;
-        }
-        .branded-tour-btn:hover::before {
-            left: 100%;
-        }
         .branded-tour-btn:hover {
-            background: #8b0000;
-            border-color: #ff0000;
-            box-shadow: 0 0 30px rgba(139, 0, 0, 0.8), 0 0 60px rgba(255, 0, 0, 0.4);
+            background: var(--xre-dark-red);
+            border-color: var(--xre-dark-red);
+            box-shadow: 0 0 30px rgba(139, 0, 0, 0.8);
             transform: scale(1.05);
             letter-spacing: 3px;
         }
@@ -826,31 +832,171 @@
             font-size: 16px;
             letter-spacing: 2px;
         }
-
+.share-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
         
-        
-        .share-modal.active 
-        
+            touch-action: pan-y;
+            overscroll-behavior: contain;
+        }
+        .share-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+        .share-modal-content {
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+            border: 2px solid var(--xre-dark-red);
+            border-radius: 12px;
+            padding: 20px 25px;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            box-shadow: 0 0 40px rgba(139, 0, 0, 0.5);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+        .share-modal.active .share-modal-content {
+            transform: scale(1);
+        }
+        .share-modal-close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 24px;
+            cursor: pointer;
+            transition: color 0.3s;
+            z-index: 10;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
         .share-modal-close:hover {
             color: var(--xre-red);
         }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+        .share-modal-title {
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            font-size: 20px;
+            color: #fff;
+            text-align: center;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+        .share-event-info {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: rgba(139, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        .share-event-img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+        .share-event-details {
+            flex: 1;
+        }
+        .share-event-name {
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            font-size: 16px;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+        .share-event-meta {
+            font-size: 12px;
+            color: var(--mad-silver);
+        }
+        .share-event-tags {
+            margin-top: 8px;
+        }
+        .share-tag {
+            display: inline-block;
+            padding: 2px 8px;
+            background: var(--xre-dark-red);
+            color: #fff;
+            font-size: 10px;
+            border-radius: 3px;
+            margin-right: 5px;
+            margin-bottom: 3px;
+            text-transform: uppercase;
+        }
+        .share-platforms {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .share-platform-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 15px 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(139, 0, 0, 0.3);
+            border-radius: 8px;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .share-platform-btn:hover {
+            background: rgba(139, 0, 0, 0.2);
+            border-color: var(--xre-dark-red);
+            transform: translateY(-3px);
+        }
+        .share-platform-icon {
+            width: 32px;
+            height: 32px;
+        }
+        .share-platform-name {
+            font-size: 11px;
+            text-align: center;
+        }
+        .download-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 15px 20px;
+            margin-top: 20px;
+            background: rgba(139, 0, 0, 0.2);
+            border: 2px solid var(--xre-dark-red);
+            border-radius: 8px;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+        }
+        .download-btn:hover {
+            background: var(--xre-dark-red);
+            transform: translateY(-3px);
+        }
+        .download-btn-icon {
+            width: 28px;
+            height: 28px;
+        }
+        .download-btn-text {
+            font-size: 14px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
         /* WeChat QR弹窗 */
         .wechat-qr-modal {
             display: none;
@@ -925,181 +1071,18 @@
             opacity: 0.7;
         }
         @keyframes heroLogoBreathe {
-            0%, 100% { transform: scale(1); opacity: 0.7; filter: drop-shadow(0 0 20px rgba(139, 0, 0, 0.4)); }
-            50% { transform: scale(1.08); opacity: 1; filter: drop-shadow(0 0 50px rgba(255, 0, 0, 0.8)); }
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 20px rgba(139, 0, 0, 0.4)); }
+            50% { transform: scale(1.08); filter: drop-shadow(0 0 50px rgba(255, 0, 0, 0.8)); }
         }
 
         /* 响应式 */
                 /* 响应式 - 1024px */
         
-
-        /* POSTER AD SECTION - 基础样式 */
-        .poster-ad-section {
-            width: 100%;
-            padding: 0;
-            background-image: url('images/xre-adbg.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            position: relative;
-            border-top: none;
-        }
-        .poster-ad-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 200px;
-            background: linear-gradient(to bottom, #8b0000 0%, transparent 100%);
-            pointer-events: none;
-            z-index: 1;
-        }
-        .poster-ad-container {
-            position: relative;
-            z-index: 2;
-        }
-        .poster-ad-container {
-            width: 100%;
-            max-width: none;
-            margin: 0;
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 0;
-            padding: 0;
-            position: relative;
-            min-height: 100vh;
-        }
-        .poster-ad-left {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0;
-            background: transparent;
-            min-height: 100vh;
-            height: 100%;
-        }
-        .poster-wrapper {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            max-width: none;
-            overflow: hidden;
-            border: none;
-            box-shadow: none;
-            margin: 0;
-        }
-        .poster-ad-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
-            display: block;
-        }
-        .poster-ad-middle {
-            display: flex;
-            flex-direction: column;
-            position: relative;
-        }
-        .middle-top {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            padding: 60px;
-            background: transparent;
-        }
-        .middle-bottom {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            padding: 60px;
-            background: transparent;
-        }
-        .middle-divider {
-            height: 2px;
-            background: linear-gradient(90deg, transparent, rgba(139, 0, 0, 0.5), transparent);
-            margin: 0 40px;
-        }
-        .content-left {
-            max-width: 80%;
-            text-align: left;
-        }
-        .content-right {
-            max-width: 80%;
-            text-align: right;
-        }
-        .ad-title {
-            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            font-size: clamp(24px, 3vw, 36px);
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: #fff;
-            margin-bottom: 15px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-        }
-        .ad-underline {
-            margin: 0 0 25px 0;
-        }
-        .ad-description {
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.9);
-            line-height: 1.6;
-            margin-bottom: 25px;
-            max-width: 500px;
-        }
-        .ad-buttons {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-        .ad-btn {
-            padding: 12px 30px;
-            font-size: 13px;
-        }
-        .disabled-btn {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-        
-        
-        
-        
-        
-        
-        
-        
-        .player-qq:hover {
-            border-color: #31c27c;
-            box-shadow: 0 0 20px rgba(49, 194, 124, 0.4);
-        }
-        
-        .player-netease:hover {
-            border-color: #c62f2f;
-            box-shadow: 0 0 20px rgba(198, 47, 47, 0.4);
-        }
-        
-        
-        
-        
-        
-        
-        .player-btn:hover 
-        
-
-
-        /* Shimmer动画 */
         @keyframes shimmer {
             0% { background-position: -200% center; }
             100% { background-position: 200% center; }
         }
-        .title-underline {
-            position: relative;
-            overflow: hidden;
-        }
-        .title-underline::after {
+        .title-underline.shimmer::after {
             content: '';
             position: absolute;
             top: 0;
@@ -1111,11 +1094,46 @@
             animation: shimmer 2s infinite;
         }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
+            nav { padding: 0 30px; height: 70px; }
+            .logo-img { height: 40px; max-width: 180px; }
+            .nav-links { gap: 25px; }
+            .hero-content { margin-top: 100px; }
+            .hero-title { font-size: clamp(70px, 13vw, 120px); }
+            .hero-subtitle { font-size: clamp(20px, 3vw, 32px); margin-top: 60px; }
+            .artists-grid { grid-template-columns: repeat(3, 1fr); gap: 15px; }
+            .footer-container { gap: 30px; flex-direction: column; text-align: center; }
+            .footer-contact-left, .footer-contact-right { text-align: center; width: 100%; }
+            .social-links { flex-wrap: wrap; justify-content: center; max-width: 300px; margin: 0 auto 25px; }
+            .hero-logo-bg img { width: 600px; height: 600px; }
+            .branded-tours-container { grid-template-columns: repeat(2, 1fr); }
+            .branded-tour-card { max-width: none; }
             .footer-bottom {
                 flex-direction: column;
-                gap: 8px;
+                gap: 10px;
+            }
+            .footer-legal {
+                order: 1;
+            }
+            .copyright {
+                order: 2;
+            }
+        }
+
+        /* 响应式 - 768px */
+        @media (max-width: 768px) {
+            .footer-bottom {
+                flex-direction: column;
+                gap: 10px;
                 padding: 15px;
+                margin: 0;
+            }
+            .footer-legal {
+                order: 1;
+                gap: 15px;
+            }
+            .copyright {
+                order: 2;
             }
             .footer-legal {
                 order: 1;
@@ -1136,7 +1154,12 @@
             .nav-links .neon-btn { padding: 8px 16px; font-size: 10px; }
             .hero-content { margin-top: 80px; }
             .hero-title { font-size: clamp(55px, 14vw, 80px); letter-spacing: 5px; }
-            
+            .hero-subtitle { font-size: clamp(16px, 3.5vw, 22px); letter-spacing: 2px; }
+            .hero-subtitle .line1, .hero-subtitle .line2, .hero-subtitle .line3 {
+                display: block;
+                margin-bottom: 0;
+            }
+
             .artists-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 0 15px; }
             .artist-name-below { font-size: 14px; }
             .footer-gap { height: 100px; }
@@ -1166,15 +1189,23 @@
             .branded-tour-card.active .branded-tour-share {
                 opacity: 1;
             }
-            
-            
-            
-            
+            .share-platforms { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+            .share-platform-btn { padding: 10px 5px; }
+            .share-platform-icon { width: 24px; height: 24px; }
+            .share-platform-name { font-size: 9px; }
         }
 
         /* 响应式 - 480px */
-
-            
+        @media (max-width: 480px) {
+            .footer-bottom {
+                flex-direction: column;
+                gap: 8px;
+                padding: 15px;
+            }
+            .footer-legal {
+                order: 1;
+                gap: 15px;
+            }
             .copyright {
                 order: 2;
             }
@@ -1190,17 +1221,22 @@
             .nav-links .neon-btn { padding: 6px 14px; font-size: 9px; }
             .hero-content { margin-top: 60px; }
             .hero-title { font-size: clamp(45px, 13vw, 65px); letter-spacing: 4px; }
-            
+            .hero-subtitle { font-size: clamp(12px, 3vw, 16px); letter-spacing: 1.5px; }
+            .hero-subtitle .line1, .hero-subtitle .line2, .hero-subtitle .line3 {
+                display: block;
+                margin-bottom: 0;
+            }
+
             .artists-grid { gap: 12px; padding: 0 10px; }
             .artist-name-below { font-size: 12px; }
             .footer-gap { height: 80px; }
             .footer-main { padding: 35px 25px 25px; }
             .footer-logo { font-size: 28px; }
-            
+            .social-icon { width: 40px; height: 40px; }
             .contact-item { font-size: 11px; }
             .footer-legal a { font-size: 10px; }
-            
-            
+            .modal-content { padding: 30px 20px; }
+            .modal-content h2 { font-size: 22px; }
             .hero-logo-bg img { width: 320px; height: 320px; }
 
             /* BRANDED TOURS - 480px */
@@ -1224,904 +1260,7 @@
         }
 
         /* 响应式 - 375px */
-
-            
-            .artists-grid { gap: 10px; padding: 0 8px; }
-            .footer-logo { font-size: 24px; }
-            
-            .contact-item { font-size: 10px; }
-            .branded-tour-name { font-size: 16px; }
-        }
-        /* POSTER AD SECTION - 使用背景图 */
-                /* POSTER AD SECTION - 使用背景图 */
-        .poster-ad-section {
-            width: 100%;
-            padding: 0;
-            background-image: url('images/xre-adbg.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            position: relative;
-            border-top: none;
-        }
-        .poster-ad-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 200px;
-            background: linear-gradient(to bottom, #8b0000 0%, transparent 100%);
-            pointer-events: none;
-            z-index: 1;
-        }
-        .poster-ad-container {
-            position: relative;
-            z-index: 2;
-        }
-
-        .poster-ad-container {
-            width: 100%;
-            max-width: none;
-            margin: 0;
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 0;
-            padding: 0;
-            position: relative;
-            min-height: 100vh;
-        }
-
-        /* 左侧海报 - 满屏显示 */
-        .poster-ad-left {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0;
-            background: transparent;
-            min-height: 100vh;
-            height: 100%;
-        }
-
-        .poster-wrapper {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            max-width: none;
-            overflow: hidden;
-            border: none;
-            box-shadow: none;
-            margin: 0;
-        }
-
-        .poster-ad-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
-            display: block;
-        }
         
-
-        
-
-        
-
-        
-
-        .player-qq:hover {
-            border-color: #31c27c;
-            box-shadow: 0 0 20px rgba(49, 194, 124, 0.4);
-        }
-
-        
-
-        .player-netease:hover {
-            border-color: #c62f2f;
-            box-shadow: 0 0 20px rgba(198, 47, 47, 0.4);
-        }
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        
-
-        .player-btn:hover 
-
-        
-        
-            .poster-wrapper {
-                max-width: 400px;
-                height: auto;
-                aspect-ratio: 3/4;
-            }
-            
-            
-            
-            
-            .player-netease-embed {
-                flex: 0 0 50%;
-                border-top: none;
-                border-left: 2px solid rgba(139, 0, 0, 0.5);
-            }
-        }
-
-        
-            .poster-wrapper {
-                width: 100%;
-                max-width: 320px;
-                height: auto;
-                aspect-ratio: 3/4;
-                margin: 0 auto;
-            }
-            .poster-ad-image {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
-            .poster-ad-middle {
-                min-height: auto;
-                order: 2;
-            }
-            .middle-top, .middle-bottom {
-                padding: 40px 30px;
-                align-items: center;
-                text-align: center;
-            }
-            .content-left, .content-right {
-                align-items: center;
-                text-align: center;
-                max-width: 100%;
-            }
-            .ad-underline {
-                margin: 0 auto 25px auto;
-            }
-            .ad-buttons {
-                justify-content: center;
-            }
-            .ad-title {
-                font-size: 24px;
-            }
-            .ad-description {
-                font-size: 14px;
-            }
-            
-            
-            
-            .player-btn, .player-netease-embed {
-                flex: 0 0 50%;
-                height: 100%;
-            }
-        }
-
-        
-            .poster-ad-image {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
-            .middle-top, .middle-bottom {
-                padding: 30px 20px;
-                align-items: center;
-                text-align: center;
-            }
-            .content-left, .content-right {
-                align-items: center;
-                text-align: center;
-            }
-            .ad-underline {
-                margin: 0 auto 20px auto;
-            }
-            .ad-title {
-                font-size: 20px;
-                letter-spacing: 2px;
-            }
-            .ad-description {
-                font-size: 12px;
-            }
-            .ad-buttons {
-                flex-direction: column;
-                width: 100%;
-                align-items: center;
-            }
-            .ad-btn {
-                width: 100%;
-                padding: 12px 20px;
-                font-size: 11px;
-            }
-            
-            
-            
-            .player-btn, .player-netease-embed {
-                flex: 0 0 50%;
-                height: 100%;
-            }
-            
-            
-        }
-
-        
-            
-        }
-
-        /* 社交按钮 - 统一银灰默认，红色hover */
-        
-        
-        
-
-        /* POSTER AD 右侧播放器区域 - 修复版 */
-        .poster-ad-right {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            height: 100%;
-        }
-        .player-spotify {
-            flex: 0 0 55%;
-            min-height: 0;
-            overflow: hidden;
-        }
-        .player-spotify iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-        .player-bottom-container {
-            flex: 0 0 45%;
-            display: flex;
-            flex-direction: row;
-        }
-        .player-btn {
-            flex: 0 0 50%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 20px;
-            text-decoration: none;
-            border: 2px solid rgba(139, 0, 0, 0.5);
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        .player-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-            transition: left 0.5s;
-        }
-        .player-btn:hover::before {
-            left: 100%;
-        }
-        .player-qq {
-            background: linear-gradient(135deg, rgba(49, 194, 124, 0.15) 0%, rgba(42, 168, 105, 0.15) 100%);
-            border-right: 1px solid rgba(139, 0, 0, 0.3);
-        }
-        .player-qq:hover {
-            border-color: #31c27c;
-            box-shadow: 0 0 20px rgba(49, 194, 124, 0.4);
-        }
-        .player-netease {
-            background: linear-gradient(135deg, rgba(198, 47, 47, 0.15) 0%, rgba(168, 42, 42, 0.15) 100%);
-            border-left: 1px solid rgba(139, 0, 0, 0.3);
-        }
-        .player-netease:hover {
-            border-color: #c62f2f;
-            box-shadow: 0 0 20px rgba(198, 47, 47, 0.4);
-        }
-        .player-btn-content {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            z-index: 2;
-        }
-        .player-platform {
-            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            font-size: 16px;
-            letter-spacing: 2px;
-            color: #fff;
-            text-transform: uppercase;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .player-platform-logo {
-            width: 24px;
-            height: 24px;
-            opacity: 0.8;
-        }
-        .player-song {
-            font-family: 'Courier New', monospace;
-            font-size: 13px;
-            color: rgba(255, 255, 255, 0.9);
-            font-weight: bold;
-        }
-        .player-artist {
-            font-family: 'Courier New', monospace;
-            font-size: 11px;
-            color: rgba(255, 255, 255, 0.6);
-        }
-        .player-play-icon {
-            width: 44px;
-            height: 44px;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            z-index: 2;
-            flex-shrink: 0;
-        }
-        .player-btn:hover .player-play-icon {
-            transform: scale(1.1);
-            background: #fff;
-        }
-        .player-play-icon svg {
-            width: 20px;
-            height: 20px;
-            fill: #000;
-            margin-left: 2px;
-        }
-
-        
-            .poster-wrapper {
-                max-width: 400px;
-                height: auto;
-                aspect-ratio: 3/4;
-            }
-            .poster-ad-right {
-                grid-column: 1 / -1;
-                min-height: 400px;
-                flex-direction: row;
-            }
-            .player-spotify {
-                flex: 0 0 50%;
-                height: 100%;
-            }
-            .player-bottom-container {
-                flex: 0 0 50%;
-                flex-direction: column;
-                height: 100%;
-            }
-            .player-btn {
-                flex: 0 0 50%;
-                padding: 15px;
-            }
-        }
-
-        
-            .poster-wrapper {
-                width: 100%;
-                max-width: 320px;
-                height: auto;
-                aspect-ratio: 3/4;
-                margin: 0 auto;
-            }
-            .poster-ad-image {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
-            .poster-ad-middle {
-                min-height: auto;
-                order: 2;
-            }
-            .middle-top, .middle-bottom {
-                padding: 40px 30px;
-                align-items: center;
-                text-align: center;
-            }
-            .content-left, .content-right {
-                align-items: center;
-                text-align: center;
-                max-width: 100%;
-            }
-            .ad-underline {
-                margin: 0 auto 25px auto;
-            }
-            .ad-buttons {
-                justify-content: center;
-            }
-            .ad-title {
-                font-size: 24px;
-            }
-            .ad-description {
-                font-size: 14px;
-            }
-            .poster-ad-right {
-                min-height: 400px;
-                order: 3;
-                flex-direction: column;
-                grid-column: auto;
-            }
-            .player-spotify {
-                flex: 0 0 200px;
-                height: 200px;
-            }
-            .player-bottom-container {
-                flex: 1;
-                flex-direction: row;
-            }
-            .player-btn {
-                flex: 0 0 50%;
-                padding: 15px;
-            }
-            .player-platform {
-                font-size: 14px;
-            }
-        }
-
-        
-            .middle-top, .middle-bottom {
-                padding: 30px 20px;
-            }
-            .ad-title {
-                font-size: 20px;
-                letter-spacing: 2px;
-            }
-            .ad-description {
-                font-size: 12px;
-            }
-            .ad-buttons {
-                flex-direction: column;
-                width: 100%;
-                align-items: center;
-            }
-            .ad-btn {
-                width: 100%;
-                padding: 12px 20px;
-                font-size: 11px;
-            }
-            .poster-ad-right {
-                min-height: 350px;
-            }
-            .player-spotify {
-                flex: 0 0 180px;
-                height: 180px;
-            }
-            .player-btn {
-                padding: 12px;
-            }
-            .player-platform {
-                font-size: 12px;
-                letter-spacing: 1px;
-            }
-            .player-platform-logo {
-                width: 18px;
-                height: 18px;
-            }
-            .player-play-icon {
-                width: 36px;
-                height: 36px;
-            }
-            
-            
-        }
-
-        
-            .player-platform {
-                font-size: 11px;
-            }
-            
-        }
-
-        /* 分享弹窗 - 修复版 */
-        .share-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            z-index: 10000;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        .share-modal.active {
-            display: flex;
-            opacity: 1;
-        }
-        .share-modal-content {
-            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
-            border: 2px solid #8b0000;
-            border-radius: 12px;
-            padding: 25px;
-            max-width: 480px;
-            width: 90%;
-            max-height: 90vh;
-            overflow-y: auto;
-            position: relative;
-            box-shadow: 0 0 50px rgba(139, 0, 0, 0.6);
-            transform: scale(0.95);
-            transition: transform 0.3s ease;
-        }
-        .share-modal.active .share-modal-content {
-            transform: scale(1);
-        }
-        .share-modal-close {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            background: none;
-            border: none;
-            color: #888;
-            font-size: 28px;
-            cursor: pointer;
-            transition: color 0.3s;
-            z-index: 10;
-            width: 30px;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            line-height: 1;
-        }
-        .share-modal-close:hover {
-            color: #ff0000;
-        }
-        .share-modal-title {
-            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            font-size: 22px;
-            color: #fff;
-            text-align: center;
-            margin-bottom: 20px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        /* 活动信息区域 */
-        .share-event-info {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 20px;
-            padding: 15px;
-            background: rgba(139, 0, 0, 0.15);
-            border-radius: 8px;
-            border: 1px solid rgba(139, 0, 0, 0.3);
-        }
-        .share-event-img {
-            width: 80px;
-            height: 80px;
-            object-fit: cover;
-            border-radius: 6px;
-            flex-shrink: 0;
-            border: 2px solid rgba(139, 0, 0, 0.5);
-        }
-        .share-event-details {
-            flex: 1;
-            min-width: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-        .share-event-name {
-            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            font-size: 18px;
-            color: #fff;
-            margin-bottom: 6px;
-            line-height: 1.2;
-            word-break: break-word;
-        }
-        .share-event-meta {
-            font-size: 13px;
-            color: #c0c0c0;
-            margin-bottom: 8px;
-        }
-        .share-event-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-        }
-        .share-tag {
-            display: inline-block;
-            padding: 3px 10px;
-            background: #8b0000;
-            color: #fff;
-            font-size: 10px;
-            border-radius: 3px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        /* 分享平台按钮 */
-        .share-platforms {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-        .share-platform-btn {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 15px 8px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(139, 0, 0, 0.3);
-            border-radius: 8px;
-            color: #fff;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            min-height: 80px;
-        }
-        .share-platform-btn:hover {
-            background: rgba(139, 0, 0, 0.2);
-            border-color: #8b0000;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(139, 0, 0, 0.3);
-        }
-        .share-platform-icon {
-            width: 32px;
-            height: 32px;
-            flex-shrink: 0;
-        }
-        .share-platform-icon svg {
-            width: 100%;
-            height: 100%;
-        }
-        .share-platform-name {
-            font-size: 11px;
-            text-align: center;
-            color: #c0c0c0;
-            letter-spacing: 0.5px;
-        }
-
-        /* 下载按钮 */
-        .download-btn {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 15px;
-            background: rgba(139, 0, 0, 0.2);
-            border: 2px solid #8b0000;
-            border-radius: 8px;
-            color: #fff;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            width: 100%;
-            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-        .download-btn:hover {
-            background: #8b0000;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(139, 0, 0, 0.5);
-        }
-        .download-btn-icon {
-            width: 24px;
-            height: 24px;
-        }
-        .download-btn-text {
-            font-size: 14px;
-            font-weight: bold;
-        }
-
-        /* 响应式 */
-        @media (max-width: 480px) {
-            .share-modal-content {
-                padding: 20px 15px;
-                width: 95%;
-            }
-            .share-modal-title {
-                font-size: 18px;
-            }
-            .share-event-info {
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-            }
-            .share-event-img {
-                width: 100px;
-                height: 100px;
-            }
-            .share-event-name {
-                font-size: 16px;
-            }
-            .share-platforms {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 10px;
-            }
-            .share-platform-btn {
-                padding: 12px 5px;
-                min-height: 70px;
-            }
-            .share-platform-icon {
-                width: 28px;
-                height: 28px;
-            }
-            .share-platform-name {
-                font-size: 10px;
-            }
-        }
-
-        /* BOOKING NOW弹窗 - 统一风格 */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            z-index: 10000;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            touch-action: pan-y;
-            overscroll-behavior: contain;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        .modal-overlay.active {
-            display: flex;
-            opacity: 1;
-        }
-        
-        .modal-overlay.active .modal-content {
-            transform: scale(1);
-        }
-        .modal-close {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            font-size: 28px;
-            color: #666;
-            cursor: pointer;
-            transition: all 0.3s;
-            background: none;
-            border: none;
-            width: 30px;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-           .modal-close:hover {
-            color: #ff0000;
-            transform: scale(1.1);
-        }
-        .modal-content h2 {
-            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            font-size: 28px;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            margin-bottom: 10px;
-            color: #fff;
-            text-align: center;
-            text-shadow: 0 0 20px rgba(139, 0, 0, 0.5);
-        }
-        .modal-content > p {
-            font-size: 13px;
-            color: #c0c0c0;
-            text-align: center;
-            margin-bottom: 25px;
-            letter-spacing: 1px;
-        }
-        .modal-content .neon-btn {
-            width: 100%;
-            margin-top: 10px;
-            padding: 14px;
-            font-size: 13px;
-            background: rgba(139, 0, 0, 0.3);
-            color: #fff;
-            border: 2px solid #8b0000;
-            cursor: pointer;
-            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            transition: all 0.4s;
-            position: relative;
-            overflow: hidden;
-        }
-        .modal-content .neon-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.5s;
-        }
-        .modal-content .neon-btn:hover::before {
-            left: 100%;
-        }
-        .modal-content .neon-btn:hover {
-            background: #8b0000;
-            border-color: #ff0000;
-            box-shadow: 0 0 30px rgba(139, 0, 0, 0.8);
-            letter-spacing: 3px;
-        }
-
-        /* 响应式 */
-        @media (max-width: 480px) {
-            .modal-content {
-                padding: 30px 20px;
-            }
-            .modal-content h2 {
-                font-size: 22px;
-            }
-        }
-
-        /* 社交按钮 - 统一银灰默认，红色hover */
-        .social-icon {
-            width: 44px;
-            height: 44px;
-            border: 2px solid #c0c0c0;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #c0c0c0;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            background: transparent;
-            cursor: pointer;
-        }
-        .social-icon:hover {
-            border-color: #ff0000;
-            color: #ff0000;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(255, 0, 0, 0.4);
-        }
-        .social-icon svg {
-            width: 22px;
-            height: 22px;
-            fill: currentColor;
-        }
-
-        /* POSTER AD 响应式 - 1024px */
-        @media (max-width: 1024px) {
-            .poster-ad-container {
-                grid-template-columns: 1fr 1fr;
-            }
-            .poster-ad-left {
-                min-height: auto;
-                padding: 40px;
-            }
-            .poster-wrapper {
-                max-width: 400px;
-                height: auto;
-                aspect-ratio: 3/4;
-            }
-            .poster-ad-right {
-                grid-column: 1 / -1;
-                min-height: 400px;
-                flex-direction: row;
-            }
-            .player-spotify {
-                flex: 0 0 50%;
-                height: 100%;
-            }
-            .player-bottom-container {
-                flex: 0 0 50%;
-                flex-direction: column;
-                height: 100%;
-            }
-            .player-btn {
-                flex: 0 0 50%;
-                padding: 15px;
-            }
-        }
-
         /* POSTER AD 响应式 - 768px */
         @media (max-width: 768px) {
             .poster-ad-container {
@@ -2179,7 +1318,6 @@
                 min-height: 400px;
                 order: 3;
                 flex-direction: column;
-                grid-column: auto;
             }
             .player-spotify {
                 flex: 0 0 200px;
@@ -2189,25 +1327,47 @@
                 flex: 1;
                 flex-direction: row;
             }
-            .player-btn {
+            .player-btn, .player-netease-embed {
                 flex: 0 0 50%;
-                padding: 15px;
-            }
-            .player-platform {
-                font-size: 14px;
+                height: 100%;
             }
         }
+
 
         /* POSTER AD 响应式 - 480px */
         @media (max-width: 480px) {
             .poster-ad-left {
                 padding: 20px 15px;
+                min-height: auto;
+                height: auto;
+                order: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
             }
             .poster-wrapper {
+                width: 100%;
                 max-width: 280px;
+                height: auto;
+                aspect-ratio: 3/4;
+                margin: 0 auto;
+            }
+            .poster-ad-image {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
             }
             .middle-top, .middle-bottom {
                 padding: 30px 20px;
+                align-items: center;
+                text-align: center;
+            }
+            .content-left, .content-right {
+                align-items: center;
+                text-align: center;
+            }
+            .ad-underline {
+                margin: 0 auto 20px auto;
             }
             .ad-title {
                 font-size: 20px;
@@ -2228,33 +1388,388 @@
             }
             .poster-ad-right {
                 min-height: 350px;
+                order: 3;
             }
             .player-spotify {
                 flex: 0 0 180px;
                 height: 180px;
             }
-            .player-btn {
-                padding: 12px;
+            .player-bottom-container {
+                flex: 1;
+                flex-direction: row;
+            }
+            .player-btn, .player-netease-embed {
+                flex: 0 0 50%;
+                height: 100%;
             }
             .player-platform {
                 font-size: 12px;
-                letter-spacing: 1px;
             }
             .player-platform-logo {
-                width: 18px;
-                height: 18px;
+                width: 16px;
+                height: 16px;
             }
-            .player-play-icon {
-                width: 36px;
-                height: 36px;
+        }
+
+@media (max-width: 375px) {
+            .hero-title { font-size: 38px; letter-spacing: 3px; }
+            .hero-subtitle { font-size: 11px; }
+            .artists-grid { gap: 10px; padding: 0 8px; }
+            .footer-logo { font-size: 24px; }
+            .social-icon { width: 38px; height: 38px; }
+            .contact-item { font-size: 10px; }
+            .branded-tour-name { font-size: 16px; }
+        }
+        /* POSTER AD SECTION - 使用背景图 */
+                /* POSTER AD SECTION - 使用背景图 */
+        .poster-ad-section {
+            width: 100%;
+            padding: 0;
+            background-image: url('images/xre-adbg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+            border-top: none;
+        }
+
+        .poster-ad-container {
+            width: 100%;
+            max-width: none;
+            margin: 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 0;
+            padding: 0;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* 左侧海报 - 满屏显示 */
+        .poster-ad-left {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            background: transparent;
+            min-height: 100vh;
+            height: 100%;
+        }
+
+        .poster-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            max-width: none;
+            overflow: hidden;
+            border: none;
+            box-shadow: none;
+            margin: 0;
+        }
+
+        .poster-ad-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+        }
+        .player-btn {
+            flex: 0 0 50%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 20px;
+            text-decoration: none;
+            border: 2px solid rgba(139, 0, 0, 0.5);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .player-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .player-btn:hover::before {
+            left: 100%;
+        }
+
+        .player-qq {
+            background: linear-gradient(135deg, rgba(49, 194, 124, 0.2) 0%, rgba(42, 168, 105, 0.2) 100%);
+            border-bottom: 1px solid rgba(139, 0, 0, 0.3);
+        }
+
+        .player-qq:hover {
+            border-color: #31c27c;
+            box-shadow: 0 0 20px rgba(49, 194, 124, 0.4);
+        }
+
+        .player-netease {
+            background: linear-gradient(135deg, rgba(198, 47, 47, 0.2) 0%, rgba(168, 42, 42, 0.2) 100%);
+            border-top: 1px solid rgba(139, 0, 0, 0.3);
+        }
+
+        .player-netease:hover {
+            border-color: #c62f2f;
+            box-shadow: 0 0 20px rgba(198, 47, 47, 0.4);
+        }
+
+        .player-btn-content {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            z-index: 2;
+        }
+
+        .player-platform {
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            font-size: 14px;
+            letter-spacing: 2px;
+            color: #fff;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .player-platform-logo {
+            width: 20px;
+            height: 20px;
+            opacity: 0.6;
+        }
+
+        .player-song {
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: bold;
+        }
+
+        .player-artist {
+            font-family: 'Courier New', monospace;
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .player-play-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 2;
+        }
+
+        .player-btn:hover .player-play-icon {
+            transform: scale(1.1);
+            background: #fff;
+        }
+
+        .player-play-icon svg {
+            width: 20px;
+            height: 20px;
+            fill: #000;
+            margin-left: 2px;
+        }
+        /* POSTER AD 响应式 - 1024px */
+        @media (max-width: 1024px) {
+            .poster-ad-container {
+                grid-template-columns: 1fr 1fr;
             }
-            .social-icon {
-                width: 40px;
-                height: 40px;
+            .poster-ad-left {
+                min-height: auto;
+                padding: 40px;
             }
-            .social-icon svg {
-                width: 20px;
-                height: 20px;
+            .poster-wrapper {
+                max-width: 400px;
+                height: auto;
+                aspect-ratio: 3/4;
+            }
+            .poster-ad-right {
+                grid-column: 1 / -1;
+                min-height: 400px;
+                flex-direction: row;
+            }
+            .player-spotify {
+                flex: 0 0 50%;
+                height: 100%;
+            }
+            .player-bottom-container {
+                flex: 0 0 50%;
+                flex-direction: column;
+                height: 100%;
+            }
+            .player-btn {
+                flex: 0 0 50%;
+                flex-direction: row;
+                padding: 15px;
+            }
+            .player-netease-embed {
+                flex: 0 0 50%;
+                border-top: none;
+                border-left: 2px solid rgba(139, 0, 0, 0.5);
+            }
+        }
+
+        /* POSTER AD 响应式 - 768px */
+        @media (max-width: 768px) {
+            .poster-ad-container {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto auto;
+            }
+            /* 移动端海报区域 - 修复居中问题 */
+            .poster-ad-left {
+                padding: 30px 20px;
+                min-height: auto;
+                height: auto;
+                order: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .poster-wrapper {
+                width: 100%;
+                max-width: 320px;
+                height: auto;
+                aspect-ratio: 3/4;
+                margin: 0 auto;
+            }
+            .poster-ad-image {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+            .poster-ad-middle {
+                min-height: auto;
+                order: 2;
+            }
+            .middle-top, .middle-bottom {
+                padding: 40px 30px;
+                align-items: center;
+                text-align: center;
+            }
+            .content-left, .content-right {
+                align-items: center;
+                text-align: center;
+                max-width: 100%;
+            }
+            .ad-underline {
+                margin: 0 auto 25px auto;
+            }
+            .ad-buttons {
+                justify-content: center;
+            }
+            .ad-title {
+                font-size: 24px;
+            }
+            .ad-description {
+                font-size: 14px;
+            }
+            .poster-ad-right {
+                min-height: 400px;
+                order: 3;
+                flex-direction: column;
+            }
+            .player-spotify {
+                flex: 0 0 200px;
+                height: 200px;
+            }
+            .player-bottom-container {
+                flex: 1;
+                flex-direction: row;
+            }
+            .player-btn, .player-netease-embed {
+                flex: 0 0 50%;
+                height: 100%;
+            }
+        }
+
+        /* POSTER AD 响应式 - 480px */
+        @media (max-width: 480px) {
+            .poster-ad-left {
+                padding: 20px 15px;
+                min-height: auto;
+                height: auto;
+                order: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .poster-wrapper {
+                width: 100%;
+                max-width: 280px;
+                height: auto;
+                aspect-ratio: 3/4;
+                margin: 0 auto;
+            }
+            .poster-ad-image {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+            .middle-top, .middle-bottom {
+                padding: 30px 20px;
+                align-items: center;
+                text-align: center;
+            }
+            .content-left, .content-right {
+                align-items: center;
+                text-align: center;
+            }
+            .ad-underline {
+                margin: 0 auto 20px auto;
+            }
+            .ad-title {
+                font-size: 20px;
+                letter-spacing: 2px;
+            }
+            .ad-description {
+                font-size: 12px;
+            }
+            .ad-buttons {
+                flex-direction: column;
+                width: 100%;
+                align-items: center;
+            }
+            .ad-btn {
+                width: 100%;
+                padding: 12px 20px;
+                font-size: 11px;
+            }
+            .poster-ad-right {
+                min-height: 350px;
+                order: 3;
+            }
+            .player-spotify {
+                flex: 0 0 180px;
+                height: 180px;
+            }
+            .player-bottom-container {
+                flex: 1;
+                flex-direction: row;
+            }
+            .player-btn, .player-netease-embed {
+                flex: 0 0 50%;
+                height: 100%;
+            }
+            .player-platform {
+                font-size: 12px;
+            }
+            .player-platform-logo {
+                width: 16px;
+                height: 16px;
             }
         }
 
@@ -2268,10 +1783,7 @@
             }
             .player-platform {
                 font-size: 11px;
-            }
-            .social-icon {
-                width: 38px;
-                height: 38px;
+                letter-spacing: 1px;
             }
         }
 </style>
@@ -2482,9 +1994,9 @@
                             <a href="https://instagram.com/xrebooking" class="social-icon" title="Instagram" target="_blank">
                                 <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
                             </a>
-                            <span class="social-icon" title="YouTube (Coming Soon)" style="cursor: default;">
+                            <a href="#" class="social-icon" title="YouTube">
                                 <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-                            </span>
+                            </a>
                             <a href="https://x.com/xrebooking" class="social-icon" title="X" target="_blank">
                                 <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
                             </a>
@@ -2587,7 +2099,7 @@
     </div>
 
     <!-- Share Modal - 修复版 -->
-    <div class="share-modal" id="shareModal" onclick="if(event.target === this) closeShareModal();">
+    <div class="share-modal" id="shareModal">
         <div class="share-modal-content">
             <button class="share-modal-close" onclick="closeShareModal()">&times;</button>
             <h3 class="share-modal-title">SHARE THIS EVENT</h3>
