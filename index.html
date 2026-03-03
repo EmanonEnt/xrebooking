@@ -1234,6 +1234,7 @@
             .branded-tour-name { font-size: 16px; }
         }
         /* POSTER AD SECTION - 使用背景图 */
+                /* POSTER AD SECTION - 使用背景图 */
         .poster-ad-section {
             width: 100%;
             padding: 0;
@@ -1263,21 +1264,21 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 60px 30px;
+            padding: 0;
             background: transparent;
-            min-height: auto;
-            height: auto;
+            min-height: 100vh;
+            height: 100%;
         }
 
         .poster-wrapper {
             position: relative;
             width: 100%;
-            max-width: 380px;
-            aspect-ratio: 3/4;
+            height: 100%;
+            max-width: none;
             overflow: hidden;
             border: none;
             box-shadow: none;
-            margin: 0 auto;
+            margin: 0;
         }
 
         .poster-ad-image {
@@ -1287,153 +1288,6 @@
             object-position: center;
             display: block;
         }
-
-        /* 中间内容区 */
-        .poster-ad-middle {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            background: rgba(0, 0, 0, 0.4);
-            border-left: 1px solid rgba(139, 0, 0, 0.3);
-            border-right: 1px solid rgba(139, 0, 0, 0.3);
-        }
-
-        .middle-top, .middle-bottom {
-            flex: 1;
-            padding: 60px 40px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
-
-        .middle-top {
-            border-bottom: 1px solid rgba(139, 0, 0, 0.3);
-        }
-
-        .content-left, .content-right {
-            max-width: 90%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
-
-        .middle-divider {
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--xre-dark-red), transparent);
-        }
-
-        .ad-title {
-            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            font-size: clamp(24px, 3vw, 36px);
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            color: #fff;
-            margin-bottom: 15px;
-            text-shadow: 0 0 30px rgba(139, 0, 0, 0.8);
-        }
-
-        .ad-underline {
-            margin: 0 auto 25px auto;
-            width: 80px;
-            height: 3px;
-            background: var(--xre-dark-red);
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* 红线闪光效果 - 统一使用 */
-        .title-underline.shimmer::after,
-        .ad-underline.shimmer::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
-            animation: shimmer 2s infinite;
-        }
-
-        @keyframes shimmer {
-            0% { left: -100%; }
-            50% { left: 100%; }
-            100% { left: 100%; }
-        }
-
-        .ad-description {
-            font-family: 'Courier New', monospace;
-            font-size: 14px;
-            line-height: 1.8;
-            color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 30px;
-            letter-spacing: 0.5px;
-        }
-
-        .ad-buttons {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .ad-btn {
-            padding: 14px 28px;
-            font-size: 13px;
-            letter-spacing: 2px;
-            text-decoration: none;
-            display: inline-block;
-            text-align: center;
-        }
-
-        .ad-btn.disabled-btn {
-            opacity: 0.5;
-            cursor: not-allowed;
-            background: rgba(139, 0, 0, 0.2);
-        }
-
-        .ad-btn.disabled-btn:hover {
-            background: rgba(139, 0, 0, 0.2);
-            box-shadow: none;
-            transform: none;
-            letter-spacing: 2px;
-        }
-
-        /* 右侧播放器区 */
-        .poster-ad-right {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            background: rgba(0, 0, 0, 0.2);
-            gap: 0;
-        }
-
-        .player-spotify {
-            flex: 0 0 65%;
-            background: #000;
-            overflow: hidden;
-            margin: 0;
-            padding: 0;
-        }
-
-        .player-spotify iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        .player-bottom-container {
-            flex: 0 0 35%;
-            display: flex;
-            flex-direction: column;
-            gap: 0;
-            background: rgba(0, 0, 0, 0.8);
-            margin: 0;
-            padding: 0;
-        }
-
         .player-btn {
             flex: 0 0 50%;
             display: flex;
@@ -1472,29 +1326,21 @@
             box-shadow: 0 0 20px rgba(49, 194, 124, 0.4);
         }
 
+        .player-netease {
+            background: linear-gradient(135deg, rgba(198, 47, 47, 0.2) 0%, rgba(168, 42, 42, 0.2) 100%);
+            border-top: 1px solid rgba(139, 0, 0, 0.3);
+        }
+
         .player-netease:hover {
             border-color: #c62f2f;
             box-shadow: 0 0 20px rgba(198, 47, 47, 0.4);
-        }
-
-        .player-netease-embed {
-            flex: 0 0 50%;
-            background: #000;
-            overflow: hidden;
-            border: 2px solid rgba(139, 0, 0, 0.5);
-            border-top: none;
-        }
-
-        .player-netease-embed iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
         }
 
         .player-btn-content {
             display: flex;
             flex-direction: column;
             gap: 4px;
+            z-index: 2;
         }
 
         .player-platform {
@@ -1503,6 +1349,15 @@
             letter-spacing: 2px;
             color: #fff;
             text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .player-platform-logo {
+            width: 20px;
+            height: 20px;
+            opacity: 0.6;
         }
 
         .player-song {
@@ -1527,6 +1382,7 @@
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
+            z-index: 2;
         }
 
         .player-btn:hover .player-play-icon {
@@ -1540,11 +1396,19 @@
             fill: #000;
             margin-left: 2px;
         }
-
         /* POSTER AD 响应式 - 1024px */
         @media (max-width: 1024px) {
             .poster-ad-container {
                 grid-template-columns: 1fr 1fr;
+            }
+            .poster-ad-left {
+                min-height: auto;
+                padding: 40px;
+            }
+            .poster-wrapper {
+                max-width: 400px;
+                height: auto;
+                aspect-ratio: 3/4;
             }
             .poster-ad-right {
                 grid-column: 1 / -1;
@@ -1580,10 +1444,8 @@
             }
             /* 移动端海报区域 - 修复居中问题 */
             .poster-ad-left {
-                padding: 20px;
+                padding: 30px 20px;
                 min-height: auto;
-                aspect-ratio: 3/4;
-                max-height: 70vh;
                 height: auto;
                 order: 1;
                 display: flex;
@@ -1591,8 +1453,9 @@
                 justify-content: center;
             }
             .poster-wrapper {
-                max-width: 400px;
                 width: 100%;
+                max-width: 320px;
+                height: auto;
                 aspect-ratio: 3/4;
                 margin: 0 auto;
             }
@@ -1649,10 +1512,8 @@
         /* POSTER AD 响应式 - 480px */
         @media (max-width: 480px) {
             .poster-ad-left {
-                padding: 15px;
+                padding: 20px 15px;
                 min-height: auto;
-                aspect-ratio: 3/4;
-                max-height: 60vh;
                 height: auto;
                 order: 1;
                 display: flex;
@@ -1660,8 +1521,9 @@
                 justify-content: center;
             }
             .poster-wrapper {
-                max-width: 100%;
                 width: 100%;
+                max-width: 280px;
+                height: auto;
                 aspect-ratio: 3/4;
                 margin: 0 auto;
             }
@@ -1715,15 +1577,26 @@
                 flex: 0 0 50%;
                 height: 100%;
             }
+            .player-platform {
+                font-size: 12px;
+            }
+            .player-platform-logo {
+                width: 16px;
+                height: 16px;
+            }
         }
 
         /* POSTER AD 响应式 - 375px */
         @media (max-width: 375px) {
             .poster-ad-left {
-                padding: 10px;
+                padding: 15px 10px;
             }
             .poster-wrapper {
-                max-width: 100%;
+                max-width: 260px;
+            }
+            .player-platform {
+                font-size: 11px;
+                letter-spacing: 1px;
             }
         }
 </style>
@@ -1865,7 +1738,12 @@
                            class="player-btn player-qq" 
                            target="_blank">
                             <div class="player-btn-content">
-                                <div class="player-platform">QQ音乐</div>
+                                <div class="player-platform">
+                                    <svg class="player-platform-logo" viewBox="0 0 24 24" fill="#31c27c">
+                                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15v-2h2v2h-2zm0-4V7h2v6H10zm4 4v-2h2v2h-2zm0-4V7h2v6h-2z"/>
+                                    </svg>
+                                    QQ音乐
+                                </div>
                                 <div class="player-song">Chinese Rocks Chart</div>
                                 <div class="player-artist">Various Artists</div>
                             </div>
@@ -1879,12 +1757,11 @@
                         <!-- 网易云音乐 - 与QQ音乐统一风格 -->
                         <a href="https://163cn.tv/2tWDD7j" 
                            class="player-btn player-netease" 
-                           target="_blank"
-                           style="background: linear-gradient(135deg, rgba(198, 47, 47, 0.2) 0%, rgba(168, 42, 42, 0.2) 100%); border-top: 1px solid rgba(139, 0, 0, 0.3);">
+                           target="_blank">
                             <div class="player-btn-content">
                                 <div class="player-platform">
-                                    <svg style="width: 16px; height: 16px; vertical-align: middle; margin-right: 6px; opacity: 0.8;" viewBox="0 0 24 24" fill="currentColor">
-                                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-2h2v2zm0-4h-2V7h2v6zm4 4h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+                                    <svg class="player-platform-logo" viewBox="0 0 24 24" fill="#c62f2f">
+                                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15v-2h2v2h-2zm0-4V7h2v6H10zm4 4v-2h2v2h-2zm0-4V7h2v6h-2z"/>
                                     </svg>
                                     网易云音乐
                                 </div>
