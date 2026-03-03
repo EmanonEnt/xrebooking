@@ -1385,25 +1385,24 @@
             }
             .poster-ad-right {
                 grid-column: 1 / -1;
-                min-height: 600px;
-                display: flex;
-                flex-direction: column;
+                min-height: 500px;
             }
             .player-spotify {
                 flex: 0 0 50%;
-                min-height: 300px;
             }
             .player-bottom-container {
                 flex: 0 0 50%;
                 flex-direction: row;
-                min-height: 300px;
             }
+            .player-bottom-container {
+                flex-direction: row;
+            }
+
             .player-embed {
-                flex: 1;
                 border-top: none;
                 border-left: 2px solid rgba(139, 0, 0, 0.3);
-                min-height: 300px;
             }
+
             .player-embed:first-child {
                 border-left: none;
             }
@@ -1623,79 +1622,6 @@
 
         .player-embed .aplayer {
             height: 100% !important;
-        }
-
-        /* MetingJS Responsive Styles */
-        @media (max-width: 1024px) {
-            .player-embed .aplayer .aplayer-pic {
-                width: 70px;
-                height: 70px;
-            }
-            .player-embed .aplayer .aplayer-info {
-                margin-left: 80px;
-                padding: 5px 10px;
-            }
-            .player-embed .aplayer .aplayer-info .aplayer-music .aplayer-title {
-                font-size: 13px;
-            }
-            .player-embed .aplayer .aplayer-list {
-                max-height: 200px !important;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .player-embed .aplayer .aplayer-pic {
-                width: 60px;
-                height: 60px;
-            }
-            .player-embed .aplayer .aplayer-info {
-                margin-left: 70px;
-                height: 60px;
-                padding: 5px;
-            }
-            .player-embed .aplayer .aplayer-info .aplayer-music .aplayer-title {
-                font-size: 12px;
-            }
-            .player-embed .aplayer .aplayer-info .aplayer-music .aplayer-author {
-                font-size: 10px;
-            }
-            .player-embed .aplayer .aplayer-list {
-                max-height: 150px !important;
-            }
-            .player-embed .aplayer .aplayer-list ol li {
-                font-size: 11px;
-                padding: 6px 10px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .player-embed .aplayer .aplayer-pic {
-                width: 50px;
-                height: 50px;
-            }
-            .player-embed .aplayer .aplayer-info {
-                margin-left: 60px;
-                height: 50px;
-            }
-            .player-embed .aplayer .aplayer-info .aplayer-music {
-                margin-bottom: 4px;
-            }
-            .player-embed .aplayer .aplayer-info .aplayer-music .aplayer-title {
-                font-size: 11px;
-            }
-            .player-embed .aplayer .aplayer-info .aplayer-music .aplayer-author {
-                font-size: 9px;
-            }
-            .player-embed .aplayer .aplayer-list {
-                max-height: 120px !important;
-            }
-            .player-embed .aplayer .aplayer-list ol li {
-                font-size: 10px;
-                padding: 5px 8px;
-            }
-            .player-embed .aplayer .aplayer-time {
-                font-size: 9px;
-            }
         }
 </style>
 
