@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- 强制刷新，防止缓存 -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
@@ -773,7 +772,10 @@
 .branded-tours-section {
     width: 100%;
     padding: 80px 0;
-    background: linear-gradient(180deg, var(--mad-silver) 0%, var(--mad-light) 30%, var(--xre-dark-red) 100%);
+    background: linear-gradient(180deg, rgba(5,5,5,0.9) 0%, rgba(10,10,10,0.85) 50%, rgba(5,5,5,0.9) 100%), url('./images/xre-adbg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
     position: relative;
 }
 
@@ -1141,7 +1143,7 @@
 
 .hero-logo-bg {
             position: absolute;
-            top: 5%;
+            top: 15%;
             left: 50%;
             transform: translateX(-50%);
             z-index: 1;
@@ -1149,8 +1151,8 @@
         }
 
         .hero-logo-bg img {
-            width: 600px;
-            height: 600px;
+            width: 400px;
+            height: 400px;
             object-fit: contain;
             animation: heroLogoBreathe 4s ease-in-out infinite;
             filter: drop-shadow(0 0 30px rgba(139, 0, 0, 0.6));
@@ -1171,18 +1173,18 @@
         }
 
         @media (max-width: 1024px) {
-            .hero-logo-bg { top: 4%; }
-            .hero-logo-bg img { width: 500px; height: 500px; }
+            .hero-logo-bg { top: 14%; }
+            .hero-logo-bg img { width: 400px; height: 400px; }
         }
 
         @media (max-width: 768px) {
-            .hero-logo-bg { top: 3%; }
+            .hero-logo-bg { top: 13%; }
             .hero-logo-bg img { width: 400px; height: 400px; }
         }
 
         @media (max-width: 480px) {
-            .hero-logo-bg { top: 2%; }
-            .hero-logo-bg img { width: 320px; height: 320px; }
+            .hero-logo-bg { top: 12%; }
+            .hero-logo-bg img { width: 400px; height: 400px; }
         }
 
 
@@ -1328,31 +1330,8 @@
 }
 
 </style>
-    <script>
-        // 防止页面刷新后自动滚动
-        if ('scrollRestoration' in history) {
-            history.scrollRestoration = 'manual';
-        }
-
-        // 页面加载前立即滚动到顶部
-        window.scrollTo(0, 0);
-
-        // 页面加载完成后再次确保在顶部
-        window.onload = function() {
-            window.scrollTo(0, 0);
-            document.body.scrollTop = 0;
-            document.documentElement.scrollTop = 0;
-        };
-
-        // DOM加载完成后也滚动到顶部
-        document.addEventListener('DOMContentLoaded', function() {
-            window.scrollTo(0, 0);
-        });
-    </script>
 </head>
 <body>
-
-    <!-- 导航栏 -->
     <nav>
         <img src="images/xrelogoL.png" alt="XRE BOOKING" class="logo-img" id="logo" onclick="location.href='./index.html'" style="animation: logoBreathe 4s ease-in-out infinite;">
         <div class="nav-links">
@@ -1362,7 +1341,6 @@
         </div>
     </nav>
 
-    <!-- HERO区域 -->
     <section class="hero">
         <div class="hero-bg"></div>
 
@@ -1391,23 +1369,7 @@
         </div>
     </section>
 
-        <!-- BRANDED TOURS区域 - 与LiveGigs自主活动区域一致 -->
-        <section class="branded-tours-section">
-            <h2 class="section-title" style="color: #000; position: relative; z-index: 10;">BRANDED TOURS</h2>
-            <div class="title-underline"></div>
-            <div class="branded-tours-container" id="brandedToursContainer">
-                <!-- 动态加载ON TOUR活动 -->
-            </div>
-            <div class="branded-tours-load-more" id="brandedToursLoadMore">
-                <button class="neon-btn" onclick="loadMoreBrandedTours()">LOAD MORE</button>
-            </div>
-        </section>
-
-
-
-    <!-- 内容包装器 -->
     <div class="content-wrapper">
-
         <!-- FEATURED ARTISTS区域 -->
         <section class="artists-section">
             <h2 class="section-title">FEATURED ARTISTS</h2>
@@ -1415,15 +1377,18 @@
             <div class="artists-grid" id="artistsGrid"></div>
         </section>
 
-        
-        
-<!-- 广告区 -->
-        
+        <!-- BRANDED TOURS区域 -->
+        <section class="branded-tours-section">
+            <h2 class="section-title" style="color: #000;">BRANDED TOURS</h2>
+            <div class="title-underline"></div>
+            <div class="branded-tours-container" id="brandedToursContainer"></div>
+            <div class="branded-tours-load-more" id="brandedToursLoadMore">
+                <button class="neon-btn" onclick="loadMoreBrandedTours()">LOAD MORE</button>
+            </div>
+        </section>
 
-        <!-- 间隙区域 -->
         <div class="footer-gap"></div>
 
-        <!-- 底部区域 -->
         <footer class="site-footer">
             <div class="footer-main">
                 <div class="footer-container">
@@ -1497,76 +1462,32 @@
                 <div class="copyright">Copyright © 2001-2026 EMANON ENT. - All Rights Reserved.</div>
             </div>
         </footer>
-
-    </div>
-
-    <!-- BOOKING NOW弹窗 -->
-    <div class="modal-overlay" id="bookingModal">
-        <div class="modal-content">
-            <span class="modal-close" onclick="closeModal()">&times;</span>
-            <h2>BOOKING NOW</h2>
-            <p>Inquire for dates, rates and full booking deals</p>
-            <form id="bookingForm" action="https://api.web3forms.com/submit" method="POST" onsubmit="handleBookingSubmit(event)">
-                <input type="hidden" name="access_key" value="021d1b10-1c62-4334-90f0-acff63be93c5">
-                <input type="hidden" name="subject" value="New Booking Inquiry - XRE BOOKING">
-                <input type="hidden" name="from_name" value="XRE BOOKING Website">
-
-                <div class="form-group">
-                    <label for="bookingName">Name</label>
-                    <input type="text" id="bookingName" name="name" required placeholder="Enter your name">
-                </div>
-
-                <div class="form-group">
-                    <label for="bookingEmail">Email</label>
-                    <input type="email" id="bookingEmail" name="email" required placeholder="Enter your email">
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="bookingDate">Preferred Date</label>
-                        <input type="text" id="bookingDate" name="preferred_date" required placeholder="MM/DD/YYYY" pattern="(0[1-9]|1[0-2])/(0[1-9]|[12][0-9]|3[01])/\d{4}" title="Please enter date in MM/DD/YYYY format">
-                    </div>
-                    <div class="form-group">
-                        <label for="bookingCountry">Country</label>
-                        <input type="text" id="bookingCountry" name="country" placeholder="Country" required>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="bookingCity">City</label>
-                        <input type="text" id="bookingCity" name="city" placeholder="City" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="bookingVenue">Venue</label>
-                        <input type="text" id="bookingVenue" name="venue" placeholder="Venue name" required>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="bookingArtist">Artist Interested In</label>
-                    <input type="text" id="bookingArtist" name="artist" placeholder="Which artist are you interested in booking?">
-                </div>
-
-                <div class="form-group">
-                    <label for="bookingMessage">Message</label>
-                    <textarea id="bookingMessage" name="message" placeholder="Tell us more about your event..."></textarea>
-                </div>
-
-                <input type="hidden" name="source" value="XRE BOOKING Homepage">
-                <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
-
-                <div id="bookingSuccess" style="display: none; text-align: center; padding: 15px; background: rgba(139, 0, 0, 0.2); border: 2px solid var(--xre-red); margin-bottom: 20px;">
-                    <p style="color: #fff; margin: 0; font-size: 14px;">✓ Booking inquiry sent successfully! We'll contact you soon.</p>
-                </div>
-
-                <button type="submit" class="neon-btn">SUBMIT BOOKING REQUEST</button>
-            </form>
-        </div>
     </div>
 
     <script>
-        // 艺人数据 - 15个艺人(14+1占位)，按A-Z排序
+        // 防止页面刷新后自动滚动
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+        }
+
+        // 页面加载前立即滚动到顶部
+        window.scrollTo(0, 0);
+
+        // 页面加载完成后再次确保在顶部
+        window.onload = function() {
+            window.scrollTo(0, 0);
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        };
+
+        // DOM加载完成后也滚动到顶部
+        document.addEventListener('DOMContentLoaded', function() {
+            window.scrollTo(0, 0);
+        });
+    </script>
+
+    <script>
+        // 艺人数据
         const artistsData = [
             { name: "ACIDEZ (MX)", image: "./assets/artists/ACIDEZ.jpg", slug: "acidez" },
             { name: "BAOPIGOU爆皮狗", image: "./assets/artists/baopigou.jpg", slug: "baopigou" },
@@ -1585,7 +1506,6 @@
             { name: "NEW ARTIST COMING...", image: "./assets/artists/NewArtistComing.webp", slug: "#" }
         ];
 
-        // 渲染艺人网格 - 图片彩色，hover蒙版，名字hover红色亮闪可点击
         function renderArtists() {
             const grid = document.getElementById('artistsGrid');
             grid.innerHTML = artistsData.map(artist => {
@@ -1602,7 +1522,6 @@
             }).join('');
         }
 
-        // 弹窗控制
         function openModal() {
             document.getElementById('bookingModal').classList.add('active');
             document.body.style.overflow = 'hidden';
@@ -1613,383 +1532,9 @@
             document.body.style.overflow = 'auto';
         }
 
-        // 点击弹窗外部关闭
-        document.getElementById('bookingModal').addEventListener('click', function(e) {
-            if (e.target === this) closeModal();
-        });
-
-        // 表单提交处理
-        function handleBookingSubmit(e) {
-            e.preventDefault();
-            const form = document.getElementById('bookingForm');
-            const formData = new FormData(form);
-            const successDiv = document.getElementById('bookingSuccess');
-
-            // 添加时间戳
-            formData.append('timestamp', new Date().toISOString());
-
-            // 添加收件人
-            formData.append('replyto', 'xrebooking@hotmail.com');
-
-            // 发送到 Web3Forms
-            fetch(form.action, {
-                method: 'POST',
-                body: formData
-            }).then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // 显示成功消息
-                    successDiv.style.display = 'block';
-
-                    // 保存到 localStorage 备份
-                    const submissionData = {
-                        name: document.getElementById('bookingName').value,
-                        email: document.getElementById('bookingEmail').value,
-                        preferred_date: document.getElementById('bookingDate').value,
-                        country: document.getElementById('bookingCountry').value,
-                        city: document.getElementById('bookingCity').value,
-                        venue: document.getElementById('bookingVenue').value,
-                        artist: document.getElementById('bookingArtist').value,
-                        message: document.getElementById('bookingMessage').value,
-                        timestamp: new Date().toISOString(),
-                        source: 'XRE BOOKING Homepage'
-                    };
-                    let submissions = JSON.parse(localStorage.getItem('bookingSubmissions') || '[]');
-                    submissions.push(submissionData);
-                    localStorage.setItem('bookingSubmissions', JSON.stringify(submissions));
-
-                    // 3秒后关闭弹窗并重置表单
-                    setTimeout(() => {
-                        closeModal();
-                        form.reset();
-                        successDiv.style.display = 'none';
-                    }, 3000);
-                } else {
-                    alert('There was an error submitting your booking request. Please try again.');
-                }
-            }).catch(error => {
-                console.error('Error:', error);
-                alert('There was an error submitting your booking request. Please try again.');
-            });
-        }
-
-        
-        // Branded Tours 全局变量 - 与LiveGigs自主活动区域一致
-        let allBrandedTours = [];
-        let displayedBrandedTours = 0;
-        const BRANDED_TOURS_PER_PAGE = 3; // 每次加载3个，与自主活动区域一致
-
-        // 从本地 ./events.html 抓取并解析ON TOUR活动数据
-        async function loadBrandedTours() {
-            const container = document.getElementById('brandedToursContainer');
-            const loadMoreContainer = document.getElementById('brandedToursLoadMore');
-            if (!container) return;
-
-            try {
-                // 显示加载状态
-                container.innerHTML = '<div class="branded-tours-loading">LOADING BRANDED TOURS...</div>';
-                if (loadMoreContainer) loadMoreContainer.classList.remove('visible');
-
-                // 从本地 events.html 获取数据
-                const response = await fetch('./events.html', {
-                    method: 'GET',
-                    headers: {
-                        'Cache-Control': 'no-cache'
-                    }
-                });
-
-                if (!response.ok) {
-                    throw new Error('Failed to fetch events.html');
-                }
-
-                const htmlText = await response.text();
-
-                // 解析HTML提取ON TOUR活动数据
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(htmlText, 'text/html');
-
-                let events = [];
-
-                // 方法：从DOM解析event-card（适配LiveGigs的events.html结构）
-                const eventCards = doc.querySelectorAll('.event-card');
-                console.log('Found event cards:', eventCards.length);
-
-                eventCards.forEach((card, index) => {
-                    // 检查状态是否为ON TOUR
-                    const statusEl = card.querySelector('.event-status');
-                    const status = statusEl ? statusEl.textContent.trim().toLowerCase() : '';
-
-                    console.log('Card', index, 'status:', status);
-
-                    // 只要包含"on tour"就显示（不区分大小写）
-                    if (status.includes('on tour') || status.includes('ontour')) {
-                        // 提取标题和副标题
-                        const nameEl = card.querySelector('.event-name');
-                        let title = '';
-                        let subtitle = '';
-
-                        if (nameEl) {
-                            const fullText = nameEl.innerHTML;
-                            // 处理<br>标签分割的标题和副标题
-                            if (fullText.includes('<br>')) {
-                                const parts = fullText.split('<br>');
-                                title = parts[0].trim();
-                                subtitle = parts[1] ? parts[1].trim() : '';
-                            } else {
-                                title = nameEl.textContent.trim();
-                            }
-                        }
-
-                        // 提取日期 - 从event-details
-                        const detailsEl = card.querySelector('.event-details');
-                        let dateRange = '';
-                        let city = '';
-
-                        if (detailsEl) {
-                            const detailsText = detailsEl.textContent.trim();
-                            // 格式: "2026.07.18~30 | THAILAND" 或 "2026.10.18~28 | HONG KONG"
-                            const parts = detailsText.split('|');
-                            if (parts.length >= 2) {
-                                dateRange = parts[0].trim();
-                                city = parts[1].trim();
-                            } else {
-                                dateRange = detailsText;
-                            }
-                        }
-
-                        // 提取海报
-                        const posterEl = card.querySelector('.event-poster');
-                        const posterUrl = posterEl ? posterEl.src : '';
-
-                        // 提取链接
-                        const btnEl = card.querySelector('.event-btn:not(.disabled)');
-                        const link = btnEl ? btnEl.href : '';
-                        const btnText = btnEl ? btnEl.textContent.trim() : 'INFO';
-
-                        console.log('Extracted event:', { title, subtitle, dateRange, city, status });
-
-                        events.push({
-                            title: title,
-                            subtitle: subtitle,
-                            dateRange: dateRange,
-                            city: city,
-                            status: 'ON TOUR',
-                            poster1: posterUrl,
-                            link: link,
-                            btn_text: btnText
-                        });
-                    }
-                });
-
-                console.log('Total ON TOUR events found:', events.length);
-
-                // 筛选所有ON TOUR状态的活动（确保只要ON TOUR就显示）
-                allBrandedTours = events.filter(event => {
-                    return event.status.toLowerCase().includes('on tour');
-                }).sort((a, b) => {
-                    // 按日期排序（最近的在前）
-                    const dateA = parseBrandedDate(a.dateRange);
-                    const dateB = parseBrandedDate(b.dateRange);
-                    return dateA - dateB;
-                });
-
-                displayedBrandedTours = 0;
-
-                if (allBrandedTours.length === 0) {
-                    container.innerHTML = '<div class="branded-tours-empty">NO ON TOUR EVENTS CURRENTLY.<br>CHECK BACK SOON!</div>';
-                    if (loadMoreContainer) loadMoreContainer.classList.remove('visible');
-                    return;
-                }
-
-                // 初始显示前3个
-                renderBrandedTours();
-
-            } catch (error) {
-                console.error('Error loading branded tours:', error);
-                container.innerHTML = '<div class="branded-tours-empty">UNABLE TO LOAD TOURS.<br>PLEASE REFRESH OR CHECK BACK LATER.</div>';
-                if (loadMoreContainer) loadMoreContainer.classList.remove('visible');
-            }
-        }
-
-        // 解析日期字符串
-        function parseBrandedDate(dateStr) {
-            if (!dateStr) return new Date(0);
-            try {
-                // 提取年份和月份
-                const match = dateStr.match(/(\d{4})\.(\d{2})/);
-                if (match) {
-                    return new Date(parseInt(match[1]), parseInt(match[2]) - 1, 1);
-                }
-            } catch (e) {}
-            return new Date(0);
-        }
-
-        // 渲染Branded Tours - 与LiveGigs自主活动卡片结构一致
-        function renderBrandedTours() {
-            const container = document.getElementById('brandedToursContainer');
-            const loadMoreContainer = document.getElementById('brandedToursLoadMore');
-
-            const toursToShow = allBrandedTours.slice(0, displayedBrandedTours + BRANDED_TOURS_PER_PAGE);
-
-            container.innerHTML = toursToShow.map((event, index) => {
-                const hasLink = event.link && event.link.trim() !== '';
-
-                // 使用从events.html提取的数据
-                const title = event.title || 'ON TOUR EVENT';
-                const subtitle = event.subtitle || '';
-                const dateRange = event.dateRange || 'TBA';
-                const city = event.city || 'TBA';
-                const posterUrl = event.poster1 || './images/asia-asiaad.jpg';
-
-                // 构建标题HTML（有副标题则换行）
-                const titleHtml = subtitle 
-                    ? `${title}<br><span style="font-size: 0.85em; opacity: 0.9;">${subtitle}</span>`
-                    : title;
-
-                return `
-                <div class="branded-tour-card ${!hasLink ? 'no-link' : ''}" data-event-id="${index}">
-                    <img src="${posterUrl}" alt="${title}" class="branded-tour-poster" onerror="this.src='./images/asia-asiaad.jpg'">
-                    <div class="branded-tour-status">ON TOUR</div>
-                    <div class="branded-tour-content">
-                        <h3 class="branded-tour-name">${titleHtml}</h3>
-                        <div class="branded-tour-details">${dateRange} | ${city}</div>
-                        <div class="branded-tour-venue"></div>
-                        ${hasLink 
-                            ? `<a href="${event.link}" class="branded-tour-btn" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation();">${event.btn_text || 'INFO'}</a>`
-                            : `<span class="branded-tour-btn disabled">${event.btn_text || 'COMING SOON'}</span>`
-                        }
-                    </div>
-                    <!-- 分享按钮 -->
-                    <button class="branded-tour-share" onclick="event.stopPropagation(); openShareModal('${title.replace(/'/g, "\'")}', '${city.replace(/'/g, "\'")}', '${dateRange.replace(/'/g, "\'")}', '${posterUrl.replace(/'/g, "\'")}', '${(event.link || '').replace(/'/g, "\'")}')" title="Share">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="18" cy="5" r="3"></circle>
-                            <circle cx="6" cy="12" r="3"></circle>
-                            <circle cx="18" cy="19" r="3"></circle>
-                            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
-                            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
-                        </svg>
-                    </button>
-                </div>
-                `;
-            }).join('');
-
-            displayedBrandedTours = toursToShow.length;
-
-            // 控制LOAD MORE按钮显示（如果还有更多，且总数>=4）
-            if (loadMoreContainer) {
-                if (allBrandedTours.length >= 4 && displayedBrandedTours < allBrandedTours.length) {
-                    loadMoreContainer.classList.add('visible');
-                } else {
-                    loadMoreContainer.classList.remove('visible');
-                }
-            }
-        }
-
-        function loadMoreBrandedTours() {
-            renderBrandedTours();
-        }
-
-        
-
-        // 初始化
         document.addEventListener('DOMContentLoaded', () => {
             renderArtists();
-            // 延迟加载Branded Tours，避免页面跳动
-            setTimeout(loadBrandedTours, 1000);
         });
-
-        // ESC键关闭弹窗
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') closeModal();
-        });
-    
-// 分享功能
-function openShareModal(title, city, date, image, link) {
-    const modal = document.getElementById('shareModal');
-    if (!modal) return;
-
-    document.getElementById('shareEventImg').src = image;
-    document.getElementById('shareEventImg').onerror = function() { this.src='./images/asia-asiaad.jpg'; };
-    document.getElementById('shareEventName').textContent = title;
-    document.getElementById('shareEventMeta').textContent = date + (city ? ' | ' + city : '');
-
-    modal.classList.add('active');
-    modal.dataset.title = title;
-    modal.dataset.city = city;
-    modal.dataset.date = date;
-    modal.dataset.image = image;
-    modal.dataset.link = link;
-}
-
-function closeShareModal(e) {
-    if (e && e.target && (e.target.classList.contains('share-modal') || e.target.classList.contains('share-modal-close'))) {
-        document.getElementById('shareModal').classList.remove('active');
-    }
-}
-
-function shareToPlatform(platform) {
-    const modal = document.getElementById('shareModal');
-    const title = modal.dataset.title || '';
-    const city = modal.dataset.city || '';
-    const date = modal.dataset.date || '';
-    const link = modal.dataset.link || window.location.href;
-
-    const shareText = title + ' - ' + city + ' (' + date + ')';
-
-    switch(platform) {
-        case 'facebook':
-            window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(link), '_blank');
-            break;
-        case 'twitter':
-            window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(shareText) + '&url=' + encodeURIComponent(link), '_blank');
-            break;
-        case 'copy':
-            navigator.clipboard.writeText(shareText + '
-' + link).then(() => {
-                alert('Copied to clipboard!');
-            });
-            break;
-    }
-    modal.classList.remove('active');
-}
-
-</script>
-
-
-<!-- Share Modal -->
-<div class="share-modal" id="shareModal" onclick="closeShareModal(event)">
-    <div class="share-modal-content">
-        <button class="share-modal-close" onclick="closeShareModal(event)">&times;</button>
-        <h3 class="share-modal-title">SHARE THIS EVENT</h3>
-        <div class="share-event-info">
-            <img class="share-event-img" id="shareEventImg" src="" alt="">
-            <div class="share-event-details">
-                <div class="share-event-name" id="shareEventName"></div>
-                <div class="share-event-meta" id="shareEventMeta"></div>
-            </div>
-        </div>
-        <div class="share-platforms">
-            <button class="share-platform-btn" onclick="shareToPlatform('facebook')">
-                <svg class="share-platform-icon" viewBox="0 0 24 24" fill="#1877f2">
-                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                </svg>
-                <span class="share-platform-name">Facebook</span>
-            </button>
-            <button class="share-platform-btn" onclick="shareToPlatform('twitter')">
-                <svg class="share-platform-icon" viewBox="0 0 24 24" fill="#1da1f2">
-                    <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
-                </svg>
-                <span class="share-platform-name">Twitter</span>
-            </button>
-            <button class="share-platform-btn" onclick="shareToPlatform('copy')">
-                <svg class="share-platform-icon" viewBox="0 0 24 24" fill="#666">
-                    <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
-                </svg>
-                <span class="share-platform-name">Copy Link</span>
-            </button>
-        </div>
-    </div>
-</div>
-
+    </script>
 </body>
 </html>
