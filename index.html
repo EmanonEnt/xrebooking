@@ -11,6 +11,43 @@
     <link rel="shortcut icon" type="image/png" href="./images/webtop.png">
     <link rel="apple-touch-icon" href="./images/webtop.png">
     <style>
+        /* Hero副标题 - 确保3行显示 */
+        .hero-subtitle {
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            font-size: clamp(22px, 3.5vw, 42px);
+            letter-spacing: clamp(4px, 1vw, 10px);
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 1400px;
+            margin: 40px auto 0;
+            padding: 0 20px;
+            line-height: 1.4;
+            text-align: center;
+        }
+        .hero-subtitle .line1,
+        .hero-subtitle .line2,
+        .hero-subtitle .line3 {
+            display: block;
+            white-space: nowrap;
+        }
+        @media (max-width: 768px) {
+            .hero-subtitle {
+                font-size: clamp(16px, 3.5vw, 22px);
+                letter-spacing: 2px;
+            }
+        }
+        @media (max-width: 480px) {
+            .hero-subtitle {
+                font-size: clamp(12px, 3vw, 16px);
+                letter-spacing: 1.5px;
+            }
+        }
+        @media (max-width: 375px) {
+            .hero-subtitle {
+                font-size: 11px;
+            }
+        }
+
         :root {
             --xre-red: #ff0000;
             --xre-dark-red: #8b0000;
@@ -219,22 +256,8 @@
             color: #c0c0c0;
             text-shadow: 0 0 30px rgba(192, 192, 192, 0.3);
         }
-        .hero-subtitle {
-            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            font-size: clamp(22px, 3.5vw, 42px);
-            letter-spacing: clamp(4px, 1vw, 10px);
-            text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.9);
-            max-width: 1400px;
-            margin: 40px auto 0;
-            padding: 0 20px;
-            line-height: 1.4;
-            text-align: center;
-        }
-        .hero-subtitle .line1, .hero-subtitle .line2, .hero-subtitle .line3 {
-            display: block;
-            margin-bottom: 0;
-        }
+        
+        .hero-subtitle .line1, .hero-subtitle .line2, 
         .content-wrapper {
             position: relative;
             z-index: 10;
@@ -1113,7 +1136,7 @@
             .nav-links .neon-btn { padding: 8px 16px; font-size: 10px; }
             .hero-content { margin-top: 80px; }
             .hero-title { font-size: clamp(55px, 14vw, 80px); letter-spacing: 5px; }
-            .hero-subtitle { font-size: clamp(16px, 3.5vw, 22px); letter-spacing: 2px; }
+            
             .artists-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 0 15px; }
             .artist-name-below { font-size: 14px; }
             .footer-gap { height: 100px; }
@@ -1167,7 +1190,7 @@
             .nav-links .neon-btn { padding: 6px 14px; font-size: 9px; }
             .hero-content { margin-top: 60px; }
             .hero-title { font-size: clamp(45px, 13vw, 65px); letter-spacing: 4px; }
-            .hero-subtitle { font-size: clamp(12px, 3vw, 16px); letter-spacing: 1.5px; }
+            
             .artists-grid { gap: 12px; padding: 0 10px; }
             .artist-name-below { font-size: 12px; }
             .footer-gap { height: 80px; }
