@@ -367,6 +367,18 @@
             line-height: 1;
             text-transform: uppercase;
             margin-bottom: 20px;
+            animation: footerLogoFlash 3s ease-in-out infinite;
+        }
+
+        @keyframes footerLogoFlash {
+            0%, 90%, 100% { 
+                text-shadow: 0 0 10px rgba(139, 0, 0, 0.3);
+                opacity: 0.95;
+            }
+            95% { 
+                text-shadow: 0 0 30px rgba(139, 0, 0, 0.8), 0 0 60px rgba(139, 0, 0, 0.4);
+                opacity: 1;
+            }
         }
         .footer-logo .xre {
             color: var(--xre-dark-red);
@@ -434,10 +446,9 @@
             border-top: 1px solid #333;
             padding: 20px 40px;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            gap: 15px;
+            gap: 40px;
             flex-wrap: wrap;
         }
         .footer-legal {
@@ -461,6 +472,7 @@
             font-size: 11px;
             letter-spacing: 1px;
             font-family: 'Courier New', monospace;
+            text-align: center;
         }
 
         /* Booking弹窗 */
@@ -1332,6 +1344,24 @@
             transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
+        }
+
+        .player-logo-bg {
+            position: absolute;
+            right: 60px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 80px;
+            height: 80px;
+            opacity: 0.15;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .player-logo-bg svg {
+            width: 100%;
+            height: 100%;
+            fill: #fff;
         }
 
         .player-btn::before {
