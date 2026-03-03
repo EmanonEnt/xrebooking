@@ -1336,10 +1336,21 @@
         if ('scrollRestoration' in history) {
             history.scrollRestoration = 'manual';
         }
-        // 页面加载时强制滚动到顶部
+
+        // 页面加载前立即滚动到顶部
+        window.scrollTo(0, 0);
+
+        // 页面加载完成后再次确保在顶部
         window.onload = function() {
             window.scrollTo(0, 0);
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
         };
+
+        // DOM加载完成后也滚动到顶部
+        document.addEventListener('DOMContentLoaded', function() {
+            window.scrollTo(0, 0);
+        });
     </script>
 </head>
 <body>
@@ -1428,7 +1439,7 @@
                     <h3 class="playlist-title">CHINESEROCKS CHART</h3>
                     <div class="playlist-embeds">
                         <!-- Spotify主播放器 -->
-                        <iframe class="playlist-embed spotify-embed" tabindex="-1" src="https://open.spotify.com/embed/playlist/3ZFjYPcR6zZaHQ6rlc3S29" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" tabindex="-1"></iframe>
+                        <iframe class="playlist-embed spotify-embed" src="https://open.spotify.com/embed/playlist/3ZFjYPcR6zZaHQ6rlc3S29" allowfullscreen allow="clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
 
                         <!-- QQ音乐播放器 -->
                         <div class="mini-player qq-player">
@@ -1436,7 +1447,7 @@
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
                                 <span>QQ Music</span>
                             </div>
-                            <iframe src="https://y.qq.com/n/ryqq/playlist/8313621383" width="100%" height="80" frameborder="0" allow="autoplay" loading="lazy" tabindex="-1"></iframe>
+                            <iframe src="https://y.qq.com/n/ryqq/playlist/8313621383" width="100%" height="80" frameborder="0" loading="lazy"></iframe>
                         </div>
 
                         <!-- 网易云播放器 -->
@@ -1445,7 +1456,7 @@
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
                                 <span>NetEase Cloud</span>
                             </div>
-                            <iframe src="https://music.163.com/outchain/player?type=0&id=123415183&auto=0&height=80" width="100%" height="80" frameborder="0" allow="autoplay" loading="lazy" tabindex="-1"></iframe>
+                            <iframe src="https://music.163.com/outchain/player?type=0&id=123415183&auto=0&height=80" width="100%" height="80" frameborder="0" loading="lazy"></iframe>
                         </div>
                     </div>
                     <div class="playlist-links">
