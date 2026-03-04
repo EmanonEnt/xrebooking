@@ -691,64 +691,7 @@
             box-shadow: 0 0 20px rgba(139, 0, 0, 0.5);
         }
 
-        /* 移动端Hero适配 */
-        @media (max-width: 768px) and (orientation: portrait) {
-            .artist-hero {
-                min-height: auto !important;
-                height: auto !important;
-                padding-top: 80px;
-                display: flex;
-                flex-direction: column;
-                background: #000;
-            }
-            .artist-hero .hero-bg {
-                position: relative !important;
-                width: 100% !important;
-                height: auto !important;
-                min-height: auto !important;
-                background: none !important;
-            }
-            .artist-hero .hero-bg::after,
-            .artist-hero .hero-bg::before {
-                display: none !important;
-            }
-            .hero-bg-img {
-                width: 100% !important;
-                height: auto !important;
-                display: block !important;
-                object-fit: contain !important;
-            }
-            .artist-hero .hero-vignette {
-                display: none !important;
-            }
-            .artist-hero .hero-content {
-                position: relative !important;
-                padding: 30px 20px !important;
-                background: #000 !important;
-                margin-top: 0 !important;
-            }
-            .artist-name {
-                font-size: clamp(28px, 7vw, 48px) !important;
-                letter-spacing: 3px !important;
-                margin-bottom: 15px !important;
-            }
-            .artist-hero .red-line {
-                width: 60px !important;
-                margin-bottom: 20px !important;
-            }
-            .artist-hero .social-links {
-                gap: 10px !important;
-                margin-top: 15px !important;
-            }
-            .artist-hero .social-links a {
-                width: 40px !important;
-                height: 40px !important;
-            }
-            .artist-hero .social-links a svg {
-                width: 18px !important;
-                height: 18px !important;
-            }
-        }
+        
         @media (max-width: 480px) and (orientation: portrait) {
             .artist-hero .hero-content {
                 padding: 25px 15px !important;
@@ -827,6 +770,105 @@
             .footer-logo { font-size: 24px; }
             .social-icon { width: 38px; height: 38px; }
             .contact-item { font-size: 10px; }
+        }
+
+    
+        /* 移动端Hero布局修复 - 照片和文字分开 */
+        @media (max-width: 768px) and (orientation: portrait) {
+            .artist-hero {
+                min-height: auto !important;
+                height: auto !important;
+                padding-top: 80px;
+                display: flex;
+                flex-direction: column;
+                background: #000;
+            }
+            /* 照片容器 */
+            .artist-hero .hero-bg {
+                position: relative !important;
+                width: 100% !important;
+                height: auto !important;
+                min-height: auto !important;
+                background: none !important;
+                order: 1;
+            }
+            .artist-hero .hero-bg::after,
+            .artist-hero .hero-bg::before {
+                display: none !important;
+            }
+            .hero-bg-img {
+                width: 100% !important;
+                height: auto !important;
+                display: block !important;
+                object-fit: contain !important;
+                object-position: center top !important;
+            }
+            .artist-hero .hero-vignette {
+                display: none !important;
+            }
+            /* 内容区域 - 在照片下方 */
+            .artist-hero .hero-content {
+                position: relative !important;
+                padding: 30px 20px !important;
+                background: #000 !important;
+                margin-top: 0 !important;
+                order: 2;
+                z-index: 10;
+            }
+            .artist-name {
+                font-size: clamp(28px, 7vw, 48px) !important;
+                letter-spacing: 3px !important;
+                margin-bottom: 15px !important;
+                line-height: 1.1 !important;
+            }
+            .artist-hero .red-line {
+                width: 60px !important;
+                margin-bottom: 20px !important;
+            }
+            .artist-hero .social-links {
+                gap: 10px !important;
+                margin-top: 15px !important;
+            }
+            .artist-hero .social-links a {
+                width: 40px !important;
+                height: 40px !important;
+            }
+            .artist-hero .social-links a svg {
+                width: 18px !important;
+                height: 18px !important;
+            }
+        }
+
+        @media (max-width: 480px) and (orientation: portrait) {
+            .artist-hero .hero-content {
+                padding: 25px 15px !important;
+            }
+            .artist-name {
+                font-size: clamp(24px, 8vw, 40px) !important;
+            }
+        }
+
+        @media (max-width: 375px) and (orientation: portrait) {
+            .artist-hero .hero-content {
+                padding: 20px 15px !important;
+            }
+        }
+
+        /* 横屏保持原有设计 */
+        @media (max-width: 768px) and (orientation: landscape) {
+            .artist-hero {
+                height: 100vh;
+                min-height: 500px;
+            }
+            .artist-hero .hero-bg {
+                position: absolute;
+                background-size: cover;
+                background-position: center center;
+            }
+            .artist-hero .hero-content {
+                position: relative;
+                z-index: 10;
+            }
         }
 
     </style>
