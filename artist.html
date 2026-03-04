@@ -1144,8 +1144,10 @@
                 if (artist.heroImage) {
                     const heroBg = document.getElementById('heroBg');
                     const heroBgImg = document.getElementById('heroBgImg');
-                    const isMobile = window.matchMedia('(max-width: 768px) and (orientation: portrait)').matches;
-                    if (isMobile && heroBgImg) {
+                    // 检测移动端竖屏或任何竖屏比例（高度>宽度）
+                    const isPortrait = window.matchMedia('(max-width: 768px) and (orientation: portrait)').matches 
+                        || window.matchMedia('(max-aspect-ratio: 1/1)').matches;
+                    if (isPortrait && heroBgImg) {
                         heroBgImg.src = artist.heroImage;
                         heroBgImg.alt = artist.name;
                         heroBgImg.style.display = 'block';
