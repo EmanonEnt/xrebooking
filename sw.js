@@ -1,5 +1,5 @@
 // XRE BOOKING Service Worker - v12 (添加artist页面支持)
-const CACHE_NAME = 'xrebooking-v12';
+const CACHE_NAME = 'xrebooking-v13';
 const STATIC_CACHE = 'xrebooking-static-v12';
 const IMAGE_CACHE = 'xrebooking-images-v12';
 
@@ -31,7 +31,7 @@ self.addEventListener('activate', (event) => {
         caches.keys().then((cacheNames) => {
             return Promise.all(
                 cacheNames.map((cacheName) => {
-                    if (!cacheName.includes('xrebooking-v12')) {
+                    if (!cacheName.includes('xrebooking-v13')) {
                         console.log('[SW] Deleting old cache:', cacheName);
                         return caches.delete(cacheName);
                     }

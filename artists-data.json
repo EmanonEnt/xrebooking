@@ -1,0 +1,44 @@
+{
+  "thenoname": {
+    "name": "THE NONAME",
+    "heroImage": "./assets/artists/TheNoname.jpg",
+    "bio": "THE NONAME is a powerful rock band known for their energetic live performances and unique sound. Formed with a passion for authentic rock music, they have been captivating audiences across Asia with their raw energy and compelling stage presence. Their music blends classic rock elements with modern influences, creating a distinctive style that resonates with fans of all generations.",
+    "agent": {
+      "name": "XRE Booking Team",
+      "email": "xrebooking@hotmail.com"
+    },
+    "social": {
+      "facebook": "https://facebook.com/thenoname",
+      "instagram": "https://instagram.com/thenoname",
+      "spotify": "https://open.spotify.com/artist/thenoname",
+      "youtube": "https://youtube.com/thenoname"
+    },
+    "mediaKit": {
+      "googleDrive": "https://drive.google.com/drive/folders/thenoname-media",
+      "baidu": "https://pan.baidu.com/s/thenoname-media"
+    },
+    "tourDates": [
+      {
+        "date": "15.03.2026",
+        "city": "Beijing",
+        "venue": "MAO Livehouse",
+        "country": "China",
+        "ticketUrl": "https://tickets.com/beijing"
+      },
+      {
+        "date": "18.03.2026",
+        "city": "Shanghai",
+        "venue": "Modern Sky Lab",
+        "country": "China",
+        "ticketUrl": ""
+      },
+      {
+        "date": "22.03.2026",
+        "city": "Guangzhou",
+        "venue": "SD Livehouse",
+        "country": "China",
+        "ticketUrl": "https://tickets.com/guangzhou"
+      }
+    ]
+  }
+}
