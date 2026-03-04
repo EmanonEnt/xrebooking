@@ -1708,9 +1708,9 @@
         /* POSTER AD 响应式 - 平板和移动端 (991px及以下) */
         @media (max-width: 991px) {
             .poster-ad-container {
-                display: flex !important;
-                flex-direction: column !important;
+                display: block !important;
                 width: 100% !important;
+                overflow: hidden !important;
             }
             /* 第一排：海报(左50%) + 广告栏(右50%) */
             .poster-ad-left {
@@ -1722,6 +1722,7 @@
                 justify-content: center !important;
                 overflow: hidden !important;
                 float: left !important;
+                position: relative !important;
             }
             .poster-wrapper {
                 width: 100% !important;
@@ -1735,10 +1736,11 @@
             /* 右侧两个广告栏 - 与海报同高 */
             .poster-ad-middle {
                 width: 50% !important;
-                margin-left: 50% !important;
                 display: flex !important;
                 flex-direction: column !important;
                 aspect-ratio: 2/3 !important;
+                float: left !important;
+                position: relative !important;
             }
             .middle-top, .middle-bottom {
                 flex: 1 !important;
