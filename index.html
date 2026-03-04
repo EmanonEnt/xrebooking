@@ -1712,6 +1712,8 @@
                 width: 100% !important;
                 margin: 0 !important;
                 padding: 0 !important;
+                line-height: 0 !important;
+                font-size: 0 !important;
             }
 
             /* 第一排：海报（全屏宽度，等比例完整显示） */
@@ -1725,17 +1727,27 @@
                 aspect-ratio: auto !important;
                 grid-column: auto !important;
                 grid-row: auto !important;
+                line-height: 0 !important;
+                font-size: 0 !important;
             }
             .poster-wrapper {
                 width: 100% !important;
                 height: auto !important;
                 display: block !important;
+                line-height: 0 !important;
+                font-size: 0 !important;
             }
             .poster-ad-image {
                 width: 100% !important;
                 height: auto !important;
                 object-fit: contain !important;
                 display: block !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                border: none !important;
+                line-height: 0 !important;
+                font-size: 0 !important;
+                vertical-align: top !important;
             }
 
             /* 第二排：2个广告栏上下排列（全屏宽度） */
@@ -1748,6 +1760,8 @@
                 aspect-ratio: auto !important;
                 grid-column: auto !important;
                 grid-row: auto !important;
+                line-height: 0 !important;
+                font-size: 0 !important;
             }
             .middle-top, .middle-bottom {
                 width: 100% !important;
@@ -1758,6 +1772,8 @@
                 text-align: center !important;
                 padding: 30px 20px !important;
                 margin: 0 !important;
+                line-height: normal !important;
+                font-size: initial !important;
             }
             .middle-top {
                 border-bottom: 1px solid rgba(139, 0, 0, 0.3) !important;
@@ -1768,16 +1784,21 @@
             }
             .ad-title {
                 font-size: clamp(20px, 5vw, 28px) !important;
-                margin-bottom: 10px !important;
+                margin: 0 0 10px 0 !important;
+                padding: 0 !important;
+                line-height: 1.2 !important;
             }
             .ad-underline {
-                margin: 0 auto 15px !important;
+                margin: 0 auto 15px auto !important;
+                padding: 0 !important;
                 width: 60px !important;
                 height: 3px !important;
+                line-height: 0 !important;
             }
             .ad-description {
                 font-size: clamp(13px, 3vw, 16px) !important;
-                margin-bottom: 20px !important;
+                margin: 0 0 20px 0 !important;
+                padding: 0 !important;
                 line-height: 1.6 !important;
             }
             .ad-buttons {
@@ -1785,10 +1806,15 @@
                 gap: 15px !important;
                 justify-content: center !important;
                 flex-wrap: wrap !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                line-height: normal !important;
             }
             .ad-btn {
                 padding: 12px 25px !important;
                 font-size: clamp(12px, 2.5vw, 14px) !important;
+                margin: 0 !important;
+                line-height: normal !important;
             }
 
             /* 第三排：Spotify播放器（全屏宽度，高度276px） */
@@ -1799,34 +1825,54 @@
                 padding: 0 !important;
                 grid-column: auto !important;
                 grid-row: auto !important;
+                line-height: 0 !important;
+                font-size: 0 !important;
             }
             .player-spotify {
                 width: 100% !important;
                 height: 276px !important;
+                min-height: 276px !important;
+                max-height: 276px !important;
                 display: block !important;
                 margin: 0 !important;
                 padding: 0 !important;
                 border: none !important;
+                line-height: 0 !important;
+                font-size: 0 !important;
+                vertical-align: top !important;
             }
             .player-spotify iframe {
                 width: 100% !important;
                 height: 276px !important;
+                min-height: 276px !important;
+                max-height: 276px !important;
                 display: block !important;
+                margin: 0 !important;
+                padding: 0 !important;
                 border: none !important;
+                line-height: 0 !important;
+                font-size: 0 !important;
+                vertical-align: top !important;
             }
 
             /* 第四排：QQ音乐 + 网易云并排（各50%，高度276px） */
             .player-bottom-container {
                 width: 100% !important;
                 height: 276px !important;
+                min-height: 276px !important;
+                max-height: 276px !important;
                 display: flex !important;
                 flex-direction: row !important;
                 margin: 0 !important;
                 padding: 0 !important;
+                line-height: 0 !important;
+                font-size: 0 !important;
             }
             .player-btn {
                 width: 50% !important;
                 height: 276px !important;
+                min-height: 276px !important;
+                max-height: 276px !important;
                 display: flex !important;
                 align-items: center !important;
                 justify-content: space-between !important;
@@ -1836,6 +1882,8 @@
                 flex: none !important;
                 border: 2px solid rgba(139, 0, 0, 0.5) !important;
                 border-top: none !important;
+                line-height: normal !important;
+                font-size: initial !important;
             }
             .player-netease {
                 border-left: 1px solid rgba(139, 0, 0, 0.3) !important;
