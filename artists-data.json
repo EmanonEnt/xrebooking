@@ -1,30 +1,26 @@
 {
   "thenoname": {
-    "name": "THE NONAME",
+    "name": "THE NONAME無名",
     "heroImage": "./assets/artists/TheNoname.jpg",
-    "bio": "THE NONAME is a powerful rock band known for their energetic live performances and unique sound. Formed with a passion for authentic rock music, they have been captivating audiences across Asia with their raw energy and compelling stage presence.",
+    "bio": "The NONAME is a Chinese punk rock institution with nearly 30 years of history. Here comes a blast of the hottest punk rock import from the Far East—straight from Xi’an, China! Masterminded by vocalist and band head honcho Ray, who is sick and tired of the ruling order, he finds his kind of freedom in music by starting his own revolution against all false hope in the world. Furthermore, these maniacs show their tough attitude straight to people’s faces and fight against all limits. Their music can be described as a mix between pure 1980s punk rock and straight hardcore, with heavy guitars, groovy bass lines, and powerful vocals. THE NONAME creates a wall of sound to scream along with; this music is the kind of revolution Ray wanted and hoped would never stop inspiring.",
     "agent": {
-      "name": "XRE Booking Team",
-      "email": "xrebooking@hotmail.com"
+      "name": "XRE Booking Group",
+      "email": "XREbooking@Hotmail.com"
     },
     "social": {
       "facebook": "https://facebook.com/thenoname",
       "instagram": "https://instagram.com/thenoname",
-      "youtube": "https://youtube.com/thenoname"
+      "spotify": "https://open.spotify.com/artist/1QjEg19ZiCoWuyUSFdbVhu",
+      "youtube": "https://youtube.com/thenoname",
+      "twitter": "https://x.com/nonamepunks",
+      "netease": "https://music.163.com/#/artist?id=12463",
+      "website": "http://nonamepunks.com"
     },
-    "videoUrl": "",
+    "videoUrl": "https://www.youtube.com/watch?v=CFZik0yVglc",
     "mediaKit": {
       "googleDrive": "",
       "baidu": ""
     },
-    "tourDates": [
-      {
-        "date": "15.03.2026",
-        "city": "Beijing",
-        "venue": "MAO Livehouse",
-        "country": "China",
-        "ticketUrl": "https://tickets.com/beijing"
-      }
-    ]
+    "tourDates": []
   }
 }
