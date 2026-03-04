@@ -238,13 +238,16 @@
         .artist-hero .social-links {
             display: flex;
             justify-content: center;
-            gap: 15px;
+            gap: 10px;
             margin-top: 20px;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
         }
         .artist-hero .social-links a {
-            width: 50px;
-            height: 50px;
+            width: 40px;
+            height: 40px;
             border: 2px solid rgba(255,255,255,0.4);
             border-radius: 50%;
             display: flex;
@@ -256,8 +259,8 @@
             background: rgba(0,0,0,0.3);
         }
         .artist-hero .social-links a svg {
-            width: 22px;
-            height: 22px;
+            width: 18px;
+            height: 18px;
             fill: currentColor;
         }
         .artist-hero .social-links a:hover {
@@ -773,47 +776,80 @@
         }
 
     
-        /* 移动端Hero布局修复 - 照片和文字分开 */
+        /* 移动端Hero - 使用与桌面端相同的蒙版效果 */
         @media (max-width: 768px) and (orientation: portrait) {
             .artist-hero {
-                min-height: auto !important;
-                height: auto !important;
-                padding-top: 80px;
+                height: 100vh;
+                min-height: 600px;
+                padding-top: 0;
                 display: flex;
                 flex-direction: column;
-                background: #000;
+                justify-content: center;
+                align-items: center;
             }
-            /* 照片容器 */
+            /* 照片背景 - 绝对定位，带蒙版 */
             .artist-hero .hero-bg {
-                position: relative !important;
+                position: absolute !important;
+                top: 0 !important;
+                left: 0 !important;
                 width: 100% !important;
-                height: auto !important;
-                min-height: auto !important;
-                background: none !important;
-                order: 1;
+                height: 100% !important;
+                background-size: cover !important;
+                background-position: center center !important;
+                filter: grayscale(0.3) sepia(0.05) contrast(1.15) brightness(0.75) saturate(1.3) !important;
+                z-index: 1 !important;
             }
-            .artist-hero .hero-bg::after,
-            .artist-hero .hero-bg::before {
-                display: none !important;
-            }
-            .hero-bg-img {
+            /* 保留蒙版效果 */
+            .artist-hero .hero-bg::after {
+                content: '' !important;
+                position: absolute !important;
+                top: 0 !important;
+                left: 0 !important;
                 width: 100% !important;
-                height: auto !important;
+                height: 100% !important;
+                background: radial-gradient(ellipse at center, rgba(139,0,0,0.1) 0%, rgba(0,0,0,0.3) 70%), 
+                            linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.5) 100%) !important;
+                z-index: 2 !important;
                 display: block !important;
-                object-fit: contain !important;
-                object-position: center top !important;
             }
+            /* 保留颗粒效果 */
+            .artist-hero .hero-bg::before {
+                content: '' !important;
+                position: absolute !important;
+                top: 0 !important;
+                left: 0 !important;
+                width: 100% !important;
+                height: 100% !important;
+                background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E") !important;
+                opacity: 0.12 !important;
+                z-index: 3 !important;
+                mix-blend-mode: overlay !important;
+                animation: grain 0.5s steps(10) infinite !important;
+                display: block !important;
+            }
+            /* 保留暗角效果 */
             .artist-hero .hero-vignette {
+                display: block !important;
+                position: absolute !important;
+                top: 0 !important;
+                left: 0 !important;
+                width: 100% !important;
+                height: 100% !important;
+                background: radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.6) 100%) !important;
+                z-index: 5 !important;
+                pointer-events: none !important;
+            }
+            /* 隐藏移动端的img标签 */
+            .hero-bg-img {
                 display: none !important;
             }
-            /* 内容区域 - 在照片下方 */
+            /* 内容区域 - 居中显示在蒙版上方 */
             .artist-hero .hero-content {
                 position: relative !important;
-                padding: 30px 20px !important;
-                background: #000 !important;
+                z-index: 10 !important;
+                padding: 20px !important;
+                background: transparent !important;
                 margin-top: 0 !important;
-                order: 2;
-                z-index: 10;
             }
             .artist-name {
                 font-size: clamp(28px, 7vw, 48px) !important;
@@ -826,31 +862,51 @@
                 margin-bottom: 20px !important;
             }
             .artist-hero .social-links {
-                gap: 10px !important;
+                gap: 8px !important;
                 margin-top: 15px !important;
+                flex-wrap: nowrap !important;
             }
             .artist-hero .social-links a {
-                width: 40px !important;
-                height: 40px !important;
+                width: 36px !important;
+                height: 36px !important;
             }
             .artist-hero .social-links a svg {
-                width: 18px !important;
-                height: 18px !important;
+                width: 16px !important;
+                height: 16px !important;
             }
         }
 
         @media (max-width: 480px) and (orientation: portrait) {
             .artist-hero .hero-content {
-                padding: 25px 15px !important;
+                padding: 15px !important;
             }
             .artist-name {
                 font-size: clamp(24px, 8vw, 40px) !important;
+            }
+            .artist-hero .social-links a {
+                width: 34px !important;
+                height: 34px !important;
+            }
+            .artist-hero .social-links a svg {
+                width: 15px !important;
+                height: 15px !important;
             }
         }
 
         @media (max-width: 375px) and (orientation: portrait) {
             .artist-hero .hero-content {
-                padding: 20px 15px !important;
+                padding: 15px !important;
+            }
+            .artist-hero .social-links {
+                gap: 6px !important;
+            }
+            .artist-hero .social-links a {
+                width: 32px !important;
+                height: 32px !important;
+            }
+            .artist-hero .social-links a svg {
+                width: 14px !important;
+                height: 14px !important;
             }
         }
 
@@ -1155,16 +1211,9 @@
                 if (artist.heroImage) {
                     const heroBg = document.getElementById('heroBg');
                     const heroBgImg = document.getElementById('heroBgImg');
-                    const isMobile = window.matchMedia('(max-width: 768px) and (orientation: portrait)').matches;
-                    if (isMobile && heroBgImg) {
-                        heroBgImg.src = artist.heroImage;
-                        heroBgImg.alt = artist.name;
-                        heroBgImg.style.display = 'block';
-                        heroBg.style.backgroundImage = 'none';
-                    } else {
-                        heroBg.style.backgroundImage = 'url(' + artist.heroImage + ')';
-                        if (heroBgImg) heroBgImg.style.display = 'none';
-                    }
+                    // 所有设备都使用background-image方式，统一使用蒙版效果
+                    heroBg.style.backgroundImage = 'url(' + artist.heroImage + ')';
+                    if (heroBgImg) heroBgImg.style.display = 'none';
                 }
 
                 document.getElementById('artistName').textContent = artist.name;
