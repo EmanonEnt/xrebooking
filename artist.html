@@ -1120,6 +1120,31 @@
             return dateStr;
         }
 
+        let currentArtist = null;
+
+        function updateHeroLayout() {
+            if (!currentArtist || !currentArtist.heroImage) return;
+
+            const heroBg = document.getElementById('heroBg');
+            const heroBgImg = document.getElementById('heroBgImg');
+            if (!heroBg) return;
+
+            // 移动端竖屏 或 电脑端竖屏（宽度>768且高度>宽度）
+            const isMobilePortrait = window.matchMedia('(max-width: 768px) and (orientation: portrait)').matches;
+            const isDesktopPortrait = window.matchMedia('(min-width: 769px) and (max-aspect-ratio: 1/1)').matches;
+            const isPortrait = isMobilePortrait || isDesktopPortrait;
+
+            if (isPortrait && heroBgImg) {
+                heroBgImg.src = currentArtist.heroImage;
+                heroBgImg.alt = currentArtist.name;
+                heroBgImg.style.display = 'block';
+                heroBg.style.backgroundImage = 'none';
+            } else {
+                heroBg.style.backgroundImage = 'url(' + currentArtist.heroImage + ')';
+                if (heroBgImg) heroBgImg.style.display = 'none';
+            }
+        }
+
         async function loadArtist() {
             const id = getParam('name') || getParam('id');
             if (!id) {
@@ -1139,25 +1164,13 @@
                     return;
                 }
 
+                currentArtist = artist;
                 document.title = artist.name + ' - XRE BOOKING';
 
-                if (artist.heroImage) {
-                    const heroBg = document.getElementById('heroBg');
-                    const heroBgImg = document.getElementById('heroBgImg');
-                    // 移动端竖屏 或 电脑端竖屏（宽度>768且高度>宽度）
-                    const isMobilePortrait = window.matchMedia('(max-width: 768px) and (orientation: portrait)').matches;
-                    const isDesktopPortrait = window.matchMedia('(min-width: 769px) and (max-aspect-ratio: 1/1)').matches;
-                    const isPortrait = isMobilePortrait || isDesktopPortrait;
-                    if (isPortrait && heroBgImg) {
-                        heroBgImg.src = artist.heroImage;
-                        heroBgImg.alt = artist.name;
-                        heroBgImg.style.display = 'block';
-                        heroBg.style.backgroundImage = 'none';
-                    } else {
-                        heroBg.style.backgroundImage = 'url(' + artist.heroImage + ')';
-                        if (heroBgImg) heroBgImg.style.display = 'none';
-                    }
-                }
+                updateHeroLayout();
+
+                // 监听窗口大小变化，实时更新布局
+                window.addEventListener('resize', updateHeroLayout);
 
                 document.getElementById('artistName').textContent = artist.name;
 
