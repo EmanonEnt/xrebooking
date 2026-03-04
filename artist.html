@@ -692,14 +692,24 @@
         }
 
         
-        
+        @media (max-width: 480px) and (orientation: portrait) {
+            .artist-hero .hero-content {
+                padding: 25px 15px !important;
+            }
             .artist-name {
                 font-size: clamp(24px, 8vw, 40px) !important;
             }
         }
-        
+        @media (max-width: 375px) and (orientation: portrait) {
+            .artist-hero .hero-content {
+                padding: 20px 15px !important;
+            }
         }
-        
+        @media (max-width: 768px) and (orientation: landscape) {
+            .artist-hero .hero-bg {
+                background-size: cover;
+                background-position: center center;
+            }
         
             .artist-hero {
                 height: 100vh;
@@ -778,73 +788,7 @@
 
     
         /* 移动端Hero布局修复 - 照片和文字分开 */
-        
-            /* 照片容器 */
-            .artist-hero .hero-bg {
-                position: relative !important;
-                width: 100% !important;
-                height: auto !important;
-                min-height: auto !important;
-                background: none !important;
-                order: 1;
-            }
-            .artist-hero .hero-bg::after,
-            .artist-hero .hero-bg::before {
-                display: none !important;
-            }
-            .hero-bg-img {
-                width: 100% !important;
-                height: auto !important;
-                display: block !important;
-                object-fit: contain !important;
-                object-position: center top !important;
-            }
-            .artist-hero .hero-vignette {
-                display: none !important;
-            }
-            /* 内容区域 - 在照片下方 */
-            .artist-hero .hero-content {
-                position: relative !important;
-                padding: 30px 20px !important;
-                background: #000 !important;
-                margin-top: 0 !important;
-                order: 2;
-                z-index: 10;
-            }
-            .artist-name {
-                font-size: clamp(28px, 7vw, 48px) !important;
-                letter-spacing: 3px !important;
-                margin-bottom: 15px !important;
-                line-height: 1.1 !important;
-            }
-            .artist-hero .red-line {
-                width: 60px !important;
-                margin-bottom: 20px !important;
-            }
-            .artist-hero .social-links {
-                gap: 10px !important;
-                margin-top: 15px !important;
-            }
-            .artist-hero .social-links a {
-                width: 34px !important;
-                height: 34px !important;
-            }
-            .artist-hero .social-links a svg {
-                width: 16px !important;
-                height: 16px !important;
-            }
-        }
-
-        
-
-        
-
-        /* 横屏保持原有设计 */
-        
-
-    
-        @media (max-width: 900px) {
-            /* 电脑竖屏/窄窗口 - 与移动端相同的布局 */
+        @media (max-width: 768px) and (orientation: portrait) {
             .artist-hero {
                 min-height: auto !important;
                 height: auto !important;
@@ -909,39 +853,13 @@
             }
         }
 
-        /* 小屏幕手机优化 */
-        @media (max-width: 480px) {
-            .artist-hero .hero-content {
-                padding: 25px 15px !important;
-            }
-            .artist-name {
-                font-size: clamp(24px, 8vw, 40px) !important;
-            }
-        }
+        
 
-        /* 超小屏幕 */
-        @media (max-width: 375px) {
-            .artist-hero .hero-content {
-                padding: 20px 15px !important;
-            }
-        }
+        
 
         /* 横屏保持原有设计 */
-        @media (max-width: 768px) and (orientation: landscape) {
-            .artist-hero {
-                height: 100vh;
-                min-height: 500px;
-            }
-            .artist-hero .hero-bg {
-                position: absolute;
-                background-size: cover;
-                background-position: center center;
-            }
-            .artist-hero .hero-content {
-                position: relative;
-                z-index: 10;
-            }
-        }
+        
+
     </style>
 </head>
 <body>
