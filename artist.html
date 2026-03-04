@@ -1213,9 +1213,16 @@
                 if (artist.heroImage) {
                     const heroBg = document.getElementById('heroBg');
                     const heroBgImg = document.getElementById('heroBgImg');
-                    // 所有设备都使用background-image方式，统一使用蒙版效果
-                    heroBg.style.backgroundImage = 'url(' + artist.heroImage + ')';
-                    if (heroBgImg) heroBgImg.style.display = 'none';
+                    const isMobile = window.matchMedia('(max-width: 768px) and (orientation: portrait)').matches;
+                    if (isMobile && heroBgImg) {
+                        heroBgImg.src = artist.heroImage;
+                        heroBgImg.alt = artist.name;
+                        heroBgImg.style.display = 'block';
+                        heroBg.style.backgroundImage = 'none';
+                    } else {
+                        heroBg.style.backgroundImage = 'url(' + artist.heroImage + ')';
+                        if (heroBgImg) heroBgImg.style.display = 'none';
+                    }
                 }
 
                 document.getElementById('artistName').textContent = artist.name;
