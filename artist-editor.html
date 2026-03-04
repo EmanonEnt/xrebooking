@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XRE BOOKING - 艺人编辑器</title>
+    <link rel="icon" type="image/png" href="./images/webtop.png">
+    <style>
+        :root {
+            --xre-red: #ff0000;
+            --xre-dark-red: #8b0000;
+            --mad-silver: #e8e8e8;
+            --black: #050505;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Courier New', monospace;
+            background: var(--black);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            text-align: center;
+            font-size: 42px;
+            letter-spacing: 5px;
+            margin-bottom: 10px;
+            color: var(--xre-red);
+        }
+        .subtitle {
+            text-align: center;
+            color: #888;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+        .editor-grid {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 20px;
+        }
+
+        /* 左侧艺人列表 */
+        .sidebar {
+            background: #111;
+            border: 1px solid var(--xre-dark-red);
+            border-radius: 8px;
+            padding: 15px;
+            height: fit-content;
+        }
+        .sidebar h3 {
+            font-family: Impact, sans-serif;
+            font-size: 16px;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            color: var(--xre-red);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .artist-list {
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        .artist-item {
+            padding: 12px;
+            margin-bottom: 8px;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .artist-item:hover {
+            border-color: var(--xre-red);
+            background: #222;
+        }
+        .artist-item.active {
+            border-color: var(--xre-red);
+            background: rgba(139, 0, 0, 0.2);
+        }
+        .artist-item-name {
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .artist-item-id {
+            font-size: 11px;
+            color: #666;
+        }
+        .artist-item-actions {
+            display: flex;
+            gap: 5px;
+        }
+        .btn-icon {
+            width: 28px;
+            height: 28px;
+            border: none;
+            background: transparent;
+            color: #888;
+            cursor: pointer;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+        .btn-icon:hover {
+            background: var(--xre-dark-red);
+            color: #fff;
+        }
+        .btn-add {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            background: var(--xre-dark-red);
+            color: #fff;
+            border: 2px solid var(--xre-red);
+            font-family: Impact, sans-serif;
+            font-size: 14px;
+            letter-spacing: 2px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+        .btn-add:hover {
+            background: var(--xre-red);
+            transform: scale(1.02);
+        }
+
+        /* 右侧编辑区 */
+        .editor-main {
+            background: #111;
+            border: 1px solid var(--xre-dark-red);
+            border-radius: 8px;
+            padding: 20px;
+        }
+        .section {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #333;
+        }
+        .section:last-child {
+            border-bottom: none;
+        }
+        .section-title {
+            font-family: Impact, sans-serif;
+            font-size: 18px;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            color: var(--xre-red);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 20px;
+            background: var(--xre-red);
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px 12px;
+            background: #1a1a1a;
+            border: 1px solid #444;
+            color: #fff;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--xre-red);
+            box-shadow: 0 0 10px rgba(139, 0, 0, 0.3);
+        }
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        .form-hint {
+            font-size: 11px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        /* 社交链接 */
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+        .social-input {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px;
+            background: #1a1a1a;
+            border: 1px solid #444;
+            border-radius: 4px;
+        }
+        .social-input svg {
+            width: 18px;
+            height: 18px;
+            fill: #888;
+            flex-shrink: 0;
+        }
+        .social-input input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 12px;
+            padding: 0;
+        }
+        .social-input input:focus {
+            outline: none;
+            box-shadow: none;
+        }
+
+        /* TOUR DATES */
+        .tour-list {
+            margin-bottom: 15px;
+        }
+        .tour-item {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr auto;
+            gap: 10px;
+            padding: 10px;
+            background: #1a1a1a;
+            border: 1px solid #444;
+            border-radius: 4px;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+        .tour-item input {
+            background: #222;
+            border: 1px solid #555;
+            padding: 8px;
+            color: #fff;
+            font-size: 12px;
+            border-radius: 3px;
+        }
+        .btn-remove {
+            width: 30px;
+            height: 30px;
+            background: transparent;
+            border: 1px solid #666;
+            color: #888;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 18px;
+        }
+        .btn-remove:hover {
+            background: var(--xre-red);
+            border-color: var(--xre-red);
+            color: #fff;
+        }
+        .btn-small {
+            padding: 8px 16px;
+            background: #222;
+            border: 1px solid #555;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 12px;
+            font-family: 'Courier New', monospace;
+        }
+        .btn-small:hover {
+            border-color: var(--xre-red);
+            color: var(--xre-red);
+        }
+
+        /* 操作按钮 */
+        .actions {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid var(--xre-dark-red);
+        }
+        .btn {
+            padding: 12px 30px;
+            font-family: Impact, sans-serif;
+            font-size: 14px;
+            letter-spacing: 2px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s;
+            text-transform: uppercase;
+        }
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid #666;
+            color: #888;
+        }
+        .btn-secondary:hover {
+            border-color: #999;
+            color: #fff;
+        }
+        .btn-primary {
+            background: var(--xre-dark-red);
+            border: 2px solid var(--xre-red);
+            color: #fff;
+        }
+        .btn-primary:hover {
+            background: var(--xre-red);
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(139, 0, 0, 0.5);
+        }
+
+        /* JSON 预览 */
+        .json-preview {
+            background: #0a0a0a;
+            border: 1px solid #333;
+            border-radius: 4px;
+            padding: 15px;
+            margin-top: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .json-preview pre {
+            font-size: 12px;
+            line-height: 1.5;
+            color: #0f0;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
+        /* 提示信息 */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            padding: 15px 25px;
+            background: var(--xre-dark-red);
+            border: 2px solid var(--xre-red);
+            color: #fff;
+            border-radius: 4px;
+            font-family: Impact, sans-serif;
+            letter-spacing: 1px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s;
+            z-index: 1000;
+        }
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            .editor-grid {
+                grid-template-columns: 1fr;
+            }
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            .social-grid {
+                grid-template-columns: 1fr;
+            }
+            .tour-item {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>XRE BOOKING</h1>
+        <p class="subtitle">艺人信息编辑器 | Artist Data Editor</p>
+
+        <div class="editor-grid">
+            <!-- 左侧艺人列表 -->
+            <div class="sidebar">
+                <h3>艺人列表 <span style="font-size: 12px; color: #666;">ARTISTS</span></h3>
+                <div class="artist-list" id="artistList"></div>
+                <button class="btn-add" onclick="addNewArtist()">+ 添加艺人</button>
+            </div>
+
+            <!-- 右侧编辑区 -->
+            <div class="editor-main">
+                <div id="editorContent">
+                    <div style="text-align: center; padding: 60px; color: #666;">
+                        <p>请选择左侧艺人进行编辑</p>
+                        <p style="font-size: 12px; margin-top: 10px;">或点击"添加艺人"创建新艺人</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // 艺人数据
+        let artistsData = {};
+        let currentArtistId = null;
+
+        // 社交图标 SVG
+        const socialIcons = {
+            facebook: '<svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>',
+            instagram: '<svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>',
+            spotify: '<svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>',
+            youtube: '<svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>',
+            twitter: '<svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>',
+            weibo: '<svg viewBox="0 0 24 24"><path d="M10.098 20.323c-3.977.391-7.414-1.406-7.672-4.02-.259-2.609 2.759-5.047 6.74-5.441 3.979-.394 7.413 1.404 7.671 4.018.259 2.6-2.759 5.049-6.737 5.439l-.002.004zM9.05 17.219c-.384.616-1.208.884-1.829.602-.612-.279-.793-.991-.406-1.593.379-.595 1.176-.861 1.793-.601.622.263.82.972.442 1.592zm1.27-1.627c-.141.237-.449.353-.689.253-.236-.09-.313-.361-.177-.586.138-.227.436-.346.672-.24.239.09.315.36.18.573h.014zm.176-2.719c-1.893-.493-4.033.45-4.857 2.118-.836 1.704-.026 3.591 1.886 4.21 1.983.64 4.318-.341 5.132-2.179.8-1.793-.201-3.642-2.161-4.149zm7.563-1.224c-.346-.105-.579-.18-.405-.649.381-1.025.421-1.905.001-2.535-.789-1.188-2.924-1.109-5.382-.031 0 0-.768.334-.571-.271.383-1.217.324-2.229-.268-2.816-1.344-1.336-4.918.045-7.985 3.088C2.013 10.878.784 13.447.784 15.658c0 4.226 5.407 6.804 10.695 6.804 6.936 0 11.551-4.021 11.551-7.21 0-1.925-1.628-3.013-2.971-3.403z"/></svg>',
+            xiaohongshu: '<svg viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.615 14.615h-2.77v-3.077h-3.69v3.077h-2.77V7.385h2.77v3.077h3.69V7.385h2.77v9.23z"/></svg>',
+            wechat: '<svg viewBox="0 0 24 24"><path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 0 1 .213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 0 0 .167-.054l1.903-1.114a.864.864 0 0 1 .717-.098 10.16 10.16 0 0 0 2.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348zM5.785 5.991c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178A1.17 1.17 0 0 1 4.623 7.17c0-.651.52-1.18 1.162-1.18zm5.813 0c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178 1.17 1.17 0 0 1-1.162-1.178c0-.651.52-1.18 1.162-1.18zm5.34 2.867c-1.797-.052-3.746.512-5.28 1.786-1.72 1.428-2.687 3.72-1.78 6.22.942 2.453 3.666 4.229 6.884 4.229.826 0 1.622-.12 2.361-.336a.722.722 0 0 1 .598.082l1.584.926a.272.272 0 0 0 .14.047c.134 0 .24-.111.24-.247 0-.06-.023-.12-.038-.177l-.327-1.233a.582.582 0 0 1-.023-.156.49.49 0 0 1 .201-.398C23.024 18.48 24 16.82 24 14.98c0-3.21-2.931-5.837-6.656-6.088V8.89c-.135-.01-.27-.027-.407-.032zm-2.53 3.274c.535 0 .969.44.969.982a.976.976 0 0 1-.969.983.976.976 0 0 1-.969-.983c0-.542.434-.982.97-.982zm4.844 0c.535 0 .969.44.969.982a.976.976 0 0 1-.969.983.976.976 0 0 1-.969-.983c0-.542.434-.982.969-.982z"/></svg>',
+            miniprogram: '<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-2h2v2zm0-4h-2V7h2v6zm4 4h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>',
+            tiktok: '<svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/></svg>',
+            douyin: '<svg viewBox="0 0 24 24"><path d="M12.53.02C13.84 0 15.14.01 16.44 0c.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>',
+            qqmusic: '<svg viewBox="0 0 24 24" fill="#31c27c"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 0 0-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>',
+            netease: '<svg viewBox="0 0 24 24" fill="#c62f2f"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5.93 8.46l-.61 7.76c-.09.87-.63 1.08-1.27 1.08-.26 0-.53-.04-.79-.13l-2.93-.99c-.66-.22-.79-.35-.79-1.07v-4.1c0-.64.23-.96.73-1.11l5.47-1.52c.5-.14.78.08.78.58 0 .13-.04.27-.09.4h.5zm-4.43 3.16l-1.47.49c-.22.07-.36.27-.36.5v2.26c0 .31.24.55.55.55h.01c.08 0 .15-.02.22-.05l1.47-.49c.22-.07.36-.27.36-.5v-2.26c0-.31-.24-.55-.55-.55h-.01c-.08 0-.15.02-.22.05zM7.5 16.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm0-5C6.67 11.5 6 10.83 6 10s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>',
+            website: '<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>'
+        };
+
+        // 加载数据
+        async function loadData() {
+            try {
+                const response = await fetch('./artists-data.json');
+                artistsData = await response.json();
+                renderArtistList();
+            } catch (error) {
+                console.error('加载数据失败:', error);
+                showToast('加载数据失败，将创建新文件');
+                artistsData = {};
+            }
+        }
+
+        // 渲染艺人列表
+        function renderArtistList() {
+            const list = document.getElementById('artistList');
+            list.innerHTML = '';
+
+            Object.entries(artistsData).forEach(([id, artist]) => {
+                const item = document.createElement('div');
+                item.className = 'artist-item' + (id === currentArtistId ? ' active' : '');
+                item.innerHTML = `
+                    <div>
+                        <div class="artist-item-name">${artist.name || '未命名'}</div>
+                        <div class="artist-item-id">${id}</div>
+                    </div>
+                    <div class="artist-item-actions">
+                        <button class="btn-icon" onclick="event.stopPropagation(); editArtist('${id}')">✎</button>
+                        <button class="btn-icon" onclick="event.stopPropagation(); deleteArtist('${id}')">×</button>
+                    </div>
+                `;
+                item.onclick = () => editArtist(id);
+                list.appendChild(item);
+            });
+        }
+
+        // 编辑艺人
+        function editArtist(id) {
+            currentArtistId = id;
+            const artist = artistsData[id] || {};
+            renderArtistList();
+            renderEditor(artist);
+        }
+
+        // 渲染编辑器
+        function renderEditor(artist) {
+            const container = document.getElementById('editorContent');
+
+            container.innerHTML = `
+                <div class="section">
+                    <div class="section-title">基本信息</div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>艺人ID（URL标识）</label>
+                            <input type="text" id="artistId" value="${currentArtistId || ''}" placeholder="例如: thenoname">
+                            <div class="form-hint">只能使用小写字母、数字和连字符</div>
+                        </div>
+                        <div class="form-group">
+                            <label>艺人名称</label>
+                            <input type="text" id="artistName" value="${artist.name || ''}" placeholder="例如: THE NONAME">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Hero背景图片</label>
+                        <input type="text" id="heroImage" value="${artist.heroImage || ''}" placeholder="./assets/artists/ArtistName.jpg">
+                        <div class="form-hint">建议尺寸: 1920x1080 或更高</div>
+                    </div>
+                    <div class="form-group">
+                        <label>艺人简介（支持HTML）</label>
+                        <textarea id="bio" placeholder="输入艺人简介...">${artist.bio || ''}</textarea>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">经纪人信息</div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>经纪人姓名</label>
+                            <input type="text" id="agentName" value="${artist.agent?.name || 'XRE Booking Team'}" placeholder="XRE Booking Team">
+                        </div>
+                        <div class="form-group">
+                            <label>经纪人邮箱</label>
+                            <input type="text" id="agentEmail" value="${artist.agent?.email || 'xrebooking@hotmail.com'}" placeholder="xrebooking@hotmail.com">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">社交媒体链接（不填则不显示）</div>
+                    <div class="social-grid">
+                        ${Object.entries(socialIcons).map(([key, svg]) => `
+                            <div class="social-input">
+                                ${svg}
+                                <input type="text" id="social_${key}" value="${artist.social?.[key] || ''}" placeholder="${key}">
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">视频链接（不填则不显示VIDEO区域）</div>
+                    <div class="form-group">
+                        <label>视频URL（支持 YouTube/优酷/B站）</label>
+                        <input type="text" id="videoUrl" value="${artist.videoUrl || ''}" placeholder="https://www.youtube.com/watch?v=...">
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">媒体包（不填则不显示MEDIA KIT区域）</div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Google Drive 链接</label>
+                            <input type="text" id="gdrive" value="${artist.mediaKit?.googleDrive || ''}" placeholder="https://drive.google.com/...">
+                        </div>
+                        <div class="form-group">
+                            <label>百度网盘 链接</label>
+                            <input type="text" id="baidu" value="${artist.mediaKit?.baidu || ''}" placeholder="https://pan.baidu.com/...">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">巡演日期（不填则不显示TOUR DATES区域）</div>
+                    <div class="tour-list" id="tourList"></div>
+                    <button class="btn-small" onclick="addTourDate()">+ 添加巡演日期</button>
+                </div>
+
+                <div class="actions">
+                    <button class="btn btn-secondary" onclick="cancelEdit()">取消</button>
+                    <button class="btn btn-primary" onclick="saveArtist()">保存艺人</button>
+                </div>
+
+                <div class="json-preview">
+                    <div style="color: #666; margin-bottom: 10px; font-size: 11px;">JSON 预览:</div>
+                    <pre id="jsonPreview">${JSON.stringify(artist, null, 2)}</pre>
+                </div>
+            `;
+
+            // 渲染巡演日期
+            renderTourDates(artist.tourDates || []);
+
+            // 添加输入监听更新预览
+            container.querySelectorAll('input, textarea').forEach(input => {
+                input.addEventListener('input', updatePreview);
+            });
+        }
+
+        // 渲染巡演日期
+        function renderTourDates(tours) {
+            const list = document.getElementById('tourList');
+            if (!list) return;
+
+            list.innerHTML = tours.map((tour, index) => `
+                <div class="tour-item" data-index="${index}">
+                    <input type="text" placeholder="日期 (DD.MM.YYYY)" value="${tour.date || ''}" class="tour-date">
+                    <input type="text" placeholder="城市" value="${tour.city || ''}" class="tour-city">
+                    <input type="text" placeholder="场地" value="${tour.venue || ''}" class="tour-venue">
+                    <input type="text" placeholder="国家" value="${tour.country || ''}" class="tour-country">
+                    <input type="text" placeholder="购票链接" value="${tour.ticketUrl || ''}" class="tour-ticket">
+                    <button class="btn-remove" onclick="removeTourDate(${index})">×</button>
+                </div>
+            `).join('');
+
+            updatePreview();
+        }
+
+        // 添加巡演日期
+        function addTourDate() {
+            const tours = getTourDates();
+            tours.push({ date: '', city: '', venue: '', country: '', ticketUrl: '' });
+            renderTourDates(tours);
+        }
+
+        // 删除巡演日期
+        function removeTourDate(index) {
+            const tours = getTourDates();
+            tours.splice(index, 1);
+            renderTourDates(tours);
+        }
+
+        // 获取巡演日期数据
+        function getTourDates() {
+            const items = document.querySelectorAll('.tour-item');
+            return Array.from(items).map(item => ({
+                date: item.querySelector('.tour-date').value,
+                city: item.querySelector('.tour-city').value,
+                venue: item.querySelector('.tour-venue').value,
+                country: item.querySelector('.tour-country').value,
+                ticketUrl: item.querySelector('.tour-ticket').value
+            }));
+        }
+
+        // 更新预览
+        function updatePreview() {
+            const data = collectFormData();
+            const preview = document.getElementById('jsonPreview');
+            if (preview) {
+                preview.textContent = JSON.stringify(data, null, 2);
+            }
+        }
+
+        // 收集表单数据
+        function collectFormData() {
+            const social = {};
+            Object.keys(socialIcons).forEach(key => {
+                const value = document.getElementById(`social_${key}`)?.value;
+                if (value) social[key] = value;
+            });
+
+            const mediaKit = {};
+            const gdrive = document.getElementById('gdrive')?.value;
+            const baidu = document.getElementById('baidu')?.value;
+            if (gdrive) mediaKit.googleDrive = gdrive;
+            if (baidu) mediaKit.baidu = baidu;
+
+            const data = {
+                name: document.getElementById('artistName')?.value || '',
+                heroImage: document.getElementById('heroImage')?.value || '',
+                bio: document.getElementById('bio')?.value || '',
+                agent: {
+                    name: document.getElementById('agentName')?.value || 'XRE Booking Team',
+                    email: document.getElementById('agentEmail')?.value || 'xrebooking@hotmail.com'
+                },
+                social: Object.keys(social).length > 0 ? social : undefined,
+                videoUrl: document.getElementById('videoUrl')?.value || undefined,
+                mediaKit: Object.keys(mediaKit).length > 0 ? mediaKit : undefined,
+                tourDates: getTourDates().filter(t => t.date || t.city)
+            };
+
+            // 移除空数组
+            if (data.tourDates.length === 0) delete data.tourDates;
+
+            return data;
+        }
+
+        // 保存艺人
+        function saveArtist() {
+            const newId = document.getElementById('artistId').value.trim().toLowerCase();
+
+            if (!newId) {
+                showToast('请输入艺人ID');
+                return;
+            }
+
+            if (!/^[a-z0-9-]+$/.test(newId)) {
+                showToast('艺人ID只能使用小写字母、数字和连字符');
+                return;
+            }
+
+            const data = collectFormData();
+
+            if (!data.name) {
+                showToast('请输入艺人名称');
+                return;
+            }
+
+            // 如果ID改变，删除旧数据
+            if (currentArtistId && currentArtistId !== newId) {
+                delete artistsData[currentArtistId];
+            }
+
+            artistsData[newId] = data;
+            currentArtistId = newId;
+
+            // 保存到本地存储（实际使用时需要后端支持）
+            localStorage.setItem('artistsData', JSON.stringify(artistsData));
+
+            renderArtistList();
+            showToast('保存成功！请复制下方JSON到 artists-data.json 文件');
+
+            // 显示完整的JSON数据供复制
+            console.log(JSON.stringify(artistsData, null, 2));
+        }
+
+        // 添加新艺人
+        function addNewArtist() {
+            currentArtistId = null;
+            renderArtistList();
+            renderEditor({});
+        }
+
+        // 删除艺人
+        function deleteArtist(id) {
+            if (!confirm(`确定要删除艺人 "${artistsData[id]?.name || id}" 吗？`)) return;
+
+            delete artistsData[id];
+            if (currentArtistId === id) {
+                currentArtistId = null;
+                document.getElementById('editorContent').innerHTML = `
+                    <div style="text-align: center; padding: 60px; color: #666;">
+                        <p>请选择左侧艺人进行编辑</p>
+                    </div>
+                `;
+            }
+            renderArtistList();
+            showToast('已删除');
+        }
+
+        // 取消编辑
+        function cancelEdit() {
+            currentArtistId = null;
+            renderArtistList();
+            document.getElementById('editorContent').innerHTML = `
+                <div style="text-align: center; padding: 60px; color: #666;">
+                    <p>请选择左侧艺人进行编辑</p>
+                </div>
+            `;
+        }
+
+        // 显示提示
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // 初始化
+        loadData();
+    </script>
+</body>
+</html>
