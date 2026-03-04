@@ -660,7 +660,7 @@
 
     <!-- Artist Hero -->
     <section class="artist-hero">
-        <div class="hero-bg" id="heroBg" style="background-image: url('./assets/artists/TheNoname.jpg');"></div>
+        <div class="hero-bg" id="heroBg" style="background-image: url('./assets/artists/default-hero.jpg');"></div>
         <div class="hero-content">
             <h1 class="artist-name" id="artistName">ARTIST NAME</h1>
             <div class="red-line"></div>
@@ -833,6 +833,39 @@
     </div>
 
     <script>
+// 备用艺人数据（当 JSON 文件加载失败时使用）
+const ARTISTS_BACKUP_DATA = {
+    "thenoname": {
+        "name": "THE NONAME",
+        "heroImage": "./assets/artists/TheNoname.jpg",
+        "bio": "THE NONAME is a powerful rock band known for their energetic live performances and unique sound.",
+        "agent": {
+            "name": "XRE Booking Team",
+            "email": "xrebooking@hotmail.com"
+        },
+        "social": {
+            "facebook": "https://facebook.com/thenoname",
+            "instagram": "https://instagram.com/thenoname",
+            "spotify": "https://open.spotify.com/artist/thenoname",
+            "youtube": "https://youtube.com/thenoname"
+        },
+        "mediaKit": {
+            "googleDrive": "#",
+            "baidu": "#"
+        },
+        "tourDates": [
+            {
+                "date": "15.03.2026",
+                "city": "Beijing",
+                "venue": "MAO Livehouse",
+                "country": "China",
+                "ticketUrl": "#"
+            }
+        ]
+    }
+};
+
+
         const getParam = name => new URLSearchParams(window.location.search).get(name);
 
         async function loadArtist() {
@@ -843,10 +876,31 @@
                 return;
             }
 
+            let data;
             try {
                 const response = await fetch('./artists-data.json');
-                const data = await response.json();
+                if (!response.ok) {
+                    console.warn('JSON file not found, using backup data');
+                    data = ARTISTS_BACKUP_DATA;
+                } else {
+                    data = await response.json();
+                }
+            } catch (e) {
+                console.warn('Fetch failed, using backup data:', e);
+                data = ARTISTS_BACKUP_DATA;
+            }
+
+            try {
+                console.log('Loaded data:', data);
+                console.log('Looking for artist:', id.toLowerCase());
+
                 const artist = data[id.toLowerCase()];
+                if (!artist) {
+                    console.error('Artist not found in data. Available keys:', Object.keys(data));
+                    document.getElementById('artistName').textContent = 'ARTIST NOT FOUND';
+                    document.getElementById('loading').classList.add('hidden');
+                    return;
+                }
 
                 if (!artist) {
                     document.getElementById('artistName').textContent = 'ARTIST NOT FOUND';
@@ -921,7 +975,7 @@
 
             } catch (error) {
                 console.error('Error loading artist:', error);
-                document.getElementById('artistName').textContent = 'ERROR LOADING';
+                document.getElementById('artistName').textContent = 'ERROR: ' + error.message;
                 document.getElementById('loading').classList.add('hidden');
             }
         }
