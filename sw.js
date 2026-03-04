@@ -1,22 +1,24 @@
-// XRE BOOKING Service Worker - v11
-const CACHE_NAME = 'xrebooking-v11';
-const STATIC_CACHE = 'xrebooking-static-v11';
-const IMAGE_CACHE = 'xrebooking-images-v11';
+// XRE BOOKING Service Worker - v12 (添加artist页面支持)
+const CACHE_NAME = 'xrebooking-v12';
+const STATIC_CACHE = 'xrebooking-static-v12';
+const IMAGE_CACHE = 'xrebooking-images-v12';
 
 // 核心静态资源
 const STATIC_ASSETS = [
     './',
-    './index.html'
+    './index.html',
+    './artist.html',
+    './artists-data.json'
 ];
 
 // 安装：缓存核心资源
 self.addEventListener('install', (event) => {
-    console.log('[SW] Installing XRE BOOKING SW...');
+    console.log('[SW] Installing XRE BOOKING SW v12...');
     event.waitUntil(
         caches.open(STATIC_CACHE).then((cache) => {
             return cache.addAll(STATIC_ASSETS);
         }).then(() => {
-            console.log('[SW] XRE BOOKING installed');
+            console.log('[SW] XRE BOOKING v12 installed');
             return self.skipWaiting();
         })
     );
@@ -24,12 +26,12 @@ self.addEventListener('install', (event) => {
 
 // 激活：清理旧缓存
 self.addEventListener('activate', (event) => {
-    console.log('[SW] Activating...');
+    console.log('[SW] Activating v12...');
     event.waitUntil(
         caches.keys().then((cacheNames) => {
             return Promise.all(
                 cacheNames.map((cacheName) => {
-                    if (!cacheName.includes('xrebooking-v11')) {
+                    if (!cacheName.includes('xrebooking-v12')) {
                         console.log('[SW] Deleting old cache:', cacheName);
                         return caches.delete(cacheName);
                     }
@@ -50,13 +52,19 @@ self.addEventListener('fetch', (event) => {
         return;
     }
 
-    // 2. HTML：Network First
+    // 2. JSON数据：Network First（确保获取最新数据）
+    if (url.pathname.endsWith('.json')) {
+        event.respondWith(networkFirst(request, STATIC_CACHE));
+        return;
+    }
+
+    // 3. HTML：Network First
     if (request.mode === 'navigate' || request.headers.get('accept').includes('text/html')) {
         event.respondWith(networkFirst(request, STATIC_CACHE));
         return;
     }
 
-    // 3. 其他：Cache First
+    // 4. 其他：Cache First
     event.respondWith(cacheFirst(request, STATIC_CACHE));
 });
 
