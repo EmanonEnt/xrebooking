@@ -1377,157 +1377,138 @@
         @media (max-width: 768px) {
             .poster-ad-container {
                 grid-template-columns: 1fr;
-                grid-template-rows: auto auto auto;
+                grid-template-rows: auto auto;
+                width: 100%;
+                max-width: 100vw;
+                overflow-x: hidden;
             }
+            /* 第一行：海报(50%) + 广告栏(50%)，海报高度=2个广告栏总高度 */
             .poster-ad-left {
-                padding: 30px 20px;
-                min-height: auto;
+                padding: 0;
                 height: auto;
+                aspect-ratio: 2/3;
                 order: 1;
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                overflow: hidden;
+                grid-row: 1 / 2;
+                grid-column: 1 / 2;
+                width: 50%;
+                float: left;
             }
             .poster-wrapper {
                 width: 100%;
-                max-width: 320px;
-                height: auto;
-                aspect-ratio: 3/4;
-                margin: 0 auto;
+                height: 100%;
+                max-width: none;
+                margin: 0;
             }
             .poster-ad-image {
                 width: 100%;
                 height: 100%;
                 object-fit: cover;
+                object-position: center;
             }
+            /* 右侧两个广告栏 - 各占50%高度，整体与海报高度相同 */
             .poster-ad-middle {
-                min-height: auto;
-                order: 2;
+                min-height: 0;
+                height: auto;
+                aspect-ratio: 2/3;
+                order: 1;
+                grid-row: 1 / 2;
+                grid-column: 1 / 2;
+                display: flex;
+                flex-direction: column;
+                width: 50%;
+                margin-left: 50%;
             }
             .middle-top, .middle-bottom {
-                padding: 40px 30px;
+                flex: 1;
+                padding: clamp(6px, 2vw, 12px);
                 align-items: center;
                 text-align: center;
+                justify-content: center;
+                display: flex;
+                flex-direction: column;
+                overflow: hidden;
+            }
+            .middle-top {
+                border-bottom: 1px solid rgba(139, 0, 0, 0.3);
             }
             .content-left, .content-right {
                 align-items: center;
                 text-align: center;
                 max-width: 100%;
-            }
-            .ad-underline {
-                margin: 0 auto 25px auto;
-            }
-            .ad-buttons {
-                justify-content: center;
-            }
-            .ad-title {
-                font-size: 24px;
-            }
-            .ad-description {
-                font-size: 14px;
-            }
-            .poster-ad-right {
-                min-height: 400px;
-                order: 3;
-                flex-direction: column;
-            }
-            .player-spotify {
-                flex: 0 0 200px;
-                height: 200px;
-            }
-            .player-bottom-container {
-                flex: 1;
-                flex-direction: row;
-            }
-            .player-btn, .player-netease-embed {
-                flex: 0 0 50%;
-                height: 100%;
-            }
-        }
-
-
-        /* POSTER AD 响应式 - 480px */
-        @media (max-width: 480px) {
-            .poster-ad-left {
-                padding: 30px 15px;
-                min-height: auto;
-                height: auto;
-                order: 1;
                 display: flex;
-                align-items: center;
+                flex-direction: column;
                 justify-content: center;
-            }
-            .poster-wrapper {
                 width: 100%;
-                max-width: 280px;
-                height: auto;
-                aspect-ratio: 3/4;
-                margin: 0 auto;
             }
-            .poster-ad-image {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
-            .middle-top, .middle-bottom {
-                padding: 40px 20px;
-                align-items: center;
-                text-align: center;
-            }
-            .content-left, .content-right {
-                align-items: center;
-                text-align: center;
-            }
+            /* 等比例缩小文字 - 更好的自适应 */
             .ad-title {
-                font-size: 22px;
-                letter-spacing: 2px;
+                font-size: clamp(11px, 2.8vw, 16px);
+                letter-spacing: 1px;
+                margin-bottom: clamp(3px, 1vw, 6px);
+                line-height: 1.2;
             }
             .ad-underline {
-                margin: 0 auto 20px auto;
+                margin-bottom: clamp(4px, 1.2vw, 8px);
+                width: clamp(25px, 6vw, 40px);
+                height: 2px;
             }
             .ad-description {
-                font-size: 12px;
-                line-height: 1.6;
+                font-size: clamp(8px, 1.8vw, 11px);
+                line-height: 1.4;
+                margin-bottom: clamp(6px, 1.5vw, 10px);
+                max-width: 95%;
             }
             .ad-buttons {
-                flex-direction: column;
+                gap: clamp(3px, 1vw, 6px);
+                flex-wrap: wrap;
+                justify-content: center;
                 width: 100%;
-                align-items: center;
-                gap: 10px;
             }
             .ad-btn {
-                width: 100%;
-                max-width: 250px;
-                padding: 12px 20px;
-                font-size: 11px;
+                padding: clamp(4px, 1.2vw, 8px) clamp(6px, 1.8vw, 12px);
+                font-size: clamp(7px, 1.6vw, 10px);
+                letter-spacing: 0.5px;
+                min-width: auto;
+                white-space: nowrap;
             }
+            /* 下方播放器 - Spotify全屏宽度，QQ和网易云高度一致 */
             .poster-ad-right {
-                min-height: 400px;
-                order: 3;
+                grid-column: 1 / -1;
+                grid-row: 2 / 3;
+                min-height: 280px;
+                height: 280px;
+                order: 2;
+                flex-direction: column;
+                width: 100%;
+                clear: both;
             }
             .player-spotify {
-                flex: 0 0 200px;
-                height: 200px;
+                flex: 0 0 50%;
+                height: 50%;
+                width: 100%;
             }
             .player-bottom-container {
-                flex: 1;
+                flex: 0 0 50%;
+                height: 50%;
+                width: 100%;
                 flex-direction: row;
             }
             .player-btn {
                 flex: 0 0 50%;
                 height: 100%;
-                padding: 12px;
+                width: 50%;
+                padding: clamp(6px, 2vw, 12px);
             }
             .player-platform {
-                font-size: 10px;
-                letter-spacing: 1px;
+                font-size: clamp(9px, 2.2vw, 12px);
             }
             .player-platform-logo {
-                width: 18px;
-                height: 18px;
-            }
-            .player-song {
-                font-size: 11px;
+                width: clamp(14px, 3.5vw, 18px);
+                height: clamp(14px, 3.5vw, 18px);
             }
         }
 
@@ -1946,7 +1927,7 @@
                 object-fit: cover;
                 object-position: center;
             }
-            /* 右侧两个广告栏 - 各占50%高度 */
+            /* 右侧两个广告栏 - 各占50%高度，整体与海报高度相同 */
             .poster-ad-middle {
                 min-height: 0;
                 height: auto;
@@ -1961,12 +1942,13 @@
             }
             .middle-top, .middle-bottom {
                 flex: 1;
-                padding: clamp(8px, 2vw, 15px);
+                padding: clamp(6px, 2vw, 12px);
                 align-items: center;
                 text-align: center;
                 justify-content: center;
                 display: flex;
                 flex-direction: column;
+                overflow: hidden;
             }
             .middle-top {
                 border-bottom: 1px solid rgba(139, 0, 0, 0.3);
@@ -1977,40 +1959,46 @@
                 max-width: 100%;
                 display: flex;
                 flex-direction: column;
+                justify-content: center;
+                width: 100%;
             }
-            /* 等比例缩小文字 */
+            /* 等比例缩小文字 - 更好的自适应 */
             .ad-title {
-                font-size: clamp(12px, 3vw, 18px);
+                font-size: clamp(11px, 2.8vw, 16px);
                 letter-spacing: 1px;
-                margin-bottom: clamp(4px, 1vw, 8px);
+                margin-bottom: clamp(3px, 1vw, 6px);
                 line-height: 1.2;
             }
             .ad-underline {
-                margin-bottom: clamp(6px, 1.5vw, 10px);
-                width: clamp(30px, 8vw, 50px);
+                margin-bottom: clamp(4px, 1.2vw, 8px);
+                width: clamp(25px, 6vw, 40px);
                 height: 2px;
             }
             .ad-description {
-                font-size: clamp(9px, 2vw, 11px);
-                line-height: 1.3;
-                margin-bottom: clamp(8px, 2vw, 12px);
+                font-size: clamp(8px, 1.8vw, 11px);
+                line-height: 1.4;
+                margin-bottom: clamp(6px, 1.5vw, 10px);
+                max-width: 95%;
             }
             .ad-buttons {
-                gap: clamp(4px, 1vw, 6px);
+                gap: clamp(3px, 1vw, 6px);
                 flex-wrap: wrap;
                 justify-content: center;
+                width: 100%;
             }
             .ad-btn {
-                padding: clamp(5px, 1.5vw, 8px) clamp(8px, 2vw, 12px);
-                font-size: clamp(8px, 1.8vw, 10px);
+                padding: clamp(4px, 1.2vw, 8px) clamp(6px, 1.8vw, 12px);
+                font-size: clamp(7px, 1.6vw, 10px);
                 letter-spacing: 0.5px;
+                min-width: auto;
+                white-space: nowrap;
             }
             /* 下方播放器 - Spotify全屏宽度，QQ和网易云高度一致 */
             .poster-ad-right {
                 grid-column: 1 / -1;
                 grid-row: 2 / 3;
-                min-height: 300px;
-                height: 300px;
+                min-height: 280px;
+                height: 280px;
                 order: 2;
                 flex-direction: column;
                 width: 100%;
@@ -2031,192 +2019,14 @@
                 flex: 0 0 50%;
                 height: 100%;
                 width: 50%;
-                padding: clamp(8px, 2vw, 15px);
+                padding: clamp(6px, 2vw, 12px);
             }
             .player-platform {
-                font-size: clamp(10px, 2.5vw, 13px);
+                font-size: clamp(9px, 2.2vw, 12px);
             }
             .player-platform-logo {
-                width: clamp(16px, 4vw, 20px);
-                height: clamp(16px, 4vw, 20px);
-            }
-        }
-
-        /* POSTER AD 响应式 - 480px */
-        @media (max-width: 480px) {
-            .poster-ad-left {
-                padding: 30px 15px;
-                min-height: auto;
-                height: auto;
-                order: 1;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-            .poster-wrapper {
-                width: 100%;
-                max-width: 280px;
-                height: auto;
-                aspect-ratio: 3/4;
-                margin: 0 auto;
-            }
-            .poster-ad-image {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-            }
-            .middle-top, .middle-bottom {
-                padding: 40px 20px;
-                align-items: center;
-                text-align: center;
-            }
-            .content-left, .content-right {
-                align-items: center;
-                text-align: center;
-            }
-            .ad-title {
-                font-size: 22px;
-                letter-spacing: 2px;
-            }
-            .ad-underline {
-                margin: 0 auto 20px auto;
-            }
-            .ad-description {
-                font-size: 12px;
-                line-height: 1.6;
-            }
-            .ad-buttons {
-                flex-direction: column;
-                width: 100%;
-                align-items: center;
-                gap: 10px;
-            }
-            .ad-btn {
-                width: 100%;
-                max-width: 250px;
-                padding: 12px 20px;
-                font-size: 11px;
-            }
-            .poster-ad-right {
-                min-height: 400px;
-                order: 3;
-            }
-            .player-spotify {
-                flex: 0 0 200px;
-                height: 200px;
-            }
-            .player-bottom-container {
-                flex: 1;
-                flex-direction: row;
-            }
-            .player-btn {
-                flex: 0 0 50%;
-                height: 100%;
-                padding: 12px;
-            }
-            .player-platform {
-                font-size: 10px;
-                letter-spacing: 1px;
-            }
-            .player-platform-logo {
-                width: 18px;
-                height: 18px;
-            }
-            .player-song {
-                font-size: 11px;
-            }
-        }
-
-        /* POSTER AD 响应式 - 375px */
-        @media (max-width: 375px) {
-            .poster-ad-container {
-                grid-template-columns: 1fr;
-                grid-template-rows: auto auto;
-            }
-            /* 第一行：海报(50%) + 广告栏(50%) */
-            .poster-ad-left {
-                padding: 0;
-                height: auto;
-                aspect-ratio: 2/3;
-                width: 50%;
-                float: left;
-            }
-            .poster-wrapper {
-                max-width: none;
-                width: 100%;
-                height: 100%;
-            }
-            .poster-ad-middle {
-                height: auto;
-                aspect-ratio: 2/3;
-                width: 50%;
-                margin-left: 50%;
-                min-height: 0;
-            }
-            .middle-top, .middle-bottom {
-                padding: clamp(5px, 1.5vw, 8px);
-            }
-            .ad-title {
-                font-size: clamp(9px, 2.5vw, 10px);
-                letter-spacing: 0.5px;
-                margin-bottom: 3px;
-            }
-            .ad-underline {
-                width: clamp(20px, 5vw, 30px);
-                height: 2px;
-                margin-bottom: 4px;
-            }
-            .ad-description {
-                font-size: clamp(6px, 1.5vw, 7px);
-                line-height: 1.2;
-                margin-bottom: 5px;
-            }
-            .ad-buttons {
-                gap: 3px;
-            }
-            .ad-btn {
-                padding: 3px 6px;
-                font-size: clamp(6px, 1.2vw, 7px);
-                letter-spacing: 0.5px;
-            }
-            /* 播放器 */
-            .poster-ad-right {
-                min-height: 200px;
-                height: 200px;
-                clear: both;
-                flex-direction: column;
-            }
-            .player-spotify {
-                flex: 0 0 50%;
-                height: 50%;
-                width: 100%;
-            }
-            .player-bottom-container {
-                flex: 0 0 50%;
-                height: 50%;
-                width: 100%;
-                flex-direction: row;
-            }
-            .player-btn {
-                flex: 0 0 50%;
-                height: 100%;
-                width: 50%;
-                padding: 5px;
-            }
-            .player-platform {
-                font-size: clamp(8px, 2vw, 9px);
-            }
-            .player-platform-logo {
-                width: 12px;
-                height: 12px;
-            }
-            .player-play-icon {
-                width: 24px;
-                height: 24px;
-            }
-            .player-play-icon svg {
-                width: 12px;
-                height: 12px;
+                width: clamp(14px, 3.5vw, 18px);
+                height: clamp(14px, 3.5vw, 18px);
             }
         }
 </style>
