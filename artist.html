@@ -788,7 +788,7 @@
 
     
         /* 移动端Hero布局修复 - 照片和文字分开（支持电脑竖屏） */
-        @media (max-aspect-ratio: 1/1), (max-width: 768px) and (orientation: portrait) {
+        @media (max-width: 768px) and (orientation: portrait), (min-width: 769px) and (max-aspect-ratio: 1/1) {
             .artist-hero {
                 min-height: auto !important;
                 height: auto !important;
@@ -1144,9 +1144,10 @@
                 if (artist.heroImage) {
                     const heroBg = document.getElementById('heroBg');
                     const heroBgImg = document.getElementById('heroBgImg');
-                    // 检测移动端竖屏或任何竖屏比例（高度>宽度）
-                    const isPortrait = window.matchMedia('(max-width: 768px) and (orientation: portrait)').matches 
-                        || window.matchMedia('(max-aspect-ratio: 1/1)').matches;
+                    // 移动端竖屏 或 电脑端竖屏（宽度>768且高度>宽度）
+                    const isMobilePortrait = window.matchMedia('(max-width: 768px) and (orientation: portrait)').matches;
+                    const isDesktopPortrait = window.matchMedia('(min-width: 769px) and (max-aspect-ratio: 1/1)').matches;
+                    const isPortrait = isMobilePortrait || isDesktopPortrait;
                     if (isPortrait && heroBgImg) {
                         heroBgImg.src = artist.heroImage;
                         heroBgImg.alt = artist.name;
