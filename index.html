@@ -1578,8 +1578,8 @@
         }
 
         .player-spotify {
-            flex: 0 0 60%;
-            height: 60%;
+            flex: 0 0 calc(60% + 100px);
+            height: calc(60% + 100px);
             background: #000;
         }
 
@@ -1590,9 +1590,9 @@
         }
 
         .player-bottom-container {
-            flex: 0 0 40%;
-            height: 40%;
-            min-height: 276px;
+            flex: 0 0 calc(40% - 100px);
+            height: calc(40% - 100px);
+            min-height: 176px;
             display: flex;
             flex-direction: column;
         }
