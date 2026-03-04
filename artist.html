@@ -597,19 +597,72 @@
         }
 
         /* 移动端 Hero 照片适配 - 确保显示全图 */
-        @media (max-width: 768px) and (orientation: portrait) {
-            .hero-bg {
-                background-size: contain;
-                background-position: center top;
-                background-repeat: no-repeat;
-                background-color: #000;
-            }
-            .artist-hero {
-                min-height: 100vh;
-                height: auto;
-                padding-top: 80px;
-            }
-        }
+       /* 移动端/竖屏适配 */
+@media (max-width: 768px) and (orientation: portrait) {
+    .artist-hero {
+        height: auto;
+        min-height: 100vh;
+        padding-top: 80px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+    .hero-bg {
+        background-size: contain;
+        background-position: center top;
+        background-repeat: no-repeat;
+        background-color: #000;
+        height: auto;
+        min-height: 60vh;
+        max-height: 75vh;
+        position: relative;
+    }
+    .hero-content {
+        position: relative;
+        margin-top: 20px;
+        padding: 20px;
+        z-index: 10;
+    }
+    .artist-name {
+        font-size: clamp(32px, 8vw, 56px);
+        letter-spacing: 3px;
+        margin-bottom: 15px;
+    }
+    .red-line {
+        width: 60px;
+        margin-bottom: 20px;
+    }
+    .social-links {
+        gap: 10px;
+    }
+    .social-links a {
+        width: 40px;
+        height: 40px;
+    }
+    .social-links a svg {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+/* 小屏手机适配 */
+@media (max-width: 480px) and (orientation: portrait) {
+    .hero-bg {
+        min-height: 55vh;
+        max-height: 70vh;
+    }
+    .artist-name {
+        font-size: clamp(28px, 10vw, 48px);
+    }
+}
+
+/* 超小屏手机适配 */
+@media (max-width: 375px) and (orientation: portrait) {
+    .hero-bg {
+        min-height: 50vh;
+        max-height: 65vh;
+    }
+}
 
         /* 平板/横屏保持 cover */
         @media (max-width: 768px) and (orientation: landscape) {
