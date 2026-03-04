@@ -2555,7 +2555,7 @@
             { name: "SKARFACE (FR)", image: "./assets/artists/SKARFACE.jpg", slug: "skarface" },
             { name: "THE GREED (TH)", image: "./assets/artists/TheGreed.jpg", slug: "thegreed" },
             { name: "THE GT BITCHES", image: "./assets/artists/TheGTBitches.jpg", slug: "thegtbitches" },
-            { name: "THE NONAME無名", image: "./assets/artists/TheNoname.jpg", slug: "thenoname" },
+            { name: "THE NONAME無名", image: "./assets/artists/TheNoname.jpg", slug: "thenoname", link: "./artist.html?name=thenoname" },
             { name: "THE SINO HEART", image: "./assets/artists/TheSinoHeart.jpg", slug: "thesinoheart" },
             { name: "THE STIRRERS", image: "./assets/artists/thestirrers.jpg", slug: "thestirrers" },
             { name: "NEW ARTIST COMING...", image: "./assets/artists/NewArtistComing.webp", slug: "#" }
@@ -2564,14 +2564,23 @@
         function renderArtists() {
             const grid = document.getElementById('artistsGrid');
             grid.innerHTML = artistsData.map(artist => {
-                const link = artist.slug === '#' ? '#' : './artist/' + artist.slug + '.html';
+                // 如果有link属性，使用link；否则使用旧的slug逻辑
+                const hasLink = artist.link && artist.link !== '#';
+                const link = hasLink ? artist.link : (artist.slug === '#' ? '#' : './artist/' + artist.slug + '.html');
+                const isClickable = link !== '#';
+
+                // 名字部分：如果有链接则包裹在a标签中，否则纯文字
+                const nameHtml = isClickable 
+                    ? `<a href="${link}" class="artist-name-link" style="text-decoration: none; color: inherit;">${artist.name}</a>`
+                    : artist.name;
+
                 return `
                 <div class="artist-card-wrapper">
                     <div class="artist-card">
                         <img loading="lazy" src="${artist.image}" alt="${artist.name}" onerror="this.style.display='none'">
                         <div class="artist-overlay"></div>
                     </div>
-                    <div class="artist-name-below">${artist.name}</div>
+                    <div class="artist-name-below">${nameHtml}</div>
                 </div>
                 `;
             }).join('');
