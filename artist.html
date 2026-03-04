@@ -373,36 +373,51 @@
             background: var(--xre-dark-red);
             border: 2px solid var(--xre-dark-red);
         }
+        .footer-gap {
+            height: 0;
+            display: none;
+            margin: 0;
+            padding: 0;
+        }
         .site-footer {
             background: #000;
             color: #c0c0c0;
+            position: relative;
+            z-index: 100;
+            border-top: none;
+            margin: 0;
+            padding: 0;
         }
         .footer-main {
-            padding: 60px 40px 50px;
+            padding: 50px 40px 40px;
+            position: relative;
             background: #000;
         }
         .footer-container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
             gap: 40px;
         }
-        .footer-contact-left, .footer-contact-right {
+        .footer-contact-left {
             flex: 1;
+            text-align: left;
             font-family: 'Courier New', monospace;
         }
-        .footer-contact-left { text-align: left; }
-        .footer-contact-right { text-align: right; }
         .contact-item {
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             color: #c0c0c0;
-            font-size: 14px;
+            font-size: 13px;
+            letter-spacing: 0.5px;
+            line-height: 1.5;
         }
         .contact-item a {
             color: #c0c0c0;
             text-decoration: none;
+            transition: all 0.3s;
+            font-weight: bold;
         }
         .contact-item a:hover {
             color: var(--xre-red);
@@ -412,87 +427,117 @@
             text-align: center;
         }
         .footer-logo {
-            font-size: clamp(36px, 6vw, 56px);
-            letter-spacing: 5px;
+            font-size: clamp(32px, 6vw, 48px);
+            font-weight: 400;
+            letter-spacing: 4px;
+            line-height: 1;
             text-transform: uppercase;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             animation: simpleGlow 3s ease-in-out infinite;
         }
+
         @keyframes simpleGlow {
-            0%, 100% { text-shadow: 0 0 10px rgba(139, 0, 0, 0.3); }
-            50% { text-shadow: 0 0 20px rgba(139, 0, 0, 0.6); }
+            0%, 100% { 
+                text-shadow: 0 0 10px rgba(139, 0, 0, 0.3);
+                opacity: 0.95;
+            }
+            50% { 
+                text-shadow: 0 0 20px rgba(139, 0, 0, 0.6), 0 0 30px rgba(139, 0, 0, 0.3);
+                opacity: 1;
+            }
         }
-        .footer-logo .xre { color: var(--xre-dark-red); }
-        .footer-logo .booking { color: #c0c0c0; }
-        .social-links-footer {
+        .footer-logo .xre {
+            color: var(--xre-dark-red);
+        }
+        .footer-logo .booking {
+            color: #c0c0c0;
+        }
+        .social-links {
             display: flex;
-            gap: 18px;
+            gap: 15px;
             justify-content: center;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
         .social-icon {
-            width: 48px;
-            height: 48px;
+            width: 44px;
+            height: 44px;
             border: 2px solid #888;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #888;
+            color: #c0c0c0;
             text-decoration: none;
             transition: all 0.3s;
             background: rgba(255,255,255,0.05);
         }
         .social-icon svg {
-            width: 24px;
-            height: 24px;
+            width: 22px;
+            height: 22px;
             fill: currentColor;
-            transition: all 0.3s;
         }
         .social-icon:hover {
             border-color: var(--xre-red);
             color: var(--xre-red);
             transform: translateY(-3px);
-        }
-        .social-icon:hover svg {
-            fill: var(--xre-red);
+            box-shadow: 0 5px 15px rgba(255,0,0,0.3);
         }
         .producer-section {
             text-align: center;
         }
         .producer-label {
-            font-size: 11px;
+            font-size: 10px;
             color: #888;
             text-transform: uppercase;
             letter-spacing: 3px;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             font-family: 'Courier New', monospace;
         }
         .producer-logo {
-            height: 40px;
+            height: 35px;
             width: auto;
             opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+        .producer-logo:hover {
+            opacity: 1;
+        }
+        .footer-contact-right {
+            flex: 1;
+            text-align: right;
+            font-family: 'Courier New', monospace;
         }
         .footer-bottom {
             background: #000;
-            padding: 25px 40px;
+            border-top: none;
+            padding: 20px 40px;
             display: flex;
             justify-content: center;
             align-items: center;
             flex-wrap: wrap;
             gap: 40px;
+            margin: 0;
+        }
+        .footer-spacer {
+            display: none;
         }
         .footer-legal {
             display: flex;
-            gap: 30px;
+            gap: 20px;
+            align-items: center;
+        }
+        .footer-legal {
+            display: flex;
+            gap: 25px;
             align-items: center;
         }
         .footer-legal a {
             color: #888;
             text-decoration: none;
-            font-size: 12px;
+            font-size: 11px;
             letter-spacing: 1px;
             text-transform: uppercase;
+            transition: all 0.3s;
             font-weight: bold;
         }
         .footer-legal a:hover {
@@ -500,9 +545,10 @@
         }
         .copyright {
             color: #777;
-            font-size: 12px;
+            font-size: 11px;
             letter-spacing: 1px;
             font-family: 'Courier New', monospace;
+            text-align: center;
         }
         .modal-overlay {
             display: none;
@@ -594,37 +640,72 @@
             .footer-container { flex-direction: column; text-align: center; }
             .footer-contact-left, .footer-contact-right { text-align: center; }
             .form-row { grid-template-columns: 1fr; }
+
+            /* 底部响应式 - 来自index.html */
+            .footer-bottom {
+                flex-direction: column;
+                gap: 10px;
+                padding: 15px;
+                margin: 0;
+            }
+            .footer-legal {
+                order: 1;
+                gap: 15px;
+            }
+            .copyright {
+                order: 2;
+            }
+            .footer-main { padding: 40px 30px 30px; }
+            .footer-container { flex-direction: column; gap: 30px; text-align: center; }
+            .footer-contact-left, .footer-contact-right { text-align: center; flex: 1; width: 100%; }
         }
 
         /* 移动端 Hero 照片适配 - 确保显示全图 */
-       /* 移动端/竖屏适配 */
+       /* 移动端/竖屏适配 - 完全使用index方案，去除所有黑边 */
 @media (max-width: 768px) and (orientation: portrait) {
     .artist-hero {
+        min-height: auto;
         height: auto;
-        min-height: 100vh;
         padding-top: 80px;
         display: flex;
         flex-direction: column;
-        justify-content: flex-start;
+        position: relative;
+        overflow: hidden;
+        background: #000;
     }
     .hero-bg {
-        background-size: contain;
-        background-position: center top;
-        background-repeat: no-repeat;
-        background-color: #000;
-        height: auto;
-        min-height: 60vh;
-        max-height: 75vh;
         position: relative;
+        width: 100%;
+        height: auto;
+        min-height: auto;
+        max-height: none;
+        background: none !important;
+        flex: none;
+    }
+    .hero-bg::after,
+    .hero-bg::before {
+        display: none !important;
+    }
+    /* 使用img标签显示图片，object-fit: contain保持比例 */
+    .hero-bg-img {
+        width: 100%;
+        height: auto;
+        display: block;
+        object-fit: contain;
+        object-position: center top;
+    }
+    .hero-vignette {
+        display: none !important;
     }
     .hero-content {
         position: relative;
-        margin-top: 20px;
-        padding: 20px;
+        padding: 30px 20px;
         z-index: 10;
+        background: #000;
+        margin-top: 0;
     }
     .artist-name {
-        font-size: clamp(32px, 8vw, 56px);
+        font-size: clamp(28px, 7vw, 48px);
         letter-spacing: 3px;
         margin-bottom: 15px;
     }
@@ -647,20 +728,18 @@
 
 /* 小屏手机适配 */
 @media (max-width: 480px) and (orientation: portrait) {
-    .hero-bg {
-        min-height: 55vh;
-        max-height: 70vh;
+    .hero-content {
+        padding: 25px 15px;
     }
     .artist-name {
-        font-size: clamp(28px, 10vw, 48px);
+        font-size: clamp(24px, 8vw, 40px);
     }
 }
 
 /* 超小屏手机适配 */
 @media (max-width: 375px) and (orientation: portrait) {
-    .hero-bg {
-        min-height: 50vh;
-        max-height: 65vh;
+    .hero-content {
+        padding: 20px 15px;
     }
 }
 
@@ -688,7 +767,9 @@
     </nav>
 
     <section class="artist-hero">
-        <div class="hero-bg" id="heroBg"></div>
+        <div class="hero-bg" id="heroBg">
+            <img src="" alt="" class="hero-bg-img" id="heroBgImg" style="display:none;">
+        </div>
         <div class="hero-vignette"></div>
         <div class="hero-content">
             <h1 class="artist-name" id="artistName">ARTIST NAME</h1>
@@ -815,7 +896,19 @@
                 document.title = artist.name + ' - XRE BOOKING';
 
                 if (artist.heroImage) {
-                    document.getElementById('heroBg').style.backgroundImage = 'url(' + artist.heroImage + ')';
+                    const heroBg = document.getElementById('heroBg');
+                    const heroBgImg = document.getElementById('heroBgImg');
+                    // 检测是否为移动端
+                    const isMobile = window.matchMedia('(max-width: 768px) and (orientation: portrait)').matches;
+                    if (isMobile && heroBgImg) {
+                        heroBgImg.src = artist.heroImage;
+                        heroBgImg.alt = artist.name;
+                        heroBgImg.style.display = 'block';
+                        heroBg.style.backgroundImage = 'none';
+                    } else {
+                        heroBg.style.backgroundImage = 'url(' + artist.heroImage + ')';
+                        if (heroBgImg) heroBgImg.style.display = 'none';
+                    }
                 }
 
                 document.getElementById('artistName').textContent = artist.name;
