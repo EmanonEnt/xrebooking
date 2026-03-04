@@ -787,8 +787,8 @@
         }
 
     
-        /* 移动端Hero布局修复 - 照片和文字分开 */
-        @media (max-width: 768px) and (orientation: portrait) {
+        /* 移动端Hero布局修复 - 照片和文字分开（支持电脑竖屏） */
+        @media (max-aspect-ratio: 1/1), (max-width: 768px) and (orientation: portrait) {
             .artist-hero {
                 min-height: auto !important;
                 height: auto !important;
