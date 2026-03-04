@@ -1501,40 +1501,43 @@
         .poster-ad-section {
             width: 100%;
             padding: 0;
-            background: linear-gradient(180deg, #1a0000 0%, #0a0000 100%);
+            background-image: url('images/xre-adbg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
             position: relative;
             border-top: 2px solid var(--xre-dark-red);
         }
 
         .poster-ad-container {
             width: 100%;
-            max-width: 1920px;
-            margin: 0 auto;
+            max-width: none;
+            margin: 0;
             display: grid;
-            grid-template-columns: 380px 1fr 380px;
+            grid-template-columns: 33.333% 33.333% 33.333%;
             gap: 0;
             padding: 0;
             position: relative;
             min-height: 100vh;
         }
 
-        /* 左侧海报 - 固定宽度 */
+        /* 左侧海报 - 满屏高度 */
         .poster-ad-left {
             position: relative;
             display: flex;
-            align-items: center;
+            align-items: stretch;
             justify-content: center;
             padding: 0;
             background: transparent;
             min-height: 100vh;
-            height: 100%;
+            height: 100vh;
+            overflow: hidden;
         }
 
         .poster-wrapper {
             position: relative;
             width: 100%;
             height: 100%;
-            max-width: 380px;
             overflow: hidden;
             border: none;
             box-shadow: none;
@@ -1555,7 +1558,8 @@
             flex-direction: column;
             justify-content: center;
             padding: 0;
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, 0.2);
+            min-height: 100vh;
         }
 
         .middle-top, .middle-bottom {
@@ -1563,7 +1567,7 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding: 60px 50px;
+            padding: 60px 40px;
             position: relative;
         }
 
@@ -1584,8 +1588,8 @@
 
         .ad-title {
             font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            font-size: clamp(28px, 3vw, 42px);
-            letter-spacing: 4px;
+            font-size: clamp(24px, 2.5vw, 36px);
+            letter-spacing: 3px;
             text-transform: uppercase;
             color: #fff;
             margin-bottom: 15px;
@@ -1604,7 +1608,7 @@
 
         .ad-description {
             font-family: 'Courier New', monospace;
-            font-size: 14px;
+            font-size: 13px;
             line-height: 1.8;
             color: rgba(255, 255, 255, 0.85);
             margin-bottom: 30px;
@@ -1679,7 +1683,7 @@
 
         .player-spotify {
             flex: 0 0 60%;
-            min-height: 60%;
+            height: 60%;
             background: #000;
         }
 
@@ -1691,6 +1695,7 @@
 
         .player-bottom-container {
             flex: 0 0 40%;
+            height: 40%;
             display: flex;
             flex-direction: column;
         }
@@ -1803,136 +1808,38 @@
             fill: #000;
             margin-left: 3px;
         }
-        .player-btn {
-            flex: 0 0 50%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 15px 20px;
-            text-decoration: none;
-            border: 2px solid rgba(139, 0, 0, 0.5);
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
 
-        .player-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-            transition: left 0.5s;
-        }
-
-        .player-btn:hover::before {
-            left: 100%;
-        }
-
-        .player-qq {
-            background: linear-gradient(135deg, rgba(49, 194, 124, 0.2) 0%, rgba(42, 168, 105, 0.2) 100%);
-            border-bottom: 1px solid rgba(139, 0, 0, 0.3);
-        }
-
-        .player-qq:hover {
-            border-color: #31c27c;
-            box-shadow: 0 0 20px rgba(49, 194, 124, 0.4);
-        }
-
-        .player-netease {
-            background: linear-gradient(135deg, rgba(198, 47, 47, 0.2) 0%, rgba(168, 42, 42, 0.2) 100%);
-            border-top: 1px solid rgba(139, 0, 0, 0.3);
-        }
-
-        .player-netease:hover {
-            border-color: #c62f2f;
-            box-shadow: 0 0 20px rgba(198, 47, 47, 0.4);
-        }
-
-        .player-btn-content {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            z-index: 2;
-        }
-
-        .player-platform {
-            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            font-size: 14px;
-            letter-spacing: 2px;
-            color: #fff;
-            text-transform: uppercase;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .player-platform-logo {
-            width: 20px;
-            height: 20px;
-            opacity: 0.6;
-        }
-
-        .player-song {
-            font-family: 'Courier New', monospace;
-            font-size: 12px;
-            color: rgba(255, 255, 255, 0.9);
-            font-weight: bold;
-        }
-
-        .player-artist {
-            font-family: 'Courier New', monospace;
-            font-size: 10px;
-            color: rgba(255, 255, 255, 0.6);
-        }
-
-        .player-play-icon {
-            width: 40px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            z-index: 2;
-        }
-
-        .player-btn:hover .player-play-icon {
-            transform: scale(1.1);
-            background: #fff;
-        }
-
-        .player-play-icon svg {
-            width: 20px;
-            height: 20px;
-            fill: #000;
-            margin-left: 2px;
-        }
         /* POSTER AD 响应式 - 1024px */
         @media (max-width: 1024px) {
             .poster-ad-container {
-                grid-template-columns: 300px 1fr;
+                grid-template-columns: 40% 60%;
+                grid-template-rows: auto auto;
             }
             .poster-ad-left {
-                min-height: auto;
-                padding: 0;
+                min-height: 100vh;
+                height: 100vh;
+                grid-row: 1 / 2;
             }
             .poster-wrapper {
-                max-width: 300px;
+                width: 100%;
                 height: 100%;
+            }
+            .poster-ad-middle {
+                min-height: 100vh;
+                height: 100vh;
+                grid-row: 1 / 2;
             }
             .middle-top, .middle-bottom {
                 padding: 40px 30px;
             }
             .ad-title {
-                font-size: 24px;
+                font-size: 22px;
             }
             .poster-ad-right {
                 grid-column: 1 / -1;
-                min-height: 350px;
+                grid-row: 2 / 3;
+                min-height: 300px;
+                height: 300px;
                 flex-direction: row;
             }
             .player-spotify {
@@ -1957,26 +1864,30 @@
                 grid-template-columns: 1fr;
                 grid-template-rows: auto auto auto;
             }
+            /* 竖屏海报拉伸保持完全显示 */
             .poster-ad-left {
-                padding: 40px 20px;
+                padding: 0;
                 min-height: auto;
                 height: auto;
+                max-height: 80vh;
                 order: 1;
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                overflow: hidden;
             }
             .poster-wrapper {
                 width: 100%;
-                max-width: 320px;
+                max-width: none;
                 height: auto;
-                aspect-ratio: 3/4;
-                margin: 0 auto;
+                aspect-ratio: 2/3;
+                margin: 0;
             }
             .poster-ad-image {
                 width: 100%;
                 height: 100%;
-                object-fit: cover;
+                object-fit: contain;
+                object-position: center;
             }
             .poster-ad-middle {
                 min-height: auto;
@@ -2010,21 +1921,23 @@
                 justify-content: center;
             }
             .poster-ad-right {
-                min-height: 500px;
+                min-height: 400px;
+                height: 400px;
                 order: 3;
-                flex-direction: column;
+                flex-direction: row;
             }
             .player-spotify {
-                flex: 0 0 250px;
-                height: 250px;
+                flex: 0 0 60%;
+                height: 100%;
             }
             .player-bottom-container {
-                flex: 1;
-                flex-direction: row;
+                flex: 0 0 40%;
+                flex-direction: column;
+                height: 100%;
             }
             .player-btn {
                 flex: 0 0 50%;
-                height: 100%;
+                height: 50%;
                 padding: 15px;
             }
             .player-platform {
@@ -2124,14 +2037,23 @@
         /* POSTER AD 响应式 - 375px */
         @media (max-width: 375px) {
             .poster-ad-left {
-                padding: 15px 10px;
+                padding: 0;
+                max-height: 65vh;
             }
             .poster-wrapper {
-                max-width: 260px;
+                max-width: none;
+                width: 100%;
+            }
+            .ad-title {
+                font-size: 20px;
             }
             .player-platform {
-                font-size: 11px;
-                letter-spacing: 1px;
+                font-size: 9px;
+                letter-spacing: 0.5px;
+            }
+            .poster-ad-right {
+                min-height: 300px;
+                height: 300px;
             }
         }
 </style>
