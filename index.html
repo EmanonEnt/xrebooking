@@ -1784,24 +1784,48 @@
                 width: 100% !important;
                 display: flex !important;
                 flex-direction: column !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                gap: 0 !important;
+                line-height: 0 !important;
             }
             .player-spotify {
                 width: 100% !important;
-                height: 352px !important;
-                min-height: 250px !important;
+                height: 276px !important;
+                min-height: 276px !important;
+                max-height: 276px !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                border: none !important;
+                display: block !important;
+            }
+            .player-spotify iframe {
+                width: 100% !important;
+                height: 276px !important;
+                display: block !important;
+                border: none !important;
+                margin: 0 !important;
+                padding: 0 !important;
             }
             /* 第三排：QQ音乐 + 网易云 */
             .player-bottom-container {
                 width: 100% !important;
                 display: flex !important;
                 flex-direction: row !important;
-                height: 352px !important;
+                height: 276px !important;
+                min-height: 276px !important;
+                max-height: 276px !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                border: none !important;
             }
             .player-btn {
                 flex: 0 0 50% !important;
                 width: 50% !important;
                 height: 100% !important;
                 padding: clamp(10px, 3vw, 25px) !important;
+                margin: 0 !important;
+                box-sizing: border-box !important;
             }
             .player-qq {
                 border-top: none !important;
@@ -1828,7 +1852,7 @@
                 font-size: clamp(7px, 1.8vw, 9px) !important;
             }
             .player-spotify, .player-bottom-container {
-                height: 300px !important;
+                height: 276px !important;
             }
         }
 
@@ -1854,7 +1878,7 @@
                 font-size: clamp(6px, 1.5vw, 8px) !important;
             }
             .player-spotify, .player-bottom-container {
-                height: 250px !important;
+                height: 276px !important;
             }
             .player-platform-logo {
                 width: 16px !important;
@@ -1871,7 +1895,7 @@
             .ad-title { font-size: 9px !important; }
             .ad-description { font-size: 6px !important; }
             .ad-btn { padding: 2px 4px !important; font-size: 5px !important; }
-            .player-spotify, .player-bottom-container { height: 200px !important; }
+            .player-spotify, .player-bottom-container { height: 276px !important; }
         }
 
 
