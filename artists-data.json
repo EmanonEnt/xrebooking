@@ -23,5 +23,29 @@
       "baidu": ""
     },
     "tourDates": []
+  },
+  "onikali": {
+    "name": "ÖNIKA LI",
+    "heroImage": "./assets/artists/OnikaLi.jpg",
+    "bio": "ÖNIKA LI (ÖNIKΛ) is an independent artist whose creative approach centers on reinterpretation and sonic transformation.\nRather than replicating existing styles, they deconstruct familiar energy and rebuild it through electronic textures, emotional contrast, and futuristic sound design.\nMoving across reggae influences, Synth Pop, Synthwave, and other evolving electronic territories, ÖNIKA LI reshapes raw rock and punk attitudes into cold, sharp, and emotionally charged soundscapes.\nTheir work goes beyond tribute—each release acts as a reimagining, translating spirit and intensity into a new auditory language for contemporary and future-facing listeners.",
+    "agent": {
+      "name": "",
+      "email": "XREbooking@Hotmail.com"
+    },
+    "social": {
+      "facebook": "https://www.facebook.com/onikali011",
+      "instagram": "https://www.instagram.com/onikali011/",
+      "spotify": "https://open.spotify.com/artist/4lhX2SBqPFOcULwnt5VI9A",
+      "youtube": "https://www.youtube.com/@Onikali011",
+      "twitter": "https://x.com/onikali011",
+      "tiktok": "https://www.tiktok.com/@onikaliofficial",
+      "website": "http://onikali.com"
+    },
+    "videoUrl": "https://www.youtube.com/watch?v=kMP8DaMt9kc",
+    "mediaKit": {
+      "googleDrive": "",
+      "baidu": ""
+    },
+    "tourDates": []
   }
 }
