@@ -11,6 +11,9 @@
     <link rel="shortcut icon" type="image/png" href="./images/webtop.png">
     <link rel="apple-touch-icon" href="./images/webtop.png">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preload" as="image" href="./images/p-p-3.jpg" fetchpriority="high">
+    <link rel="preload" as="image" href="images/webtop.png" fetchpriority="high">
+    <link rel="preload" as="image" href="images/xrelogoL.png" fetchpriority="high">
     <style>
         :root {
             --xre-red: #ff0000;
@@ -18,6 +21,39 @@
             --mad-silver: #e8e8e8;
             --mad-light: #f5f5f5;
             --black: #050505;
+        }
+
+        /* 性能优化 */
+        .hero-bg {
+            will-change: transform;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+        }
+        .artist-card,
+        .branded-tour-card {
+            will-change: transform;
+            transform: translateZ(0);
+            contain: layout style paint;
+        }
+        .smoke-container {
+            will-change: opacity;
+            contain: layout style;
+        }
+        /* 防止iOS滚动问题 */
+        html {
+            -webkit-overflow-scrolling: touch;
+        }
+        body {
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior-y: none;
+        }
+        /* 优化滚动性能 */
+        .content-wrapper {
+            contain: layout style paint;
+        }
+        .artists-section,
+        .branded-tours-section {
+            contain: layout style paint;
         }
 
         .loading {
@@ -153,53 +189,23 @@
             height: 100%;
             background-image: url('./images/p-p-3.jpg');
             background-size: cover;
-            background-position: center top;
+            background-position: center center;
             background-repeat: no-repeat;
             background-attachment: fixed;
             filter: brightness(0.8) saturate(1.2);
             z-index: 0;
+            will-change: transform;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            /* 防止图片加载前的闪烁 */
+            background-color: #050505;
         }
-
-        /* 竖版海报适配 - 移动端显示中间部分 */
-        @media (max-aspect-ratio: 3/4) {
-            .hero-bg {
-                background-size: cover;
-                background-position: center 20%;
-            }
+        .hero-bg.loaded {
+            animation: fadeInBg 0.5s ease;
         }
-
-        @media (max-width: 768px) {
-            .hero-bg {
-                background-attachment: scroll;
-                background-position: center top;
-            }
-        }
-
-        /* 超小屏幕竖版海报优化 */
-        @media (max-width: 480px) {
-            .hero-bg {
-                background-size: cover;
-                background-position: center 10%;
-            }
-            .hero-title {
-                font-size: clamp(40px, 12vw, 60px);
-                letter-spacing: 3px;
-            }
-            .hero-subtitle {
-                font-size: clamp(10px, 2.8vw, 12px);
-                letter-spacing: 1px;
-            }
-        }
-
-        /* 横屏手机适配 */
-        @media (max-height: 500px) and (orientation: landscape) {
-            .hero-bg {
-                background-size: cover;
-                background-position: center 30%;
-            }
-            .hero-content {
-                margin-top: 80px;
-            }
+        @keyframes fadeInBg {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
         .smoke-container {
             position: absolute;
@@ -331,15 +337,11 @@
             position: relative;
             width: 100%;
             height: 0;
-            padding-bottom: 48% !important; /* 保持750*360比例 */
+            padding-bottom: 48% !important;
             overflow: hidden;
             cursor: default;
             transition: all 0.4s;
             border: 2px solid transparent;
-        }
-        /* 强制保持比例，防止被其他样式覆盖 */
-        .artist-card[style] {
-            padding-bottom: 48% !important;
         }
         .artist-card img {
             position: absolute;
@@ -405,16 +407,8 @@
             display: inline-block;
             font-weight: normal;
         }
-        .artist-name-below:hover {
-            color: var(--xre-red);
-            font-weight: bold;
-            text-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
-        }
-        .artist-name-below .artist-name-link:hover {
-            color: var(--xre-red);
-            font-weight: bold;
-            text-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
-        }
+        .artist-name-below:hover,
+        .artist-name-below .artist-name-link:hover,
         .artist-name-below .artist-name-text:hover {
             color: var(--xre-red);
             font-weight: bold;
@@ -566,19 +560,13 @@
             gap: 40px;
             margin: 0;
         }
-        .footer-spacer {
-            display: none;
-        }
+        
         .footer-legal {
             display: flex;
             gap: 20px;
             align-items: center;
         }
-        .footer-legal {
-            display: flex;
-            gap: 25px;
-            align-items: center;
-        }
+        
         .footer-legal a {
             color: #888;
             text-decoration: none;
@@ -1299,26 +1287,15 @@
             }
             .footer-legal {
                 order: 1;
-                gap: 15px;
-            }
-            .copyright {
-                order: 2;
-            }
-            .footer-legal {
-                order: 1;
                 justify-content: center;
                 gap: 15px;
             }
             .copyright {
                 order: 2;
             }
-            .footer-spacer {
-                display: none;
-            }
+            
             .artist-card { aspect-ratio: 750/360 !important; overflow: hidden; }
             .artist-card img { width: 100% !important; height: 100% !important; object-fit: cover !important; }
-            .artist-card:hover img { transform: none !important; filter: brightness(1.1) !important; }
-            .artist-card:hover { transform: none !important; }
             nav { padding: 0 20px; height: 65px; }
             .logo-img { height: 35px; max-width: 160px; }
             .nav-links a { font-size: 11px; letter-spacing: 2px; }
@@ -1389,15 +1366,9 @@
             .copyright {
                 order: 2;
             }
-            .footer-spacer {
-                display: none;
-            }
+            
             .artist-card { aspect-ratio: 750/360 !important; overflow: hidden; }
             .artist-card img { width: 100% !important; height: 100% !important; object-fit: cover !important; }
-            .artist-card:hover img { transform: none !important; }
-            .artist-card:hover { transform: none !important; }
-            .artist-card:hover img { transform: none !important; filter: brightness(1.1) !important; }
-            .artist-card:hover { transform: none !important; }
             nav { padding: 0 15px; height: 60px; }
             .logo-img { height: 32px; max-width: 140px; }
             .nav-links { gap: 12px; }
@@ -1997,41 +1968,6 @@
             }
         }
 
-            /* 第四排：QQ音乐 + 网易云并排（各50%，高度276px） */
-            .player-bottom-container {
-                width: 100% !important;
-                height: 276px !important;
-                min-height: 276px !important;
-                max-height: 276px !important;
-                display: flex !important;
-                flex-direction: row !important;
-                margin: 0 !important;
-                padding: 0 !important;
-                line-height: 0 !important;
-                font-size: 0 !important;
-            }
-            .player-btn {
-                width: 50% !important;
-                height: 276px !important;
-                min-height: 276px !important;
-                max-height: 276px !important;
-                display: flex !important;
-                align-items: center !important;
-                justify-content: space-between !important;
-                padding: 20px !important;
-                margin: 0 !important;
-                box-sizing: border-box !important;
-                flex: none !important;
-                border: 2px solid rgba(139, 0, 0, 0.5) !important;
-                border-top: none !important;
-                line-height: normal !important;
-                font-size: initial !important;
-            }
-            .player-netease {
-                border-left: 1px solid rgba(139, 0, 0, 0.3) !important;
-            }
-        }
-
         /* POSTER AD 响应式 - 小屏手机 (480px及以下) */
         @media (max-width: 480px) {
             .middle-top, .middle-bottom {
@@ -2052,8 +1988,7 @@
                 height: 552px !important;
                 min-height: 552px !important;
                 max-height: 552px !important;
-                display: flex !important;
-                flex-direction: row !important;
+                display: block !important;
                 margin: 0 !important;
                 padding: 0 !important;
             }
@@ -2069,14 +2004,9 @@
             }
             .player-btn {
                 width: 50% !important;
-                width: 100% !important;
                 height: 276px !important;
                 min-height: 276px !important;
                 max-height: 276px !important;
-                display: flex !important;
-                flex-direction: row !important;
-                margin: 0 !important;
-                padding: 0 !important;
                 display: flex !important;
                 align-items: center !important;
                 justify-content: space-between !important;
@@ -2111,8 +2041,7 @@
                 height: 552px !important;
                 min-height: 552px !important;
                 max-height: 552px !important;
-                display: flex !important;
-                flex-direction: row !important;
+                display: block !important;
                 margin: 0 !important;
                 padding: 0 !important;
             }
@@ -2128,14 +2057,9 @@
             }
             .player-btn {
                 width: 50% !important;
-                width: 100% !important;
                 height: 276px !important;
                 min-height: 276px !important;
                 max-height: 276px !important;
-                display: flex !important;
-                flex-direction: row !important;
-                margin: 0 !important;
-                padding: 0 !important;
                 display: flex !important;
                 align-items: center !important;
                 justify-content: space-between !important;
@@ -2150,12 +2074,52 @@
             }
         }
 
-
         
 </style>
 
     <!-- Service Worker 注册 -->
     <script>
+        // 防止滚动跳转修复
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+        }
+
+        // 保存滚动位置
+        let scrollPos = 0;
+        
+        // 优化滚动性能
+        let ticking = false;
+        let lastScrollY = 0;
+
+        function updateOnScroll() {
+            const currentScrollY = window.pageYOffset;
+
+            // 只在滚动位置变化时处理
+            if (currentScrollY !== lastScrollY) {
+                lastScrollY = currentScrollY;
+
+                // 保存滚动位置
+                sessionStorage.setItem('scrollPos', currentScrollY);
+            }
+
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', function() {
+            if (!ticking) {
+                window.requestAnimationFrame(updateOnScroll);
+                ticking = true;
+            }
+        }, { passive: true });
+
+        // 恢复滚动位置
+        window.addEventListener('load', function() {
+            const savedPos = sessionStorage.getItem('scrollPos');
+            if (savedPos) {
+                window.scrollTo(0, parseInt(savedPos));
+                sessionStorage.removeItem('scrollPos');
+            }
+        });
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('./sw.js')
@@ -2172,7 +2136,7 @@
 
 <body>
     <div class="loading" id="loading">
-        <img src="images/xrelogoL.png" alt="XRE BOOKING" style="height: 60px; animation: logoBreathe 2s ease-in-out infinite;" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'color: var(--xre-red); font-size: 24px; letter-spacing: 4px;\'>XRE BOOKING</span>';">
+        <img src="images/xrelogoL.png" alt="XRE BOOKING" style="height: 60px; animation: logoBreathe 2s ease-in-out infinite;">
     </div>
 
     
@@ -2190,8 +2154,6 @@
     <!-- HERO区域 -->
     <section class="hero">
         <div class="hero-bg"></div>
-        <!-- 竖版海报备用显示 -->
-        <div class="hero-bg-mobile"></div>
         <div class="smoke-container">
             <div class="smoke"></div>
             <div class="smoke"></div>
@@ -2338,7 +2300,6 @@
                 </div>
             </div>
         </section>
-
 
         <!-- 间隙区域 -->
         <div class="footer-gap"></div>
@@ -2590,8 +2551,99 @@
             renderArtists();
             setTimeout(loadBrandedTours, 500);
 
+        // 检测hero背景图加载
+        const heroBg = document.querySelector('.hero-bg');
+        if (heroBg) {
+            const bgImg = new Image();
+            bgImg.onload = function() {
+                heroBg.classList.add('loaded');
+            };
+            bgImg.src = './images/p-p-3.jpg';
+        }
+
+        // 预加载artist图片
+        const artistImages = [
+            "./assets/artists/ACIDEZ.jpg",
+            "./assets/artists/baopigou.jpg",
+            "./assets/artists/bigd.jpg",
+            "./assets/artists/BrainFailure.jpg",
+            "./assets/artists/Massachrist.jpg",
+            "./assets/artists/NonServium.jpg",
+            "./assets/artists/OnikaLi.jpg",
+            "./assets/artists/yshc.jpg",
+            "./assets/artists/SKARFACE.jpg",
+            "./assets/artists/TheGreed.jpg",
+            "./assets/artists/TheGTBitches.jpg",
+            "./assets/artists/TheNoname.jpg",
+            "./assets/artists/TheSinoHeart.jpg",
+            "./assets/artists/thestirrers.jpg",
+            "./assets/artists/NewArtistComing.webp"
+        ];
+
+        // 使用requestIdleCallback在空闲时预加载
+        if ('requestIdleCallback' in window) {
+            requestIdleCallback(() => {
+                artistImages.forEach(src => {
+                    const img = new Image();
+                    img.loading = 'lazy';
+                    img.src = src;
+                });
+            }, { timeout: 2000 });
+        }
+
+        // 优化懒加载 - 使用Intersection Observer
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        if (img.dataset.src) {
+                            img.src = img.dataset.src;
+                            img.removeAttribute('data-src');
+                        }
+                        observer.unobserve(img);
+                    }
+                });
+            }, {
+                rootMargin: '50px 0px',
+                threshold: 0.01
+            });
+
+            // 观察所有懒加载图片
+            document.querySelectorAll('img[loading="lazy"]').forEach(img => {
+                imageObserver.observe(img);
+            });
+        }
+
             // 绑定键盘事件
             document.addEventListener('keydown', handleKeydown);
+
+        // iOS Safari滚动修复
+        let startY = 0;
+        let startX = 0;
+
+        document.addEventListener('touchstart', function(e) {
+            startY = e.touches[0].pageY;
+            startX = e.touches[0].pageX;
+        }, { passive: true });
+
+        document.addEventListener('touchmove', function(e) {
+            const y = e.touches[0].pageY;
+            const x = e.touches[0].pageX;
+            const scrollTop = window.pageYOffset;
+            const scrollHeight = document.documentElement.scrollHeight;
+            const clientHeight = window.innerHeight;
+
+            // 防止下拉刷新导致的跳转
+            if (scrollTop <= 0 && y > startY) {
+                e.preventDefault();
+            }
+            // 防止上拉到底导致的跳转
+            if (scrollTop + clientHeight >= scrollHeight && y < startY) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+
         });
 
         function handleKeydown(e) {
@@ -2631,15 +2683,15 @@
                 // 只有明确设置了link的艺人才能点击
                 const hasLink = artist.link && artist.link !== '#' && artist.link !== '';
 
-                // 名字部分：如果有链接则包裹在a标签中，否则纯文字但保持hover效果
+                // 名字部分：有链接用<a>，无链接用<span>，但都保持hover效果
                 const nameHtml = hasLink 
-                    ? `<a href="${artist.link}" class="artist-name-link" style="text-decoration: none; color: inherit; cursor: pointer;">${artist.name}</a>`
-                    : `<span class="artist-name-text" style="cursor: default;">${artist.name}</span>`;
+                    ? `<a href="${artist.link}" class="artist-name-link" style="text-decoration: none; color: inherit;">${artist.name}</a>`
+                    : `<span class="artist-name-text">${artist.name}</span>`;
 
                 return `
                 <div class="artist-card-wrapper">
                     <div class="artist-card">
-                        <img loading="lazy" src="${artist.image}" alt="${artist.name}" onerror="this.style.display='none'">
+                        <img loading="lazy" decoding="async" src="${artist.image}" alt="${artist.name}" onerror="if(this.src && this.src!==''){this.style.display='none';}else{this.removeAttribute('src');}">
                         <div class="artist-overlay"></div>
                     </div>
                     <div class="artist-name-below">${nameHtml}</div>
@@ -2653,7 +2705,14 @@
             const modal = document.getElementById('bookingModal');
             if (modal) {
                 modal.classList.add('active');
-                document.body.style.overflow = 'hidden';
+                
+            // 保存滚动位置
+            const scrollY = window.pageYOffset;
+            document.body.dataset.scrollY = scrollY;
+            document.body.style.position = 'fixed';
+            document.body.style.top = `-${scrollY}px`;
+            document.body.style.width = '100%';
+            document.body.style.overflow = 'hidden';
             }
         }
 
@@ -2662,6 +2721,14 @@
             if (modal) {
                 modal.classList.remove('active');
                 document.body.style.overflow = 'auto';
+
+            // 恢复滚动位置
+            const scrollY = document.body.dataset.scrollY || 0;
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.width = '';
+            window.scrollTo(0, parseInt(scrollY));
+
             }
         }
 
@@ -2720,6 +2787,13 @@
             // 显示modal
             modal.classList.add('active');
             isShareModalOpen = true;
+            
+            // 保存滚动位置
+            const scrollY = window.pageYOffset;
+            document.body.dataset.scrollY = scrollY;
+            document.body.style.position = 'fixed';
+            document.body.style.top = `-${scrollY}px`;
+            document.body.style.width = '100%';
             document.body.style.overflow = 'hidden';
         }
 
@@ -2730,6 +2804,14 @@
                 isShareModalOpen = false;
                 if (!isWechatModalOpen) {
                     document.body.style.overflow = 'auto';
+
+            // 恢复滚动位置
+            const scrollY = document.body.dataset.scrollY || 0;
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.width = '';
+            window.scrollTo(0, parseInt(scrollY));
+
                 }
             }
         }
@@ -2818,6 +2900,14 @@
                 qrModal.classList.remove('active');
                 isWechatModalOpen = false;
                 document.body.style.overflow = 'auto';
+
+            // 恢复滚动位置
+            const scrollY = document.body.dataset.scrollY || 0;
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.width = '';
+            window.scrollTo(0, parseInt(scrollY));
+
             }
         }
 
@@ -3045,7 +3135,7 @@
                             <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
                         </svg>
                     </button>
-                    <img src="${posterUrl}" alt="${escapeHtml(title)}" class="branded-tour-poster" onerror="this.style.display='none'">
+                    <img src="${posterUrl}" alt="${escapeHtml(title)}" class="branded-tour-poster" loading="lazy" decoding="async" onerror="if(this.src && this.src!==''){this.style.display='none';}else{this.removeAttribute('src');}">
                     <div class="branded-tour-status">ON TOUR</div>
                     <div class="branded-tour-content">
                         <h3 class="branded-tour-name">${titleHtml}</h3>
