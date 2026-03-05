@@ -151,13 +151,55 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('https://livegigsasia.com/image/p-p-3.png');
+            background-image: url('./images/p-p-3.jpg');
             background-size: cover;
-            background-position: center center;
+            background-position: center top;
             background-repeat: no-repeat;
             background-attachment: fixed;
             filter: brightness(0.8) saturate(1.2);
             z-index: 0;
+        }
+
+        /* 竖版海报适配 - 移动端显示中间部分 */
+        @media (max-aspect-ratio: 3/4) {
+            .hero-bg {
+                background-size: cover;
+                background-position: center 20%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-bg {
+                background-attachment: scroll;
+                background-position: center top;
+            }
+        }
+
+        /* 超小屏幕竖版海报优化 */
+        @media (max-width: 480px) {
+            .hero-bg {
+                background-size: cover;
+                background-position: center 10%;
+            }
+            .hero-title {
+                font-size: clamp(40px, 12vw, 60px);
+                letter-spacing: 3px;
+            }
+            .hero-subtitle {
+                font-size: clamp(10px, 2.8vw, 12px);
+                letter-spacing: 1px;
+            }
+        }
+
+        /* 横屏手机适配 */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .hero-bg {
+                background-size: cover;
+                background-position: center 30%;
+            }
+            .hero-content {
+                margin-top: 80px;
+            }
         }
         .smoke-container {
             position: absolute;
@@ -289,11 +331,15 @@
             position: relative;
             width: 100%;
             height: 0;
-            padding-bottom: 48% !important;
+            padding-bottom: 48% !important; /* 保持750*360比例 */
             overflow: hidden;
             cursor: default;
             transition: all 0.4s;
             border: 2px solid transparent;
+        }
+        /* 强制保持比例，防止被其他样式覆盖 */
+        .artist-card[style] {
+            padding-bottom: 48% !important;
         }
         .artist-card img {
             position: absolute;
@@ -360,6 +406,16 @@
             font-weight: normal;
         }
         .artist-name-below:hover {
+            color: var(--xre-red);
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
+        }
+        .artist-name-below .artist-name-link:hover {
+            color: var(--xre-red);
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
+        }
+        .artist-name-below .artist-name-text:hover {
             color: var(--xre-red);
             font-weight: bold;
             text-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
@@ -2116,7 +2172,7 @@
 
 <body>
     <div class="loading" id="loading">
-        <img src="images/xrelogoL.png" alt="XRE BOOKING" style="height: 60px; animation: logoBreathe 2s ease-in-out infinite;">
+        <img src="images/xrelogoL.png" alt="XRE BOOKING" style="height: 60px; animation: logoBreathe 2s ease-in-out infinite;" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'color: var(--xre-red); font-size: 24px; letter-spacing: 4px;\'>XRE BOOKING</span>';">
     </div>
 
     
@@ -2134,6 +2190,8 @@
     <!-- HERO区域 -->
     <section class="hero">
         <div class="hero-bg"></div>
+        <!-- 竖版海报备用显示 -->
+        <div class="hero-bg-mobile"></div>
         <div class="smoke-container">
             <div class="smoke"></div>
             <div class="smoke"></div>
@@ -2570,15 +2628,13 @@
         function renderArtists() {
             const grid = document.getElementById('artistsGrid');
             grid.innerHTML = artistsData.map(artist => {
-                // 如果有link属性，使用link；否则使用旧的slug逻辑
-                const hasLink = artist.link && artist.link !== '#';
-                const link = hasLink ? artist.link : (artist.slug === '#' ? '#' : './artist/' + artist.slug + '.html');
-                const isClickable = link !== '#';
+                // 只有明确设置了link的艺人才能点击
+                const hasLink = artist.link && artist.link !== '#' && artist.link !== '';
 
-                // 名字部分：如果有链接则包裹在a标签中，否则纯文字
-                const nameHtml = isClickable 
-                    ? `<a href="${link}" class="artist-name-link" style="text-decoration: none; color: inherit;">${artist.name}</a>`
-                    : artist.name;
+                // 名字部分：如果有链接则包裹在a标签中，否则纯文字但保持hover效果
+                const nameHtml = hasLink 
+                    ? `<a href="${artist.link}" class="artist-name-link" style="text-decoration: none; color: inherit; cursor: pointer;">${artist.name}</a>`
+                    : `<span class="artist-name-text" style="cursor: default;">${artist.name}</span>`;
 
                 return `
                 <div class="artist-card-wrapper">
