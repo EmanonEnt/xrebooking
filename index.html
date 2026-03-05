@@ -11,6 +11,9 @@
     <link rel="shortcut icon" type="image/png" href="./images/webtop.png">
     <link rel="apple-touch-icon" href="./images/webtop.png">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preload" as="image" href="https://livegigsasia.com/image/p-p-3.png" fetchpriority="high">
+    <link rel="preload" as="image" href="images/webtop.png" fetchpriority="high">
+    <link rel="preload" as="image" href="images/xrelogoL.png" fetchpriority="high">
     <style>
         :root {
             --xre-red: #ff0000;
@@ -18,6 +21,39 @@
             --mad-silver: #e8e8e8;
             --mad-light: #f5f5f5;
             --black: #050505;
+        }
+
+        /* 性能优化 */
+        .hero-bg {
+            will-change: transform;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+        }
+        .artist-card,
+        .branded-tour-card {
+            will-change: transform;
+            transform: translateZ(0);
+            contain: layout style paint;
+        }
+        .smoke-container {
+            will-change: opacity;
+            contain: layout style;
+        }
+        /* 防止iOS滚动问题 */
+        html {
+            -webkit-overflow-scrolling: touch;
+        }
+        body {
+            -webkit-overflow-scrolling: touch;
+            overscroll-behavior-y: none;
+        }
+        /* 优化滚动性能 */
+        .content-wrapper {
+            contain: layout style paint;
+        }
+        .artists-section,
+        .branded-tours-section {
+            contain: layout style paint;
         }
 
         .loading {
@@ -158,6 +194,18 @@
             background-attachment: fixed;
             filter: brightness(0.8) saturate(1.2);
             z-index: 0;
+            will-change: transform;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            /* 防止图片加载前的闪烁 */
+            background-color: #050505;
+        }
+        .hero-bg.loaded {
+            animation: fadeInBg 0.5s ease;
+        }
+        @keyframes fadeInBg {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
         .smoke-container {
             position: absolute;
@@ -2094,6 +2142,48 @@
 
     <!-- Service Worker 注册 -->
     <script>
+        // 防止滚动跳转修复
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+        }
+
+        // 保存滚动位置
+        let scrollPos = 0;
+        
+        // 优化滚动性能
+        let ticking = false;
+        let lastScrollY = 0;
+
+        function updateOnScroll() {
+            const currentScrollY = window.pageYOffset;
+
+            // 只在滚动位置变化时处理
+            if (currentScrollY !== lastScrollY) {
+                lastScrollY = currentScrollY;
+
+                // 保存滚动位置
+                sessionStorage.setItem('scrollPos', currentScrollY);
+            }
+
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', function() {
+            if (!ticking) {
+                window.requestAnimationFrame(updateOnScroll);
+                ticking = true;
+            }
+        }, { passive: true });
+
+
+        // 恢复滚动位置
+        window.addEventListener('load', function() {
+            const savedPos = sessionStorage.getItem('scrollPos');
+            if (savedPos) {
+                window.scrollTo(0, parseInt(savedPos));
+                sessionStorage.removeItem('scrollPos');
+            }
+        });
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('./sw.js')
@@ -2526,8 +2616,101 @@
             renderArtists();
             setTimeout(loadBrandedTours, 500);
 
+        // 检测hero背景图加载
+        const heroBg = document.querySelector('.hero-bg');
+        if (heroBg) {
+            const bgImg = new Image();
+            bgImg.onload = function() {
+                heroBg.classList.add('loaded');
+            };
+            bgImg.src = 'https://livegigsasia.com/image/p-p-3.png';
+        }
+
+        // 预加载artist图片
+        const artistImages = [
+            "./assets/artists/ACIDEZ.jpg",
+            "./assets/artists/baopigou.jpg",
+            "./assets/artists/bigd.jpg",
+            "./assets/artists/BrainFailure.jpg",
+            "./assets/artists/Massachrist.jpg",
+            "./assets/artists/NonServium.jpg",
+            "./assets/artists/OnikaLi.jpg",
+            "./assets/artists/yshc.jpg",
+            "./assets/artists/SKARFACE.jpg",
+            "./assets/artists/TheGreed.jpg",
+            "./assets/artists/TheGTBitches.jpg",
+            "./assets/artists/TheNoname.jpg",
+            "./assets/artists/TheSinoHeart.jpg",
+            "./assets/artists/thestirrers.jpg",
+            "./assets/artists/NewArtistComing.webp"
+        ];
+
+        // 使用requestIdleCallback在空闲时预加载
+        if ('requestIdleCallback' in window) {
+            requestIdleCallback(() => {
+                artistImages.forEach(src => {
+                    const img = new Image();
+                    img.loading = 'lazy';
+                    img.src = src;
+                });
+            }, { timeout: 2000 });
+        }
+
+
+        // 优化懒加载 - 使用Intersection Observer
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        if (img.dataset.src) {
+                            img.src = img.dataset.src;
+                            img.removeAttribute('data-src');
+                        }
+                        observer.unobserve(img);
+                    }
+                });
+            }, {
+                rootMargin: '50px 0px',
+                threshold: 0.01
+            });
+
+            // 观察所有懒加载图片
+            document.querySelectorAll('img[loading="lazy"]').forEach(img => {
+                imageObserver.observe(img);
+            });
+        }
+
+
             // 绑定键盘事件
             document.addEventListener('keydown', handleKeydown);
+
+        // iOS Safari滚动修复
+        let startY = 0;
+        let startX = 0;
+
+        document.addEventListener('touchstart', function(e) {
+            startY = e.touches[0].pageY;
+            startX = e.touches[0].pageX;
+        }, { passive: true });
+
+        document.addEventListener('touchmove', function(e) {
+            const y = e.touches[0].pageY;
+            const x = e.touches[0].pageX;
+            const scrollTop = window.pageYOffset;
+            const scrollHeight = document.documentElement.scrollHeight;
+            const clientHeight = window.innerHeight;
+
+            // 防止下拉刷新导致的跳转
+            if (scrollTop <= 0 && y > startY) {
+                e.preventDefault();
+            }
+            // 防止上拉到底导致的跳转
+            if (scrollTop + clientHeight >= scrollHeight && y < startY) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+
         });
 
         function handleKeydown(e) {
@@ -2577,7 +2760,7 @@
                 return `
                 <div class="artist-card-wrapper">
                     <div class="artist-card">
-                        <img loading="lazy" src="${artist.image}" alt="${artist.name}" onerror="this.style.display='none'">
+                        <img loading="lazy" decoding="async" src="${artist.image}" alt="${artist.name}" onerror="if(this.src && this.src!==''){this.style.display='none';}else{this.removeAttribute('src');}">
                         <div class="artist-overlay"></div>
                     </div>
                     <div class="artist-name-below">${nameHtml}</div>
@@ -2591,7 +2774,14 @@
             const modal = document.getElementById('bookingModal');
             if (modal) {
                 modal.classList.add('active');
-                document.body.style.overflow = 'hidden';
+                
+            // 保存滚动位置
+            const scrollY = window.pageYOffset;
+            document.body.dataset.scrollY = scrollY;
+            document.body.style.position = 'fixed';
+            document.body.style.top = `-${scrollY}px`;
+            document.body.style.width = '100%';
+            document.body.style.overflow = 'hidden';
             }
         }
 
@@ -2600,6 +2790,14 @@
             if (modal) {
                 modal.classList.remove('active');
                 document.body.style.overflow = 'auto';
+
+            // 恢复滚动位置
+            const scrollY = document.body.dataset.scrollY || 0;
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.width = '';
+            window.scrollTo(0, parseInt(scrollY));
+
             }
         }
 
@@ -2658,6 +2856,13 @@
             // 显示modal
             modal.classList.add('active');
             isShareModalOpen = true;
+            
+            // 保存滚动位置
+            const scrollY = window.pageYOffset;
+            document.body.dataset.scrollY = scrollY;
+            document.body.style.position = 'fixed';
+            document.body.style.top = `-${scrollY}px`;
+            document.body.style.width = '100%';
             document.body.style.overflow = 'hidden';
         }
 
@@ -2668,6 +2873,14 @@
                 isShareModalOpen = false;
                 if (!isWechatModalOpen) {
                     document.body.style.overflow = 'auto';
+
+            // 恢复滚动位置
+            const scrollY = document.body.dataset.scrollY || 0;
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.width = '';
+            window.scrollTo(0, parseInt(scrollY));
+
                 }
             }
         }
@@ -2756,6 +2969,14 @@
                 qrModal.classList.remove('active');
                 isWechatModalOpen = false;
                 document.body.style.overflow = 'auto';
+
+            // 恢复滚动位置
+            const scrollY = document.body.dataset.scrollY || 0;
+            document.body.style.position = '';
+            document.body.style.top = '';
+            document.body.style.width = '';
+            window.scrollTo(0, parseInt(scrollY));
+
             }
         }
 
@@ -2983,7 +3204,7 @@
                             <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
                         </svg>
                     </button>
-                    <img src="${posterUrl}" alt="${escapeHtml(title)}" class="branded-tour-poster" onerror="this.style.display='none'">
+                    <img src="${posterUrl}" alt="${escapeHtml(title)}" class="branded-tour-poster" loading="lazy" decoding="async" onerror="if(this.src && this.src!==''){this.style.display='none';}else{this.removeAttribute('src');}">
                     <div class="branded-tour-status">ON TOUR</div>
                     <div class="branded-tour-content">
                         <h3 class="branded-tour-name">${titleHtml}</h3>
