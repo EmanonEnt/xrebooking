@@ -156,7 +156,7 @@
             background-repeat: no-repeat;
             filter: brightness(0.8) saturate(1.2);
             z-index: 0;
-            will-change: transform;
+            /* will-change removed for performance */
         }
 
         /* 桌面端使用fixed背景效果，移动端使用scroll避免卡顿 */
@@ -187,7 +187,7 @@
             height: 150%;
             background: radial-gradient(ellipse at center, rgba(255,255,255,0.03) 0%, transparent 50%);
             filter: blur(80px);
-            will-change: transform;
+            /* will-change removed for performance */
         }
         .smoke:nth-child(1) { top: -30%; left: -30%; animation: smokeFloat 20s ease-in-out infinite; }
         .smoke:nth-child(2) { top: 10%; right: -30%; animation: smokeFloat 25s ease-in-out infinite reverse; opacity: 0.5; }
@@ -254,7 +254,7 @@
             margin-bottom: 0;
             padding-bottom: 0;
             transform: translateZ(0);
-            will-change: transform;
+            /* will-change removed for performance */
         }
         .artists-section {
             width: 100%;
@@ -1650,7 +1650,7 @@
         }
 
         .player-qq {
-            background: linear-gradient(135deg, rgba(49, 194, 124, 0.25) 0%, rgba(42, 168, 105, 0.25) 100%);
+            background: linear-gradient(135deg, rgba(49, 194, 124, 0.15) 0%, rgba(42, 168, 105, 0.15) 100%);
             border-bottom: 1px solid rgba(139, 0, 0, 0.3);
         }
 
@@ -1660,7 +1660,7 @@
         }
 
         .player-netease {
-            background: linear-gradient(135deg, rgba(198, 47, 47, 0.25) 0%, rgba(168, 42, 42, 0.25) 100%);
+            background: linear-gradient(135deg, rgba(198, 47, 47, 0.15) 0%, rgba(168, 42, 42, 0.15) 100%);
             border-top: 1px solid rgba(139, 0, 0, 0.3);
         }
 
@@ -2027,9 +2027,6 @@
             });
         }
     </script>
-    <!-- Google Invisible reCAPTCHA -->
-    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
-
 </head>
 
 <body>
@@ -2140,8 +2137,8 @@
                 <!-- 右侧播放器区 -->
                 <div class="poster-ad-right">
                     <!-- Spotify 播放器 - 占50%+ -->
-                    <div class="player-spotify">
-                        <iframe src="https://open.spotify.com/embed/playlist/6xZPXG1qFVxlxZf8v63S0W?utm_source=generator&theme=0" 
+                    <div class="player-spotify" id="spotifyContainer">
+                        <iframe data-src="https://open.spotify.com/embed/playlist/6xZPXG1qFVxlxZf8v63S0W?utm_source=generator&theme=0" 
                                 width="100%" 
                                 height="100%" 
                                 frameborder="0" 
@@ -2326,11 +2323,7 @@
                 <div id="bookingSuccess" style="display: none; text-align: center; padding: 15px; background: rgba(139, 0, 0, 0.2); border: 2px solid var(--xre-red); margin-bottom: 20px;">
                     <p style="color: #fff; margin: 0; font-size: 14px;">Booking inquiry sent successfully!</p>
                 </div>
-                                <!-- Invisible reCAPTCHA -->
-                <div id="recaptcha-container" style="position: absolute; bottom: 20px; right: 20px; z-index: 1;"></div>
-                <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response">
-
-                <button type="submit" class="neon-btn" id="submitBookingBtn">SUBMIT BOOKING REQUEST</button>
+                <button type="submit" class="neon-btn">SUBMIT BOOKING REQUEST</button>
             </form>
         </div>
     </div>
@@ -2461,9 +2454,18 @@
             }, 300);
 
             renderArtists();
-            // 延迟加载BRANDED TOURS，避免阻塞首屏渲染
-            requestAnimationFrame(() => {
-                setTimeout(loadBrandedTours, 100);
+
+            // 延迟加载 BRANDED TOURS（避免阻塞）
+            setTimeout(loadBrandedTours, 500);
+
+            // 延迟加载 Spotify（页面完全加载后）
+            window.addEventListener('load', () => {
+                setTimeout(() => {
+                    const spotifyIframe = document.querySelector('#spotifyContainer iframe');
+                    if (spotifyIframe && spotifyIframe.dataset.src) {
+                        spotifyIframe.src = spotifyIframe.dataset.src;
+                    }
+                }, 2000);
             });
 
             // 绑定键盘事件
@@ -2532,38 +2534,7 @@
             grid.appendChild(fragment);
         }
 
-        // ================== Invisible reCAPTCHA ==================
-var recaptchaWidget;
-
-function onloadCallback() {
-    recaptchaWidget = grecaptcha.render('recaptcha-container', {
-        'sitekey': '6LfMg4EsAAAAAFKJJP9qEEIeZAyO5GMmzDP3f7vi',
-        'size': 'invisible',
-        'badge': 'bottomright',  // 徽章位置: bottomright, bottomleft, inline
-        'callback': onRecaptchaSuccess,
-        'expired-callback': onRecaptchaExpired,
-        'error-callback': onRecaptchaError
-    });
-}
-
-function onRecaptchaSuccess(token) {
-    // 验证成功，设置隐藏字段并提交表单
-    document.getElementById('g-recaptcha-response').value = token;
-    document.getElementById('bookingForm').submit();
-}
-
-function onRecaptchaExpired() {
-    // 验证过期，重置
-    grecaptcha.reset(recaptchaWidget);
-    alert('Verification expired. Please try again.');
-}
-
-function onRecaptchaError() {
-    // 验证错误
-    alert('reCAPTCHA error. Please refresh the page and try again.');
-}
-
-// ================== Booking Modal ==================
+        // ================== Booking Modal ==================
         function openModal() {
             const modal = document.getElementById('bookingModal');
             if (modal) {
@@ -2583,17 +2554,6 @@ function onRecaptchaError() {
         function handleBookingSubmit(e) {
             e.preventDefault();
             const form = e.target;
-            const successMsg = document.getElementById('bookingSuccess');
-
-            // 执行隐形 reCAPTCHA 验证
-            grecaptcha.execute(recaptchaWidget);
-
-            // 注意：实际提交在 onRecaptchaSuccess 回调中执行
-            return false;
-        }
-
-        function submitBookingForm() {
-            const form = document.getElementById('bookingForm');
             const successMsg = document.getElementById('bookingSuccess');
 
             fetch(form.action, { method: 'POST', body: new FormData(form) })
