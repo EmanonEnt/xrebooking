@@ -7,6 +7,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>XRE BOOKING - Artist Agency</title>
+    <meta name="description" content="XRE BOOKING - Artist Agency in Punkrock, Garage, Mod, Powerpop, Surf, Poppunk, RocknRoll, Hardcore, Metal">
     <link rel="icon" type="image/png" href="./images/webtop.png">
     <link rel="shortcut icon" type="image/png" href="./images/webtop.png">
     <link rel="apple-touch-icon" href="./images/webtop.png">
@@ -2024,10 +2025,10 @@
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('./sw.js')
                     .then((registration) => {
-                        // console.log('SW registered:', registration.scope);
+                        // // console.log('SW registered:', registration.scope);
                     })
                     .catch((error) => {
-                        // console.log('SW registration failed:', error);
+                        // // console.log('SW registration failed:', error);
                     });
             });
         }
@@ -2036,14 +2037,14 @@
 
 <body>
     <div class="loading" id="loading">
-        <img src="images/xrelogoL.png" alt="XRE BOOKING" style="height: 60px; animation: logoBreathe 2s ease-in-out infinite;">
+        <img src="images/xrelogoL.png" alt="XRE BOOKING" style="height: 60px; animation: logoBreathe 2s ease-in-out infinite;" loading="lazy">
     </div>
 
     
 
     <!-- 导航栏 -->
     <nav>
-        <img src="images/xrelogoL.png" alt="XRE BOOKING" class="logo-img" id="logo" onclick="location.href='./index.html'">
+        <img src="images/xrelogoL.png" alt="XRE BOOKING" class="logo-img" id="logo" onclick="location.href='./index.html'" loading="lazy">
         <div class="nav-links">
             <a href="https://www.livegigsasia.com/events.html">EVENTS</a>
             <a href="https://www.livegigsasia.com/partners.html">Partners</a>
@@ -2100,7 +2101,7 @@
                 <!-- 左侧海报 - 满屏高度，2:3比例 -->
                 <div class="poster-ad-left">
                     <div class="poster-wrapper">
-                        <img src="https://livegigsasia.com/image/1-b-2.jpg" alt="Punk Heart Fest" class="poster-ad-image">
+                        <img src="https://livegigsasia.com/image/1-b-2.jpg" alt="Punk Heart Fest" class="poster-ad-image" loading="lazy">
                     </div>
                 </div>
 
@@ -2259,7 +2260,7 @@
                         </div>
                         <div class="producer-section">
                             <div class="producer-label">Produced by</div>
-                            <img src="https://www.livegigsasia.com/image/emanonent-logo.png" alt="EMANON ENT." class="producer-logo">
+                            <img src="https://www.livegigsasia.com/image/emanonent-logo.png" alt="EMANON ENT." class="producer-logo" loading="lazy">
                         </div>
                     </div>
                     <div class="footer-contact-right">
@@ -2339,7 +2340,7 @@
             <button class="share-modal-close" onclick="closeShareModal()">&times;</button>
             <h3 class="share-modal-title">SHARE THIS EVENT</h3>
             <div class="share-event-info">
-                <img class="share-event-img" id="shareEventImg" src="" alt="">
+                <img class="share-event-img" id="shareEventImg" src="" alt="" loading="lazy">
                 <div class="share-event-details">
                     <div class="share-event-name" id="shareEventName"></div>
                     <div class="share-event-meta" id="shareEventMeta"></div>
@@ -2386,8 +2387,8 @@
                 </button>
                 <button class="share-platform-btn" onclick="shareToPlatform('line')">
                     <svg class="share-platform-icon" viewBox="0 0 24 24" fill="#06c755">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.5 14.5h-9c-.28 0-.5-.22-.5-.5V8c0-.28.22-.5.5-.5h9c.28 0 .5.22.5.5v8c0 .28-.22.5-.5.5z"/>
-                        <path d="M7 9.5h2v1H7zm0 2h2v1H7zm3-2h2v1h-2zm0 2h2v1h-2zm3-2h2v1h-2zm0 2h2v1h-2z" fill="#fff"/>
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.46 14.5H7.54c-.83 0-1.5-.67-1.5-1.5V9c0-.83.67-1.5 1.5-1.5h8.92c.83 0 1.5.67 1.5 1.5v6c0 .83-.67 1.5-1.5 1.5z"/>
+                        <path d="M7.5 9.5h2v1h-2zm0 2h2v1h-2zm3-2h2v1h-2zm0 2h2v1h-2zm3-2h2v1h-2zm0 2h2v1h-2z" fill="#fff"/>
                     </svg>
                     <span class="share-platform-name">LINE</span>
                 </button>
@@ -2400,7 +2401,7 @@
                 <button class="share-platform-btn" onclick="shareToPlatform('wechat-moments')">
                     <svg class="share-platform-icon" viewBox="0 0 24 24" fill="#07c160">
                         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
-                        <circle cx="12" cy="12" r="3"/>
+                        <circle cx="12" cy="12" r="2.5"/>
                         <circle cx="17" cy="7" r="1.5"/>
                     </svg>
                     <span class="share-platform-name">Moments</span>
@@ -2823,7 +2824,7 @@
                 bindMobileEvents();
 
             } catch (error) {
-                // console.error('Error loading branded tours:', error);
+                // // console.error('Error loading branded tours:', error);
                 container.innerHTML = '<div class="branded-tours-empty">UNABLE TO LOAD TOURS.</div>';
             }
         }
