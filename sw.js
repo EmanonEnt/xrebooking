@@ -1,23 +1,21 @@
-// 优化版 Service Worker - 轻量级缓存策略
-const CACHE_NAME = 'xrebooking-v1';
+// Optimized Service Worker - Minimal & Fast
+const CACHE_NAME = 'xrebooking-v2';
 const STATIC_ASSETS = [
     './',
     './index.html'
 ];
 
-// 安装事件 - 预缓存关键资源
+// Install - cache minimal assets
 self.addEventListener('install', (event) => {
     event.waitUntil(
         caches.open(CACHE_NAME).then((cache) => {
             return cache.addAll(STATIC_ASSETS);
-        }).catch(() => {
-            // 静默失败，不影响用户体验
-        })
+        }).catch(() => {})
     );
     self.skipWaiting();
 });
 
-// 激活事件 - 清理旧缓存
+// Activate - clean old caches
 self.addEventListener('activate', (event) => {
     event.waitUntil(
         caches.keys().then((cacheNames) => {
@@ -31,24 +29,26 @@ self.addEventListener('activate', (event) => {
     self.clients.claim();
 });
 
-//  fetch 事件 - 网络优先策略
+// Fetch - network first, cache fallback for static only
 self.addEventListener('fetch', (event) => {
     const { request } = event;
 
-    // 跳过非GET请求和chrome-extension请求
-    if (request.method !== 'GET' || request.url.startsWith('chrome-extension://')) {
-        return;
-    }
+    // Skip non-GET and cross-origin
+    if (request.method !== 'GET') return;
+    if (!request.url.startsWith(self.location.origin)) return;
 
-    // 跳过跨域请求（如Spotify iframe）
-    if (!request.url.startsWith(self.location.origin)) {
-        return;
-    }
+    // Only cache HTML and static assets
+    const url = new URL(request.url);
+    const isStatic = url.pathname.endsWith('.html') || 
+                     url.pathname.endsWith('.css') || 
+                     url.pathname.endsWith('.js') ||
+                     url.pathname.match(/\.(png|jpg|jpeg|gif|svg|webp|ico)$/);
+
+    if (!isStatic) return;
 
     event.respondWith(
         fetch(request)
             .then((response) => {
-                // 缓存成功的响应
                 if (response && response.status === 200) {
                     const responseClone = response.clone();
                     caches.open(CACHE_NAME).then((cache) => {
@@ -58,13 +58,7 @@ self.addEventListener('fetch', (event) => {
                 return response;
             })
             .catch(() => {
-                // 网络失败时回退到缓存
-                return caches.match(request).then((cachedResponse) => {
-                    return cachedResponse || new Response('Offline', {
-                        status: 503,
-                        statusText: 'Service Unavailable'
-                    });
-                });
+                return caches.match(request);
             })
     );
 });

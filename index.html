@@ -1,2044 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="XRE BOOKING - Artist Agency">
     <title>XRE BOOKING - Artist Agency</title>
-    <link rel="icon" type="image/png" href="./images/webtop.png">
-    <link rel="shortcut icon" type="image/png" href="./images/webtop.png">
-    <link rel="apple-touch-icon" href="./images/webtop.png">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --xre-red: #ff0000;
-            --xre-dark-red: #8b0000;
-            --mad-silver: #e8e8e8;
-            --black: #050505;
-        }
-
-        .loading {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--black);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 99999;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-        .loading.hidden {
-            opacity: 0;
-            visibility: hidden;
-        }
-
+        :root { --xre-red: #ff0000; --xre-dark-red: #8b0000; --mad-silver: #e8e8e8; --black: #050505; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { 
-            scroll-behavior: auto; 
-            overflow-x: hidden;
-            width: 100%;
-        }
-        body {
-            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            background-color: var(--black);
-            color: #fff;
-            overflow-x: hidden;
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-            position: relative;
-            width: 100%;
-        }
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            height: 80px;
-            padding: 0 50px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 9999;
-            background: rgba(0, 0, 0, 0.5);
-        }
-        .logo-img {
-            height: 45px;
-            width: auto;
-            max-width: 200px;
-            object-fit: contain;
-            cursor: pointer;
-            animation: logoBreathe 4s ease-in-out infinite;
-        }
-        @keyframes logoBreathe {
-            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(139, 0, 0, 0.4)); }
-            50% { transform: scale(1.03); filter: drop-shadow(0 0 15px rgba(139, 0, 0, 0.8)); }
-        }
-        .nav-links {
-            display: flex;
-            gap: 40px;
-            align-items: center;
-        }
-        .nav-links a {
-            color: #fff;
-            text-decoration: none;
-            font-size: 14px;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            transition: all 0.3s;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-        }
-        .nav-links a:hover {
-            color: var(--xre-dark-red);
-            text-shadow: 0 0 10px rgba(139, 0, 0, 0.8);
-        }
-        .neon-btn {
-            background: rgba(139, 0, 0, 0.3);
-            color: #ffffff !important;
-            border: 2px solid var(--xre-dark-red);
-            padding: 10px 25px;
-            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            font-size: 12px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: all 0.4s;
-            position: relative;
-            overflow: hidden;
-        }
-        .neon-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            transition: left 0.5s;
-        }
-        .neon-btn:hover::before {
-            left: 100%;
-        }
-        .neon-btn:hover {
-            background: var(--xre-dark-red);
-            border-color: var(--xre-dark-red);
-            box-shadow: 0 0 30px rgba(139, 0, 0, 0.8), 0 0 60px rgba(139, 0, 0, 0.4);
-            transform: scale(1.05);
-            letter-spacing: 3px;
-        }
-        .hero {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            min-height: 600px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 1;
-            overflow: hidden;
-        }
-        .hero-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('./images/p-p-3.jpg');
-            background-size: cover;
-            background-position: center center;
-            background-repeat: no-repeat;
-            filter: brightness(0.8) saturate(1.2);
-            z-index: 0;
-            will-change: transform;
-        }
-
-        /* 桌面端使用fixed背景效果，移动端使用scroll避免卡顿 */
-        @media (min-width: 769px) {
-            .hero-bg {
-                background-attachment: fixed;
-            }
-        }
-        @media (max-width: 768px) {
-            .hero-bg {
-                background-attachment: scroll;
-            }
-        }
-        .smoke-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 3;
-            overflow: hidden;
-            pointer-events: none;
-            opacity: 0.4;
-        }
-        .smoke {
-            position: absolute;
-            width: 150%;
-            height: 150%;
-            background: radial-gradient(ellipse at center, rgba(255,255,255,0.03) 0%, transparent 50%);
-            filter: blur(80px);
-            will-change: transform;
-        }
-        .smoke:nth-child(1) { top: -30%; left: -30%; animation: smokeFloat 20s ease-in-out infinite; }
-        .smoke:nth-child(2) { top: 10%; right: -30%; animation: smokeFloat 25s ease-in-out infinite reverse; opacity: 0.5; }
-        .smoke:nth-child(3) { bottom: -30%; left: 10%; animation: smokeFloat 22s ease-in-out infinite; opacity: 0.3; animation-delay: -5s; }
-        @keyframes smokeFloat {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(3%, 2%) scale(1.05); }
-        }
-        .hero-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(ellipse at center, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.3) 100%);
-            z-index: 2;
-        }
-        .hero-content {
-            position: relative;
-            z-index: 1;
-            text-align: center;
-            width: 100%;
-            padding: 0 20px;
-            margin-top: 120px;
-        }
-        .hero-title {
-            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            font-size: clamp(80px, 14vw, 220px);
-            font-weight: 400;
-            letter-spacing: clamp(8px, 2vw, 20px);
-            line-height: 0.85;
-            margin-bottom: 40px;
-            max-width: 1900px;
-            margin-left: auto;
-            margin-right: auto;
-            text-transform: uppercase;
-        }
-        .hero-title .gray, .hero-title .red {
-            color: #c0c0c0;
-            text-shadow: 0 0 30px rgba(192, 192, 192, 0.3);
-        }
-        .hero-subtitle {
-            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            font-size: clamp(22px, 3.5vw, 42px);
-            letter-spacing: clamp(4px, 1vw, 10px);
-            text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.9);
-            max-width: 1400px;
-            margin: 20px auto 0;
-            padding: 0 20px;
-            line-height: 1.4;
-            text-align: center;
-        }
-        .hero-subtitle .line1, .hero-subtitle .line2, .hero-subtitle .line3 {
-            display: block;
-            white-space: nowrap;
-        }
-        .content-wrapper {
-            position: relative;
-            z-index: 10;
-            margin-top: 100vh;
-            background: var(--black);
-            min-height: 100vh;
-            margin-bottom: 0;
-            padding-bottom: 0;
-            transform: translateZ(0);
-            will-change: transform;
-        }
-        .artists-section {
-            width: 100%;
-            padding: 100px 0;
-            background: var(--mad-silver);
-            position: relative;
-        }
-        .section-title {
-            text-align: center;
-            font-size: clamp(36px, 6vw, 72px);
-            letter-spacing: 5px;
-            text-transform: uppercase;
-            color: var(--black);
-            margin-bottom: 20px;
-            font-weight: 900;
-        }
-        .title-underline {
-            width: 100px;
-            height: 3px;
-            background: var(--xre-red);
-            margin: 0 auto 60px;
-            position: relative;
-            overflow: hidden;
-        }
-        .artists-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-            max-width: 95%;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        .artist-card-wrapper { 
-            text-align: center; 
-            position: relative;
-        }
-        .artist-card {
-            position: relative;
-            width: 100%;
-            height: 0;
-            padding-bottom: 48% !important;
-            overflow: hidden;
-            cursor: default;
-            transition: border-color 0.4s, box-shadow 0.4s;
-            border: 2px solid transparent;
-            transform: translateZ(0);
-        }
-        .artist-card img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover !important;
-            object-position: center;
-            filter: brightness(1);
-            transition: all 0.4s;
-        }
-        .artist-card:hover {
-            border-color: var(--xre-red);
-            box-shadow: 0 0 30px rgba(139, 0, 0, 0.6);
-        }
-        .artist-card:hover img { 
-            transform: scale(1.05);
-            filter: brightness(1.1);
-        }
-        /* 闪光特效 - 所有端 */
-        .artist-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 50%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            transform: skewX(-25deg);
-            transition: none;
-            z-index: 10;
-            pointer-events: none;
-        }
-        .artist-card:hover::before {
-            animation: artistShine 0.8s ease-in-out;
-        }
-        @keyframes artistShine {
-            0% { left: -100%; }
-            100% { left: 150%; }
-        }
-        .artist-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.3);
-            opacity: 0;
-            transition: opacity 0.4s;
-        }
-        .artist-card:hover .artist-overlay { 
-            opacity: 1; 
-        }
-        .artist-name-below {
-            margin-top: 15px;
-            font-size: 20px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: var(--black);
-            cursor: default;
-            transition: all 0.3s;
-            display: inline-block;
-            font-weight: normal;
-        }
-        .artist-name-below:hover {
-            color: var(--xre-red);
-            font-weight: bold;
-            text-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
-        }
-        .artist-name-link {
-            transition: color 0.3s, text-shadow 0.3s;
-        }
-        .artist-name-link:hover {
-            color: var(--xre-red);
-            text-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
-        }
-
-        .footer-gap {
-            height: 0;
-            display: none;
-            margin: 0;
-            padding: 0;
-        }
-        .site-footer {
-            background: #000;
-            color: #c0c0c0;
-            position: relative;
-            z-index: 100;
-            border-top: none;
-            margin: 0;
-            padding: 0;
-        }
-        .footer-main {
-            padding: 50px 40px 40px;
-            position: relative;
-            background: #000;
-        }
-        .footer-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 40px;
-        }
-        .footer-contact-left {
-            flex: 1;
-            text-align: left;
-            font-family: 'Courier New', monospace;
-        }
-        .contact-item {
-            margin-bottom: 10px;
-            color: #c0c0c0;
-            font-size: 13px;
-            letter-spacing: 0.5px;
-            line-height: 1.5;
-        }
-        .contact-item a {
-            color: #c0c0c0;
-            text-decoration: none;
-            transition: all 0.3s;
-            font-weight: bold;
-        }
-        .contact-item a:hover {
-            color: var(--xre-red);
-        }
-        .footer-brand {
-            flex: 0 0 auto;
-            text-align: center;
-        }
-        .footer-logo {
-            font-size: clamp(32px, 6vw, 48px);
-            font-weight: 400;
-            letter-spacing: 4px;
-            line-height: 1;
-            text-transform: uppercase;
-            margin-bottom: 20px;
-            animation: simpleGlow 3s ease-in-out infinite;
-        }
-
-        @keyframes simpleGlow {
-            0%, 100% { 
-                text-shadow: 0 0 10px rgba(139, 0, 0, 0.3);
-                opacity: 0.95;
-            }
-            50% { 
-                text-shadow: 0 0 20px rgba(139, 0, 0, 0.6), 0 0 30px rgba(139, 0, 0, 0.3);
-                opacity: 1;
-            }
-        }
-        .footer-logo .xre {
-            color: var(--xre-dark-red);
-        }
-        .footer-logo .booking {
-            color: #c0c0c0;
-        }
-        .social-links {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            margin-bottom: 25px;
-        }
-        .social-icon {
-            width: 44px;
-            height: 44px;
-            border: 2px solid #888;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #c0c0c0;
-            text-decoration: none;
-            transition: all 0.3s;
-            background: rgba(255,255,255,0.05);
-        }
-        .social-icon svg {
-            width: 22px;
-            height: 22px;
-            fill: currentColor;
-        }
-        .social-icon:hover {
-            border-color: var(--xre-red);
-            color: var(--xre-red);
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(255,0,0,0.3);
-        }
-        .producer-section {
-            text-align: center;
-        }
-        .producer-label {
-            font-size: 10px;
-            color: #888;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            margin-bottom: 10px;
-            font-family: 'Courier New', monospace;
-        }
-        .producer-logo {
-            height: 35px;
-            width: auto;
-            opacity: 0.8;
-            transition: opacity 0.3s;
-        }
-        .producer-logo:hover {
-            opacity: 1;
-        }
-        .footer-contact-right {
-            flex: 1;
-            text-align: right;
-            font-family: 'Courier New', monospace;
-        }
-        .footer-bottom {
-            background: #000;
-            border-top: none;
-            padding: 20px 40px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 40px;
-            margin: 0;
-        }
-        .footer-spacer {
-            display: none;
-        }
-        .footer-legal {
-            display: flex;
-            gap: 20px;
-            align-items: center;
-        }
-        .footer-legal {
-            display: flex;
-            gap: 25px;
-            align-items: center;
-        }
-        .footer-legal a {
-            color: #888;
-            text-decoration: none;
-            font-size: 11px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            transition: all 0.3s;
-            font-weight: bold;
-        }
-        .footer-legal a:hover {
-            color: var(--xre-red);
-        }
-        .copyright {
-            color: #777;
-            font-size: 11px;
-            letter-spacing: 1px;
-            font-family: 'Courier New', monospace;
-            text-align: center;
-        }
-
-        /* Booking弹窗 */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            z-index: 10000;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            touch-action: pan-y;
-            overscroll-behavior: contain;
-            cursor: pointer;
-        }
-        .modal-overlay > * {
-            cursor: default;
-        }
+        html { scroll-behavior: smooth; overflow-x: hidden; }
+        body { font-family: Impact, 'Arial Narrow Bold', sans-serif; background-color: var(--black); color: #fff; overflow-x: hidden; min-height: 100vh; line-height: 1.6; }
+        .loading { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--black); display: flex; align-items: center; justify-content: center; z-index: 99999; transition: transform 0.3s ease, opacity 0.3s ease; }
+        .loading.hidden { transform: translateY(-100%); opacity: 0; pointer-events: none; }
+        nav { position: fixed; top: 0; width: 100%; height: 80px; padding: 0 50px; display: flex; justify-content: space-between; align-items: center; z-index: 9999; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(10px); }
+        .logo-img { height: 45px; width: auto; max-width: 200px; object-fit: contain; cursor: pointer; animation: logoBreathe 4s ease-in-out infinite; }
+        @keyframes logoBreathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.03); } }
+        .nav-links { display: flex; gap: 40px; align-items: center; }
+        .nav-links a { color: #fff; text-decoration: none; font-size: 14px; letter-spacing: 3px; text-transform: uppercase; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--xre-red); }
+        .neon-btn { background: rgba(139, 0, 0, 0.3); color: #fff; border: 2px solid var(--xre-dark-red); padding: 10px 25px; font-family: Impact, 'Arial Narrow Bold', sans-serif; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: all 0.3s; }
+        .neon-btn:hover { background: var(--xre-dark-red); box-shadow: 0 0 20px rgba(139, 0, 0, 0.6); transform: scale(1.02); }
+        .hero { position: relative; width: 100%; height: 100vh; min-height: 600px; display: flex; flex-direction: column; justify-content: center; align-items: center; overflow: hidden; }
+        .hero-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-image: url('./images/p-p-3.jpg'); background-size: cover; background-position: center; filter: brightness(0.8); z-index: 0; }
+        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(ellipse at center, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.5) 100%); z-index: 1; }
+        .hero-content { position: relative; z-index: 2; text-align: center; width: 100%; padding: 0 20px; margin-top: 80px; }
+        .hero-title { font-size: clamp(60px, 12vw, 180px); font-weight: 400; letter-spacing: clamp(5px, 1.5vw, 15px); line-height: 0.9; margin-bottom: 30px; text-transform: uppercase; color: #c0c0c0; text-shadow: 0 0 30px rgba(139, 0, 0, 0.5); }
+        .hero-subtitle { font-size: clamp(18px, 3vw, 36px); letter-spacing: clamp(3px, 0.8vw, 8px); text-transform: uppercase; color: rgba(255, 255, 255, 0.9); max-width: 1200px; margin: 0 auto; line-height: 1.4; }
+        .content-wrapper { position: relative; z-index: 10; background: var(--black); }
+        .artists-section { width: 100%; padding: 80px 0; background: var(--mad-silver); }
+        .section-title { text-align: center; font-size: clamp(32px, 5vw, 60px); letter-spacing: 4px; text-transform: uppercase; color: var(--black); margin-bottom: 15px; }
+        .title-underline { width: 80px; height: 3px; background: var(--xre-red); margin: 0 auto 50px; }
+        .artists-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 95%; margin: 0 auto; padding: 0 20px; }
+        .artist-card-wrapper { text-align: center; }
+        .artist-card { position: relative; width: 100%; padding-bottom: 56.25%; overflow: hidden; cursor: pointer; border: 2px solid transparent; transition: border-color 0.3s, transform 0.3s; }
+        .artist-card img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+        .artist-card:hover { border-color: var(--xre-red); transform: scale(1.02); }
+        .artist-card:hover img { transform: scale(1.05); }
+        .artist-name-below { margin-top: 12px; font-size: 18px; letter-spacing: 2px; text-transform: uppercase; color: var(--black); transition: color 0.3s; }
+        .artist-name-below:hover { color: var(--xre-red); }
+        .branded-tours-section { width: 100%; padding: 80px 0; background: linear-gradient(180deg, #e8e8e8 0%, #1a0000 40%, #0a0000 100%); }
+        .branded-tours-container { max-width: 1400px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; padding: 0 20px; }
+        .branded-tour-card { position: relative; background: linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 100%); overflow: hidden; cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; border: 1px solid rgba(139, 0, 0, 0.3); aspect-ratio: 3/4; }
+        .branded-tour-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(139, 0, 0, 0.3); border-color: var(--xre-red); }
+        .branded-tour-poster { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.8); transition: filter 0.3s, transform 0.4s; }
+        .branded-tour-card:hover .branded-tour-poster { filter: brightness(1); transform: scale(1.05); }
+        .branded-tour-share { position: absolute; top: 15px; left: 15px; width: 40px; height: 40px; background: rgba(0, 0, 0, 0.8); border: 2px solid var(--xre-red); border-radius: 50%; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 10; opacity: 0; transition: opacity 0.3s, transform 0.2s; }
+        .branded-tour-card:hover .branded-tour-share { opacity: 1; }
+        .branded-tour-share:hover { transform: scale(1.1); background: var(--xre-red); }
+        .branded-tour-status { position: absolute; top: 15px; right: 15px; padding: 6px 14px; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; font-weight: bold; background: rgba(0, 0, 0, 0.8); border: 1px solid var(--xre-red); color: #ffaa00; z-index: 5; }
+        .branded-tour-content { position: absolute; bottom: 0; left: 0; right: 0; padding: 30px 20px; background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%); z-index: 5; }
+        .branded-tour-name { font-size: clamp(18px, 2vw, 24px); letter-spacing: 2px; text-transform: uppercase; color: #fff; margin-bottom: 8px; line-height: 1.2; }
+        .branded-tour-details { font-size: 13px; color: rgba(255,255,255,0.8); letter-spacing: 1px; margin-bottom: 15px; }
+        .branded-tour-btn { display: inline-block; background: rgba(139, 0, 0, 0.4); color: #fff; border: 2px solid var(--xre-red); padding: 10px 25px; font-family: 'Orbitron', Impact, sans-serif; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; text-decoration: none; cursor: pointer; transition: all 0.3s; }
+        .branded-tour-btn:hover { background: var(--xre-red); box-shadow: 0 0 20px rgba(139, 0, 0, 0.6); }
+        .branded-tour-btn.disabled { pointer-events: none; opacity: 0.6; background: rgba(100, 100, 100, 0.3); border-color: #666; }
+        .branded-tours-load-more { text-align: center; margin-top: 50px; display: none; }
+        .branded-tours-load-more.visible { display: block; }
+        .share-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.85); z-index: 10000; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s ease; }
+        .share-modal.active { display: flex; opacity: 1; }
+        .share-modal-content { background: linear-gradient(135deg, #1a0000 0%, #0a0000 100%); border: 2px solid var(--xre-red); border-radius: 8px; padding: 30px; max-width: 450px; width: 90%; position: relative; box-shadow: 0 0 40px rgba(139, 0, 0, 0.5); transform: scale(0.95); transition: transform 0.3s ease; }
+        .share-modal.active .share-modal-content { transform: scale(1); }
+        .share-modal-close { position: absolute; top: 10px; right: 15px; background: none; border: none; color: #fff; font-size: 24px; cursor: pointer; transition: color 0.3s; }
+        .share-modal-close:hover { color: var(--xre-red); }
+        .share-modal-title { font-family: 'Orbitron', Impact, sans-serif; font-size: 18px; color: #fff; text-align: center; margin-bottom: 20px; letter-spacing: 2px; text-transform: uppercase; }
+        .share-event-info { display: flex; gap: 15px; margin-bottom: 20px; padding: 15px; background: rgba(139, 0, 0, 0.15); border-radius: 6px; border: 1px solid rgba(139, 0, 0, 0.3); }
+        .share-event-img { width: 70px; height: 70px; object-fit: cover; border-radius: 4px; border: 1px solid rgba(139, 0, 0, 0.3); }
+        .share-event-details { flex: 1; }
+        .share-event-name { font-family: 'Orbitron', Impact, sans-serif; font-size: 15px; color: #fff; margin-bottom: 5px; letter-spacing: 1px; word-break: break-word; }
+        .share-event-meta { font-size: 12px; color: rgba(255,255,255,0.7); font-family: 'Courier New', monospace; }
+        .share-event-tags { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 5px; }
+        .share-tag { display: inline-block; padding: 3px 8px; background: rgba(139, 0, 0, 0.6); color: #fff; font-size: 10px; border-radius: 3px; text-transform: uppercase; letter-spacing: 1px; }
+        .share-platforms { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+        .share-platform-btn { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 12px 6px; background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(139, 0, 0, 0.4); border-radius: 6px; color: #fff; cursor: pointer; transition: all 0.3s ease; font-family: inherit; }
+        .share-platform-btn:hover { background: rgba(139, 0, 0, 0.3); border-color: var(--xre-red); transform: translateY(-2px); }
+        .share-platform-icon { width: 24px; height: 24px; }
+        .share-platform-name { font-size: 10px; text-align: center; }
+        .download-btn { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 12px 20px; margin-top: 20px; background: rgba(139, 0, 0, 0.2); border: 2px solid var(--xre-red); border-radius: 6px; color: #fff; cursor: pointer; transition: all 0.3s ease; width: 100%; font-family: 'Orbitron', Impact, sans-serif; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; }
+        .download-btn:hover { background: var(--xre-red); transform: translateY(-2px); }
+        .wechat-qr-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.9); z-index: 10001; justify-content: center; align-items: center; }
+        .wechat-qr-modal.active { display: flex; }
+        .wechat-qr-content { background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%); border: 2px solid var(--xre-red); border-radius: 8px; padding: 25px; text-align: center; max-width: 300px; }
+        .wechat-qr-title { font-family: 'Orbitron', Impact, sans-serif; font-size: 14px; color: #fff; margin-bottom: 15px; letter-spacing: 2px; }
+        .wechat-qr-hint { font-size: 12px; color: rgba(255,255,255,0.7); margin: 15px 0; }
+        .wechat-qr-close { padding: 8px 25px; background: var(--xre-red); color: #fff; border: none; border-radius: 4px; cursor: pointer; font-family: 'Orbitron', Impact, sans-serif; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; }
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.9); z-index: 10000; justify-content: center; align-items: center; padding: 20px; }
         .modal-overlay.active { display: flex; }
-        .modal-content {
-            background: linear-gradient(135deg, #1a0000 0%, #0a0000 50%, #000000 100%);
-            border: 2px solid var(--xre-dark-red);
-            padding: 40px 35px;
-            max-width: 480px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            position: relative;
-            box-shadow: 0 0 60px rgba(139, 0, 0, 0.6), inset 0 0 30px rgba(139, 0, 0, 0.1);
-        }
-        .modal-close {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            font-size: 28px;
-            color: #666;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .modal-close:hover { color: var(--xre-red); transform: scale(1.2); }
-        .modal-content h2 {
-            font-size: 28px;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            margin-bottom: 10px;
-            color: #fff;
-            text-align: center;
-        }
-        .modal-content p {
-            font-size: 13px;
-            color: var(--mad-silver);
-            text-align: center;
-            margin-bottom: 25px;
-        }
-        .form-group { margin-bottom: 18px; }
-        .form-group label {
-            display: block;
-            font-size: 11px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: var(--mad-silver);
-            margin-bottom: 6px;
-        }
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
-            width: 100%;
-            padding: 12px;
-            background: rgba(0, 0, 0, 0.6);
-            border: 2px solid var(--xre-red);
-            color: #fff;
-            font-size: 14px;
-            letter-spacing: 1px;
-            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-        }
-        .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: var(--xre-red);
-            box-shadow: 0 0 15px rgba(139, 0, 0, 0.3);
-        }
-        .form-group textarea {
-            min-height: 80px;
-            resize: vertical;
-        }
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-        .modal-content .neon-btn {
-            width: 100%;
-            margin-top: 10px;
-            padding: 14px;
-            font-size: 13px;
-            background: transparent;
-            color: #fff;
-            border: 2px solid var(--xre-dark-red);
-            cursor: pointer;
-            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-        .modal-content .neon-btn:hover {
-            background: var(--xre-dark-red);
-            box-shadow: 0 0 20px rgba(139, 0, 0, 0.5);
-        }
-
-        /* BRANDED TOURS区域 */
-                .branded-tours-section {
-            width: 100%;
-            padding: 80px 0;
-            background: linear-gradient(180deg, #e8e8e8 0%, #f0f0f0 20%, #1a0000 60%, #0a0000 100%);
-            position: relative;
-        }
-        .branded-tours-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-            padding: 0 20px;
-        }
-        .branded-tour-card {
-            position: relative;
-            background: linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 100%);
-            overflow: hidden;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            border: 1px solid rgba(139, 0, 0, 0.3);
-            aspect-ratio: 3/4;
-            max-width: 400px;
-            margin: 0 auto;
-            width: 100%;
-            -webkit-tap-highlight-color: transparent;
-        }
-        .branded-tour-card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(139, 0, 0, 0.8);
-            box-shadow: 0 0 30px rgba(139, 0, 0, 0.3);
-        }
-        .branded-tour-card.active {
-            transform: translateY(-5px);
-            border-color: rgba(139, 0, 0, 0.8);
-        }
-        .branded-tour-card.active .branded-tour-share {
-            opacity: 1;
-        }
-        .branded-tour-poster {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
-            filter: brightness(0.7);
-            transition: all 0.4s;
-            z-index: 1;
-        }
-        .branded-tour-card:hover .branded-tour-poster,
-        .branded-tour-card.active .branded-tour-poster {
-            filter: brightness(1);
-            transform: scale(1.05);
-        }
-        .branded-tour-share {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            width: 40px;
-            height: 40px;
-            background: rgba(0, 0, 0, 0.8);
-            border: 2px solid var(--xre-red);
-            border-radius: 50%;
-            color: #fff;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 15;
-            opacity: 0;
-            transition: all 0.3s ease;
-            pointer-events: auto;
-        }
-        .branded-tour-card:hover .branded-tour-share {
-            opacity: 1;
-        }
-        .branded-tour-share:hover {
-            background: var(--xre-red);
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
-            transform: scale(1.1);
-        }
-        .branded-tour-share svg {
-            width: 18px;
-            height: 18px;
-        }
-        .branded-tour-status {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            z-index: 10;
-            padding: 8px 16px;
-            font-size: 12px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            font-weight: bold;
-            border-radius: 4px;
-            background: rgba(0, 0, 0, 0.7);
-            border: 1px solid rgba(139, 0, 0, 0.5);
-            color: #ffaa00;
-            pointer-events: none;
-        }
-        .branded-tour-content {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: center;
-            padding: 80px 20px 40px;
-            z-index: 5;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.2) 40%, rgba(0,0,0,0.6) 70%, rgba(0,0,0,0.8) 100%);
-            transition: all 0.4s ease;
-            pointer-events: none;
-        }
-        .branded-tour-card:hover .branded-tour-content,
-        .branded-tour-card.active .branded-tour-content {
-            background: transparent;
-        }
-        .branded-tour-name {
-            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            font-size: clamp(20px, 2.5vw, 28px);
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: #fff;
-            margin-bottom: 15px;
-            text-shadow: 0 0 30px rgba(139, 0, 0, 1), 0 2px 4px rgba(0,0,0,0.8);
-            line-height: 1.2;
-            text-align: center;
-            transition: all 0.3s ease;
-            pointer-events: none;
-        }
-        .branded-tour-details {
-            font-size: 14px;
-            color: #c0c0c0;
-            letter-spacing: 1px;
-            margin-bottom: 8px;
-            text-align: center;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-            transition: all 0.3s ease;
-            pointer-events: none;
-        }
-        .branded-tour-venue {
-            font-size: 13px;
-            color: rgba(255,255,255,0.8);
-            letter-spacing: 1px;
-            margin-bottom: auto;
-            text-align: center;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-            transition: all 0.3s ease;
-            pointer-events: none;
-        }
-        .branded-tour-card:hover .branded-tour-name,
-        .branded-tour-card:hover .branded-tour-details,
-        .branded-tour-card:hover .branded-tour-venue,
-        .branded-tour-card.active .branded-tour-name,
-        .branded-tour-card.active .branded-tour-details,
-        .branded-tour-card.active .branded-tour-venue {
-            opacity: 0;
-            visibility: hidden;
-        }
-        .branded-tour-btn {
-            display: inline-block;
-            background: rgba(139, 0, 0, 0.3);
-            color: #fff;
-            border: 2px solid var(--xre-dark-red);
-            padding: 12px 30px;
-            font-family: 'Orbitron', Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            font-size: 12px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            text-decoration: none;
-            cursor: pointer;
-            transition: all 0.4s;
-            position: relative;
-            overflow: hidden;
-            margin-top: auto;
-            pointer-events: auto;
-            z-index: 20;
-        }
-        .branded-tour-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.5s;
-        }
-        .branded-tour-btn:hover::before {
-            left: 100%;
-        }
-        .branded-tour-btn:hover {
-            background: var(--xre-dark-red);
-            border-color: var(--xre-red);
-            box-shadow: 0 0 30px rgba(139, 0, 0, 0.8), 0 0 60px rgba(139, 0, 0, 0.4);
-            transform: scale(1.05);
-            letter-spacing: 3px;
-        }
-        .branded-tour-btn.disabled {
-            pointer-events: none;
-            cursor: default;
-            opacity: 0.9;
-            background: rgba(139, 0, 0, 0.7);
-        }
-        .branded-tour-card:hover .branded-tour-btn,
-        .branded-tour-card.active .branded-tour-btn {
-            opacity: 1 !important;
-            visibility: visible !important;
-        }
-        .branded-tours-load-more {
-            text-align: center;
-            margin-top: 60px;
-            display: none;
-        }
-        .branded-tours-load-more.visible {
-            display: block;
-        }
-        .branded-tours-load-more .neon-btn {
-            background: rgba(139, 0, 0, 0.3);
-            color: #fff;
-            border: 2px solid var(--xre-dark-red);
-            padding: 15px 40px;
-            font-size: 14px;
-            letter-spacing: 3px;
-        }
-        .branded-tours-loading {
-            grid-column: 1 / -1;
-            text-align: center;
-            color: #666;
-            padding: 40px;
-            font-size: 14px;
-            letter-spacing: 2px;
-        }
-        .branded-tours-empty {
-            grid-column: 1 / -1;
-            text-align: center;
-            color: #666;
-            padding: 60px 20px;
-            font-size: 16px;
-            letter-spacing: 2px;
-        }
-.share-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 10000;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        
-            touch-action: pan-y;
-            overscroll-behavior: contain;
-        }
-        .share-modal.active {
-            display: flex;
-            opacity: 1;
-        }
-        .share-modal-content {
-            background: linear-gradient(135deg, #1a0000 0%, #0a0000 100%);
-            border: 2px solid var(--xre-dark-red);
-            border-radius: 8px;
-            padding: 30px;
-            max-width: 480px;
-            width: 90%;
-            position: relative;
-            box-shadow: 0 0 60px rgba(139, 0, 0, 0.6), inset 0 0 30px rgba(139, 0, 0, 0.1);
-            transform: scale(0.9);
-            transition: transform 0.3s ease;
-        }
-        .share-modal.active .share-modal-content {
-            transform: scale(1);
-        }
-        .share-modal-close {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            background: rgba(139, 0, 0, 0.3);
-            border: 1px solid var(--xre-dark-red);
-            border-radius: 50%;
-            color: #fff;
-            font-size: 20px;
-            cursor: pointer;
-            transition: all 0.3s;
-            z-index: 10;
-            width: 32px;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .share-modal-close:hover {
-            background: var(--xre-red);
-            color: #fff;
-            transform: rotate(90deg);
-        }
-        .share-modal-title {
-            font-family: 'Orbitron', Impact, sans-serif;
-            font-size: 18px;
-            color: #fff;
-            text-align: center;
-            margin-bottom: 25px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-        .share-event-info {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 25px;
-            padding: 15px;
-            background: rgba(139, 0, 0, 0.15);
-            border-radius: 8px;
-            border: 1px solid rgba(139, 0, 0, 0.3);
-        }
-        .share-event-img {
-            width: 80px;
-            height: 80px;
-            object-fit: cover;
-            border-radius: 4px;
-            border: 1px solid rgba(139, 0, 0, 0.3);
-        }
-        .share-event-details {
-            flex: 1;
-        }
-        .share-event-name {
-            font-family: 'Orbitron', Impact, sans-serif;
-            font-size: 16px;
-            color: #fff;
-            margin-bottom: 5px;
-            letter-spacing: 1px;
-        }
-        .share-event-meta {
-            font-size: 12px;
-            color: rgba(255,255,255,0.7);
-            font-family: 'Courier New', monospace;
-        }
-        .share-event-tags {
-            margin-top: 8px;
-        }
-        .share-tag {
-            display: inline-block;
-            padding: 3px 10px;
-            background: rgba(139, 0, 0, 0.6);
-            color: #fff;
-            font-size: 10px;
-            border-radius: 3px;
-            margin-right: 5px;
-            margin-bottom: 3px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .share-platforms {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-        }
-        .share-platform-btn {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            padding: 12px 8px;
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(139, 0, 0, 0.4);
-            border-radius: 6px;
-            color: #fff;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .share-platform-btn:hover {
-            background: rgba(139, 0, 0, 0.3);
-            border-color: var(--xre-red);
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(139, 0, 0, 0.3);
-        }
-        .share-platform-icon {
-            width: 28px;
-            height: 28px;
-        }
-        .share-platform-name {
-            font-size: 10px;
-            text-align: center;
-            letter-spacing: 0.5px;
-        }
-        .download-btn {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            padding: 15px 20px;
-            margin-top: 25px;
-            background: rgba(139, 0, 0, 0.2);
-            border: 2px solid var(--xre-dark-red);
-            border-radius: 6px;
-            color: #fff;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            width: 100%;
-            font-family: 'Orbitron', Impact, sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .download-btn:hover {
-            background: var(--xre-dark-red);
-            transform: translateY(-3px);
-            box-shadow: 0 5px 20px rgba(139, 0, 0, 0.4);
-        }
-        .download-btn-icon {
-            width: 24px;
-            height: 24px;
-        }
-        .download-btn-text {
-            font-size: 12px;
-            font-weight: bold;
-            letter-spacing: 2px;
-        }
-        /* WeChat QR弹窗 */
-        .wechat-qr-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            z-index: 10001;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            cursor: pointer;
-        }
-        .wechat-qr-modal > * {
-            cursor: default;
-        }
-        .wechat-qr-modal.active {
-            display: flex;
-            opacity: 1;
-        }
-        .wechat-qr-content {
-            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
-            border: 2px solid var(--xre-dark-red);
-            border-radius: 8px;
-            padding: 30px;
-            text-align: center;
-            max-width: 320px;
-            transform: scale(0.9);
-            transition: transform 0.3s ease;
-        }
-        .wechat-qr-modal.active .wechat-qr-content {
-            transform: scale(1);
-        }
-        .wechat-qr-title {
-            font-family: 'Orbitron', Impact, sans-serif;
-            font-size: 16px;
-            color: #fff;
-            margin-bottom: 20px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-        .wechat-qr-code {
-            width: 200px;
-            height: 200px;
-            margin: 0 auto 15px;
-            background: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            color: #666;
-            border-radius: 4px;
-        }
-        .wechat-qr-hint {
-            font-size: 12px;
-            color: rgba(255,255,255,0.7);
-            margin-bottom: 15px;
-            line-height: 1.5;
-        }
-        .wechat-qr-close {
-            margin-top: 10px;
-            padding: 10px 30px;
-            background: var(--xre-dark-red);
-            color: #fff;
-            border: 2px solid var(--xre-red);
-            border-radius: 4px;
-            cursor: pointer;
-            font-family: 'Orbitron', Impact, sans-serif;
-            font-size: 12px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            transition: all 0.3s;
-        }
-        .wechat-qr-close:hover {
-            background: var(--xre-red);
-            box-shadow: 0 0 20px rgba(139, 0, 0, 0.5);
-        }
-        /* Hero Logo */
-        .hero-logo-bg {
-            position: absolute;
-            top: 8%;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 1;
-            pointer-events: none;
-            animation: fadeIn 2s ease-in-out forwards;
-        }
-        .hero-logo-bg img {
-            width: 680px;
-            height: 680px;
-            object-fit: contain;
-            animation: heroLogoBreathe 4s ease-in-out infinite, fadeIn 2s ease-in-out forwards;
-            filter: drop-shadow(0 0 30px rgba(139, 0, 0, 0.6));
-            opacity: 0;
-        }
-        @keyframes fadeIn {
-            0% { opacity: 0; }
-            100% { opacity: 0.7; }
-        }
-        @keyframes heroLogoBreathe {
-            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 20px rgba(139, 0, 0, 0.4)); }
-            50% { transform: scale(1.08); filter: drop-shadow(0 0 50px rgba(255, 0, 0, 0.8)); }
-        }
-
-        /* 响应式 */
-                /* 响应式 - 1024px */
-        
-        @keyframes shimmer {
-            0% { background-position: -200% center; }
-            100% { background-position: 200% center; }
-        }
-        .title-underline.shimmer::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            background-size: 200% 100%;
-            animation: shimmer 2s infinite;
-        }
-
-@media (max-width: 1024px) {
-            nav { padding: 0 30px; height: 70px; }
-            .logo-img { height: 40px; max-width: 180px; }
-            .nav-links { gap: 25px; }
-            .hero-content { margin-top: 100px; }
-            .hero-title { font-size: clamp(70px, 13vw, 120px); }
-            .hero-subtitle { font-size: clamp(20px, 3vw, 32px); margin-top: 30px; }
-            .artists-grid { grid-template-columns: repeat(3, 1fr); gap: 15px; }
-            .footer-container { gap: 30px; flex-direction: column; text-align: center; }
-            .footer-contact-left, .footer-contact-right { text-align: center; width: 100%; }
-            .social-links { flex-wrap: wrap; justify-content: center; max-width: 300px; margin: 0 auto 25px; }
-            .hero-logo-bg img { width: 600px; height: 600px; }
-            .branded-tours-container { grid-template-columns: repeat(2, 1fr); }
-            .branded-tour-card { max-width: none; }
-            .footer-bottom {
-                flex-direction: column;
-                gap: 10px;
-            }
-            .footer-legal {
-                order: 1;
-            }
-            .copyright {
-                order: 2;
-            }
-        }
-
-        /* 响应式 - 768px */
-        @media (max-width: 768px) {
-            .footer-bottom {
-                flex-direction: column;
-                gap: 10px;
-                padding: 15px;
-                margin: 0;
-            }
-            .footer-legal {
-                order: 1;
-                gap: 15px;
-            }
-            .copyright {
-                order: 2;
-            }
-            .footer-legal {
-                order: 1;
-                justify-content: center;
-                gap: 15px;
-            }
-            .copyright {
-                order: 2;
-            }
-            .footer-spacer {
-                display: none;
-            }
-            .artist-card { aspect-ratio: 750/360 !important; overflow: hidden; transform: translateZ(0); }
-            .artist-card img { width: 100% !important; height: 100% !important; object-fit: cover !important; }
-            .artist-card:hover img { filter: brightness(1.1) !important; }
-            .artist-card:active { transform: scale(0.98); }
-            nav { padding: 0 20px; height: 65px; }
-            .logo-img { height: 35px; max-width: 160px; }
-            .nav-links a { font-size: 11px; letter-spacing: 2px; }
-            .nav-links .neon-btn { padding: 8px 16px; font-size: 10px; }
-            .hero-content { margin-top: 80px; }
-            .hero-title { font-size: clamp(55px, 14vw, 80px); letter-spacing: 5px; }
-            .hero-subtitle { 
-                font-size: clamp(14px, 3.5vw, 20px); 
-                letter-spacing: 2px; 
-                margin-top: 15px;
-                text-align: center;
-                line-height: 1.5;
-            }
-            .hero-subtitle .line1, .hero-subtitle .line2, .hero-subtitle .line3 {
-                display: block;
-                white-space: normal;
-                text-align: center;
-            }
-
-            .artists-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 0 15px; }
-            .artist-name-below { font-size: 14px; }
-            .footer-gap { height: 100px; }
-            .footer-main { padding: 40px 30px 30px; }
-            .footer-container { flex-direction: column; gap: 30px; text-align: center; }
-            .footer-contact-left, .footer-contact-right { text-align: center; flex: 1; width: 100%; }
-            .form-row { grid-template-columns: 1fr; }
-            .hero-logo-bg img { width: 450px; height: 450px; }
-
-            /* BRANDED TOURS - 768px */
-            .branded-tours-container { grid-template-columns: 1fr; padding: 0 20px; }
-            .branded-tour-card { max-width: none; aspect-ratio: 2/3; }
-            .branded-tour-content { padding: 60px 20px 30px; }
-            .branded-tour-name { font-size: 18px; }
-            .branded-tour-details { font-size: 12px; }
-            .branded-tour-venue { font-size: 11px; }
-            .branded-tour-btn { padding: 10px 25px; font-size: 11px; }
-            .branded-tour-status { top: 15px; right: 15px; padding: 6px 12px; font-size: 11px; }
-            /* 移动端分享按钮默认隐藏，hover/active状态显示 */
-            .branded-tour-share { 
-                width: 40px; 
-                height: 40px; 
-                top: 15px; 
-                left: 15px; 
-                opacity: 0;
-                border: 2px solid var(--xre-red);
-            }
-            .branded-tour-card:hover .branded-tour-share,
-            .branded-tour-card.active .branded-tour-share {
-                opacity: 1;
-            }
-            .share-platforms { grid-template-columns: repeat(4, 1fr); gap: 8px; }
-            .share-platform-btn { padding: 10px 5px; }
-            .share-platform-icon { width: 22px; height: 22px; }
-            .share-platform-name { font-size: 9px; }
-        }
-
-        /* 响应式 - 480px */
-        @media (max-width: 480px) {
-            .footer-bottom {
-                gap: 8px;
-            }
-            .artist-card { aspect-ratio: 750/360 !important; overflow: hidden; transform: translateZ(0); }
-            .artist-card img { width: 100% !important; height: 100% !important; object-fit: cover !important; }
-            .artist-card:hover img { filter: brightness(1.1) !important; }
-            .artist-card:active { transform: scale(0.98); }
-            nav { padding: 0 15px; height: 60px; }
-            .logo-img { height: 32px; max-width: 140px; }
-            .nav-links { gap: 12px; }
-            .nav-links a { font-size: 10px; letter-spacing: 1px; }
-            .nav-links .neon-btn { padding: 6px 14px; font-size: 9px; }
-            .hero-content { margin-top: 60px; }
-            .hero-title { font-size: clamp(45px, 13vw, 65px); letter-spacing: 4px; }
-            .hero-subtitle { 
-                font-size: clamp(11px, 3vw, 14px); 
-                letter-spacing: 1.5px; 
-                margin-top: 10px;
-                text-align: center;
-                line-height: 1.5;
-            }
-            .hero-subtitle .line1, .hero-subtitle .line2, .hero-subtitle .line3 {
-                display: block;
-                white-space: normal;
-                text-align: center;
-            }
-
-            .artists-grid { gap: 12px; padding: 0 10px; }
-            .artist-name-below { font-size: 12px; }
-            .footer-gap { height: 80px; }
-            .footer-main { padding: 35px 25px 25px; }
-            .footer-logo { font-size: 28px; }
-            .social-icon { width: 40px; height: 40px; }
-            .contact-item { font-size: 11px; }
-            .footer-legal a { font-size: 10px; }
-            .modal-content { padding: 30px 20px; }
-            .modal-content h2 { font-size: 22px; }
-            .hero-logo-bg img { width: 320px; height: 320px; }
-
-            /* BRANDED TOURS - 480px */
-            .branded-tours-section { padding: 60px 0; }
-            .branded-tour-card { aspect-ratio: 2/3; }
-            .branded-tour-content { padding: 50px 15px 25px; }
-            .branded-tour-name { font-size: 16px; }
-            .branded-tour-btn { padding: 10px 25px; font-size: 11px; }
-            .branded-tour-status { font-size: 10px; padding: 5px 10px; top: 10px; right: 10px; }
-            /* 移动端分享按钮默认隐藏，hover/active状态显示 */
-            .branded-tour-share { 
-                width: 36px; 
-                height: 36px; 
-                top: 10px; 
-                left: 10px; 
-                opacity: 0;
-                border: 2px solid var(--xre-red);
-            }
-            .branded-tour-card:hover .branded-tour-share,
-            .branded-tour-card.active .branded-tour-share {
-                opacity: 1;
-            }
-        }
-
-        /* 响应式 - 375px */
-        
-        
-
-@media (max-width: 375px) {
-            .hero-title { font-size: 38px; letter-spacing: 3px; }
-            .hero-subtitle { 
-                font-size: 10px; 
-                text-align: center;
-                line-height: 1.5;
-            }
-            .hero-subtitle .line1, .hero-subtitle .line2, .hero-subtitle .line3 {
-                display: block;
-                white-space: normal;
-                text-align: center;
-            }
-            .artists-grid { gap: 10px; padding: 0 8px; }
-            .footer-logo { font-size: 24px; }
-            .social-icon { width: 38px; height: 38px; }
-            .contact-item { font-size: 10px; }
-            .branded-tour-name { font-size: 16px; }
-        }
-        /* POSTER AD SECTION - 使用背景图 */
-        .poster-ad-section {
-            width: 100%;
-            padding: 0;
-            background-image: url('images/xre-adbg.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            position: relative;
-            border-top: none;
-        }
-
-        .poster-ad-container {
-            width: 100%;
-            max-width: none;
-            margin: 0;
-            display: grid;
-            grid-template-columns: 33.333% 33.333% 33.333%;
-            gap: 0;
-            padding: 0;
-            position: relative;
-            min-height: 100vh;
-        }
-
-        /* 左侧海报 - 满屏高度 */
-        .poster-ad-left {
-            position: relative;
-            display: flex;
-            align-items: stretch;
-            justify-content: center;
-            padding: 0;
-            background: transparent;
-            min-height: 100vh;
-            height: 100vh;
-            overflow: hidden;
-        }
-
-        .poster-wrapper {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            border: none;
-            box-shadow: none;
-            margin: 0;
-        }
-
-        .poster-ad-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
-            display: block;
-        }
-
-        /* 中间广告栏样式 */
-        .poster-ad-middle {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 0;
-            background: rgba(0, 0, 0, 0.2);
-            min-height: 100vh;
-        }
-
-        .middle-top, .middle-bottom {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 60px 40px;
-            position: relative;
-            align-items: center;
-            text-align: center;
-        }
-
-        .middle-top {
-            border-bottom: 1px solid rgba(139, 0, 0, 0.3);
-        }
-
-        .content-left, .content-right {
-            max-width: 90%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
-
-        .ad-underline {
-            width: 80px;
-            height: 3px;
-            background: var(--xre-red);
-            margin: 0 auto 25px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .ad-buttons {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .ad-title {
-            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            font-size: clamp(24px, 2.5vw, 36px);
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: #fff;
-            margin-bottom: 15px;
-            line-height: 1.1;
-            text-shadow: 0 0 20px rgba(139, 0, 0, 0.5);
-        }
-
-        .ad-description {
-            font-family: 'Courier New', monospace;
-            font-size: 13px;
-            line-height: 1.8;
-            color: rgba(255, 255, 255, 0.85);
-            margin-bottom: 30px;
-            letter-spacing: 0.5px;
-        }
-
-        .ad-btn {
-            display: inline-block;
-            background: rgba(139, 0, 0, 0.3);
-            color: #fff;
-            border: 2px solid var(--xre-dark-red);
-            padding: 12px 30px;
-            font-family: 'Orbitron', Impact, sans-serif;
-            font-size: 12px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            text-decoration: none;
-            cursor: pointer;
-            transition: all 0.4s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .ad-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        .ad-btn:hover::before {
-            left: 100%;
-        }
-
-        .ad-btn:hover {
-            background: var(--xre-dark-red);
-            border-color: var(--xre-red);
-            box-shadow: 0 0 30px rgba(139, 0, 0, 0.8);
-            transform: scale(1.05);
-            letter-spacing: 3px;
-        }
-
-        .ad-btn.disabled-btn {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .ad-btn.disabled-btn:hover {
-            background: rgba(139, 0, 0, 0.3);
-            border-color: var(--xre-dark-red);
-            box-shadow: none;
-            transform: none;
-            letter-spacing: 2px;
-        }
-
-        /* 右侧播放器区 */
-        .poster-ad-right {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        .player-spotify {
-            flex: 0 0 calc(60% + 100px);
-            height: calc(60% + 100px);
-            background: #000;
-        }
-
-        .player-spotify iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        .player-bottom-container {
-            flex: 0 0 calc(40% - 100px);
-            height: calc(40% - 100px);
-            min-height: 176px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .player-btn {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 20px 25px;
-            text-decoration: none;
-            border: 2px solid rgba(139, 0, 0, 0.5);
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-            min-height: 276px;
-            max-height: 276px;
-        }
-
-        .player-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-            transition: left 0.5s;
-        }
-
-        .player-btn:hover::before {
-            left: 100%;
-        }
-
-        .player-qq {
-            background: linear-gradient(135deg, rgba(49, 194, 124, 0.25) 0%, rgba(42, 168, 105, 0.25) 100%);
-            border-bottom: 1px solid rgba(139, 0, 0, 0.3);
-        }
-
-        .player-qq:hover {
-            border-color: #31c27c;
-            box-shadow: 0 0 20px rgba(49, 194, 124, 0.4);
-        }
-
-        .player-netease {
-            background: linear-gradient(135deg, rgba(198, 47, 47, 0.25) 0%, rgba(168, 42, 42, 0.25) 100%);
-            border-top: 1px solid rgba(139, 0, 0, 0.3);
-        }
-
-        .player-netease:hover {
-            border-color: #c62f2f;
-            box-shadow: 0 0 20px rgba(198, 47, 47, 0.4);
-        }
-
-        .player-btn-content {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            z-index: 2;
-        }
-
-        .player-platform {
-            font-family: 'Orbitron', Impact, sans-serif;
-            font-size: 14px;
-            letter-spacing: 2px;
-            color: #fff;
-            text-transform: uppercase;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .player-platform-logo {
-            width: 24px;
-            height: 24px;
-            opacity: 0.8;
-        }
-
-        .player-song {
-            font-family: 'Courier New', monospace;
-            font-size: 13px;
-            color: rgba(255, 255, 255, 0.9);
-            font-weight: bold;
-        }
-
-        .player-artist {
-            font-family: 'Courier New', monospace;
-            font-size: 11px;
-            color: rgba(255, 255, 255, 0.6);
-        }
-
-        .player-play-icon {
-            width: 50px;
-            height: 50px;
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            z-index: 2;
-        }
-
-        .player-btn:hover .player-play-icon {
-            transform: scale(1.1);
-            background: #fff;
-        }
-
-        .player-play-icon svg {
-            width: 24px;
-            height: 24px;
-            fill: #000;
-            margin-left: 3px;
-        }
-
-        /* POSTER AD 响应式 - 移动端 (991px及以下) */
-        @media (max-width: 991px) {
-            .poster-ad-container {
-                display: block !important;
-                width: 100% !important;
-                margin: 0 !important;
-                padding: 0 !important;
-                line-height: 0 !important;
-                font-size: 0 !important;
-                min-height: auto !important;
-                height: auto !important;
-                grid-template-columns: none !important;
-            }
-
-            /* 第一排：海报（全屏宽度，等比例完整显示） */
-            .poster-ad-left {
-                width: 100% !important;
-                display: block !important;
-                padding: 0 !important;
-                margin: 0 !important;
-                float: none !important;
-                position: relative !important;
-                aspect-ratio: auto !important;
-                grid-column: auto !important;
-                grid-row: auto !important;
-                line-height: 0 !important;
-                font-size: 0 !important;
-                min-height: auto !important;
-                height: auto !important;
-            }
-            .poster-wrapper {
-                width: 100% !important;
-                height: auto !important;
-                display: block !important;
-                line-height: 0 !important;
-                font-size: 0 !important;
-                position: relative !important;
-            }
-            .poster-ad-image {
-                width: 100% !important;
-                height: auto !important;
-                object-fit: contain !important;
-                display: block !important;
-                margin: 0 !important;
-                padding: 0 !important;
-                border: none !important;
-                line-height: 0 !important;
-                font-size: 0 !important;
-                vertical-align: top !important;
-            }
-
-            /* 第二排：2个广告栏上下排列（全屏宽度） */
-            .poster-ad-middle {
-                width: 100% !important;
-                display: block !important;
-                margin: 0 !important;
-                padding: 0 !important;
-                float: none !important;
-                aspect-ratio: auto !important;
-                grid-column: auto !important;
-                grid-row: auto !important;
-                line-height: 0 !important;
-                font-size: 0 !important;
-                min-height: auto !important;
-                height: auto !important;
-            }
-            .middle-top, .middle-bottom {
-                width: 100% !important;
-                display: flex !important;
-                flex-direction: column !important;
-                align-items: center !important;
-                justify-content: center !important;
-                text-align: center !important;
-                padding: 30px 20px !important;
-                margin: 0 !important;
-                line-height: normal !important;
-                font-size: initial !important;
-                min-height: auto !important;
-                height: auto !important;
-                flex: none !important;
-            }
-            .middle-top {
-                border-bottom: 1px solid rgba(139, 0, 0, 0.3) !important;
-            }
-            .content-left, .content-right {
-                width: 100% !important;
-                max-width: 500px !important;
-            }
-            .ad-title {
-                font-size: clamp(20px, 5vw, 28px) !important;
-                margin: 0 0 10px 0 !important;
-                padding: 0 !important;
-                line-height: 1.2 !important;
-            }
-            .ad-underline {
-                margin: 0 auto 15px auto !important;
-                padding: 0 !important;
-                width: 60px !important;
-                height: 3px !important;
-                line-height: 0 !important;
-            }
-            .ad-description {
-                font-size: clamp(13px, 3vw, 16px) !important;
-                margin: 0 0 20px 0 !important;
-                padding: 0 !important;
-                line-height: 1.6 !important;
-            }
-            .ad-buttons {
-                display: flex !important;
-                gap: 15px !important;
-                justify-content: center !important;
-                flex-wrap: wrap !important;
-                margin: 0 !important;
-                padding: 0 !important;
-                line-height: normal !important;
-            }
-            .ad-btn {
-                padding: 12px 25px !important;
-                font-size: clamp(12px, 2.5vw, 14px) !important;
-                margin: 0 !important;
-                line-height: normal !important;
-            }
-
-            /* 第三排：Spotify播放器（全屏宽度，高度276px） */
-            .poster-ad-right {
-                width: 100% !important;
-                display: block !important;
-                margin: 0 !important;
-                padding: 0 !important;
-                grid-column: auto !important;
-                grid-row: auto !important;
-                line-height: 0 !important;
-                font-size: 0 !important;
-                min-height: auto !important;
-                height: auto !important;
-            }
-            .player-spotify {
-                width: 100% !important;
-                height: 552px !important;
-                min-height: 552px !important;
-                max-height: 552px !important;
-                display: block !important;
-                margin: 0 !important;
-                padding: 0 !important;
-                border: none !important;
-                line-height: 0 !important;
-                font-size: 0 !important;
-                vertical-align: top !important;
-            }
-            .player-spotify iframe {
-                width: 100% !important;
-                height: 552px !important;
-                min-height: 552px !important;
-                max-height: 552px !important;
-                display: block !important;
-                margin: 0 !important;
-                padding: 0 !important;
-                border: none !important;
-                line-height: 0 !important;
-                font-size: 0 !important;
-                vertical-align: top !important;
-            }
-
-            /* 第四排：QQ音乐 + 网易云并排（各50%，高度276px） */
-            .player-bottom-container {
-                width: 100% !important;
-                height: 276px !important;
-                min-height: 276px !important;
-                max-height: 276px !important;
-                display: flex !important;
-                flex-direction: row !important;
-                margin: 0 !important;
-                padding: 0 !important;
-                line-height: 0 !important;
-                font-size: 0 !important;
-                overflow: hidden !important;
-            }
-            .player-btn {
-                width: 50% !important;
-                height: 276px !important;
-                min-height: 276px !important;
-                max-height: 276px !important;
-                display: flex !important;
-                align-items: center !important;
-                justify-content: space-between !important;
-                padding: 20px !important;
-                margin: 0 !important;
-                box-sizing: border-box !important;
-                flex: none !important;
-                border: 2px solid rgba(139, 0, 0, 0.5) !important;
-                border-top: none !important;
-                line-height: normal !important;
-                font-size: initial !important;
-                overflow: hidden !important;
-                position: relative !important;
-            }
-            .player-btn-content {
-                max-height: 100% !important;
-                overflow: hidden !important;
-            }
-            .player-play-icon {
-                flex-shrink: 0 !important;
-            }
-            .player-netease {
-                border-left: 1px solid rgba(139, 0, 0, 0.3) !important;
-            }
-        }
-
-            /* 第四排：QQ音乐 + 网易云并排（各50%，高度276px） */
-            .player-bottom-container {
-                width: 100% !important;
-                height: 276px !important;
-                min-height: 276px !important;
-                max-height: 276px !important;
-                display: flex !important;
-                flex-direction: row !important;
-                margin: 0 !important;
-                padding: 0 !important;
-                line-height: 0 !important;
-                font-size: 0 !important;
-            }
-            .player-btn {
-                width: 50% !important;
-                height: 276px !important;
-                min-height: 276px !important;
-                max-height: 276px !important;
-                display: flex !important;
-                align-items: center !important;
-                justify-content: space-between !important;
-                padding: 20px !important;
-                margin: 0 !important;
-                box-sizing: border-box !important;
-                flex: none !important;
-                border: 2px solid rgba(139, 0, 0, 0.5) !important;
-                border-top: none !important;
-                line-height: normal !important;
-                font-size: initial !important;
-            }
-            .player-netease {
-                border-left: 1px solid rgba(139, 0, 0, 0.3) !important;
-            }
-        }
-
-        /* POSTER AD 响应式 - 小屏手机 (480px及以下) */
-        @media (max-width: 480px) {
-            .middle-top, .middle-bottom {
-                padding: 25px 15px !important;
-            }
-            .ad-title {
-                font-size: 18px !important;
-            }
-            .ad-description {
-                font-size: 12px !important;
-            }
-            .ad-btn {
-                padding: 10px 20px !important;
-                font-size: 11px !important;
-            }
-            /* 播放器样式继承991px定义 */
-        }
-
-        /* POSTER AD 响应式 - 超小屏手机 (375px及以下) */
-        @media (max-width: 375px) {
-            .middle-top, .middle-bottom {
-                padding: 20px 15px !important;
-            }
-            .ad-title {
-                font-size: 16px !important;
-            }
-            .ad-description {
-                font-size: 11px !important;
-            }
-            .ad-btn {
-                padding: 8px 16px !important;
-                font-size: 10px !important;
-            }
-            /* 播放器样式继承991px定义 */
-        }
-
-
-        
-</style>
-
-    <!-- Service Worker 注册 -->
-    <script>
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js')
-                    .then((registration) => {
-                        console.log('SW registered:', registration.scope);
-                    })
-                    .catch((error) => {
-                        console.log('SW registration failed:', error);
-                    });
-            });
-        }
-    </script>
+        .modal-content { background: linear-gradient(135deg, #1a0000 0%, #0a0000 100%); border: 2px solid var(--xre-dark-red); padding: 35px 30px; max-width: 450px; width: 100%; max-height: 90vh; overflow-y: auto; position: relative; }
+        .modal-close { position: absolute; top: 15px; right: 20px; font-size: 28px; color: #666; cursor: pointer; background: none; border: none; }
+        .modal-close:hover { color: var(--xre-red); }
+        .modal-content h2 { font-size: 24px; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 8px; color: #fff; text-align: center; }
+        .modal-content p { font-size: 12px; color: var(--mad-silver); text-align: center; margin-bottom: 20px; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--mad-silver); margin-bottom: 5px; }
+        .form-group input, .form-group textarea { width: 100%; padding: 10px; background: rgba(0, 0, 0, 0.6); border: 1px solid var(--xre-red); color: #fff; font-size: 14px; font-family: inherit; }
+        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--xre-red); box-shadow: 0 0 10px rgba(139, 0, 0, 0.3); }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .site-footer { background: #000; color: #c0c0c0; padding: 40px 0 20px; }
+        .footer-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 30px; padding: 0 40px; }
+        .footer-contact-left, .footer-contact-right { font-family: 'Courier New', monospace; font-size: 12px; line-height: 1.8; }
+        .footer-contact-left a, .footer-contact-right a { color: #c0c0c0; text-decoration: none; }
+        .footer-contact-left a:hover { color: var(--xre-red); }
+        .footer-brand { text-align: center; }
+        .footer-logo { font-size: 36px; letter-spacing: 3px; margin-bottom: 15px; }
+        .footer-logo .xre { color: var(--xre-dark-red); }
+        .footer-logo .booking { color: #c0c0c0; }
+        .social-links { display: flex; gap: 12px; justify-content: center; margin-bottom: 15px; }
+        .social-icon { width: 40px; height: 40px; border: 1px solid #666; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #c0c0c0; text-decoration: none; transition: all 0.3s; }
+        .social-icon:hover { border-color: var(--xre-red); color: var(--xre-red); transform: translateY(-2px); }
+        .social-icon svg { width: 18px; height: 18px; fill: currentColor; }
+        .producer-section { text-align: center; }
+        .producer-label { font-size: 9px; color: #666; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 5px; }
+        .producer-logo { height: 30px; opacity: 0.8; }
+        .footer-bottom { border-top: 1px solid #222; margin-top: 30px; padding-top: 20px; display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; }
+        .footer-bottom a { color: #666; text-decoration: none; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; }
+        .footer-bottom a:hover { color: var(--xre-red); }
+        .copyright { color: #555; font-size: 10px; letter-spacing: 1px; }
+        @media (max-width: 1024px) { nav { padding: 0 30px; height: 70px; } .nav-links { gap: 25px; } .artists-grid { grid-template-columns: repeat(2, 1fr); } .branded-tours-container { grid-template-columns: repeat(2, 1fr); } .footer-container { flex-direction: column; text-align: center; } }
+        @media (max-width: 768px) { nav { padding: 0 20px; height: 60px; } .logo-img { height: 35px; } .nav-links { gap: 15px; } .nav-links a { font-size: 11px; letter-spacing: 2px; } .neon-btn { padding: 8px 16px; font-size: 10px; } .hero-title { font-size: clamp(45px, 12vw, 70px); } .hero-subtitle { font-size: clamp(12px, 3vw, 16px); } .artists-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; } .artist-name-below { font-size: 14px; } .branded-tours-container { grid-template-columns: 1fr; } .branded-tour-card { max-width: 400px; margin: 0 auto; } .branded-tour-share { opacity: 1; } .share-platforms { grid-template-columns: repeat(4, 1fr); } .form-row { grid-template-columns: 1fr; } .footer-container { padding: 0 20px; } }
+        @media (max-width: 480px) { .hero-title { font-size: 38px; } .artists-grid { gap: 10px; padding: 0 10px; } .share-modal-content { padding: 20px; } .share-platforms { grid-template-columns: repeat(3, 1fr); } }
+    </style>
 </head>
-
 <body>
     <div class="loading" id="loading">
-        <img src="images/xrelogoL.png" alt="XRE BOOKING" style="height: 60px; animation: logoBreathe 2s ease-in-out infinite;">
+        <img src="images/xrelogoL.png" alt="XRE BOOKING" style="height: 50px; animation: logoBreathe 2s ease-in-out infinite;">
     </div>
 
-    
-
-    <!-- 导航栏 -->
     <nav>
-        <img src="images/xrelogoL.png" alt="XRE BOOKING" class="logo-img" id="logo" onclick="location.href='./index.html'">
+        <img src="images/xrelogoL.png" alt="XRE BOOKING" class="logo-img" onclick="location.href='./index.html'">
         <div class="nav-links">
             <a href="https://www.livegigsasia.com/events.html">EVENTS</a>
             <a href="https://www.livegigsasia.com/partners.html">Partners</a>
@@ -2046,290 +136,102 @@
         </div>
     </nav>
 
-    <!-- HERO区域 -->
     <section class="hero">
         <div class="hero-bg"></div>
-        <div class="smoke-container">
-            <div class="smoke"></div>
-            <div class="smoke"></div>
-            <div class="smoke"></div>
-        </div>
         <div class="hero-overlay"></div>
-        <div class="hero-logo-bg">
-            <img src="images/webtop.png" alt="" loading="eager">
-        </div>
         <div class="hero-content">
-            <h1 class="hero-title">
-                <span class="gray">XRE</span><span class="red">BOOKING</span>
-            </h1>
+            <h1 class="hero-title">XREBOOKING</h1>
             <p class="hero-subtitle">
-                <span class="line1">Booking Agency in Punkrock, Garage, Mod,</span>
-                <span class="line2">Powerpop, Surf, Poppunk, RocknRoll,</span>
-                <span class="line3">Hardcore, Metal.</span>
+                Booking Agency in Punkrock, Garage, Mod,<br>
+                Powerpop, Surf, Poppunk, RocknRoll,<br>
+                Hardcore, Metal.
             </p>
         </div>
     </section>
 
-    <!-- 内容包装器 -->
     <div class="content-wrapper">
-        <!-- FEATURED ARTISTS区域 -->
         <section class="artists-section">
             <h2 class="section-title">FEATURED ARTISTS</h2>
-            <div class="title-underline shimmer"></div>
+            <div class="title-underline"></div>
             <div class="artists-grid" id="artistsGrid"></div>
         </section>
 
-        <!-- BRANDED TOURS区域 -->
         <section class="branded-tours-section">
-            <h2 class="section-title branded-title">BRANDED TOURS</h2>
-            <div class="title-underline shimmer"></div>
-            <div class="branded-tours-container" id="brandedToursContainer"></div>
+            <h2 class="section-title" style="color: #fff;">BRANDED TOURS</h2>
+            <div class="title-underline"></div>
+            <div class="branded-tours-container" id="brandedToursContainer">
+                <div style="grid-column: 1/-1; text-align: center; padding: 40px; color: #666;">LOADING TOURS...</div>
+            </div>
             <div class="branded-tours-load-more" id="brandedToursLoadMore">
                 <button class="neon-btn" onclick="loadMoreBrandedTours()">LOAD MORE</button>
             </div>
         </section>
 
-        <!-- POSTER AD SECTION -->
-        <section class="poster-ad-section">
-            <div class="poster-ad-container">
-                <!-- 左侧海报 - 满屏高度，2:3比例 -->
-                <div class="poster-ad-left">
-                    <div class="poster-wrapper">
-                        <img src="https://livegigsasia.com/image/1-b-2.jpg" alt="Punk Heart Fest" class="poster-ad-image">
-                    </div>
-                </div>
-
-                <!-- 中间内容区 -->
-                <div class="poster-ad-middle">
-                    <!-- 上半部分 - Punk Heart Fest - 偏左对齐 -->
-                    <div class="middle-top">
-                        <div class="content-left">
-                            <h3 class="ad-title">PUNK HEART FEST</h3>
-                            <div class="title-underline ad-underline shimmer"></div>
-                            <p class="ad-description">
-                                China's indoor punk festival IP, founded in 2023. We connect local & international punk bands, bringing raw live energy and community spirit. UP THE PUNX – Freedom, Rebellion, Authenticity & Unity.
-                            </p>
-                            <div class="ad-buttons">
-                                <a href="http://punkheartfest.com" class="neon-btn ad-btn" target="_blank">朋克心音樂節</a>
-                                <button class="neon-btn ad-btn disabled-btn">Tickets</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- 分割线 -->
-                    <div class="middle-divider"></div>
-
-                    <!-- 下半部分 - Chinese Rocks Charts - 偏右对齐 -->
-                    <div class="middle-bottom">
-                        <div class="content-right">
-                            <h3 class="ad-title">CHINESE ROCKS CHARTS</h3>
-                            <div class="title-underline ad-underline shimmer"></div>
-                            <p class="ad-description">
-                                A platform dedicated to Chinese rock and punk music. Showcasing best tracks, bands and latest scene updates.
-                            </p>
-                            <div class="ad-buttons">
-                                <a href="http://chineserocks.net" class="neon-btn ad-btn" target="_blank">ChineseRocks.net</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 右侧播放器区 -->
-                <div class="poster-ad-right">
-                    <!-- Spotify 播放器 - 占50%+ -->
-                    <div class="player-spotify">
-                        <iframe src="https://open.spotify.com/embed/playlist/6xZPXG1qFVxlxZf8v63S0W?utm_source=generator&theme=0" 
-                                width="100%" 
-                                height="100%" 
-                                frameborder="0" 
-                                allowfullscreen="" 
-                                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
-                                loading="lazy">
-                        </iframe>
-                    </div>
-
-                    <!-- 底部QQ音乐和网易云 - 竖着等比例排列 -->
-                    <div class="player-bottom-container">
-                        <!-- QQ音乐 - 外链 -->
-                        <a href="https://i2.y.qq.com/n3/other/pages/details/playlist.html?id=9674279142&hosteuin=" 
-                           class="player-btn player-qq" 
-                           target="_blank">
-                            <div class="player-btn-content">
-                                <div class="player-platform">
-                                    <svg class="player-platform-logo" viewBox="0 0 24 24" fill="#31c27c">
-                                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15v-2h2v2h-2zm0-4V7h2v6H10zm4 4v-2h2v2h-2zm0-4V7h2v6h-2z"/>
-                                    </svg>
-                                    QQ音乐
-                                </div>
-                                <div class="player-song">Chinese Rocks Chart</div>
-                                <div class="player-artist">Various Artists</div>
-                            </div>
-                            <div class="player-play-icon">
-                                <svg viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M8 5v14l11-7z"/>
-                                </svg>
-                            </div>
-                        </a>
-
-                        <!-- 网易云音乐 - 与QQ音乐统一风格 -->
-                        <a href="https://163cn.tv/2tWDD7j" 
-                           class="player-btn player-netease" 
-                           target="_blank">
-                            <div class="player-btn-content">
-                                <div class="player-platform">
-                                    <svg class="player-platform-logo" viewBox="0 0 24 24" fill="#c62f2f">
-                                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15v-2h2v2h-2zm0-4V7h2v6H10zm4 4v-2h2v2h-2zm0-4V7h2v6h-2z"/>
-                                    </svg>
-                                    网易云音乐
-                                </div>
-                                <div class="player-song">Chinese Rocks Chart</div>
-                                <div class="player-artist">Various Artists</div>
-                            </div>
-                            <div class="player-play-icon">
-                                <svg viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M8 5v14l11-7z"/>
-                                </svg>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-
-        <!-- 间隙区域 -->
-        <div class="footer-gap"></div>
-
-        <!-- 底部区域 -->
         <footer class="site-footer">
-            <div class="footer-main">
-                <div class="footer-container">
-                    <div class="footer-contact-left">
-                        <div class="contact-item">
-                            <a href="mailto:xrebooking@hotmail.com">xrebooking@hotmail.com</a>
-                        </div>
-                        <div class="contact-item">
-                            <a href="tel:+86-010-6874-5456">+86 010 6874 5456</a>
-                        </div>
+            <div class="footer-container">
+                <div class="footer-contact-left">
+                    <div><a href="mailto:xrebooking@hotmail.com">xrebooking@hotmail.com</a></div>
+                    <div><a href="tel:+86-010-6874-5456">+86 010 6874 5456</a></div>
+                </div>
+                <div class="footer-brand">
+                    <div class="footer-logo"><span class="xre">XRE</span><span class="booking">BOOKING</span></div>
+                    <div class="social-links">
+                        <a href="https://facebook.com/xrebooking" class="social-icon" target="_blank">
+                            <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                        </a>
+                        <a href="https://instagram.com/xrebooking" class="social-icon" target="_blank">
+                            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069z"/></svg>
+                        </a>
+                        <a href="https://x.com/xrebooking" class="social-icon" target="_blank">
+                            <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                        </a>
+                        <a href="https://weibo.com/u/2069556322" class="social-icon" target="_blank">
+                            <svg viewBox="0 0 24 24"><path d="M10.098 20.323c-3.977.391-7.414-1.406-7.672-4.02-.259-2.609 2.759-5.047 6.74-5.441 3.979-.394 7.413 1.404 7.671 4.018.259 2.6-2.759 5.049-6.737 5.439l-.002.004z"/></svg>
+                        </a>
                     </div>
-                    <div class="footer-brand">
-                        <div class="footer-logo">
-                            <span class="xre">XRE</span><span class="booking">BOOKING</span>
-                        </div>
-                        <div class="social-links">
-                            <!-- 前4个 - LiveGigs风格 -->
-                            <a href="https://facebook.com/xrebooking" class="social-icon" title="Facebook" target="_blank">
-                                <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-                            </a>
-                            <a href="https://instagram.com/xrebooking" class="social-icon" title="Instagram" target="_blank">
-                                <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-                            </a>
-                            <span class="social-icon" title="YouTube (Coming Soon)" style="cursor: default;">
-                                <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-                            </span>
-                            <a href="https://x.com/xrebooking" class="social-icon" title="X" target="_blank">
-                                <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                            </a>
-                            <!-- 后4个 - CN风格（改色） -->
-                            <a href="https://weibo.com/u/2069556322" class="social-icon" title="微博" target="_blank">
-                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M10.098 20.323c-3.977.391-7.414-1.406-7.672-4.02-.259-2.609 2.759-5.047 6.74-5.441 3.979-.394 7.413 1.404 7.671 4.018.259 2.6-2.759 5.049-6.737 5.439l-.002.004zM9.05 17.219c-.384.616-1.208.884-1.829.602-.612-.279-.793-.991-.406-1.593.379-.595 1.176-.861 1.793-.601.622.263.82.972.442 1.592zm1.27-1.627c-.141.237-.449.353-.689.253-.236-.09-.313-.361-.177-.586.138-.227.436-.346.672-.24.239.09.315.36.18.573h.014zm.176-2.719c-1.893-.493-4.033.45-4.857 2.118-.836 1.704-.026 3.591 1.886 4.21 1.983.64 4.318-.341 5.132-2.179.8-1.793-.201-3.642-2.161-4.149zm7.563-1.224c-.346-.105-.579-.18-.405-.649.381-1.025.421-1.905.001-2.535-.789-1.188-2.924-1.109-5.382-.031 0 0-.768.334-.571-.271.383-1.217.324-2.229-.268-2.816-1.344-1.336-4.918.045-7.985 3.088C2.013 10.878.784 13.447.784 15.658c0 4.226 5.407 6.804 10.695 6.804 6.936 0 11.551-4.021 11.551-7.21 0-1.925-1.628-3.013-2.971-3.403z"/>
-                                </svg>
-                            </a>
-                            <a href="https://www.xiaohongshu.com/user/profile/64a076b2000000001c0292cc" class="social-icon" title="小红书" target="_blank">
-                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.615 14.615h-2.77v-3.077h-3.69v3.077h-2.77V7.385h2.77v3.077h3.69V7.385h2.77v9.23z"/>
-                                </svg>
-                            </a>
-                            <span class="social-icon" title="微信公众号: livegigspro" style="cursor: default;">
-                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 0 1 .213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 0 0 .167-.054l1.903-1.114a.864.864 0 0 1 .717-.098 10.16 10.16 0 0 0 2.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348zM5.785 5.991c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178A1.17 1.17 0 0 1 4.623 7.17c0-.651.52-1.18 1.162-1.18zm5.813 0c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178 1.17 1.17 0 0 1-1.162-1.178c0-.651.52-1.18 1.162-1.18zm5.34 2.867c-1.797-.052-3.746.512-5.28 1.786-1.72 1.428-2.687 3.72-1.78 6.22.942 2.453 3.666 4.229 6.884 4.229.826 0 1.622-.12 2.361-.336a.722.722 0 0 1 .598.082l1.584.926a.272.272 0 0 0 .14.047c.134 0 .24-.111.24-.247 0-.06-.023-.12-.038-.177l-.327-1.233a.582.582 0 0 1-.023-.156.49.49 0 0 1 .201-.398C23.024 18.48 24 16.82 24 14.98c0-3.21-2.931-5.837-6.656-6.088V8.89c-.135-.01-.27-.027-.407-.032zm-2.53 3.274c.535 0 .969.44.969.982a.976.976 0 0 1-.969.983.976.976 0 0 1-.969-.983c0-.542.434-.982.97-.982zm4.844 0c.535 0 .969.44.969.982a.976.976 0 0 1-.969.983.976.976 0 0 1-.969-.983c0-.542.434-.982.969-.982z"/>
-                                </svg>
-                            </span>
-                            <a href="https://wxaurl.cn/HMcAK6R7fou" class="social-icon" title="小程序" target="_blank">
-                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-2h2v2zm0-4h-2V7h2v6zm4 4h-2v-2h2v2zm0-4h-2V7h2v6z"/>
-                                </svg>
-                            </a>
-                        </div>
-                        <div class="producer-section">
-                            <div class="producer-label">Produced by</div>
-                            <img src="https://www.livegigsasia.com/image/emanonent-logo.png" alt="EMANON ENT." class="producer-logo">
-                        </div>
+                    <div class="producer-section">
+                        <div class="producer-label">Produced by</div>
+                        <img src="https://www.livegigsasia.com/image/emanonent-logo.png" alt="EMANON ENT." class="producer-logo">
                     </div>
-                    <div class="footer-contact-right">
-                        <div class="contact-item">
-                            2-2021# Hepingli West Street,<br>
-                            Beijing,China.100000
-                        </div>
-                    </div>
+                </div>
+                <div class="footer-contact-right">
+                    2-2021# Hepingli West Street,<br>Beijing, China. 100000
                 </div>
             </div>
             <div class="footer-bottom">
-                <div class="footer-legal">
-                    <a href="https://www.livegigsasia.com/privacypolicy.html">Privacy Policy</a>
-                    <a href="https://www.livegigsasia.com/accessibilitystatement.html">Accessibility Statement</a>
-                </div>
-                <div class="copyright">Copyright 2001-2026 EMANON ENT. - All Rights Reserved.</div>
+                <a href="https://www.livegigsasia.com/privacypolicy.html">Privacy Policy</a>
+                <a href="https://www.livegigsasia.com/accessibilitystatement.html">Accessibility</a>
+                <span class="copyright">Copyright 2001-2026 EMANON ENT.</span>
             </div>
         </footer>
     </div>
 
-    <!-- BOOKING NOW弹窗 -->
-    <div class="modal-overlay" id="bookingModal" onclick="if(event.target === this) closeModal();">
+    <div class="modal-overlay" id="bookingModal" onclick="if(event.target===this)closeModal()">
         <div class="modal-content">
-            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <button class="modal-close" onclick="closeModal()">&times;</button>
             <h2>BOOKING NOW</h2>
             <p>Inquire for dates, rates and full booking deals</p>
             <form id="bookingForm" action="https://api.web3forms.com/submit" method="POST" onsubmit="handleBookingSubmit(event)">
                 <input type="hidden" name="access_key" value="021d1b10-1c62-4334-90f0-acff63be93c5">
                 <input type="hidden" name="subject" value="New Booking Inquiry - XRE BOOKING">
-                <div class="form-group">
-                    <label for="bookingName">Name</label>
-                    <input type="text" id="bookingName" name="name" required placeholder="Enter your name">
-                </div>
-                <div class="form-group">
-                    <label for="bookingEmail">Email</label>
-                    <input type="email" id="bookingEmail" name="email" required placeholder="Enter your email">
+                <div class="form-group"><label>Name</label><input type="text" name="name" required placeholder="Your name"></div>
+                <div class="form-group"><label>Email</label><input type="email" name="email" required placeholder="Your email"></div>
+                <div class="form-row">
+                    <div class="form-group"><label>Date</label><input type="text" name="preferred_date" placeholder="MM/DD/YYYY"></div>
+                    <div class="form-group"><label>Country</label><input type="text" name="country" placeholder="Country"></div>
                 </div>
                 <div class="form-row">
-                    <div class="form-group">
-                        <label for="bookingDate">Preferred Date</label>
-                        <input type="text" id="bookingDate" name="preferred_date" required placeholder="MM/DD/YYYY">
-                    </div>
-                    <div class="form-group">
-                        <label for="bookingCountry">Country</label>
-                        <input type="text" id="bookingCountry" name="country" placeholder="Country" required>
-                    </div>
+                    <div class="form-group"><label>City</label><input type="text" name="city" placeholder="City"></div>
+                    <div class="form-group"><label>Venue</label><input type="text" name="venue" placeholder="Venue"></div>
                 </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="bookingCity">City</label>
-                        <input type="text" id="bookingCity" name="city" placeholder="City" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="bookingVenue">Venue</label>
-                        <input type="text" id="bookingVenue" name="venue" placeholder="Venue name" required>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="bookingArtist">Artist Interested In</label>
-                    <input type="text" id="bookingArtist" name="artist" placeholder="Which artist are you interested in booking?">
-                </div>
-                <div class="form-group">
-                    <label for="bookingMessage">Message</label>
-                    <textarea id="bookingMessage" name="message" placeholder="Tell us more about your event..."></textarea>
-                </div>
-                <div id="bookingSuccess" style="display: none; text-align: center; padding: 15px; background: rgba(139, 0, 0, 0.2); border: 2px solid var(--xre-red); margin-bottom: 20px;">
-                    <p style="color: #fff; margin: 0; font-size: 14px;">Booking inquiry sent successfully!</p>
-                </div>
-                <button type="submit" class="neon-btn">SUBMIT BOOKING REQUEST</button>
+                <div class="form-group"><label>Artist</label><input type="text" name="artist" placeholder="Artist interested in"></div>
+                <div class="form-group"><label>Message</label><textarea name="message" rows="3" placeholder="Tell us about your event..."></textarea></div>
+                <button type="submit" class="neon-btn" style="width: 100%; margin-top: 10px;">SUBMIT REQUEST</button>
             </form>
         </div>
     </div>
 
-    <!-- Share Modal - 修复版 -->
-    <div class="share-modal" id="shareModal" onclick="if(event.target === this) closeShareModal();">
+    <div class="share-modal" id="shareModal" onclick="if(event.target===this)closeShareModal()">
         <div class="share-modal-content">
             <button class="share-modal-close" onclick="closeShareModal()">&times;</button>
             <h3 class="share-modal-title">SHARE THIS EVENT</h3>
@@ -2343,139 +245,61 @@
             </div>
             <div class="share-platforms">
                 <button class="share-platform-btn" onclick="shareToPlatform('facebook')">
-                    <svg class="share-platform-icon" viewBox="0 0 24 24" fill="#1877f2">
-                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                    </svg>
+                    <svg class="share-platform-icon" viewBox="0 0 24 24" fill="#1877f2"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
                     <span class="share-platform-name">Facebook</span>
                 </button>
                 <button class="share-platform-btn" onclick="shareToPlatform('instagram')">
-                    <svg class="share-platform-icon" viewBox="0 0 24 24">
-                        <defs>
-                            <linearGradient id="igGrad" x1="0%" y1="100%" x2="100%" y2="0%">
-                                <stop offset="0%" style="stop-color:#feda75"/>
-                                <stop offset="50%" style="stop-color:#d62976"/>
-                                <stop offset="100%" style="stop-color:#4f5bd5"/>
-                            </linearGradient>
-                        </defs>
-                        <path fill="url(#igGrad)" d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                    </svg>
+                    <svg class="share-platform-icon" viewBox="0 0 24 24"><defs><linearGradient id="ig" x1="0%" y1="100%" x2="100%" y2="0%"><stop offset="0%" stop-color="#feda75"/><stop offset="50%" stop-color="#d62976"/><stop offset="100%" stop-color="#4f5bd5"/></linearGradient></defs><path fill="url(#ig)" d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069z"/></svg>
                     <span class="share-platform-name">Instagram</span>
                 </button>
                 <button class="share-platform-btn" onclick="shareToPlatform('whatsapp')">
-                    <svg class="share-platform-icon" viewBox="0 0 24 24" fill="#25d366">
-                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
-                    </svg>
+                    <svg class="share-platform-icon" viewBox="0 0 24 24" fill="#25d366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
                     <span class="share-platform-name">WhatsApp</span>
                 </button>
                 <button class="share-platform-btn" onclick="shareToPlatform('reddit')">
-                    <svg class="share-platform-icon" viewBox="0 0 24 24" fill="#ff4500">
-                        <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701z"/>
-                    </svg>
+                    <svg class="share-platform-icon" viewBox="0 0 24 24" fill="#ff4500"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701z"/></svg>
                     <span class="share-platform-name">Reddit</span>
                 </button>
                 <button class="share-platform-btn" onclick="shareToPlatform('telegram')">
-                    <svg class="share-platform-icon" viewBox="0 0 24 24" fill="#0088cc">
-                        <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
-                    </svg>
+                    <svg class="share-platform-icon" viewBox="0 0 24 24" fill="#0088cc"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
                     <span class="share-platform-name">Telegram</span>
                 </button>
                 <button class="share-platform-btn" onclick="shareToPlatform('line')">
-                    <svg class="share-platform-icon" viewBox="0 0 24 24" fill="#06c755">
-                        <path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zM12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2z"/>
-                    </svg>
+                    <svg class="share-platform-icon" viewBox="0 0 24 24" fill="#06c755"><path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755z"/></svg>
                     <span class="share-platform-name">LINE</span>
                 </button>
-                <button class="share-platform-btn" onclick="shareToPlatform('wechat-friend')">
-                    <svg class="share-platform-icon" viewBox="0 0 24 24" fill="#07c160">
-                        <path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 0 1 .213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 0 0 .167-.054l1.903-1.114a.864.864 0 0 1 .717-.098 10.16 10.16 0 0 0 2.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348z"/>
-                    </svg>
+                <button class="share-platform-btn" onclick="shareToPlatform('wechat')">
+                    <svg class="share-platform-icon" viewBox="0 0 24 24" fill="#07c160"><path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 0 1 .213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 0 0 .167-.054l1.903-1.114a.864.864 0 0 1 .717-.098 10.16 10.16 0 0 0 2.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348z"/></svg>
                     <span class="share-platform-name">WeChat</span>
                 </button>
-                <button class="share-platform-btn" onclick="shareToPlatform('wechat-moments')">
-                    <svg class="share-platform-icon" viewBox="0 0 24 24" fill="#07c160">
-                        <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm6.066 9.645h-2.77v-3.077h-3.69v3.077h-2.77V7.385h2.77v3.077h3.69V7.385h2.77v9.23z"/>
-                    </svg>
-                    <span class="share-platform-name">Moments</span>
-                </button>
             </div>
-            <button class="download-btn" id="downloadPosterBtn" onclick="downloadPoster()">
-                <svg class="download-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                <span class="download-btn-text">DOWNLOAD POSTER</span>
+            <button class="download-btn" onclick="downloadPoster()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                <span>DOWNLOAD POSTER</span>
             </button>
         </div>
     </div>
 
-    <!-- WeChat QR Modal -->
-    <div class="wechat-qr-modal" id="wechatQRModal" onclick="if(event.target === this) closeWeChatQR();">
+    <div class="wechat-qr-modal" id="wechatQRModal" onclick="if(event.target===this)closeWeChatQR()">
         <div class="wechat-qr-content">
-            <h3 class="wechat-qr-title">Scan to Share on WeChat</h3>
-            <div class="wechat-qr-code" id="wechatQRCode"></div>
-            <p class="wechat-qr-hint">Content copied to clipboard.<br>Open WeChat and paste to share.</p>
-            <button class="wechat-qr-close" onclick="closeWeChatQR()">Got it</button>
+            <h3 class="wechat-qr-title">Scan to Share</h3>
+            <div style="width: 180px; height: 180px; margin: 0 auto; background: #fff; display: flex; align-items: center; justify-content: center; border-radius: 4px;">
+                <span style="color: #666; font-size: 12px;">QR CODE</span>
+            </div>
+            <p class="wechat-qr-hint">Content copied to clipboard.<br>Open WeChat to share.</p>
+            <button class="wechat-qr-close" onclick="closeWeChatQR()">GOT IT</button>
         </div>
     </div>
 
     <script>
-        // ================== 全局变量 ==================
         const LIVEGIGS_URL = 'https://livegigsasia.com';
         let allBrandedTours = [];
         let displayedBrandedTours = 0;
         const BRANDED_TOURS_PER_PAGE = 3;
         let isShareModalOpen = false;
-        let isWechatModalOpen = false;
 
-        // ================== 页面初始化 ==================
-        // 优化滚动行为：允许浏览器恢复滚动位置，避免刷新跳动
-        if ('scrollRestoration' in history) {
-            history.scrollRestoration = 'auto';
-        }
-
-        // 检测是否是页面刷新，如果是则保留滚动位置
-        const isPageRefresh = performance.navigation && performance.navigation.type === 1;
-
-        if (!isPageRefresh && window.scrollY === 0) {
-            // 首次访问且未滚动时，确保从顶部开始
-            window.scrollTo(0, 0);
-        }
-
-        window.onload = function() {
-            // 仅在首次加载时滚动到顶部
-            if (!sessionStorage.getItem('pageLoaded')) {
-                window.scrollTo({ top: 0, behavior: 'instant' });
-                sessionStorage.setItem('pageLoaded', 'true');
-            }
-        };
-
-        document.addEventListener('DOMContentLoaded', function() {
-            // 隐藏加载动画
-            setTimeout(() => {
-                const loading = document.getElementById('loading');
-                if (loading) loading.classList.add('hidden');
-            }, 300);
-
-            renderArtists();
-            // 延迟加载BRANDED TOURS，避免阻塞首屏渲染
-            requestAnimationFrame(() => {
-                setTimeout(loadBrandedTours, 100);
-            });
-
-            // 绑定键盘事件
-            document.addEventListener('keydown', handleKeydown);
-        });
-
-        function handleKeydown(e) {
-            if (e.key === 'Escape') {
-                if (isWechatModalOpen) {
-                    closeWeChatQR();
-                } else if (isShareModalOpen) {
-                    closeShareModal();
-                } else {
-                    closeModal();
-                }
-            }
-        }
-
-        // ================== 艺人数据 ==================
         const artistsData = [
             { name: "ACIDEZ (MX)", image: "./assets/artists/ACIDEZ.jpg", slug: "acidez" },
             { name: "BAOPIGOU豹皮狗", image: "./assets/artists/baopigou.jpg", slug: "baopigou" },
@@ -2483,7 +307,7 @@
             { name: "BRAIN FAILURE腦濁", image: "./assets/artists/BrainFailure.jpg", slug: "brainfailure" },
             { name: "MASSACHRIST", image: "./assets/artists/Massachrist.jpg", slug: "massachrist" },
             { name: "NON SERVIUM (ES)", image: "./assets/artists/NonServium.jpg", slug: "nonservium" },
-            { name: "ÖNIKA LI", image: "./assets/artists/OnikaLi.jpg", slug: "onikali", link: "./artist.html?name=onikali" },
+            { name: "ONIKA LI", image: "./assets/artists/OnikaLi.jpg", slug: "onikali", link: "./artist.html?name=onikali" },
             { name: "SILVER ASH銀色灰塵", image: "./assets/artists/yshc.jpg", slug: "yshc" },
             { name: "SKARFACE (FR)", image: "./assets/artists/SKARFACE.jpg", slug: "skarface" },
             { name: "THE GREED (TH)", image: "./assets/artists/TheGreed.jpg", slug: "thegreed" },
@@ -2494,38 +318,50 @@
             { name: "NEW ARTIST COMING...", image: "./assets/artists/NewArtistComing.webp", slug: "#" }
         ];
 
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                const loading = document.getElementById('loading');
+                if (loading) loading.classList.add('hidden');
+            }, 500);
+
+            renderArtists();
+
+            if ('requestIdleCallback' in window) {
+                requestIdleCallback(() => loadBrandedTours(), { timeout: 2000 });
+            } else {
+                setTimeout(loadBrandedTours, 100);
+            }
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    closeModal();
+                    closeShareModal();
+                    closeWeChatQR();
+                }
+            });
+        });
+
         function renderArtists() {
             const grid = document.getElementById('artistsGrid');
             if (!grid) return;
 
-            const fragment = document.createDocumentFragment();
-
-            artistsData.forEach(artist => {
-                const hasLink = artist.link && artist.link !== '#';
-
-                const wrapper = document.createElement('div');
-                wrapper.className = 'artist-card-wrapper';
-
-                const nameHtml = hasLink 
-                    ? `<a href="${artist.link}" class="artist-name-link" style="text-decoration: none; color: inherit;">${artist.name}</a>`
+            const html = artistsData.map(artist => {
+                const nameHtml = artist.link 
+                    ? `<a href="${artist.link}" style="text-decoration: none; color: inherit;">${artist.name}</a>`
                     : artist.name;
-
-                wrapper.innerHTML = `
-                    <div class="artist-card">
-                        <img loading="lazy" src="${artist.image}" alt="${artist.name}" onerror="this.style.display='none'">
-                        <div class="artist-overlay"></div>
+                return `
+                    <div class="artist-card-wrapper">
+                        <div class="artist-card">
+                            <img loading="lazy" src="${artist.image}" alt="${artist.name}" onerror="this.style.display='none'">
+                        </div>
+                        <div class="artist-name-below">${nameHtml}</div>
                     </div>
-                    <div class="artist-name-below">${nameHtml}</div>
                 `;
+            }).join('');
 
-                fragment.appendChild(wrapper);
-            });
-
-            grid.innerHTML = '';
-            grid.appendChild(fragment);
+            grid.innerHTML = html;
         }
 
-        // ================== Booking Modal ==================
         function openModal() {
             const modal = document.getElementById('bookingModal');
             if (modal) {
@@ -2538,60 +374,54 @@
             const modal = document.getElementById('bookingModal');
             if (modal) {
                 modal.classList.remove('active');
-                document.body.style.overflow = 'auto';
+                document.body.style.overflow = '';
             }
         }
 
         function handleBookingSubmit(e) {
             e.preventDefault();
             const form = e.target;
-            const successMsg = document.getElementById('bookingSuccess');
 
-            fetch(form.action, { method: 'POST', body: new FormData(form) })
-                .then(r => r.json())
-                .then(data => {
-                    if (data.success && successMsg) {
-                        successMsg.style.display = 'block';
-                        setTimeout(() => {
-                            closeModal();
-                            form.reset();
-                            successMsg.style.display = 'none';
-                        }, 3000);
-                    }
-                })
-                .catch(() => {});
+            fetch(form.action, { 
+                method: 'POST', 
+                body: new FormData(form) 
+            })
+            .then(r => r.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Booking inquiry sent successfully!');
+                    closeModal();
+                    form.reset();
+                }
+            })
+            .catch(() => alert('Failed to send. Please try again.'));
         }
 
-        // ================== Share Modal - 修复版 ==================
-        function openShareModal(title, city, date, image, link, subtitle) {
-            // 防止重复打开
+        function openShareModal(title, city, date, image, link) {
             if (isShareModalOpen) return;
 
             const modal = document.getElementById('shareModal');
             if (!modal) return;
 
-            const eventImg = document.getElementById('shareEventImg');
-            const eventName = document.getElementById('shareEventName');
-            const eventMeta = document.getElementById('shareEventMeta');
-            const eventTags = document.getElementById('shareEventTags');
+            const cleanTitle = decodeHtmlEntities(title || '');
+            const cleanCity = decodeHtmlEntities(city || '');
+            const cleanDate = decodeHtmlEntities(date || '');
 
-            // 设置数据
-            eventImg.src = image || '';
-            eventName.textContent = title || '';
-            eventMeta.textContent = (date || '') + (city ? ' | ' + city : '');
+            document.getElementById('shareEventImg').src = image || '';
+            document.getElementById('shareEventName').textContent = cleanTitle;
+            document.getElementById('shareEventMeta').textContent = 
+                (cleanDate ? cleanDate : '') + (cleanCity ? ' | ' + cleanCity : '');
 
-            // 生成标签
-            const tags = generateTags(title, city, date, link);
-            eventTags.innerHTML = tags.map(tag => '<span class="share-tag">' + tag + '</span>').join('');
+            const tags = generateTags(cleanTitle, cleanCity);
+            document.getElementById('shareEventTags').innerHTML = 
+                tags.map(tag => `<span class="share-tag">${escapeHtml(tag)}</span>`).join('');
 
-            // 存储数据到modal
-            modal.dataset.title = title || '';
-            modal.dataset.city = city || '';
-            modal.dataset.date = date || '';
+            modal.dataset.title = cleanTitle;
+            modal.dataset.city = cleanCity;
+            modal.dataset.date = cleanDate;
             modal.dataset.image = image || '';
             modal.dataset.link = link || '';
 
-            // 显示modal
             modal.classList.add('active');
             isShareModalOpen = true;
             document.body.style.overflow = 'hidden';
@@ -2602,34 +432,44 @@
             if (modal) {
                 modal.classList.remove('active');
                 isShareModalOpen = false;
-                if (!isWechatModalOpen) {
-                    document.body.style.overflow = 'auto';
-                }
+                document.body.style.overflow = '';
             }
         }
 
-        function generateTags(title, city, date, link) {
-            const tags = [];
-            const fullText = ((title || '') + ' ' + (city || '') + ' ' + (date || '')).toLowerCase();
+        function decodeHtmlEntities(text) {
+            if (!text) return '';
+            const textarea = document.createElement('textarea');
+            textarea.innerHTML = text;
+            return textarea.value;
+        }
 
-            // 音乐风格标签
-            const genres = {
-                'punk': 'Punk', 'metal': 'Metal', 'rock': 'Rock', 'hardcore': 'Hardcore',
-                'slam': 'Slam', 'death': 'DeathMetal', 'black': 'BlackMetal',
-                'thrash': 'Thrash', 'grind': 'Grindcore', 'crust': 'Crust',
-                'emo': 'Emo', 'indie': 'Indie', 'alternative': 'AltRock'
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function generateTags(title, city) {
+            const tags = new Set();
+            const text = (title + ' ' + city).toLowerCase();
+
+            const genreMap = {
+                'punk': 'PUNK', 'metal': 'METAL', 'rock': 'ROCK', 
+                'hardcore': 'HARDCORE', 'slam': 'SLAM', 'death': 'DEATH METAL',
+                'black': 'BLACK METAL', 'thrash': 'THRASH', 'grind': 'GRIND',
+                'crust': 'CRUST', 'emo': 'EMO', 'indie': 'INDIE'
             };
 
-            Object.entries(genres).forEach(([keyword, tag]) => {
-                if (fullText.includes(keyword) && !tags.includes(tag)) {
-                    tags.push(tag);
-                }
+            Object.entries(genreMap).forEach(([key, value]) => {
+                if (text.includes(key)) tags.add(value);
             });
 
-            if (tags.length === 0) tags.push('LiveMusic');
-            if (tags.length < 2) tags.push('Concert');
-            tags.push('XRE');
-            return tags.slice(0, 6);
+            if (tags.size === 0) tags.add('LIVE MUSIC');
+            tags.add('CONCERT');
+            tags.add('XRE');
+
+            return Array.from(tags).slice(0, 5);
         }
 
         function shareToPlatform(platform) {
@@ -2648,51 +488,32 @@
             if (link) shareText += '\nEvent: ' + link;
 
             const encodedText = encodeURIComponent(shareText);
+            const encodedUrl = encodeURIComponent(LIVEGIGS_URL);
 
-            switch(platform) {
-                case 'facebook':
-                    window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(LIVEGIGS_URL), '_blank', 'width=600,height=400');
-                    break;
-                case 'instagram':
-                    copyToClipboard(shareText);
+            const shareUrls = {
+                facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
+                whatsapp: `https://wa.me/?text=${encodedText}`,
+                reddit: `https://reddit.com/submit?url=${encodedUrl}&title=${encodeURIComponent(title)}`,
+                telegram: `https://t.me/share/url?url=${encodedUrl}&text=${encodedText}`,
+                line: `https://social-plugins.line.me/lineit/share?url=${encodedUrl}`
+            };
+
+            if (platform === 'instagram' || platform === 'wechat') {
+                copyToClipboard(shareText);
+                if (platform === 'wechat') {
+                    document.getElementById('wechatQRModal').classList.add('active');
+                } else {
                     alert('Content copied! Open Instagram app to share.');
-                    break;
-                case 'whatsapp':
-                    window.open('https://wa.me/?text=' + encodedText, '_blank');
-                    break;
-                case 'reddit':
-                    window.open('https://reddit.com/submit?url=' + encodeURIComponent(LIVEGIGS_URL) + '&title=' + encodeURIComponent(title), '_blank');
-                    break;
-                case 'telegram':
-                    window.open('https://t.me/share/url?url=' + encodeURIComponent(LIVEGIGS_URL) + '&text=' + encodedText, '_blank');
-                    break;
-                case 'line':
-                    window.open('https://social-plugins.line.me/lineit/share?url=' + encodeURIComponent(LIVEGIGS_URL), '_blank');
-                    break;
-                case 'wechat-friend':
-                case 'wechat-moments':
-                    handleWeChatShare(shareText);
-                    break;
+                }
+            } else if (shareUrls[platform]) {
+                window.open(shareUrls[platform], '_blank', 'width=600,height=400');
             }
+
             closeShareModal();
         }
 
-        function handleWeChatShare(text) {
-            copyToClipboard(text);
-            const qrModal = document.getElementById('wechatQRModal');
-            if (qrModal) {
-                qrModal.classList.add('active');
-                isWechatModalOpen = true;
-            }
-        }
-
         function closeWeChatQR() {
-            const qrModal = document.getElementById('wechatQRModal');
-            if (qrModal) {
-                qrModal.classList.remove('active');
-                isWechatModalOpen = false;
-                document.body.style.overflow = 'auto';
-            }
+            document.getElementById('wechatQRModal').classList.remove('active');
         }
 
         function copyToClipboard(text) {
@@ -2733,13 +554,11 @@
             }
         }
 
-        // ================== Branded Tours - 修复版 ==================
         async function loadBrandedTours() {
             const container = document.getElementById('brandedToursContainer');
             const loadMoreContainer = document.getElementById('brandedToursLoadMore');
             if (!container) return;
 
-            // 使用缓存数据（5分钟内）
             const cached = sessionStorage.getItem('brandedToursCache');
             const cacheTime = sessionStorage.getItem('brandedToursCacheTime');
             const now = Date.now();
@@ -2748,14 +567,10 @@
                 allBrandedTours = JSON.parse(cached);
                 displayedBrandedTours = 0;
                 renderBrandedTours();
-                bindMobileEvents();
                 return;
             }
 
             try {
-                container.innerHTML = '<div class="branded-tours-loading">LOADING...</div>';
-                if (loadMoreContainer) loadMoreContainer.classList.remove('visible');
-
                 const response = await fetch('./events.html?_=' + now, {
                     method: 'GET',
                     headers: { 'Cache-Control': 'no-cache' }
@@ -2804,21 +619,19 @@
                 allBrandedTours = events.sort((a, b) => parseBrandedDate(a.dateRange) - parseBrandedDate(b.dateRange));
                 displayedBrandedTours = 0;
 
-                // 缓存数据
                 sessionStorage.setItem('brandedToursCache', JSON.stringify(allBrandedTours));
                 sessionStorage.setItem('brandedToursCacheTime', now.toString());
 
                 if (allBrandedTours.length === 0) {
-                    container.innerHTML = '<div class="branded-tours-empty">NO ON TOUR EVENTS CURRENTLY.</div>';
+                    container.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 60px 20px; color: #666;">NO ON TOUR EVENTS CURRENTLY.</div>';
                     return;
                 }
 
                 renderBrandedTours();
-                bindMobileEvents();
 
             } catch (error) {
                 console.error('Error loading branded tours:', error);
-                container.innerHTML = '<div class="branded-tours-empty">UNABLE TO LOAD TOURS.</div>';
+                container.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 60px 20px; color: #666;">UNABLE TO LOAD TOURS.</div>';
             }
         }
 
@@ -2834,9 +647,8 @@
             if (!container) return;
 
             const toursToShow = allBrandedTours.slice(0, displayedBrandedTours + BRANDED_TOURS_PER_PAGE);
-            const fragment = document.createDocumentFragment();
 
-            toursToShow.forEach((event, index) => {
+            const html = toursToShow.map((event, index) => {
                 const hasLink = event.link?.trim();
                 const title = event.title || 'ON TOUR EVENT';
                 const subtitle = event.subtitle || '';
@@ -2844,127 +656,40 @@
                 const city = event.city || 'TBA';
                 const posterUrl = event.poster1 || '';
 
-                const card = document.createElement('div');
-                card.className = `branded-tour-card ${!hasLink ? 'no-link' : ''}`;
-                card.dataset.index = index;
-                card.dataset.title = title;
-                card.dataset.city = city;
-                card.dataset.date = dateRange;
-                card.dataset.image = posterUrl;
-                card.dataset.link = event.link || '';
-
                 const titleHtml = subtitle 
                     ? `${title}<br><span style="font-size:0.85em;opacity:0.9">${subtitle}</span>`
                     : title;
 
-                card.innerHTML = `
-                    <button class="branded-tour-share" title="Share">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/>
-                            <circle cx="18" cy="19" r="3"/>
-                            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
-                            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
-                        </svg>
-                    </button>
-                    <img src="${posterUrl}" alt="" class="branded-tour-poster" loading="lazy" onerror="this.style.display='none'">
-                    <div class="branded-tour-status">ON TOUR</div>
-                    <div class="branded-tour-content">
-                        <h3 class="branded-tour-name">${titleHtml}</h3>
-                        <div class="branded-tour-details">${dateRange} | ${city}</div>
-                        <div class="branded-tour-venue"></div>
-                        ${hasLink 
-                            ? `<a href="${event.link}" class="branded-tour-btn" target="_blank" rel="noopener">${event.btn_text || 'INFO'}</a>`
-                            : `<span class="branded-tour-btn disabled">${event.btn_text || 'COMING SOON'}</span>`
-                        }
+                return `
+                    <div class="branded-tour-card" data-index="${index}" data-title="${escapeHtml(title)}" data-city="${escapeHtml(city)}" data-date="${escapeHtml(dateRange)}" data-image="${posterUrl}" data-link="${event.link || ''}">
+                        <button class="branded-tour-share" title="Share" onclick="event.stopPropagation(); openShareModal('${escapeHtml(title)}', '${escapeHtml(city)}', '${escapeHtml(dateRange)}', '${posterUrl}', '${event.link || ''}')">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/>
+                                <circle cx="18" cy="19" r="3"/>
+                                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+                                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+                            </svg>
+                        </button>
+                        <img src="${posterUrl}" alt="" class="branded-tour-poster" loading="lazy" onerror="this.style.display='none'">
+                        <div class="branded-tour-status">ON TOUR</div>
+                        <div class="branded-tour-content">
+                            <h3 class="branded-tour-name">${titleHtml}</h3>
+                            <div class="branded-tour-details">${dateRange} | ${city}</div>
+                            ${hasLink 
+                                ? `<a href="${event.link}" class="branded-tour-btn" target="_blank" rel="noopener">${event.btn_text || 'INFO'}</a>`
+                                : `<span class="branded-tour-btn disabled">${event.btn_text || 'COMING SOON'}</span>`
+                            }
+                        </div>
                     </div>
                 `;
+            }).join('');
 
-                fragment.appendChild(card);
-            });
-
-            container.innerHTML = '';
-            container.appendChild(fragment);
+            container.innerHTML = html;
             displayedBrandedTours = toursToShow.length;
 
             if (loadMoreContainer) {
                 const showLoadMore = allBrandedTours.length >= 4 && displayedBrandedTours < allBrandedTours.length;
                 loadMoreContainer.classList.toggle('visible', showLoadMore);
-            }
-        }
-
-        function escapeHtml(text) {
-            if (!text) return '';
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
-
-        // ================== 移动端触摸事件绑定 - 优化版 ==================
-        function bindMobileEvents() {
-            const container = document.getElementById('brandedToursContainer');
-            if (!container || container.dataset.eventsBound) return;
-
-            container.dataset.eventsBound = 'true';
-
-            // 统一的事件委托处理
-            container.addEventListener('click', handleCardClick, { passive: false });
-
-            // 触摸事件用于检测滑动vs点击
-            let touchStartY = 0;
-            let touchStartTime = 0;
-
-            container.addEventListener('touchstart', (e) => {
-                touchStartY = e.touches[0].clientY;
-                touchStartTime = Date.now();
-            }, { passive: true });
-
-            container.addEventListener('touchend', (e) => {
-                const touchEndY = e.changedTouches[0].clientY;
-                const touchDuration = Date.now() - touchStartTime;
-                const diffY = Math.abs(touchStartY - touchEndY);
-
-                // 快速点击且非滑动
-                if (touchDuration < 300 && diffY < 10) {
-                    handleCardClick(e);
-                }
-            }, { passive: true });
-        }
-
-        function handleCardClick(e) {
-            const card = e.target.closest('.branded-tour-card');
-            if (!card) return;
-
-            const shareBtn = e.target.closest('.branded-tour-share');
-            const linkBtn = e.target.closest('.branded-tour-btn');
-
-            // 分享按钮
-            if (shareBtn) {
-                e.preventDefault();
-                openShareModal(
-                    card.dataset.title || '',
-                    card.dataset.city || '',
-                    card.dataset.date || '',
-                    card.dataset.image || '',
-                    card.dataset.link || ''
-                );
-                return;
-            }
-
-            // 链接按钮 - 正常跳转
-            if (linkBtn) return;
-
-            // 移动端点击卡片切换active状态
-            if (window.innerWidth <= 768) {
-                e.preventDefault();
-                const wasActive = card.classList.contains('active');
-
-                // 移除所有active状态
-                card.parentNode.querySelectorAll('.branded-tour-card.active').forEach(c => {
-                    c.classList.remove('active');
-                });
-
-                // 切换当前状态
-                if (!wasActive) card.classList.add('active');
             }
         }
 
