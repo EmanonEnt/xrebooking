@@ -2722,22 +2722,109 @@
 
         async function downloadPoster() {
             const modal = document.getElementById('shareModal');
-            if (!modal?.dataset.image) return alert('No poster image available');
+            const imageUrl = modal.dataset.image;
+            const title = modal.dataset.title || 'poster';
+
+            if (!imageUrl) {
+                alert('No poster image available');
+                return;
+            }
 
             try {
-                const res = await fetch(modal.dataset.image);
-                if (!res.ok) throw new Error();
-                const blob = await res.blob();
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = (modal.dataset.title || 'poster').replace(/[^\w]/g, '_').toLowerCase() + '_poster.jpg';
-                a.click();
-                URL.revokeObjectURL(url);
-            } catch {
-                alert('Download failed. Please right-click the image to save manually.');
+                // 显示下载中提示
+                const btn = document.getElementById('downloadPosterBtn');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '<span class="download-btn-text">DOWNLOADING...</span>';
+                btn.disabled = true;
+
+                // 尝试使用fetch下载（可能因CORS失败）
+                const response = await fetch(imageUrl, { mode: 'cors' });
+                if (!response.ok) throw new Error('Network response was not ok');
+
+                const blob = await response.blob();
+                const blobUrl = window.URL.createObjectURL(blob);
+
+                // 创建下载链接
+                const link = document.createElement('a');
+                link.href = blobUrl;
+                link.download = title.replace(/[^a-z0-9]/gi, '_').toLowerCase() + '_poster.jpg';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
+                // 清理
+                window.URL.revokeObjectURL(blobUrl);
+
+                // 恢复按钮
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+
+                // 显示成功提示
+                showToast('Poster downloaded successfully!');
+            } catch (error) {
+                console.error('Download failed:', error);
+                // 如果fetch失败（可能是跨域问题），尝试使用canvas方法
+                tryCanvasDownload(imageUrl, title);
             }
         }
+
+        // 使用Canvas作为备选下载方法
+        function tryCanvasDownload(imageUrl, title) {
+            const img = new Image();
+            img.crossOrigin = 'anonymous';
+            img.onload = function() {
+                const canvas = document.createElement('canvas');
+                canvas.width = img.naturalWidth;
+                canvas.height = img.naturalHeight;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0);
+
+                try {
+                    canvas.toBlob(function(blob) {
+                        const blobUrl = window.URL.createObjectURL(blob);
+                        const link = document.createElement('a');
+                        link.href = blobUrl;
+                        link.download = title.replace(/[^a-z0-9]/gi, '_').toLowerCase() + '_poster.jpg';
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                        window.URL.revokeObjectURL(blobUrl);
+                        showToast('Poster downloaded successfully!');
+                    }, 'image/jpeg', 0.9);
+                } catch (e) {
+                    alert('Download failed. Please try right-clicking the image to save it manually.');
+                }
+
+                // 恢复按钮
+                const btn = document.getElementById('downloadPosterBtn');
+                btn.innerHTML = '<svg class="download-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg><span class="download-btn-text">DOWNLOAD POSTER</span><span class="download-btn-subtext">Save to Device</span>';
+                btn.disabled = false;
+            };
+            img.onerror = function() {
+                alert('Cannot download this image due to cross-origin restrictions. Please try right-clicking the image to save it manually.');
+                const btn = document.getElementById('downloadPosterBtn');
+                btn.innerHTML = '<svg class="download-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg><span class="download-btn-text">DOWNLOAD POSTER</span><span class="download-btn-subtext">Save to Device</span>';
+                btn.disabled = false;
+            };
+            img.src = imageUrl;
+        }
+
+        // 显示提示消息
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.style.cssText = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:rgba(139,0,0,0.9);color:#fff;padding:12px 24px;border-radius:4px;font-family:Impact,Haettenschweiler,Arial Narrow Bold,sans-serif;letter-spacing:1px;z-index:100002;animation:fadeInUp 0.3s ease;';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.style.animation = 'fadeOut 0.3s ease';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // 添加动画样式
+        const toastStyle = document.createElement('style');
+        toastStyle.textContent = '@keyframes fadeInUp { from { opacity:0; transform:translateX(-50%) translateY(20px); } to { opacity:1; transform:translateX(-50%) translateY(0); } } @keyframes fadeOut { from { opacity:1; } to { opacity:0; } }';
+        document.head.appendChild(toastStyle);
 
         // ================== Branded Tours - 修复版 ==================
         async function loadBrandedTours() {
