@@ -1,5 +1,5 @@
 // 优化版 Service Worker - 轻量级缓存策略
-const CACHE_NAME = 'xrebooking-v1';
+const CACHE_NAME = 'xrebooking-v2';
 const STATIC_ASSETS = [
     './',
     './index.html'
@@ -31,7 +31,7 @@ self.addEventListener('activate', (event) => {
     self.clients.claim();
 });
 
-//  fetch 事件 - 网络优先策略
+// fetch 事件 - 网络优先策略
 self.addEventListener('fetch', (event) => {
     const { request } = event;
 
