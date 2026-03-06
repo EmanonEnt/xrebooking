@@ -2329,7 +2329,7 @@
     </div>
 
     <!-- Share Modal - 修复版 -->
-    <div class="share-modal" id="shareModal" onclick="handleShareModalClick(event)">
+    <div class="share-modal" id="shareModal" onclick="if(event.target === this) closeShareModal();">
         <div class="share-modal-content">
             <button class="share-modal-close" onclick="closeShareModal()">&times;</button>
             <h3 class="share-modal-title">SHARE THIS EVENT</h3>
@@ -2351,25 +2351,25 @@
                 <button class="share-platform-btn" onclick="shareToPlatform('instagram')">
                     <svg class="share-platform-icon" viewBox="0 0 24 24">
                         <defs>
-                            <linearGradient id="ig-gradient" x1="0%" y1="100%" x2="100%" y2="0%">
+                            <linearGradient id="igGrad" x1="0%" y1="100%" x2="100%" y2="0%">
                                 <stop offset="0%" style="stop-color:#feda75"/>
                                 <stop offset="50%" style="stop-color:#d62976"/>
                                 <stop offset="100%" style="stop-color:#4f5bd5"/>
                             </linearGradient>
                         </defs>
-                        <path fill="url(#ig-gradient)" d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                        <path fill="url(#igGrad)" d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
                     </svg>
                     <span class="share-platform-name">Instagram</span>
                 </button>
                 <button class="share-platform-btn" onclick="shareToPlatform('whatsapp')">
                     <svg class="share-platform-icon" viewBox="0 0 24 24" fill="#25d366">
-                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
                     </svg>
                     <span class="share-platform-name">WhatsApp</span>
                 </button>
                 <button class="share-platform-btn" onclick="shareToPlatform('reddit')">
                     <svg class="share-platform-icon" viewBox="0 0 24 24" fill="#ff4500">
-                        <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
+                        <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701z"/>
                     </svg>
                     <span class="share-platform-name">Reddit</span>
                 </button>
@@ -2381,47 +2381,35 @@
                 </button>
                 <button class="share-platform-btn" onclick="shareToPlatform('line')">
                     <svg class="share-platform-icon" viewBox="0 0 24 24" fill="#06c755">
-                        <path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/>
+                        <path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zM12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2z"/>
                     </svg>
                     <span class="share-platform-name">LINE</span>
                 </button>
                 <button class="share-platform-btn" onclick="shareToPlatform('wechat-friend')">
                     <svg class="share-platform-icon" viewBox="0 0 24 24" fill="#07c160">
-                        <path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 0 1 .213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 0 0 .167-.054l1.903-1.114a.864.864 0 0 1 .717-.098 10.16 10.16 0 0 0 2.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348zM5.785 5.991c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178A1.17 1.17 0 0 1 4.623 7.17c0-.651.52-1.18 1.162-1.18zm5.813 0c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178 1.17 1.17 0 0 1-1.162-1.178c0-.651.52-1.18 1.162-1.18zm5.34 2.867c-1.797-.052-3.746.512-5.28 1.786-1.72 1.428-2.687 3.72-1.78 6.22.942 2.453 3.666 4.229 6.884 4.229.826 0 1.622-.12 2.361-.336a.722.722 0 0 1 .598.082l1.584.926a.272.272 0 0 0 .14.047c.134 0 .24-.111.24-.247 0-.06-.023-.12-.038-.177l-.327-1.233a.582.582 0 0 1-.023-.156.49.49 0 0 1 .201-.398C23.024 18.48 24 16.82 24 14.98c0-3.21-2.931-5.837-6.656-6.088V8.89c-.135-.01-.27-.027-.407-.03zm-2.53 3.274c.535 0 .969.44.969.982a.976.976 0 0 1-.969.983.976.976 0 0 1-.969-.983c0-.542.434-.982.97-.982zm4.844 0c.535 0 .969.44.969.982a.976.976 0 0 1-.969.983.976.976 0 0 1-.969-.983c0-.542.434-.982.969-.982z"/>
+                        <path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 0 1 .213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 0 0 .167-.054l1.903-1.114a.864.864 0 0 1 .717-.098 10.16 10.16 0 0 0 2.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348z"/>
                     </svg>
-                    <span class="share-platform-name">WeChat Friend</span>
+                    <span class="share-platform-name">WeChat</span>
                 </button>
                 <button class="share-platform-btn" onclick="shareToPlatform('wechat-moments')">
                     <svg class="share-platform-icon" viewBox="0 0 24 24" fill="#07c160">
-                        <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm6.066 9.645l-1.605 7.485c-.121.568-.462.707-.936.44l-2.587-1.913-1.25 1.209c-.138.14-.253.257-.518.257l.185-2.623 4.795-4.374c.208-.186-.045-.29-.324-.104l-5.927 3.76-2.554-.807c-.555-.175-.568-.555.116-.822l9.98-3.871c.463-.175.868.104.745.763z"/>
+                        <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm6.066 9.645h-2.77v-3.077h-3.69v3.077h-2.77V7.385h2.77v3.077h3.69V7.385h2.77v9.23z"/>
                     </svg>
-                    <span class="share-platform-name">WeChat Moments</span>
+                    <span class="share-platform-name">Moments</span>
                 </button>
             </div>
-            
-            <!-- Download Poster Button -->
             <button class="download-btn" id="downloadPosterBtn" onclick="downloadPoster()">
-                <svg class="download-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                    <polyline points="7 10 12 15 17 10"></polyline>
-                    <line x1="12" y1="15" x2="12" y2="3"></line>
-                </svg>
+                <svg class="download-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                 <span class="download-btn-text">DOWNLOAD POSTER</span>
-                <span class="download-btn-subtext">Save to Device</span>
             </button>
         </div>
     </div>
 
-    <div class="wechat-qr-modal" id="wechatQRModal" onclick="handleWechatModalClick(event)">
+    <!-- WeChat QR Modal -->
+    <div class="wechat-qr-modal" id="wechatQRModal" onclick="if(event.target === this) closeWeChatQR();">
         <div class="wechat-qr-content">
             <h3 class="wechat-qr-title">Scan to Share on WeChat</h3>
-            <div class="wechat-qr-code" id="wechatQRCode">
-                <!-- äºç»´ç å°å¨è¿éå¨æçæ -->
-            </div>
-            <p class="wechat-qr-hint">Content copied to clipboard.<br>Open WeChat and paste to share.</p>
-            <button class="wechat-qr-close" onclick="closeWeChatQR()">Got it</button>
-        </div>
-    </div>
+            <div class="wechat-qr-code" id="wechatQRCode"></div>
             <p class="wechat-qr-hint">Content copied to clipboard.<br>Open WeChat and paste to share.</p>
             <button class="wechat-qr-close" onclick="closeWeChatQR()">Got it</button>
         </div>
@@ -2584,494 +2572,141 @@
         }
 
         // ================== Share Modal - 修复版 ==================
-        function generateTags(title, city, date, link, subtitle) {
-            const tags = [];
-            const fullText = (title + ' ' + (subtitle || '') + ' ' + city + ' ' + (date || '') + ' ' + (link || '')).toLowerCase();
-
-            // ä»æ é¢åå¯æ é¢æåå³é®è¯ä½ä¸ºTAG
-            const allText = title + ' ' + (subtitle || '');
-            const titleWords = allText.toLowerCase().split(/[\s\-'"]+/).filter(w => w.length >= 3);
-            const commonWords = new Set(['the', 'and', 'for', 'with', 'live', 'show', 'gig', 'band', 'new', 'year', 'party']);
-
-            titleWords.forEach(word => {
-                // è¿æ»¤æåªåå«ç¹æ®å­ç¬¦ææ°å­çè¯
-                const cleanWord = word.replace(/[^a-z0-9]/g, '');
-                if (cleanWord.length < 2) return;
-                if (commonWords.has(cleanWord)) return;
-
-                const capitalized = cleanWord.charAt(0).toUpperCase() + cleanWord.slice(1);
-                if (!tags.includes(capitalized)) {
-                    tags.push(capitalized);
-                }
-            });
-
-            // é³ä¹é£æ ¼æ ç­¾
-            const genreKeywords = {
-                'punk': 'Punk', 'metal': 'Metal', 'rock': 'Rock', 'hardcore': 'Hardcore',
-                'slam': 'SlamMetal', 'death': 'DeathMetal', 'black': 'BlackMetal',
-                'thrash': 'ThrashMetal', 'grind': 'Grindcore', 'crust': 'Crust',
-                'emo': 'Emo', 'indie': 'Indie', 'alternative': 'AltRock',
-                'post': 'PostRock', 'progressive': 'ProgRock', 'psychedelic': 'Psychedelic',
-                'stoner': 'Stoner', 'doom': 'DoomMetal', 'gothic': 'Gothic',
-                'industrial': 'Industrial', 'electronic': 'Electronic', 'synth': 'Synth',
-                'noise': 'Noise', 'experimental': 'Experimental', 'ambient': 'Ambient',
-                'jazz': 'Jazz', 'blues': 'Blues', 'folk': 'Folk', 'country': 'Country',
-                'reggae': 'Reggae', 'ska': 'Ska', 'funk': 'Funk', 'soul': 'Soul',
-                'hiphop': 'HipHop', 'rap': 'Rap', 'trap': 'Trap',
-                'edm': 'EDM', 'techno': 'Techno', 'house': 'House', 'trance': 'Trance',
-                'dubstep': 'Dubstep', 'drumnbass': 'DnB', 'garage': 'Garage', 'grime': 'Grime',
-                'grindcore': 'Grindcore', 'deathcore': 'Deathcore', 'metalcore': 'Metalcore',
-                'skatepunk': 'SkatePunk', 'streetpunk': 'StreetPunk', 'oipunk': 'Oi',
-                'anarchopunk': 'AnarchoPunk', 'crustpunk': 'CrustPunk',
-                'poppunk': 'PopPunk', 'melodichardcore': 'MelodicHardcore',
-                'folkmetal': 'FolkMetal', 'viking': 'VikingMetal', 'pagan': 'PaganMetal',
-                'powermetal': 'PowerMetal', 'speedmetal': 'SpeedMetal', 'glam': 'GlamMetal',
-                'nwobhm': 'NWOBHM', 'heavymetal': 'HeavyMetal', 'numetal': 'NuMetal',
-                'rapmetal': 'RapMetal', 'funkmetal': 'FunkMetal', 'altmetal': 'AltMetal',
-                'industrialmetal': 'IndustrialMetal', 'gothicmetal': 'GothicMetal',
-                'doommetal': 'DoomMetal', 'stonermetal': 'StonerMetal', 'sludge': 'Sludge',
-                'postmetal': 'PostMetal', 'avantgarde': 'AvantGarde', 'mathrock': 'MathRock',
-                'midwestemo': 'MidwestEmo', 'screamo': 'Screamo', 'skramz': 'Skramz',
-                'easycore': 'Easycore', 'positive': 'PositiveHardcore',
-                'youthcrew': 'YouthCrew', 'straightedge': 'StraightEdge',
-                'garagepunk': 'GaragePunk', 'psychobilly': 'Psychobilly', 'horrorpunk': 'HorrorPunk',
-                'deathrock': 'Deathrock', 'goth': 'Goth', 'darkwave': 'Darkwave',
-                'coldwave': 'Coldwave', 'minimal': 'Minimal', 'synthpunk': 'SynthPunk',
-                'electropunk': 'ElectroPunk', 'digital': 'DigitalHardcore', 'breakcore': 'Breakcore',
-                'jungle': 'Jungle', 'hardstyle': 'Hardstyle', 'hardcoretechno': 'HardcoreTechno',
-                'gabber': 'Gabber', 'speedcore': 'Speedcore', 'extratone': 'Extratone',
-                'industrialtechno': 'IndustrialTechno', 'ebm': 'EBM', 'darktechno': 'DarkTechno',
-                'acid': 'Acid', 'detroit': 'DetroitTechno', 'berlin': 'BerlinTechno',
-                'deep': 'DeepHouse', 'progressivehouse': 'ProgHouse', 'techhouse': 'TechHouse',
-                'ukgarage': 'UKGarage', 'bassline': 'Bassline', 'dub': 'Dub',
-                'reggaeton': 'Reggaeton', 'dancehall': 'Dancehall', 'soca': 'Soca',
-                'calypso': 'Calypso', 'zouk': 'Zouk', 'compas': 'Compas',
-                'afrobeat': 'Afrobeat', 'highlife': 'Highlife', 'juju': 'Juju',
-                'world': 'WorldMusic', 'ethnic': 'Ethnic', 'traditional': 'Traditional',
-                'celtic': 'Celtic', 'balkan': 'Balkan', 'klezmer': 'Klezmer',
-                'gypsy': 'GypsyPunk', 'flamenco': 'Flamenco', 'fado': 'Fado',
-                'tango': 'Tango', 'samba': 'Samba', 'bossanova': 'BossaNova',
-                'mpb': 'MPB', 'cumbia': 'Cumbia', 'salsa': 'Salsa', 'merengue': 'Merengue',
-                'bachata': 'Bachata', 'dembow': 'Dembow', 'moombahton': 'Moombahton',
-                'tribal': 'Tribal', 'guaracha': 'Guaracha', 'riddim': 'Riddim'
-            };
-
-            // æ´»å¨ç±»åæ ç­¾
-            const eventKeywords = {
-                'fest': 'Festival', 'festival': 'Festival', 'tour': 'Tour', 'show': 'LiveShow',
-                'gig': 'Gig', 'concert': 'Concert', 'party': 'Party', 'warmup': 'WarmUp',
-                'revival': 'Revival', 'reunion': 'Reunion', 'anniversary': 'Anniversary',
-                'benefit': 'Benefit', 'charity': 'Charity', 'release': 'ReleaseParty',
-                'album': 'AlbumRelease', 'ep': 'EPRelease', 'single': 'SingleRelease',
-                'premiere': 'Premiere', 'screening': 'Screening', 'exhibition': 'Exhibition',
-                'market': 'Market', 'fair': 'Fair', 'convention': 'Convention',
-                'conference': 'Conference', 'seminar': 'Seminar', 'workshop': 'Workshop',
-                'masterclass': 'Masterclass', 'competition': 'Competition', 'contest': 'Contest',
-                'battle': 'Battle', 'jam': 'JamSession', 'openmic': 'OpenMic',
-                'audition': 'Audition', 'casting': 'Casting', 'meetup': 'Meetup',
-                'gathering': 'Gathering', 'rally': 'Rally', 'protest': 'Protest',
-                'march': 'March', 'demonstration': 'Demonstration', 'fundraiser': 'Fundraiser',
-                'auction': 'Auction', 'sale': 'Sale', 'popup': 'PopUp', 'launch': 'Launch',
-                'opening': 'Opening', 'closing': 'Closing', 'finale': 'GrandFinale',
-                'ceremony': 'Ceremony', 'awards': 'Awards', 'nomination': 'Nomination',
-                'voting': 'Voting', 'election': 'Election', 'rave': 'Rave',
-                'warehouse': 'WarehouseParty', 'underground': 'Underground',
-                'secret': 'SecretParty', 'private': 'PrivateEvent', 'vip': 'VIP',
-                'exclusive': 'Exclusive', 'limited': 'Limited', 'special': 'SpecialEvent',
-                'annual': 'Annual', 'monthly': 'Monthly', 'weekly': 'Weekly', 'daily': 'Daily',
-                'seasonal': 'Seasonal', 'holiday': 'Holiday', 'christmas': 'Christmas',
-                'newyear': 'NewYear', 'halloween': 'Halloween', 'summer': 'Summer',
-                'winter': 'Winter', 'spring': 'Spring', 'fall': 'Fall', 'autumn': 'Autumn'
-            };
-
-            // å°åºæ ç­¾
-            const regionKeywords = {
-                'asia': 'Asia', 'china': 'China', 'hongkong': 'HongKong', 'hong kong': 'HongKong', 'taiwan': 'Taiwan',
-                'macau': 'Macau', 'japan': 'Japan', 'tokyo': 'Tokyo', 'osaka': 'Osaka', 'korea': 'Korea', 'seoul': 'Seoul',
-                'thailand': 'Thailand', 'bangkok': 'Bangkok', 'singapore': 'Singapore',
-                'malaysia': 'Malaysia', 'indonesia': 'Indonesia', 'philippines': 'Philippines',
-                'vietnam': 'Vietnam', 'cambodia': 'Cambodia', 'myanmar': 'Myanmar', 'laos': 'Laos',
-                'brunei': 'Brunei', 'india': 'India', 'nepal': 'Nepal', 'bangladesh': 'Bangladesh',
-                'srilanka': 'SriLanka', 'pakistan': 'Pakistan', 'australia': 'Australia',
-                'newzealand': 'NewZealand', 'usa': 'USA', 'uk': 'UK', 'europe': 'Europe',
-                'germany': 'Germany', 'france': 'France', 'italy': 'Italy', 'spain': 'Spain',
-                'netherlands': 'Netherlands', 'belgium': 'Belgium', 'switzerland': 'Switzerland',
-                'austria': 'Austria', 'sweden': 'Sweden', 'norway': 'Norway', 'denmark': 'Denmark',
-                'finland': 'Finland', 'poland': 'Poland', 'czech': 'Czech', 'hungary': 'Hungary',
-                'romania': 'Romania', 'bulgaria': 'Bulgaria', 'greece': 'Greece', 'turkey': 'Turkey',
-                'russia': 'Russia', 'ukraine': 'Ukraine', 'canada': 'Canada', 'mexico': 'Mexico',
-                'brazil': 'Brazil', 'argentina': 'Argentina', 'chile': 'Chile', 'peru': 'Peru',
-                'colombia': 'Colombia', 'venezuela': 'Venezuela', 'ecuador': 'Ecuador',
-                'bolivia': 'Bolivia', 'paraguay': 'Paraguay', 'uruguay': 'Uruguay',
-                'latin': 'LatinAmerica', 'southamerica': 'SouthAmerica', 'northamerica': 'NorthAmerica',
-                'centralamerica': 'CentralAmerica', 'caribbean': 'Caribbean', 'africa': 'Africa',
-                'middleeast': 'MiddleEast', 'dubai': 'Dubai', 'uae': 'UAE', 'qatar': 'Qatar',
-                'saudi': 'SaudiArabia', 'israel': 'Israel', 'iran': 'Iran', 'egypt': 'Egypt',
-                'morocco': 'Morocco', 'southafrica': 'SouthAfrica', 'nigeria': 'Nigeria', 'kenya': 'Kenya'
-            };
-
-            // æåæ ç­¾
-            Object.entries(genreKeywords).forEach(([keyword, tag]) => {
-                if (fullText.includes(keyword) && !tags.includes(tag)) {
-                    tags.push(tag);
-                }
-            });
-
-            Object.entries(eventKeywords).forEach(([keyword, tag]) => {
-                if (fullText.includes(keyword) && !tags.includes(tag)) {
-                    tags.push(tag);
-                }
-            });
-
-            Object.entries(regionKeywords).forEach(([keyword, tag]) => {
-                if (fullText.includes(keyword) && !tags.includes(tag)) {
-                    tags.push(tag);
-                }
-            });
-
-            // ç¡®ä¿æè¶³å¤æ°éçTAGï¼è³å°3ä¸ªï¼
-            if (tags.length === 0) tags.push('LiveMusic');
-            if (tags.length < 2) tags.push('LiveEvent');
-            if (tags.length < 3) tags.push('Concert');
-
-            // å§ç»æ·»å åçTAG
-            tags.push('LiveGigsAsia');
-
-            // éå¶æå¤æ¾ç¤º6ä¸ªTAG
-            return tags.slice(0, 6);
-        }
-
         function openShareModal(title, city, date, image, link, subtitle) {
+            // 防止重复打开
+            if (isShareModalOpen) return;
+
             const modal = document.getElementById('shareModal');
+            if (!modal) return;
+
             const eventImg = document.getElementById('shareEventImg');
             const eventName = document.getElementById('shareEventName');
             const eventMeta = document.getElementById('shareEventMeta');
             const eventTags = document.getElementById('shareEventTags');
 
-            eventImg.src = image;
-            eventImg.onerror = function() { this.src = './image/asia-asiaad.jpg'; };
-            eventName.textContent = title;
-            eventMeta.textContent = date + (city ? ' | ' + city : '');
+            // 设置数据
+            eventImg.src = image || '';
+            eventName.textContent = title || '';
+            eventMeta.textContent = (date || '') + (city ? ' | ' + city : '');
 
+            // 生成标签
             const tags = generateTags(title, city, date, link);
             eventTags.innerHTML = tags.map(tag => '<span class="share-tag">' + tag + '</span>').join('');
 
-            modal.dataset.title = title;
-            modal.dataset.city = city;
-            modal.dataset.date = date;
-            modal.dataset.image = image;
-            modal.dataset.link = link;
+            // 存储数据到modal
+            modal.dataset.title = title || '';
+            modal.dataset.city = city || '';
+            modal.dataset.date = date || '';
+            modal.dataset.image = image || '';
+            modal.dataset.link = link || '';
 
+            // 显示modal
             modal.classList.add('active');
-
-            // æ·»å ESCé®çå¬
-            document.addEventListener('keydown', handleShareModalKeydown);
+            isShareModalOpen = true;
+            document.body.style.overflow = 'hidden';
         }
-
-        
-
-        // ä¸è½½æµ·æ¥å°æ¬å°
-        async function downloadPoster() {
-            const modal = document.getElementById('shareModal');
-            const imageUrl = modal.dataset.image;
-            const title = modal.dataset.title || 'poster';
-
-            if (!imageUrl) {
-                alert('No poster image available');
-                return;
-            }
-
-            try {
-                // æ¾ç¤ºä¸è½½ä¸­æç¤º
-                const btn = document.getElementById('downloadPosterBtn');
-                const originalText = btn.innerHTML;
-                btn.innerHTML = '<span class="download-btn-text">DOWNLOADING...</span>';
-                btn.disabled = true;
-
-                // è·åå¾çblob
-                const response = await fetch(imageUrl, { mode: 'cors' });
-                if (!response.ok) throw new Error('Network response was not ok');
-
-                const blob = await response.blob();
-                const blobUrl = window.URL.createObjectURL(blob);
-
-                // åå»ºä¸è½½é¾æ¥
-                const link = document.createElement('a');
-                link.href = blobUrl;
-                link.download = title.replace(/[^a-z0-9]/gi, '_').toLowerCase() + '_poster.jpg';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-
-                // æ¸ç
-                window.URL.revokeObjectURL(blobUrl);
-
-                // æ¢å¤æé®
-                btn.innerHTML = originalText;
-                btn.disabled = false;
-
-                // æ¾ç¤ºæåæç¤º
-                showToast('Poster downloaded successfully!');
-            } catch (error) {
-                console.error('Download failed:', error);
-                // å¦æfetchå¤±è´¥ï¼å¯è½æ¯è·¨åé®é¢ï¼ï¼å°è¯ä½¿ç¨canvasæ¹æ³
-                tryCanvasDownload(imageUrl, title);
-            }
-        }
-
-        // ä½¿ç¨Canvasä½ä¸ºå¤éä¸è½½æ¹æ³
-        function tryCanvasDownload(imageUrl, title) {
-            const img = new Image();
-            img.crossOrigin = 'anonymous';
-            img.onload = function() {
-                const canvas = document.createElement('canvas');
-                canvas.width = img.naturalWidth;
-                canvas.height = img.naturalHeight;
-                const ctx = canvas.getContext('2d');
-                ctx.drawImage(img, 0, 0);
-
-                try {
-                    canvas.toBlob(function(blob) {
-                        const blobUrl = window.URL.createObjectURL(blob);
-                        const link = document.createElement('a');
-                        link.href = blobUrl;
-                        link.download = title.replace(/[^a-z0-9]/gi, '_').toLowerCase() + '_poster.jpg';
-                        document.body.appendChild(link);
-                        link.click();
-                        document.body.removeChild(link);
-                        window.URL.revokeObjectURL(blobUrl);
-                        showToast('Poster downloaded successfully!');
-                    }, 'image/jpeg', 0.9);
-                } catch (e) {
-                    alert('Download failed. Please try right-clicking the image to save it manually.');
-                }
-
-                // æ¢å¤æé®
-                const btn = document.getElementById('downloadPosterBtn');
-                btn.innerHTML = '<svg class="download-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg><span class="download-btn-text">DOWNLOAD POSTER</span><span class="download-btn-subtext">Save to Device</span>';
-                btn.disabled = false;
-            };
-            img.onerror = function() {
-                alert('Cannot download this image due to cross-origin restrictions. Please try right-clicking the image to save it manually.');
-                const btn = document.getElementById('downloadPosterBtn');
-                btn.innerHTML = '<svg class="download-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg><span class="download-btn-text">DOWNLOAD POSTER</span><span class="download-btn-subtext">Save to Device</span>';
-                btn.disabled = false;
-            };
-            img.src = imageUrl;
-        }
-
-        // æ¾ç¤ºæç¤ºæ¶æ¯
-        function showToast(message) {
-            const toast = document.createElement('div');
-            toast.style.cssText = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:rgba(139,0,0,0.9);color:#fff;padding:12px 24px;border-radius:4px;font-family:Impact,Haettenschweiler,Arial Narrow Bold,sans-serif;letter-spacing:1px;z-index:100002;animation:fadeInUp 0.3s ease;';
-            toast.textContent = message;
-            document.body.appendChild(toast);
-            setTimeout(() => {
-                toast.style.animation = 'fadeOut 0.3s ease';
-                setTimeout(() => toast.remove(), 300);
-            }, 3000);
-        }
-
-        // æ·»å å¨ç»æ ·å¼
-        const toastStyle = document.createElement('style');
-        toastStyle.textContent = '@keyframes fadeInUp { from { opacity:0; transform:translateX(-50%) translateY(20px); } to { opacity:1; transform:translateX(-50%) translateY(0); } } @keyframes fadeOut { from { opacity:1; } to { opacity:0; } }';
-        document.head.appendChild(toastStyle);
-    
 
         function closeShareModal() {
-            document.getElementById('shareModal').classList.remove('active');
-            // ç§»é¤ESCé®çå¬
-            document.removeEventListener('keydown', handleShareModalKeydown);
-        }
-        // å¤çåäº«å¼¹çªé®çäºä»¶ï¼ESCå³é­ï¼
-        function handleShareModalKeydown(e) {
-            if (e.key === 'Escape' || e.keyCode === 27) {
-                closeShareModal();
+            const modal = document.getElementById('shareModal');
+            if (modal) {
+                modal.classList.remove('active');
+                isShareModalOpen = false;
+                if (!isWechatModalOpen) {
+                    document.body.style.overflow = 'auto';
+                }
             }
         }
 
-        // å¤çåäº«å¼¹çªç¹å»äºä»¶ï¼ç¹å»ç©ºç½åºåå³é­ï¼
-        
-        // å¤çå¾®ä¿¡å¼¹çªé®çäºä»¶ï¼ESCå³é­ï¼
-        function handleWechatModalKeydown(e) {
-            if (e.key === 'Escape' || e.keyCode === 27) {
-                closeWeChatQR();
-            }
-        }
-        // å¤çå¾®ä¿¡å¼¹çªç¹å»äºä»¶ï¼ç¹å»ç©ºç½åºåå³é­ï¼
-        function handleWechatModalClick(e) {
-            if (e.target === e.currentTarget) {
-                closeWeChatQR();
-            }
-        }
+        function generateTags(title, city, date, link) {
+            const tags = [];
+            const fullText = ((title || '') + ' ' + (city || '') + ' ' + (date || '')).toLowerCase();
 
-function handleShareModalClick(e) {
-            // å¦æç¹å»çæ¯å¼¹çªèæ¯ï¼ä¸æ¯åå®¹åºåï¼ï¼åå³é­
-            if (e.target === e.currentTarget) {
-                closeShareModal();
-            }
-        }
+            // 音乐风格标签
+            const genres = {
+                'punk': 'Punk', 'metal': 'Metal', 'rock': 'Rock', 'hardcore': 'Hardcore',
+                'slam': 'Slam', 'death': 'DeathMetal', 'black': 'BlackMetal',
+                'thrash': 'Thrash', 'grind': 'Grindcore', 'crust': 'Crust',
+                'emo': 'Emo', 'indie': 'Indie', 'alternative': 'AltRock'
+            };
 
+            Object.entries(genres).forEach(([keyword, tag]) => {
+                if (fullText.includes(keyword) && !tags.includes(tag)) {
+                    tags.push(tag);
+                }
+            });
 
-        function closeWeChatQR() {
-            document.getElementById('wechatQRModal').classList.remove('active');
-            // ç§»é¤ESCé®çå¬
-            document.removeEventListener('keydown', handleWechatModalKeydown);
+            if (tags.length === 0) tags.push('LiveMusic');
+            if (tags.length < 2) tags.push('Concert');
+            tags.push('XRE');
+            return tags.slice(0, 6);
         }
 
         function shareToPlatform(platform) {
             const modal = document.getElementById('shareModal');
+            if (!modal) return;
+
             const title = modal.dataset.title || '';
             const city = modal.dataset.city || '';
             const date = modal.dataset.date || '';
-            const image = modal.dataset.image || '';
             const link = modal.dataset.link || '';
 
-            const tags = generateTags(title, city, date, link);
-            const tagsStr = tags.map(function(t) { return '#' + t; }).join(' ');
-
-            // æå»ºåäº«ææ¬ï¼åå«ææä¿¡æ¯
             let shareText = title;
             if (city) shareText += ' - ' + city;
             if (date) shareText += ' (' + date + ')';
-            shareText += '\n\n' + tagsStr;
-            if (image) shareText += '\n\nPoster: ' + image;
-            shareText += '\n\nCheck out more events at ' + LIVEGIGS_URL;
-            if (link) shareText += '\nEvent link: ' + link;
+            shareText += '\n\nCheck out more at ' + LIVEGIGS_URL;
+            if (link) shareText += '\nEvent: ' + link;
 
-            const shareUrl = encodeURIComponent(LIVEGIGS_URL);
             const encodedText = encodeURIComponent(shareText);
-            const encodedTitle = encodeURIComponent(title);
-            const encodedTags = encodeURIComponent(tagsStr);
-
-            let url = '';
 
             switch(platform) {
                 case 'facebook':
-                    // Facebookåäº« - åªåäº«tagsï¼æ æå­æè¿°
-                    url = 'https://www.facebook.com/sharer/sharer.php?u=' + shareUrl + '&quote=' + encodedTags;
-                    window.open(url, '_blank', 'width=600,height=400');
+                    window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(LIVEGIGS_URL), '_blank', 'width=600,height=400');
                     break;
-
                 case 'instagram':
-                    // Instagramæ²¡æç´æ¥åäº«URLï¼å¤å¶åå®¹å°åªè´´æ¿
                     copyToClipboard(shareText);
-                    alert('Content copied to clipboard!\n\nPlease open Instagram app and paste to share.\n\nContent includes:\n- Event title, city, date\n- Tags\n- Poster image URL\n- LiveGigs link');
+                    alert('Content copied! Open Instagram app to share.');
                     break;
-
                 case 'whatsapp':
-                    // æ£æµç§»å¨è®¾å¤å¹¶ä½¿ç¨éå½çåäº«æ¹å¼
-                    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-                    if (isMobile) {
-                        // ç§»å¨ç«¯ä½¿ç¨whatsapp://åè®®
-                        url = 'whatsapp://send?text=' + encodedText;
-                        window.location.href = url;
-                        // å¦æåè®®æ æ³æå¼ï¼3ç§åå°è¯webçæ¬
-                        setTimeout(function() {
-                            window.open('https://wa.me/?text=' + encodedText, '_blank');
-                        }, 3000);
-                    } else {
-                        // æ¡é¢ç«¯ä½¿ç¨webçæ¬
-                        url = 'https://wa.me/?text=' + encodedText;
-                        window.open(url, '_blank');
-                    }
+                    window.open('https://wa.me/?text=' + encodedText, '_blank');
                     break;
-
                 case 'reddit':
-                    url = 'https://reddit.com/submit?url=' + shareUrl + '&title=' + encodedTitle;
-                    window.open(url, '_blank', 'width=600,height=400');
+                    window.open('https://reddit.com/submit?url=' + encodeURIComponent(LIVEGIGS_URL) + '&title=' + encodeURIComponent(title), '_blank');
                     break;
-
                 case 'telegram':
-                    url = 'https://t.me/share/url?url=' + shareUrl + '&text=' + encodedText;
-                    window.open(url, '_blank');
+                    window.open('https://t.me/share/url?url=' + encodeURIComponent(LIVEGIGS_URL) + '&text=' + encodedText, '_blank');
                     break;
-
                 case 'line':
-                    url = 'https://social-plugins.line.me/lineit/share?url=' + shareUrl;
-                    window.open(url, '_blank');
+                    window.open('https://social-plugins.line.me/lineit/share?url=' + encodeURIComponent(LIVEGIGS_URL), '_blank');
                     break;
-
                 case 'wechat-friend':
                 case 'wechat-moments':
-                    handleWeChatShare(shareText, image);
+                    handleWeChatShare(shareText);
                     break;
             }
-
             closeShareModal();
         }
 
-        function handleWeChatShare(text, image) {
-            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-            const isWeChat = /MicroMessenger/i.test(navigator.userAgent);
-
-            // åå¤åäº«åå®¹
-            let shareContent = text;
-            if (image && !text.includes(image)) {
-                shareContent += '\n\nPoster: ' + image;
-            }
-
-            if (isWeChat) {
-                // å·²ç»å¨å¾®ä¿¡åï¼æç¤ºç¨æ·ä½¿ç¨å¾®ä¿¡åçåäº«
-                copyToClipboard(shareContent);
-                alert('You are in WeChat!\n\nContent copied to clipboard.\nPlease use WeChat\'s native share button (top right menu) to share this event.\n\nContent includes event details and poster image URL.');
-            } else if (isMobile) {
-                // ç§»å¨ç«¯ä½ä¸å¨å¾®ä¿¡å
-                copyToClipboard(shareContent);
-
-                // å°è¯æå¼å¾®ä¿¡
-                const wechatUrl = 'weixin://';
-                window.location.href = wechatUrl;
-
-                setTimeout(function() {
-                    alert('Content copied to clipboard!\n\nIf WeChat didn\'t open automatically, please:\n1. Open WeChat app manually\n2. Paste the copied content to share\n\nContent includes event details and poster image URL.');
-                }, 1000);
-            } else {
-                // æ¡é¢ç«¯ - ä½¿ç¨Google Chart APIçæçæ­£çäºç»´ç 
-                copyToClipboard(shareContent);
-
-                // æ´æ°æç¤ºææ¬
-                const qrModal = document.getElementById('wechatQRModal');
-                const qrHint = qrModal.querySelector('.wechat-qr-hint');
-                if (qrHint) {
-                    qrHint.innerHTML = 'Content copied to clipboard!<br>Open WeChat on your phone and paste to share.<br><br>Content includes: Event details, tags, and poster image URL.';
-                }
-
-                // çæäºç»´ç 
-                generateWeChatQR(shareContent);
-
+        function handleWeChatShare(text) {
+            copyToClipboard(text);
+            const qrModal = document.getElementById('wechatQRModal');
+            if (qrModal) {
                 qrModal.classList.add('active');
+                isWechatModalOpen = true;
             }
         }
 
-        // çæå¾®ä¿¡åäº«äºç»´ç 
-        function generateWeChatQR(content) {
-            const qrContainer = document.getElementById('wechatQRCode');
-            if (!qrContainer) return;
-
-            // æ¸ç©ºå®¹å¨
-            qrContainer.innerHTML = '';
-
-            // ä½¿ç¨Google Chart APIçæäºç»´ç 
-            const qrUrl = 'https://chart.googleapis.com/chart?cht=qr&chs=200x200&chld=M|0&chl=' + encodeURIComponent(content);
-
-            // åå»ºäºç»´ç å¾ç
-            const qrImg = document.createElement('img');
-            qrImg.src = qrUrl;
-            qrImg.alt = 'WeChat Share QR Code';
-            qrImg.style.width = '150px';
-            qrImg.style.height = '150px';
-            qrImg.style.display = 'block';
-            qrImg.style.margin = '0 auto';
-
-            qrContainer.appendChild(qrImg);
+        function closeWeChatQR() {
+            const qrModal = document.getElementById('wechatQRModal');
+            if (qrModal) {
+                qrModal.classList.remove('active');
+                isWechatModalOpen = false;
+                document.body.style.overflow = 'auto';
+            }
         }
 
         function copyToClipboard(text) {
             if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(text).catch(function() {
-                    fallbackCopy(text);
-                });
+                navigator.clipboard.writeText(text).catch(() => fallbackCopy(text));
             } else {
                 fallbackCopy(text);
             }
@@ -3088,14 +2723,27 @@ function handleShareModalClick(e) {
             document.body.removeChild(textarea);
         }
 
-        // ç¹å»å¼¹çªå¤é¨å³é­
-        document.getElementById('shareModal').addEventListener('click', function(e) {
-            if (e.target === this) closeShareModal();
-        });
+        async function downloadPoster() {
+            const modal = document.getElementById('shareModal');
+            if (!modal?.dataset.image) return alert('No poster image available');
 
-        document.getElementById('wechatQRModal').addEventListener('click', function(e) {
-            if (e.target === this) closeWeChatQR();
-        });function loadBrandedTours() {
+            try {
+                const res = await fetch(modal.dataset.image);
+                if (!res.ok) throw new Error();
+                const blob = await res.blob();
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = (modal.dataset.title || 'poster').replace(/[^\w]/g, '_').toLowerCase() + '_poster.jpg';
+                a.click();
+                URL.revokeObjectURL(url);
+            } catch {
+                alert('Download failed. Please right-click the image to save manually.');
+            }
+        }
+
+        // ================== Branded Tours - 修复版 ==================
+        async function loadBrandedTours() {
             const container = document.getElementById('brandedToursContainer');
             const loadMoreContainer = document.getElementById('brandedToursLoadMore');
             if (!container) return;
