@@ -938,51 +938,36 @@
             opacity: 1;
         }
         .share-modal-content {
-            background: linear-gradient(135deg, #1a0000 0%, #0a0000 100%);
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
             border: 2px solid var(--xre-dark-red);
-            border-radius: 8px;
+            border-radius: 12px;
             padding: 30px;
-            max-width: 480px;
+            max-width: 500px;
             width: 90%;
             position: relative;
-            box-shadow: 0 0 60px rgba(139, 0, 0, 0.6), inset 0 0 30px rgba(139, 0, 0, 0.1);
-            transform: scale(0.9);
-            transition: transform 0.3s ease;
-        }
-        .share-modal.active .share-modal-content {
-            transform: scale(1);
+            box-shadow: 0 0 40px rgba(139, 0, 0, 0.5);
         }
         .share-modal-close {
             position: absolute;
             top: 10px;
             right: 15px;
-            background: rgba(139, 0, 0, 0.3);
-            border: 1px solid var(--xre-dark-red);
-            border-radius: 50%;
+            background: none;
+            border: none;
             color: #fff;
-            font-size: 20px;
+            font-size: 24px;
             cursor: pointer;
-            transition: all 0.3s;
-            z-index: 10;
-            width: 32px;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            transition: color 0.3s;
         }
         .share-modal-close:hover {
-            background: var(--xre-red);
-            color: #fff;
-            transform: rotate(90deg);
+            color: var(--xre-red);
         }
         .share-modal-title {
-            font-family: 'Orbitron', Impact, sans-serif;
-            font-size: 18px;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            font-size: 20px;
             color: #fff;
             text-align: center;
-            margin-bottom: 25px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
         }
         .share-event-info {
             display: flex;
@@ -1004,64 +989,61 @@
             flex: 1;
         }
         .share-event-name {
-            font-family: 'Orbitron', Impact, sans-serif;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
             font-size: 16px;
             color: #fff;
             margin-bottom: 5px;
-            letter-spacing: 1px;
         }
         .share-event-meta {
             font-size: 12px;
-            color: rgba(255,255,255,0.7);
-            font-family: 'Courier New', monospace;
+            color: #c0c0c0;
         }
         .share-event-tags {
             margin-top: 8px;
         }
         .share-tag {
             display: inline-block;
-            padding: 3px 10px;
-            background: rgba(139, 0, 0, 0.6);
+            padding: 2px 8px;
+            background: var(--xre-dark-red);
             color: #fff;
             font-size: 10px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
             border-radius: 3px;
             margin-right: 5px;
             margin-bottom: 3px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
         }
         .share-platforms {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
         }
         .share-platform-btn {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 8px;
-            padding: 12px 8px;
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(139, 0, 0, 0.4);
-            border-radius: 6px;
+            padding: 15px 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(139, 0, 0, 0.3);
+            border-radius: 8px;
             color: #fff;
             cursor: pointer;
             transition: all 0.3s ease;
         }
         .share-platform-btn:hover {
-            background: rgba(139, 0, 0, 0.3);
-            border-color: var(--xre-red);
+            background: rgba(139, 0, 0, 0.2);
+            border-color: var(--xre-dark-red);
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(139, 0, 0, 0.3);
         }
         .share-platform-icon {
-            width: 28px;
-            height: 28px;
+            width: 32px;
+            height: 32px;
         }
         .share-platform-name {
-            font-size: 10px;
+            font-size: 11px;
             text-align: center;
-            letter-spacing: 0.5px;
         }
         .download-btn {
             display: flex;
@@ -1069,31 +1051,34 @@
             align-items: center;
             gap: 8px;
             padding: 15px 20px;
-            margin-top: 25px;
+            margin-top: 20px;
             background: rgba(139, 0, 0, 0.2);
             border: 2px solid var(--xre-dark-red);
-            border-radius: 6px;
+            border-radius: 8px;
             color: #fff;
             cursor: pointer;
             transition: all 0.3s ease;
             width: 100%;
-            font-family: 'Orbitron', Impact, sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
         }
         .download-btn:hover {
             background: var(--xre-dark-red);
             transform: translateY(-3px);
-            box-shadow: 0 5px 20px rgba(139, 0, 0, 0.4);
+            box-shadow: 0 10px 30px rgba(139, 0, 0, 0.4);
         }
         .download-btn-icon {
-            width: 24px;
-            height: 24px;
+            width: 28px;
+            height: 28px;
         }
         .download-btn-text {
-            font-size: 12px;
+            font-size: 14px;
             font-weight: bold;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
+        }
+        .download-btn-subtext {
+            font-size: 10px;
+            color: #c0c0c0;
+            margin-top: -5px;
         }
         /* WeChat QR弹窗 */
         .wechat-qr-modal {
@@ -1107,73 +1092,45 @@
             z-index: 10001;
             justify-content: center;
             align-items: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            cursor: pointer;
-        }
-        .wechat-qr-modal > * {
-            cursor: default;
         }
         .wechat-qr-modal.active {
             display: flex;
-            opacity: 1;
         }
         .wechat-qr-content {
-            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
-            border: 2px solid var(--xre-dark-red);
-            border-radius: 8px;
+            background: #fff;
+            border-radius: 12px;
             padding: 30px;
             text-align: center;
-            max-width: 320px;
-            transform: scale(0.9);
-            transition: transform 0.3s ease;
-        }
-        .wechat-qr-modal.active .wechat-qr-content {
-            transform: scale(1);
+            max-width: 300px;
         }
         .wechat-qr-title {
-            font-family: 'Orbitron', Impact, sans-serif;
-            font-size: 16px;
-            color: #fff;
-            margin-bottom: 20px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 15px;
         }
         .wechat-qr-code {
             width: 200px;
             height: 200px;
             margin: 0 auto 15px;
-            background: #fff;
+            background: #f5f5f5;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 12px;
             color: #666;
-            border-radius: 4px;
         }
         .wechat-qr-hint {
             font-size: 12px;
-            color: rgba(255,255,255,0.7);
-            margin-bottom: 15px;
-            line-height: 1.5;
+            color: #666;
         }
         .wechat-qr-close {
-            margin-top: 10px;
-            padding: 10px 30px;
-            background: var(--xre-dark-red);
+            margin-top: 15px;
+            padding: 8px 24px;
+            background: #07c160;
             color: #fff;
-            border: 2px solid var(--xre-red);
+            border: none;
             border-radius: 4px;
             cursor: pointer;
-            font-family: 'Orbitron', Impact, sans-serif;
-            font-size: 12px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            transition: all 0.3s;
-        }
-        .wechat-qr-close:hover {
-            background: var(--xre-red);
-            box-shadow: 0 0 20px rgba(139, 0, 0, 0.5);
         }
         /* Hero Logo */
         .hero-logo-bg {
@@ -1216,6 +1173,27 @@
             background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
             background-size: 200% 100%;
             animation: shimmer 2s infinite;
+        }
+
+        /* 分享弹窗响应式 */
+        @media (max-width: 768px) {
+            .share-platforms {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 10px;
+            }
+            .share-platform-btn {
+                padding: 10px 5px;
+            }
+            .share-platform-icon {
+                width: 24px;
+                height: 24px;
+            }
+            .share-platform-name {
+                font-size: 9px;
+            }
+            .share-modal-content {
+                padding: 20px;
+            }
         }
 
 @media (max-width: 1024px) {
@@ -1324,9 +1302,9 @@
             .branded-tour-card.active .branded-tour-share {
                 opacity: 1;
             }
-            .share-platforms { grid-template-columns: repeat(4, 1fr); gap: 8px; }
+            .share-platforms { grid-template-columns: repeat(3, 1fr); gap: 10px; }
             .share-platform-btn { padding: 10px 5px; }
-            .share-platform-icon { width: 22px; height: 22px; }
+            .share-platform-icon { width: 24px; height: 24px; }
             .share-platform-name { font-size: 9px; }
         }
 
@@ -2399,8 +2377,13 @@
                 </button>
             </div>
             <button class="download-btn" id="downloadPosterBtn" onclick="downloadPoster()">
-                <svg class="download-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                <svg class="download-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
                 <span class="download-btn-text">DOWNLOAD POSTER</span>
+                <span class="download-btn-subtext">Save to Device</span>
             </button>
         </div>
     </div>
