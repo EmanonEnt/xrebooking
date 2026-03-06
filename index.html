@@ -156,9 +156,19 @@
             background-repeat: no-repeat;
             filter: brightness(0.8) saturate(1.2);
             z-index: 0;
-            will-change: transform;
-            /* Chrome优化：使用scroll代替fixed避免性能问题 */
-            background-attachment: scroll;
+            /* will-change removed for performance */
+        }
+
+        /* 桌面端使用fixed背景效果，移动端使用scroll避免卡顿 */
+        @media (min-width: 769px) {
+            .hero-bg {
+                background-attachment: fixed;
+            }
+        }
+        @media (max-width: 768px) {
+            .hero-bg {
+                background-attachment: scroll;
+            }
         }
         .smoke-container {
             position: absolute;
@@ -170,8 +180,6 @@
             overflow: hidden;
             pointer-events: none;
             opacity: 0.4;
-            /* Chrome优化：减少动画复杂度 */
-            display: none; /* 在Chrome中禁用烟雾效果提升性能 */
         }
         .smoke {
             position: absolute;
@@ -179,7 +187,7 @@
             height: 150%;
             background: radial-gradient(ellipse at center, rgba(255,255,255,0.03) 0%, transparent 50%);
             filter: blur(80px);
-            will-change: transform;
+            /* will-change removed for performance */
         }
         .smoke:nth-child(1) { top: -30%; left: -30%; animation: smokeFloat 20s ease-in-out infinite; }
         .smoke:nth-child(2) { top: 10%; right: -30%; animation: smokeFloat 25s ease-in-out infinite reverse; opacity: 0.5; }
@@ -246,7 +254,7 @@
             margin-bottom: 0;
             padding-bottom: 0;
             transform: translateZ(0);
-            will-change: transform;
+            /* will-change removed for performance */
         }
         .artists-section {
             width: 100%;
@@ -313,6 +321,7 @@
             transform: scale(1.05);
             filter: brightness(1.1);
         }
+        /* 闪光特效 - 所有端 */
         .artist-card::before {
             content: '';
             position: absolute;
@@ -401,7 +410,7 @@
         .footer-contact-left {
             flex: 1;
             text-align: left;
-            font-family: 'Courier New', 'PingFang SC', 'Microsoft YaHei', monospace;
+            font-family: 'Courier New', monospace;
         }
         .contact-item {
             margin-bottom: 10px;
@@ -488,7 +497,7 @@
             text-transform: uppercase;
             letter-spacing: 3px;
             margin-bottom: 10px;
-            font-family: 'Courier New', 'PingFang SC', 'Microsoft YaHei', monospace;
+            font-family: 'Courier New', monospace;
         }
         .producer-logo {
             height: 35px;
@@ -502,7 +511,7 @@
         .footer-contact-right {
             flex: 1;
             text-align: right;
-            font-family: 'Courier New', 'PingFang SC', 'Microsoft YaHei', monospace;
+            font-family: 'Courier New', monospace;
         }
         .footer-bottom {
             background: #000;
@@ -544,7 +553,7 @@
             color: #777;
             font-size: 11px;
             letter-spacing: 1px;
-            font-family: 'Courier New', 'PingFang SC', 'Microsoft YaHei', monospace;
+            font-family: 'Courier New', monospace;
             text-align: center;
         }
 
@@ -660,7 +669,7 @@
         }
 
         /* BRANDED TOURS区域 */
-        .branded-tours-section {
+                .branded-tours-section {
             width: 100%;
             padding: 80px 0;
             background: linear-gradient(180deg, #e8e8e8 0%, #f0f0f0 20%, #1a0000 60%, #0a0000 100%);
@@ -907,9 +916,7 @@
             font-size: 16px;
             letter-spacing: 2px;
         }
-
-        /* Share Modal - 修复版 */
-        .share-modal {
+.share-modal {
             display: none;
             position: fixed;
             top: 0;
@@ -922,6 +929,9 @@
             align-items: center;
             opacity: 0;
             transition: opacity 0.3s ease;
+        
+            touch-action: pan-y;
+            overscroll-behavior: contain;
         }
         .share-modal.active {
             display: flex;
@@ -966,7 +976,7 @@
             transform: rotate(90deg);
         }
         .share-modal-title {
-            font-family: 'Orbitron', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', Impact, sans-serif;
+            font-family: 'Orbitron', Impact, sans-serif;
             font-size: 18px;
             color: #fff;
             text-align: center;
@@ -988,12 +998,13 @@
             height: 80px;
             object-fit: cover;
             border-radius: 4px;
+            border: 1px solid rgba(139, 0, 0, 0.3);
         }
         .share-event-details {
             flex: 1;
         }
         .share-event-name {
-            font-family: 'Orbitron', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', Impact, sans-serif;
+            font-family: 'Orbitron', Impact, sans-serif;
             font-size: 16px;
             color: #fff;
             margin-bottom: 5px;
@@ -1002,7 +1013,7 @@
         .share-event-meta {
             font-size: 12px;
             color: rgba(255,255,255,0.7);
-            font-family: 'Courier New', 'PingFang SC', 'Microsoft YaHei', monospace;
+            font-family: 'Courier New', monospace;
         }
         .share-event-tags {
             margin-top: 8px;
@@ -1066,7 +1077,7 @@
             cursor: pointer;
             transition: all 0.3s ease;
             width: 100%;
-            font-family: 'Orbitron', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', Impact, sans-serif;
+            font-family: 'Orbitron', Impact, sans-serif;
             text-transform: uppercase;
             letter-spacing: 1px;
         }
@@ -1121,7 +1132,7 @@
             transform: scale(1);
         }
         .wechat-qr-title {
-            font-family: 'Orbitron', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', Impact, sans-serif;
+            font-family: 'Orbitron', Impact, sans-serif;
             font-size: 16px;
             color: #fff;
             margin-bottom: 20px;
@@ -1154,7 +1165,7 @@
             border: 2px solid var(--xre-red);
             border-radius: 4px;
             cursor: pointer;
-            font-family: 'Orbitron', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', Impact, sans-serif;
+            font-family: 'Orbitron', Impact, sans-serif;
             font-size: 12px;
             letter-spacing: 2px;
             text-transform: uppercase;
@@ -1192,6 +1203,8 @@
         }
 
         /* 响应式 */
+                /* 响应式 - 1024px */
+        
         @keyframes shimmer {
             0% { background-position: -200% center; }
             100% { background-position: 200% center; }
@@ -1205,7 +1218,7 @@
             animation: shimmer 2s infinite;
         }
 
-        @media (max-width: 1024px) {
+@media (max-width: 1024px) {
             nav { padding: 0 30px; height: 70px; }
             .logo-img { height: 40px; max-width: 180px; }
             .nav-links { gap: 25px; }
@@ -1231,6 +1244,7 @@
             }
         }
 
+        /* 响应式 - 768px */
         @media (max-width: 768px) {
             .footer-bottom {
                 flex-direction: column;
@@ -1297,6 +1311,7 @@
             .branded-tour-venue { font-size: 11px; }
             .branded-tour-btn { padding: 10px 25px; font-size: 11px; }
             .branded-tour-status { top: 15px; right: 15px; padding: 6px 12px; font-size: 11px; }
+            /* 移动端分享按钮默认隐藏，hover/active状态显示 */
             .branded-tour-share { 
                 width: 40px; 
                 height: 40px; 
@@ -1315,6 +1330,7 @@
             .share-platform-name { font-size: 9px; }
         }
 
+        /* 响应式 - 480px */
         @media (max-width: 480px) {
             .footer-bottom {
                 gap: 8px;
@@ -1362,6 +1378,7 @@
             .branded-tour-name { font-size: 16px; }
             .branded-tour-btn { padding: 10px 25px; font-size: 11px; }
             .branded-tour-status { font-size: 10px; padding: 5px 10px; top: 10px; right: 10px; }
+            /* 移动端分享按钮默认隐藏，hover/active状态显示 */
             .branded-tour-share { 
                 width: 36px; 
                 height: 36px; 
@@ -1376,7 +1393,11 @@
             }
         }
 
-        @media (max-width: 375px) {
+        /* 响应式 - 375px */
+        
+        
+
+@media (max-width: 375px) {
             .hero-title { font-size: 38px; letter-spacing: 3px; }
             .hero-subtitle { 
                 font-size: 10px; 
@@ -1394,7 +1415,7 @@
             .contact-item { font-size: 10px; }
             .branded-tour-name { font-size: 16px; }
         }
-        /* POSTER AD SECTION */
+        /* POSTER AD SECTION - 使用背景图 */
         .poster-ad-section {
             width: 100%;
             padding: 0;
@@ -1418,6 +1439,7 @@
             min-height: 100vh;
         }
 
+        /* 左侧海报 - 满屏高度 */
         .poster-ad-left {
             position: relative;
             display: flex;
@@ -1448,6 +1470,7 @@
             display: block;
         }
 
+        /* 中间广告栏样式 */
         .poster-ad-middle {
             display: flex;
             flex-direction: column;
@@ -1508,7 +1531,7 @@
         }
 
         .ad-description {
-            font-family: 'Courier New', 'PingFang SC', 'Microsoft YaHei', monospace;
+            font-family: 'Courier New', monospace;
             font-size: 13px;
             line-height: 1.8;
             color: rgba(255, 255, 255, 0.85);
@@ -1522,7 +1545,7 @@
             color: #fff;
             border: 2px solid var(--xre-dark-red);
             padding: 12px 30px;
-            font-family: 'Orbitron', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', Impact, sans-serif;
+            font-family: 'Orbitron', Impact, sans-serif;
             font-size: 12px;
             letter-spacing: 2px;
             text-transform: uppercase;
@@ -1569,6 +1592,7 @@
             letter-spacing: 2px;
         }
 
+        /* 右侧播放器区 */
         .poster-ad-right {
             display: flex;
             flex-direction: column;
@@ -1592,7 +1616,7 @@
             height: calc(40% - 100px);
             min-height: 176px;
             display: flex;
-            flex-direction: row;
+            flex-direction: column;
         }
 
         .player-btn {
@@ -1602,12 +1626,12 @@
             justify-content: space-between;
             padding: 20px 25px;
             text-decoration: none;
-            border: none;
+            border: 2px solid rgba(139, 0, 0, 0.5);
             transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
-            min-height: 176px;
-            width: 50%;
+            min-height: 276px;
+            max-height: 276px;
         }
 
         .player-btn::before {
@@ -1626,92 +1650,87 @@
         }
 
         .player-qq {
-            background: linear-gradient(135deg, #31c27c 0%, #2aa86d 100%);
-            border-right: 1px solid rgba(0, 0, 0, 0.2);
+            background: linear-gradient(135deg, rgba(49, 194, 124, 0.15) 0%, rgba(42, 168, 105, 0.15) 100%);
+            border-bottom: 1px solid rgba(139, 0, 0, 0.3);
         }
 
         .player-qq:hover {
-            background: linear-gradient(135deg, #3dd68a 0%, #31c27c 100%);
-            box-shadow: 0 0 30px rgba(49, 194, 124, 0.6);
+            border-color: #31c27c;
+            box-shadow: 0 0 20px rgba(49, 194, 124, 0.4);
         }
 
         .player-netease {
-            background: linear-gradient(135deg, #c62f2f 0%, #a82a2a 100%);
+            background: linear-gradient(135deg, rgba(198, 47, 47, 0.15) 0%, rgba(168, 42, 42, 0.15) 100%);
+            border-top: 1px solid rgba(139, 0, 0, 0.3);
         }
 
         .player-netease:hover {
-            background: linear-gradient(135deg, #d63a3a 0%, #c62f2f 100%);
-            box-shadow: 0 0 30px rgba(198, 47, 47, 0.6);
+            border-color: #c62f2f;
+            box-shadow: 0 0 20px rgba(198, 47, 47, 0.4);
         }
 
         .player-btn-content {
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 5px;
             z-index: 2;
         }
 
         .player-platform {
-            font-family: 'Orbitron', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', Impact, sans-serif;
-            font-size: 16px;
+            font-family: 'Orbitron', Impact, sans-serif;
+            font-size: 14px;
             letter-spacing: 2px;
             color: #fff;
             text-transform: uppercase;
             display: flex;
             align-items: center;
-            gap: 12px;
-            font-weight: 600;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            gap: 10px;
         }
 
         .player-platform-logo {
-            width: 32px;
-            height: 32px;
-            opacity: 1;
+            width: 24px;
+            height: 24px;
+            opacity: 0.8;
         }
 
         .player-song {
-            font-family: 'Courier New', 'PingFang SC', 'Microsoft YaHei', monospace;
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.95);
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.9);
             font-weight: bold;
-            margin-top: 8px;
         }
 
         .player-artist {
-            font-family: 'Courier New', 'PingFang SC', 'Microsoft YaHei', monospace;
-            font-size: 12px;
-            color: rgba(255, 255, 255, 0.8);
-            margin-top: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.6);
         }
 
         .player-play-icon {
-            width: 60px;
-            height: 60px;
-            background: rgba(255, 255, 255, 0.95);
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.9);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
             z-index: 2;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
 
         .player-btn:hover .player-play-icon {
             transform: scale(1.1);
             background: #fff;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
         }
 
         .player-play-icon svg {
-            width: 28px;
-            height: 28px;
+            width: 24px;
+            height: 24px;
             fill: #000;
-            margin-left: 4px;
+            margin-left: 3px;
         }
 
-        /* POSTER AD 响应式 */
+        /* POSTER AD 响应式 - 移动端 (991px及以下) */
         @media (max-width: 991px) {
             .poster-ad-container {
                 display: block !important;
@@ -1725,6 +1744,7 @@
                 grid-template-columns: none !important;
             }
 
+            /* 第一排：海报（全屏宽度，等比例完整显示） */
             .poster-ad-left {
                 width: 100% !important;
                 display: block !important;
@@ -1761,6 +1781,7 @@
                 vertical-align: top !important;
             }
 
+            /* 第二排：2个广告栏上下排列（全屏宽度） */
             .poster-ad-middle {
                 width: 100% !important;
                 display: block !important;
@@ -1832,6 +1853,7 @@
                 line-height: normal !important;
             }
 
+            /* 第三排：Spotify播放器（全屏宽度，高度276px） */
             .poster-ad-right {
                 width: 100% !important;
                 display: block !important;
@@ -1871,6 +1893,7 @@
                 vertical-align: top !important;
             }
 
+            /* 第四排：QQ音乐 + 网易云并排（各50%，高度276px） */
             .player-bottom-container {
                 width: 100% !important;
                 height: 276px !important;
@@ -1903,28 +1926,54 @@
                 overflow: hidden !important;
                 position: relative !important;
             }
-
-            .player-qq {
-                background: linear-gradient(135deg, #31c27c 0%, #2aa86d 100%) !important;
-                border-right: 1px solid rgba(0, 0, 0, 0.2) !important;
-            }
-            .player-qq:hover {
-                background: linear-gradient(135deg, #3dd68a 0%, #31c27c 100%) !important;
-            }
-            .player-netease {
-                background: linear-gradient(135deg, #c62f2f 0%, #a82a2a 100%) !important;
-            }
-            .player-netease:hover {
-                background: linear-gradient(135deg, #d63a3a 0%, #c62f2f 100%) !important;
-            }            .player-btn-content {
+            .player-btn-content {
                 max-height: 100% !important;
                 overflow: hidden !important;
             }
             .player-play-icon {
                 flex-shrink: 0 !important;
             }
+            .player-netease {
+                border-left: 1px solid rgba(139, 0, 0, 0.3) !important;
+            }
         }
 
+            /* 第四排：QQ音乐 + 网易云并排（各50%，高度276px） */
+            .player-bottom-container {
+                width: 100% !important;
+                height: 276px !important;
+                min-height: 276px !important;
+                max-height: 276px !important;
+                display: flex !important;
+                flex-direction: row !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                line-height: 0 !important;
+                font-size: 0 !important;
+            }
+            .player-btn {
+                width: 50% !important;
+                height: 276px !important;
+                min-height: 276px !important;
+                max-height: 276px !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: space-between !important;
+                padding: 20px !important;
+                margin: 0 !important;
+                box-sizing: border-box !important;
+                flex: none !important;
+                border: 2px solid rgba(139, 0, 0, 0.5) !important;
+                border-top: none !important;
+                line-height: normal !important;
+                font-size: initial !important;
+            }
+            .player-netease {
+                border-left: 1px solid rgba(139, 0, 0, 0.3) !important;
+            }
+        }
+
+        /* POSTER AD 响应式 - 小屏手机 (480px及以下) */
         @media (max-width: 480px) {
             .middle-top, .middle-bottom {
                 padding: 25px 15px !important;
@@ -1939,8 +1988,10 @@
                 padding: 10px 20px !important;
                 font-size: 11px !important;
             }
+            /* 播放器样式继承991px定义 */
         }
 
+        /* POSTER AD 响应式 - 超小屏手机 (375px及以下) */
         @media (max-width: 375px) {
             .middle-top, .middle-bottom {
                 padding: 20px 15px !important;
@@ -1955,8 +2006,12 @@
                 padding: 8px 16px !important;
                 font-size: 10px !important;
             }
+            /* 播放器样式继承991px定义 */
         }
-    </style>
+
+
+        
+</style>
 
     <!-- Service Worker 注册 -->
     <script>
@@ -1978,6 +2033,8 @@
     <div class="loading" id="loading">
         <img src="images/xrelogoL.png" alt="XRE BOOKING" style="height: 60px; animation: logoBreathe 2s ease-in-out infinite;">
     </div>
+
+    
 
     <!-- 导航栏 -->
     <nav>
@@ -2035,7 +2092,7 @@
         <!-- POSTER AD SECTION -->
         <section class="poster-ad-section">
             <div class="poster-ad-container">
-                <!-- 左侧海报 -->
+                <!-- 左侧海报 - 满屏高度，2:3比例 -->
                 <div class="poster-ad-left">
                     <div class="poster-wrapper">
                         <img src="https://livegigsasia.com/image/1-b-2.jpg" alt="Punk Heart Fest" class="poster-ad-image">
@@ -2044,12 +2101,13 @@
 
                 <!-- 中间内容区 -->
                 <div class="poster-ad-middle">
+                    <!-- 上半部分 - Punk Heart Fest - 偏左对齐 -->
                     <div class="middle-top">
                         <div class="content-left">
                             <h3 class="ad-title">PUNK HEART FEST</h3>
                             <div class="title-underline ad-underline shimmer"></div>
                             <p class="ad-description">
-                                China&apos;s indoor punk festival IP, founded in 2023. We connect local & international punk bands, bringing raw live energy and community spirit. UP THE PUNX – Freedom, Rebellion, Authenticity & Unity.
+                                China's indoor punk festival IP, founded in 2023. We connect local & international punk bands, bringing raw live energy and community spirit. UP THE PUNX – Freedom, Rebellion, Authenticity & Unity.
                             </p>
                             <div class="ad-buttons">
                                 <a href="http://punkheartfest.com" class="neon-btn ad-btn" target="_blank">朋克心音樂節</a>
@@ -2058,8 +2116,10 @@
                         </div>
                     </div>
 
+                    <!-- 分割线 -->
                     <div class="middle-divider"></div>
 
+                    <!-- 下半部分 - Chinese Rocks Charts - 偏右对齐 -->
                     <div class="middle-bottom">
                         <div class="content-right">
                             <h3 class="ad-title">CHINESE ROCKS CHARTS</h3>
@@ -2076,8 +2136,9 @@
 
                 <!-- 右侧播放器区 -->
                 <div class="poster-ad-right">
-                    <div class="player-spotify">
-                        <iframe src="https://open.spotify.com/embed/playlist/6xZPXG1qFVxlxZf8v63S0W?utm_source=generator&theme=0" 
+                    <!-- Spotify 播放器 - 占50%+ -->
+                    <div class="player-spotify" id="spotifyContainer">
+                        <iframe data-src="https://open.spotify.com/embed/playlist/6xZPXG1qFVxlxZf8v63S0W?utm_source=generator&theme=0" 
                                 width="100%" 
                                 height="100%" 
                                 frameborder="0" 
@@ -2087,7 +2148,9 @@
                         </iframe>
                     </div>
 
+                    <!-- 底部QQ音乐和网易云 - 竖着等比例排列 -->
                     <div class="player-bottom-container">
+                        <!-- QQ音乐 - 外链 -->
                         <a href="https://i2.y.qq.com/n3/other/pages/details/playlist.html?id=9674279142&hosteuin=" 
                            class="player-btn player-qq" 
                            target="_blank">
@@ -2108,6 +2171,7 @@
                             </div>
                         </a>
 
+                        <!-- 网易云音乐 - 与QQ音乐统一风格 -->
                         <a href="https://163cn.tv/2tWDD7j" 
                            class="player-btn player-netease" 
                            target="_blank">
@@ -2132,8 +2196,11 @@
             </div>
         </section>
 
+
+        <!-- 间隙区域 -->
         <div class="footer-gap"></div>
 
+        <!-- 底部区域 -->
         <footer class="site-footer">
             <div class="footer-main">
                 <div class="footer-container">
@@ -2150,6 +2217,7 @@
                             <span class="xre">XRE</span><span class="booking">BOOKING</span>
                         </div>
                         <div class="social-links">
+                            <!-- 前4个 - LiveGigs风格 -->
                             <a href="https://facebook.com/xrebooking" class="social-icon" title="Facebook" target="_blank">
                                 <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
                             </a>
@@ -2162,6 +2230,7 @@
                             <a href="https://x.com/xrebooking" class="social-icon" title="X" target="_blank">
                                 <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
                             </a>
+                            <!-- 后4个 - CN风格（改色） -->
                             <a href="https://weibo.com/u/2069556322" class="social-icon" title="微博" target="_blank">
                                 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M10.098 20.323c-3.977.391-7.414-1.406-7.672-4.02-.259-2.609 2.759-5.047 6.74-5.441 3.979-.394 7.413 1.404 7.671 4.018.259 2.6-2.759 5.049-6.737 5.439l-.002.004zM9.05 17.219c-.384.616-1.208.884-1.829.602-.612-.279-.793-.991-.406-1.593.379-.595 1.176-.861 1.793-.601.622.263.82.972.442 1.592zm1.27-1.627c-.141.237-.449.353-.689.253-.236-.09-.313-.361-.177-.586.138-.227.436-.346.672-.24.239.09.315.36.18.573h.014zm.176-2.719c-1.893-.493-4.033.45-4.857 2.118-.836 1.704-.026 3.591 1.886 4.21 1.983.64 4.318-.341 5.132-2.179.8-1.793-.201-3.642-2.161-4.149zm7.563-1.224c-.346-.105-.579-.18-.405-.649.381-1.025.421-1.905.001-2.535-.789-1.188-2.924-1.109-5.382-.031 0 0-.768.334-.571-.271.383-1.217.324-2.229-.268-2.816-1.344-1.336-4.918.045-7.985 3.088C2.013 10.878.784 13.447.784 15.658c0 4.226 5.407 6.804 10.695 6.804 6.936 0 11.551-4.021 11.551-7.21 0-1.925-1.628-3.013-2.971-3.403z"/>
@@ -2259,7 +2328,7 @@
         </div>
     </div>
 
-    <!-- Share Modal -->
+    <!-- Share Modal - 修复版 -->
     <div class="share-modal" id="shareModal" onclick="if(event.target === this) closeShareModal();">
         <div class="share-modal-content">
             <button class="share-modal-close" onclick="closeShareModal()">&times;</button>
@@ -2312,7 +2381,7 @@
                 </button>
                 <button class="share-platform-btn" onclick="shareToPlatform('line')">
                     <svg class="share-platform-icon" viewBox="0 0 24 24" fill="#06c755">
-                        <path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755z"/>
+                        <path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zM12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2z"/>
                     </svg>
                     <span class="share-platform-name">LINE</span>
                 </button>
@@ -2347,69 +2416,330 @@
     </div>
 
     <script>
-
-        // ===== 全局变量 =====
-        let currentShareEvent = null;
+        // ================== 全局变量 ==================
+        const LIVEGIGS_URL = 'https://livegigsasia.com';
         let allBrandedTours = [];
         let displayedBrandedTours = 0;
         const BRANDED_TOURS_PER_PAGE = 3;
+        let isShareModalOpen = false;
+        let isWechatModalOpen = false;
 
-        // ===== 艺术家数据 =====
-        const artists = [
-            { name: 'ACIDEZ (MX)', image: './assets/artists/ACIDEZ.jpg', link: 'https://www.livegigsasia.com/artists/acidez.html' },
-            { name: 'BAOPIGOU豹皮狗', image: './assets/artists/baopigou.jpg', link: 'https://www.livegigsasia.com/artists/baopigou.html' },
-            { name: 'BIG D & THE KIDS TABLE (US)', image: './assets/artists/bigd.jpg', link: 'https://www.livegigsasia.com/artists/bigd.html' },
-            { name: 'BRAIN FAILURE腦濁', image: './assets/artists/BrainFailure.jpg', link: 'https://www.livegigsasia.com/artists/brainfailure.html' },
-            { name: 'MASSACHRIST', image: './assets/artists/Massachrist.jpg', link: 'https://www.livegigsasia.com/artists/massachrist.html' },
-            { name: 'NON SERVIUM (ES)', image: './assets/artists/NonServium.jpg', link: 'https://www.livegigsasia.com/artists/nonservium.html' },
-            { name: 'ÖNIKA LI', image: './assets/artists/OnikaLi.jpg', link: './artist.html?name=onikali' },
-            { name: 'SILVER ASH銀色灰塵', image: './assets/artists/yshc.jpg', link: 'https://www.livegigsasia.com/artists/yshc.html' },
-            { name: 'SKARFACE (FR)', image: './assets/artists/SKARFACE.jpg', link: 'https://www.livegigsasia.com/artists/skarface.html' },
-            { name: 'THE GREED (TH)', image: './assets/artists/TheGreed.jpg', link: 'https://www.livegigsasia.com/artists/thegreed.html' },
-            { name: 'THE GT BITCHES', image: './assets/artists/TheGTBitches.jpg', link: 'https://www.livegigsasia.com/artists/thegtbitches.html' },
-            { name: 'THE NONAME無名', image: './assets/artists/TheNoname.jpg', link: './artist.html?name=thenoname' },
-            { name: 'THE SINO HEART', image: './assets/artists/TheSinoHeart.jpg', link: 'https://www.livegigsasia.com/artists/thesinoheart.html' },
-            { name: 'THE STIRRERS', image: './assets/artists/thestirrers.jpg', link: 'https://www.livegigsasia.com/artists/thestirrers.html' },
-            { name: 'NEW ARTIST COMING...', image: './assets/artists/NewArtistComing.webp', link: '#' }
-        ];
+        // ================== 页面初始化 ==================
+        // 优化滚动行为：允许浏览器恢复滚动位置，避免刷新跳动
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'auto';
+        }
 
-        // ===== 初始化 =====
+        // 检测是否是页面刷新，如果是则保留滚动位置
+        const isPageRefresh = performance.navigation && performance.navigation.type === 1;
+
+        if (!isPageRefresh && window.scrollY === 0) {
+            // 首次访问且未滚动时，确保从顶部开始
+            window.scrollTo(0, 0);
+        }
+
+        window.onload = function() {
+            // 仅在首次加载时滚动到顶部
+            if (!sessionStorage.getItem('pageLoaded')) {
+                window.scrollTo({ top: 0, behavior: 'instant' });
+                sessionStorage.setItem('pageLoaded', 'true');
+            }
+        };
+
         document.addEventListener('DOMContentLoaded', function() {
             // 隐藏加载动画
             setTimeout(() => {
                 const loading = document.getElementById('loading');
                 if (loading) loading.classList.add('hidden');
-            }, 500);
+            }, 300);
 
-            // 渲染艺术家
             renderArtists();
 
-            // 加载品牌巡演
-            loadBrandedTours();
+            // 延迟加载 BRANDED TOURS（避免阻塞）
+            setTimeout(loadBrandedTours, 500);
 
-            // 导航栏滚动效果
-            initNavScroll();
+            // 延迟加载 Spotify（页面完全加载后）
+            window.addEventListener('load', () => {
+                setTimeout(() => {
+                    const spotifyIframe = document.querySelector('#spotifyContainer iframe');
+                    if (spotifyIframe && spotifyIframe.dataset.src) {
+                        spotifyIframe.src = spotifyIframe.dataset.src;
+                    }
+                }, 2000);
+            });
 
-            // 触摸设备优化
-            initTouchDevice();
+            // 绑定键盘事件
+            document.addEventListener('keydown', handleKeydown);
         });
 
-        // ===== 渲染艺术家 =====
+        function handleKeydown(e) {
+            if (e.key === 'Escape') {
+                if (isWechatModalOpen) {
+                    closeWeChatQR();
+                } else if (isShareModalOpen) {
+                    closeShareModal();
+                } else {
+                    closeModal();
+                }
+            }
+        }
+
+        // ================== 艺人数据 ==================
+        const artistsData = [
+            { name: "ACIDEZ (MX)", image: "./assets/artists/ACIDEZ.jpg", slug: "acidez" },
+            { name: "BAOPIGOU豹皮狗", image: "./assets/artists/baopigou.jpg", slug: "baopigou" },
+            { name: "BIG D & THE KIDS TABLE (US)", image: "./assets/artists/bigd.jpg", slug: "bigd" },
+            { name: "BRAIN FAILURE腦濁", image: "./assets/artists/BrainFailure.jpg", slug: "brainfailure" },
+            { name: "MASSACHRIST", image: "./assets/artists/Massachrist.jpg", slug: "massachrist" },
+            { name: "NON SERVIUM (ES)", image: "./assets/artists/NonServium.jpg", slug: "nonservium" },
+            { name: "ÖNIKA LI", image: "./assets/artists/OnikaLi.jpg", slug: "onikali", link: "./artist.html?name=onikali" },
+            { name: "SILVER ASH銀色灰塵", image: "./assets/artists/yshc.jpg", slug: "yshc" },
+            { name: "SKARFACE (FR)", image: "./assets/artists/SKARFACE.jpg", slug: "skarface" },
+            { name: "THE GREED (TH)", image: "./assets/artists/TheGreed.jpg", slug: "thegreed" },
+            { name: "THE GT BITCHES", image: "./assets/artists/TheGTBitches.jpg", slug: "thegtbitches" },
+            { name: "THE NONAME無名", image: "./assets/artists/TheNoname.jpg", slug: "thenoname", link: "./artist.html?name=thenoname" },
+            { name: "THE SINO HEART", image: "./assets/artists/TheSinoHeart.jpg", slug: "thesinoheart" },
+            { name: "THE STIRRERS", image: "./assets/artists/thestirrers.jpg", slug: "thestirrers" },
+            { name: "NEW ARTIST COMING...", image: "./assets/artists/NewArtistComing.webp", slug: "#" }
+        ];
+
         function renderArtists() {
             const grid = document.getElementById('artistsGrid');
             if (!grid) return;
 
-            grid.innerHTML = artists.map(artist => `
-                <div class="artist-card-wrapper">
+            const fragment = document.createDocumentFragment();
+
+            artistsData.forEach(artist => {
+                const hasLink = artist.link && artist.link !== '#';
+
+                const wrapper = document.createElement('div');
+                wrapper.className = 'artist-card-wrapper';
+
+                const nameHtml = hasLink 
+                    ? `<a href="${artist.link}" class="artist-name-link" style="text-decoration: none; color: inherit;">${artist.name}</a>`
+                    : artist.name;
+
+                wrapper.innerHTML = `
                     <div class="artist-card">
-                        <img src="${artist.image}" alt="${artist.name}" loading="lazy" onerror="this.src='https://via.placeholder.com/400x192/1a0000/666?text=${encodeURIComponent(artist.name)}'">
+                        <img loading="lazy" src="${artist.image}" alt="${artist.name}" onerror="this.style.display='none'">
                         <div class="artist-overlay"></div>
                     </div>
-                    <div class="artist-name-below">
-                        <a href="${artist.link}" class="artist-name-link" style="color: inherit; text-decoration: none;">${artist.name}</a>
-                    </div>
-                </div>
-            `).join('');
+                    <div class="artist-name-below">${nameHtml}</div>
+                `;
+
+                fragment.appendChild(wrapper);
+            });
+
+            grid.innerHTML = '';
+            grid.appendChild(fragment);
+        }
+
+        // ================== Booking Modal ==================
+        function openModal() {
+            const modal = document.getElementById('bookingModal');
+            if (modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('bookingModal');
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        function handleBookingSubmit(e) {
+            e.preventDefault();
+            const form = e.target;
+            const successMsg = document.getElementById('bookingSuccess');
+
+            fetch(form.action, { method: 'POST', body: new FormData(form) })
+                .then(r => r.json())
+                .then(data => {
+                    if (data.success && successMsg) {
+                        successMsg.style.display = 'block';
+                        setTimeout(() => {
+                            closeModal();
+                            form.reset();
+                            successMsg.style.display = 'none';
+                        }, 3000);
+                    }
+                })
+                .catch(() => {});
+        }
+
+        // ================== Share Modal - 修复版 ==================
+        function openShareModal(title, city, date, image, link, subtitle) {
+            // 防止重复打开
+            if (isShareModalOpen) return;
+
+            const modal = document.getElementById('shareModal');
+            if (!modal) return;
+
+            const eventImg = document.getElementById('shareEventImg');
+            const eventName = document.getElementById('shareEventName');
+            const eventMeta = document.getElementById('shareEventMeta');
+            const eventTags = document.getElementById('shareEventTags');
+
+            // 设置数据
+            eventImg.src = image || '';
+            eventName.textContent = title || '';
+            eventMeta.textContent = (date || '') + (city ? ' | ' + city : '');
+
+            // 生成标签
+            const tags = generateTags(title, city, date, link);
+            eventTags.innerHTML = tags.map(tag => '<span class="share-tag">' + tag + '</span>').join('');
+
+            // 存储数据到modal
+            modal.dataset.title = title || '';
+            modal.dataset.city = city || '';
+            modal.dataset.date = date || '';
+            modal.dataset.image = image || '';
+            modal.dataset.link = link || '';
+
+            // 显示modal
+            modal.classList.add('active');
+            isShareModalOpen = true;
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeShareModal() {
+            const modal = document.getElementById('shareModal');
+            if (modal) {
+                modal.classList.remove('active');
+                isShareModalOpen = false;
+                if (!isWechatModalOpen) {
+                    document.body.style.overflow = 'auto';
+                }
+            }
+        }
+
+        function generateTags(title, city, date, link) {
+            const tags = [];
+            const fullText = ((title || '') + ' ' + (city || '') + ' ' + (date || '')).toLowerCase();
+
+            // 音乐风格标签
+            const genres = {
+                'punk': 'Punk', 'metal': 'Metal', 'rock': 'Rock', 'hardcore': 'Hardcore',
+                'slam': 'Slam', 'death': 'DeathMetal', 'black': 'BlackMetal',
+                'thrash': 'Thrash', 'grind': 'Grindcore', 'crust': 'Crust',
+                'emo': 'Emo', 'indie': 'Indie', 'alternative': 'AltRock'
+            };
+
+            Object.entries(genres).forEach(([keyword, tag]) => {
+                if (fullText.includes(keyword) && !tags.includes(tag)) {
+                    tags.push(tag);
+                }
+            });
+
+            if (tags.length === 0) tags.push('LiveMusic');
+            if (tags.length < 2) tags.push('Concert');
+            tags.push('XRE');
+            return tags.slice(0, 6);
+        }
+
+        function shareToPlatform(platform) {
+            const modal = document.getElementById('shareModal');
+            if (!modal) return;
+
+            const title = modal.dataset.title || '';
+            const city = modal.dataset.city || '';
+            const date = modal.dataset.date || '';
+            const link = modal.dataset.link || '';
+
+            let shareText = title;
+            if (city) shareText += ' - ' + city;
+            if (date) shareText += ' (' + date + ')';
+            shareText += '\n\nCheck out more at ' + LIVEGIGS_URL;
+            if (link) shareText += '\nEvent: ' + link;
+
+            const encodedText = encodeURIComponent(shareText);
+
+            switch(platform) {
+                case 'facebook':
+                    window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(LIVEGIGS_URL), '_blank', 'width=600,height=400');
+                    break;
+                case 'instagram':
+                    copyToClipboard(shareText);
+                    alert('Content copied! Open Instagram app to share.');
+                    break;
+                case 'whatsapp':
+                    window.open('https://wa.me/?text=' + encodedText, '_blank');
+                    break;
+                case 'reddit':
+                    window.open('https://reddit.com/submit?url=' + encodeURIComponent(LIVEGIGS_URL) + '&title=' + encodeURIComponent(title), '_blank');
+                    break;
+                case 'telegram':
+                    window.open('https://t.me/share/url?url=' + encodeURIComponent(LIVEGIGS_URL) + '&text=' + encodedText, '_blank');
+                    break;
+                case 'line':
+                    window.open('https://social-plugins.line.me/lineit/share?url=' + encodeURIComponent(LIVEGIGS_URL), '_blank');
+                    break;
+                case 'wechat-friend':
+                case 'wechat-moments':
+                    handleWeChatShare(shareText);
+                    break;
+            }
+            closeShareModal();
+        }
+
+        function handleWeChatShare(text) {
+            copyToClipboard(text);
+            const qrModal = document.getElementById('wechatQRModal');
+            if (qrModal) {
+                qrModal.classList.add('active');
+                isWechatModalOpen = true;
+            }
+        }
+
+        function closeWeChatQR() {
+            const qrModal = document.getElementById('wechatQRModal');
+            if (qrModal) {
+                qrModal.classList.remove('active');
+                isWechatModalOpen = false;
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        function copyToClipboard(text) {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).catch(() => fallbackCopy(text));
+            } else {
+                fallbackCopy(text);
+            }
+        }
+
+        function fallbackCopy(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+        }
+
+        async function downloadPoster() {
+            const modal = document.getElementById('shareModal');
+            if (!modal?.dataset.image) return alert('No poster image available');
+
+            try {
+                const res = await fetch(modal.dataset.image);
+                if (!res.ok) throw new Error();
+                const blob = await res.blob();
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = (modal.dataset.title || 'poster').replace(/[^\w]/g, '_').toLowerCase() + '_poster.jpg';
+                a.click();
+                URL.revokeObjectURL(url);
+            } catch {
+                alert('Download failed. Please right-click the image to save manually.');
+            }
         }
 
         // ================== Branded Tours - 修复版 ==================
@@ -2418,6 +2748,7 @@
             const loadMoreContainer = document.getElementById('brandedToursLoadMore');
             if (!container) return;
 
+            // 使用缓存数据（5分钟内）
             const cached = sessionStorage.getItem('brandedToursCache');
             const cacheTime = sessionStorage.getItem('brandedToursCacheTime');
             const now = Date.now();
@@ -2482,6 +2813,7 @@
                 allBrandedTours = events.sort((a, b) => parseBrandedDate(a.dateRange) - parseBrandedDate(b.dateRange));
                 displayedBrandedTours = 0;
 
+                // 缓存数据
                 sessionStorage.setItem('brandedToursCache', JSON.stringify(allBrandedTours));
                 sessionStorage.setItem('brandedToursCacheTime', now.toString());
 
@@ -2501,7 +2833,7 @@
 
         function parseBrandedDate(dateStr) {
             if (!dateStr) return 0;
-            const match = dateStr.match(/([0-9]{4})\.([0-9]{2})/);
+            const match = dateStr.match(/(\d{4})\.(\d{2})/);
             return match ? new Date(parseInt(match[1]), parseInt(match[2]) - 1, 1).getTime() : 0;
         }
 
@@ -2569,14 +2901,24 @@
             }
         }
 
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // ================== 移动端触摸事件绑定 - 优化版 ==================
         function bindMobileEvents() {
             const container = document.getElementById('brandedToursContainer');
             if (!container || container.dataset.eventsBound) return;
 
             container.dataset.eventsBound = 'true';
 
+            // 统一的事件委托处理
             container.addEventListener('click', handleCardClick, { passive: false });
 
+            // 触摸事件用于检测滑动vs点击
             let touchStartY = 0;
             let touchStartTime = 0;
 
@@ -2590,6 +2932,7 @@
                 const touchDuration = Date.now() - touchStartTime;
                 const diffY = Math.abs(touchStartY - touchEndY);
 
+                // 快速点击且非滑动
                 if (touchDuration < 300 && diffY < 10) {
                     handleCardClick(e);
                 }
@@ -2603,6 +2946,7 @@
             const shareBtn = e.target.closest('.branded-tour-share');
             const linkBtn = e.target.closest('.branded-tour-btn');
 
+            // 分享按钮
             if (shareBtn) {
                 e.preventDefault();
                 openShareModal(
@@ -2615,14 +2959,20 @@
                 return;
             }
 
+            // 链接按钮 - 正常跳转
             if (linkBtn) return;
 
+            // 移动端点击卡片切换active状态
             if (window.innerWidth <= 768) {
                 e.preventDefault();
                 const wasActive = card.classList.contains('active');
+
+                // 移除所有active状态
                 card.parentNode.querySelectorAll('.branded-tour-card.active').forEach(c => {
                     c.classList.remove('active');
                 });
+
+                // 切换当前状态
                 if (!wasActive) card.classList.add('active');
             }
         }
@@ -2630,261 +2980,6 @@
         function loadMoreBrandedTours() {
             renderBrandedTours();
         }
-
-        // ===== 导航栏滚动效果function displayBrandedTours() {
-            const container = document.getElementById('brandedToursContainer');
-            const loadMoreBtn = document.getElementById('brandedToursLoadMore');
-            
-            if (!container) return;
-
-            // 清除加载提示
-            if (displayedBrandedTours === 0) {
-                container.innerHTML = '';
-            }
-
-            const toursToShow = allBrandedTours.slice(displayedBrandedTours, displayedBrandedTours + BRANDED_TOURS_PER_PAGE);
-
-            toursToShow.forEach(tour => {
-                const card = createBrandedTourCard(tour);
-                container.appendChild(card);
-            });
-
-            displayedBrandedTours += toursToShow.length;
-
-            // 显示/隐藏加载更多按钮
-            if (loadMoreBtn) {
-                if (displayedBrandedTours < allBrandedTours.length) {
-                    loadMoreBtn.classList.add('visible');
-                } else {
-                    loadMoreBtn.classList.remove('visible');
-                }
-            }
-        }
-
-        // ===== 创建品牌巡演卡片 =====
-        function createBrandedTourCard(tour) {
-            const card = document.createElement('div');
-            card.className = 'branded-tour-card';
-            card.dataset.eventId = tour.id;
-
-            card.innerHTML = `
-                <img src="${tour.poster}" alt="${tour.name}" class="branded-tour-poster" loading="lazy" onerror="this.src='https://via.placeholder.com/400x533/1a0000/666?text=${encodeURIComponent(tour.name)}'">
-                <button class="branded-tour-share" onclick="event.stopPropagation(); openShareModal('${tour.id}')" title="Share">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="18" cy="5" r="3"/>
-                        <circle cx="6" cy="12" r="3"/>
-                        <circle cx="18" cy="19" r="3"/>
-                        <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
-                        <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
-                    </svg>
-                </button>
-                <span class="branded-tour-status">${tour.status}</span>
-                <div class="branded-tour-content">
-                    <div class="branded-tour-name">${tour.name}</div>
-                    <div class="branded-tour-details">${tour.date}</div>
-                    <div class="branded-tour-venue">${tour.venue}</div>
-                    <a href="${tour.ticketLink}" class="branded-tour-btn ${tour.isSoldOut ? 'disabled' : ''}" target="_blank" ${tour.isSoldOut ? 'onclick="event.preventDefault();"' : ''}>
-                        ${tour.isSoldOut ? 'SOLD OUT' : 'GET TICKETS'}
-                    </a>
-                </div>
-            `;
-
-            // 触摸设备优化
-            if ('ontouchstart' in window) {
-                card.addEventListener('touchstart', function() {
-                    this.classList.add('active');
-                }, { passive: true });
-                card.addEventListener('touchend', function() {
-                    setTimeout(() => this.classList.remove('active'), 300);
-                }, { passive: true });
-            }
-
-            return card;
-        }
-
-        // ===== 加载更多品牌巡演 =====
-        function loadMoreBrandedTours() {
-            displayBrandedTours();
-        }
-
-        // ===== 导航栏滚动效果 =====
-        function initNavScroll() {
-            const nav = document.querySelector('nav');
-            let lastScroll = 0;
-
-            window.addEventListener('scroll', function() {
-                const currentScroll = window.pageYOffset;
-                
-                if (currentScroll > 100) {
-                    nav.style.background = 'rgba(0, 0, 0, 0.95)';
-                    nav.style.backdropFilter = 'blur(10px)';
-                } else {
-                    nav.style.background = 'rgba(0, 0, 0, 0.5)';
-                    nav.style.backdropFilter = 'none';
-                }
-
-                lastScroll = currentScroll;
-            }, { passive: true });
-        }
-
-        // ===== 触摸设备优化 =====
-        function initTouchDevice() {
-            if ('ontouchstart' in window) {
-                document.body.classList.add('touch-device');
-            }
-        }
-
-        // ===== Booking Modal =====
-        function openModal() {
-            const modal = document.getElementById('bookingModal');
-            if (modal) {
-                modal.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            }
-        }
-
-        function closeModal() {
-            const modal = document.getElementById('bookingModal');
-            if (modal) {
-                modal.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-        }
-
-        function handleBookingSubmit(event) {
-            event.preventDefault();
-            const form = event.target;
-            const successMsg = document.getElementById('bookingSuccess');
-            
-            fetch(form.action, {
-                method: 'POST',
-                body: new FormData(form)
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    if (successMsg) successMsg.style.display = 'block';
-                    form.reset();
-                    setTimeout(() => {
-                        if (successMsg) successMsg.style.display = 'none';
-                        closeModal();
-                    }, 3000);
-                }
-            })
-            .catch(error => {
-                console.error('Booking error:', error);
-            });
-        }
-
-        // ===== Share Modal =====
-        function openShareModal(eventId) {
-            const event = allBrandedTours.find(t => t.id == eventId);
-            if (!event) return;
-
-            currentShareEvent = event;
-
-            // 更新弹窗内容
-            const img = document.getElementById('shareEventImg');
-            const name = document.getElementById('shareEventName');
-            const meta = document.getElementById('shareEventMeta');
-            const tags = document.getElementById('shareEventTags');
-
-            if (img) img.src = event.poster;
-            if (name) name.textContent = event.name;
-            if (meta) meta.textContent = `${event.date} | ${event.venue}`;
-            if (tags) {
-                tags.innerHTML = event.tags.map(tag => `<span class="share-tag">${tag}</span>`).join('');
-            }
-
-            // 显示弹窗
-            const modal = document.getElementById('shareModal');
-            if (modal) {
-                modal.classList.add('active');
-                document.body.style.overflow = 'hidden';
-            }
-        }
-
-        function closeShareModal() {
-            const modal = document.getElementById('shareModal');
-            if (modal) {
-                modal.classList.remove('active');
-                document.body.style.overflow = '';
-            }
-        }
-
-        // ===== 分享功能 =====
-        function shareToPlatform(platform) {
-            if (!currentShareEvent) return;
-
-            const event = currentShareEvent;
-            const shareUrl = window.location.href;
-            const shareText = `${event.name} - ${event.date} at ${event.venue}`;
-
-            const shareUrls = {
-                'facebook': `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`,
-                'twitter': `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`,
-                'whatsapp': `https://wa.me/?text=${encodeURIComponent(shareText + ' ' + shareUrl)}`,
-                'reddit': `https://reddit.com/submit?url=${encodeURIComponent(shareUrl)}&title=${encodeURIComponent(shareText)}`,
-                'telegram': `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`,
-                'line': `https://line.me/R/msg/text/?${encodeURIComponent(shareText + ' ' + shareUrl)}`
-            };
-
-            if (platform === 'instagram') {
-                alert('Instagram sharing is not available via web. Please share manually!');
-                return;
-            }
-
-            if (platform === 'wechat-friend' || platform === 'wechat-moments') {
-                // 复制到剪贴板并显示二维码
-                navigator.clipboard.writeText(shareText + ' ' + shareUrl).then(() => {
-                    showWeChatQR();
-                });
-                return;
-            }
-
-            const url = shareUrls[platform];
-            if (url) {
-                window.open(url, '_blank', 'width=600,height=400');
-            }
-        }
-
-        // ===== WeChat QR Modal =====
-        function showWeChatQR() {
-            closeShareModal();
-            const modal = document.getElementById('wechatQRModal');
-            if (modal) {
-                modal.classList.add('active');
-            }
-        }
-
-        function closeWeChatQR() {
-            const modal = document.getElementById('wechatQRModal');
-            if (modal) {
-                modal.classList.remove('active');
-            }
-        }
-
-        // ===== 下载海报 =====
-        function downloadPoster() {
-            if (!currentShareEvent || !currentShareEvent.poster) return;
-            
-            const link = document.createElement('a');
-            link.href = currentShareEvent.poster;
-            link.download = `${currentShareEvent.name.replace(/\s+/g, '_')}_poster.jpg`;
-            link.target = '_blank';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-
-        // ===== 键盘事件 =====
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                closeModal();
-                closeShareModal();
-                closeWeChatQR();
-            }
-        });
     </script>
 </body>
 </html>
