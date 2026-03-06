@@ -2731,20 +2731,20 @@
             }
 
             try {
-                // 显示下载中提示
+                // æ¾ç¤ºä¸è½½ä¸­æç¤º
                 const btn = document.getElementById('downloadPosterBtn');
                 const originalText = btn.innerHTML;
                 btn.innerHTML = '<span class="download-btn-text">DOWNLOADING...</span>';
                 btn.disabled = true;
 
-                // 尝试使用fetch下载（可能因CORS失败）
+                // è·åå¾çblob
                 const response = await fetch(imageUrl, { mode: 'cors' });
                 if (!response.ok) throw new Error('Network response was not ok');
 
                 const blob = await response.blob();
                 const blobUrl = window.URL.createObjectURL(blob);
 
-                // 创建下载链接
+                // åå»ºä¸è½½é¾æ¥
                 const link = document.createElement('a');
                 link.href = blobUrl;
                 link.download = title.replace(/[^a-z0-9]/gi, '_').toLowerCase() + '_poster.jpg';
@@ -2752,23 +2752,23 @@
                 link.click();
                 document.body.removeChild(link);
 
-                // 清理
+                // æ¸ç
                 window.URL.revokeObjectURL(blobUrl);
 
-                // 恢复按钮
+                // æ¢å¤æé®
                 btn.innerHTML = originalText;
                 btn.disabled = false;
 
-                // 显示成功提示
+                // æ¾ç¤ºæåæç¤º
                 showToast('Poster downloaded successfully!');
             } catch (error) {
                 console.error('Download failed:', error);
-                // 如果fetch失败（可能是跨域问题），尝试使用canvas方法
+                // å¦æfetchå¤±è´¥ï¼å¯è½æ¯è·¨åé®é¢ï¼ï¼å°è¯ä½¿ç¨canvasæ¹æ³
                 tryCanvasDownload(imageUrl, title);
             }
         }
 
-        // 使用Canvas作为备选下载方法
+        // ä½¿ç¨Canvasä½ä¸ºå¤éä¸è½½æ¹æ³
         function tryCanvasDownload(imageUrl, title) {
             const img = new Image();
             img.crossOrigin = 'anonymous';
@@ -2795,7 +2795,7 @@
                     alert('Download failed. Please try right-clicking the image to save it manually.');
                 }
 
-                // 恢复按钮
+                // æ¢å¤æé®
                 const btn = document.getElementById('downloadPosterBtn');
                 btn.innerHTML = '<svg class="download-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg><span class="download-btn-text">DOWNLOAD POSTER</span><span class="download-btn-subtext">Save to Device</span>';
                 btn.disabled = false;
@@ -2809,7 +2809,7 @@
             img.src = imageUrl;
         }
 
-        // 显示提示消息
+        // æ¾ç¤ºæç¤ºæ¶æ¯
         function showToast(message) {
             const toast = document.createElement('div');
             toast.style.cssText = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:rgba(139,0,0,0.9);color:#fff;padding:12px 24px;border-radius:4px;font-family:Impact,Haettenschweiler,Arial Narrow Bold,sans-serif;letter-spacing:1px;z-index:100002;animation:fadeInUp 0.3s ease;';
@@ -2821,10 +2821,27 @@
             }, 3000);
         }
 
-        // 添加动画样式
+        // æ·»å å¨ç»æ ·å¼
         const toastStyle = document.createElement('style');
         toastStyle.textContent = '@keyframes fadeInUp { from { opacity:0; transform:translateX(-50%) translateY(20px); } to { opacity:1; transform:translateX(-50%) translateY(0); } } @keyframes fadeOut { from { opacity:1; } to { opacity:0; } }';
-        document.head.appendChild(toastStyle);
+        document.head.appendChild(toastStyle);function(e) {
+                            // 如果下载属性不起作用，让用户手动保存
+                            setTimeout(function() {
+                                alert('If download didn\'t start automatically, please right-click/long-press the image above to save it.');
+                            }, 100);
+                        });
+
+                        // 图片加载错误处理
+                        document.getElementById('posterImg').onerror = function() {
+                            this.style.display = 'none';
+                            document.querySelector('.image-container').innerHTML = '<p style="color:#ff0000;">⚠️ Image failed to load. Please go back and try again.</p>';
+                        };
+                    <\/script>
+                </body>
+                </html>
+            `);
+            downloadWindow.document.close();
+        }
 
         // ================== Branded Tours - 修复版 ==================
         async function loadBrandedTours() {
