@@ -1,23 +1,21 @@
-// 优化版 Service Worker - 轻量级缓存策略
+// Optimized Service Worker - Lightweight Cache Strategy
 const CACHE_NAME = 'xrebooking-v2';
 const STATIC_ASSETS = [
     './',
     './index.html'
 ];
 
-// 安装事件 - 预缓存关键资源
+// Install - Pre-cache critical resources
 self.addEventListener('install', (event) => {
     event.waitUntil(
         caches.open(CACHE_NAME).then((cache) => {
             return cache.addAll(STATIC_ASSETS);
-        }).catch(() => {
-            // 静默失败，不影响用户体验
-        })
+        }).catch(() => {})
     );
     self.skipWaiting();
 });
 
-// 激活事件 - 清理旧缓存
+// Activate - Clean old caches
 self.addEventListener('activate', (event) => {
     event.waitUntil(
         caches.keys().then((cacheNames) => {
@@ -31,16 +29,16 @@ self.addEventListener('activate', (event) => {
     self.clients.claim();
 });
 
-// fetch 事件 - 网络优先策略
+// Fetch - Network first strategy with cache fallback
 self.addEventListener('fetch', (event) => {
     const { request } = event;
 
-    // 跳过非GET请求和chrome-extension请求
+    // Skip non-GET requests and chrome-extension
     if (request.method !== 'GET' || request.url.startsWith('chrome-extension://')) {
         return;
     }
 
-    // 跳过跨域请求（如Spotify iframe）
+    // Skip cross-origin requests
     if (!request.url.startsWith(self.location.origin)) {
         return;
     }
@@ -48,7 +46,6 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(
         fetch(request)
             .then((response) => {
-                // 缓存成功的响应
                 if (response && response.status === 200) {
                     const responseClone = response.clone();
                     caches.open(CACHE_NAME).then((cache) => {
@@ -58,7 +55,6 @@ self.addEventListener('fetch', (event) => {
                 return response;
             })
             .catch(() => {
-                // 网络失败时回退到缓存
                 return caches.match(request).then((cachedResponse) => {
                     return cachedResponse || new Response('Offline', {
                         status: 503,
