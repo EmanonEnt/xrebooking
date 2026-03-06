@@ -2027,6 +2027,9 @@
             });
         }
     </script>
+    <!-- Google Invisible reCAPTCHA -->
+    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
+
 </head>
 
 <body>
@@ -2323,7 +2326,11 @@
                 <div id="bookingSuccess" style="display: none; text-align: center; padding: 15px; background: rgba(139, 0, 0, 0.2); border: 2px solid var(--xre-red); margin-bottom: 20px;">
                     <p style="color: #fff; margin: 0; font-size: 14px;">Booking inquiry sent successfully!</p>
                 </div>
-                <button type="submit" class="neon-btn">SUBMIT BOOKING REQUEST</button>
+                                <!-- Invisible reCAPTCHA -->
+                <div id="recaptcha-container" style="position: absolute; bottom: 20px; right: 20px; z-index: 1;"></div>
+                <input type="hidden" name="g-recaptcha-response" id="g-recaptcha-response">
+
+                <button type="submit" class="neon-btn" id="submitBookingBtn">SUBMIT BOOKING REQUEST</button>
             </form>
         </div>
     </div>
@@ -2525,7 +2532,38 @@
             grid.appendChild(fragment);
         }
 
-        // ================== Booking Modal ==================
+        // ================== Invisible reCAPTCHA ==================
+var recaptchaWidget;
+
+function onloadCallback() {
+    recaptchaWidget = grecaptcha.render('recaptcha-container', {
+        'sitekey': '6LfMg4EsAAAAAFKJJP9qEEIeZAyO5GMmzDP3f7vi',
+        'size': 'invisible',
+        'badge': 'bottomright',  // 徽章位置: bottomright, bottomleft, inline
+        'callback': onRecaptchaSuccess,
+        'expired-callback': onRecaptchaExpired,
+        'error-callback': onRecaptchaError
+    });
+}
+
+function onRecaptchaSuccess(token) {
+    // 验证成功，设置隐藏字段并提交表单
+    document.getElementById('g-recaptcha-response').value = token;
+    document.getElementById('bookingForm').submit();
+}
+
+function onRecaptchaExpired() {
+    // 验证过期，重置
+    grecaptcha.reset(recaptchaWidget);
+    alert('Verification expired. Please try again.');
+}
+
+function onRecaptchaError() {
+    // 验证错误
+    alert('reCAPTCHA error. Please refresh the page and try again.');
+}
+
+// ================== Booking Modal ==================
         function openModal() {
             const modal = document.getElementById('bookingModal');
             if (modal) {
@@ -2545,6 +2583,17 @@
         function handleBookingSubmit(e) {
             e.preventDefault();
             const form = e.target;
+            const successMsg = document.getElementById('bookingSuccess');
+
+            // 执行隐形 reCAPTCHA 验证
+            grecaptcha.execute(recaptchaWidget);
+
+            // 注意：实际提交在 onRecaptchaSuccess 回调中执行
+            return false;
+        }
+
+        function submitBookingForm() {
+            const form = document.getElementById('bookingForm');
             const successMsg = document.getElementById('bookingSuccess');
 
             fetch(form.action, { method: 'POST', body: new FormData(form) })
