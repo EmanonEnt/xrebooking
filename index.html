@@ -156,7 +156,7 @@
             background-repeat: no-repeat;
             filter: brightness(0.8) saturate(1.2);
             z-index: 0;
-            /* will-change removed for performance */
+            will-change: transform;
         }
 
         /* 桌面端使用fixed背景效果，移动端使用scroll避免卡顿 */
@@ -187,7 +187,7 @@
             height: 150%;
             background: radial-gradient(ellipse at center, rgba(255,255,255,0.03) 0%, transparent 50%);
             filter: blur(80px);
-            /* will-change removed for performance */
+            will-change: transform;
         }
         .smoke:nth-child(1) { top: -30%; left: -30%; animation: smokeFloat 20s ease-in-out infinite; }
         .smoke:nth-child(2) { top: 10%; right: -30%; animation: smokeFloat 25s ease-in-out infinite reverse; opacity: 0.5; }
@@ -254,7 +254,7 @@
             margin-bottom: 0;
             padding-bottom: 0;
             transform: translateZ(0);
-            /* will-change removed for performance */
+            will-change: transform;
         }
         .artists-section {
             width: 100%;
@@ -2137,8 +2137,8 @@
                 <!-- 右侧播放器区 -->
                 <div class="poster-ad-right">
                     <!-- Spotify 播放器 - 占50%+ -->
-                    <div class="player-spotify" id="spotifyContainer">
-                        <iframe data-src="https://open.spotify.com/embed/playlist/6xZPXG1qFVxlxZf8v63S0W?utm_source=generator&theme=0" 
+                    <div class="player-spotify">
+                        <iframe src="https://open.spotify.com/embed/playlist/6xZPXG1qFVxlxZf8v63S0W?utm_source=generator&theme=0" 
                                 width="100%" 
                                 height="100%" 
                                 frameborder="0" 
@@ -2454,21 +2454,9 @@
             }, 300);
 
             renderArtists();
-
-            // 延迟加载 BRANDED TOURS（避免阻塞）
-            // 只加载一次 BRANDED TOURS
-            if (!brandedToursLoaded && !brandedToursLoading) {
-                setTimeout(loadBrandedTours, 500);
-            }
-
-            // 延迟加载 Spotify（页面完全加载后）
-            window.addEventListener('load', () => {
-                setTimeout(() => {
-                    const spotifyIframe = document.querySelector('#spotifyContainer iframe');
-                    if (spotifyIframe && spotifyIframe.dataset.src) {
-                        spotifyIframe.src = spotifyIframe.dataset.src;
-                    }
-                }, 2000);
+            // 延迟加载BRANDED TOURS，避免阻塞首屏渲染
+            requestAnimationFrame(() => {
+                setTimeout(loadBrandedTours, 100);
             });
 
             // 绑定键盘事件
@@ -2761,6 +2749,7 @@
                 displayedBrandedTours = 0;
                 renderBrandedTours();
                 bindMobileEvents();
+                brandedToursLoading=false;
                 return;
             }
 
@@ -2827,8 +2816,8 @@
 
                 renderBrandedTours();
                 bindMobileEvents();
-
-            } catch (error) {
+                brandedToursLoading=false;
+            }catch (error) {
                 console.error('Error loading branded tours:', error);
                 container.innerHTML = '<div class="branded-tours-empty">UNABLE TO LOAD TOURS.</div>';
             }
