@@ -1,9 +1,9 @@
-// XRE BOOKING Service Worker - v13 (优化性能，events.html 不缓存)
+// XRE BOOKING Service Worker - v13 (最小修改版)
 const CACHE_NAME = 'xrebooking-v13';
 const STATIC_CACHE = 'xrebooking-static-v13';
 const IMAGE_CACHE = 'xrebooking-images-v13';
 
-// 核心静态资源（排除 events.html）
+// 核心静态资源
 const STATIC_ASSETS = [
     './',
     './index.html',
@@ -46,41 +46,25 @@ self.addEventListener('fetch', (event) => {
     const { request } = event;
     const url = new URL(request.url);
 
-    // ===== 关键修复：events.html 使用 Network Only（不缓存）=====
-    if (url.pathname.includes('events.html')) {
-        event.respondWith(
-            fetch(request, {
-                cache: 'no-store'
-            }).catch((error) => {
-                console.error('[SW] events.html fetch failed:', error);
-                return new Response('[]', {
-                    status: 200,
-                    headers: { 'Content-Type': 'application/json' }
-                });
-            })
-        );
-        return;
-    }
-
-    // 2. 图片资源：Stale-While-Revalidate 策略
+    // 1. 图片资源：Stale-While-Revalidate 策略
     if (request.destination === 'image') {
         event.respondWith(staleWhileRevalidate(request, IMAGE_CACHE));
         return;
     }
 
-    // 3. JSON数据：Network First
+    // 2. JSON数据：Network First
     if (url.pathname.endsWith('.json')) {
         event.respondWith(networkFirst(request, STATIC_CACHE));
         return;
     }
 
-    // 4. HTML 导航请求：Network First
-    if (request.mode === 'navigate' || request.headers.get('accept')?.includes('text/html')) {
+    // 3. HTML：Network First
+    if (request.mode === 'navigate' || request.headers.get('accept').includes('text/html')) {
         event.respondWith(networkFirst(request, STATIC_CACHE));
         return;
     }
 
-    // 5. 其他：Cache First
+    // 4. 其他：Cache First
     event.respondWith(cacheFirst(request, STATIC_CACHE));
 });
 
