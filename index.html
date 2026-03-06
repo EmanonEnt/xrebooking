@@ -730,10 +730,10 @@
             position: absolute;
             top: 20px;
             left: 20px;
-            width: 40px;
-            height: 40px;
-            background: rgba(0, 0, 0, 0.8);
-            border: 2px solid var(--xre-red);
+            width: 36px;
+            height: 36px;
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid var(--xre-dark-red);
             border-radius: 50%;
             color: #fff;
             cursor: pointer;
@@ -749,13 +749,13 @@
             opacity: 1;
         }
         .branded-tour-share:hover {
-            background: var(--xre-red);
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
+            background: var(--xre-dark-red);
+            box-shadow: 0 0 15px rgba(139, 0, 0, 0.8);
             transform: scale(1.1);
         }
         .branded-tour-share svg {
-            width: 18px;
-            height: 18px;
+            width: 16px;
+            height: 16px;
         }
         .branded-tour-status {
             position: absolute;
@@ -1319,12 +1319,12 @@
             .branded-tour-status { top: 15px; right: 15px; padding: 6px 12px; font-size: 11px; }
             /* 移动端分享按钮默认隐藏，hover/active状态显示 */
             .branded-tour-share { 
-                width: 40px; 
-                height: 40px; 
+                width: 36px; 
+                height: 36px; 
                 top: 15px; 
                 left: 15px; 
                 opacity: 0;
-                border: 2px solid var(--xre-red);
+                border: 1px solid var(--xre-dark-red);
             }
             .branded-tour-card:hover .branded-tour-share,
             .branded-tour-card.active .branded-tour-share {
@@ -1391,7 +1391,7 @@
                 top: 10px; 
                 left: 10px; 
                 opacity: 0;
-                border: 2px solid var(--xre-red);
+                border: 1px solid var(--xre-dark-red);
             }
             .branded-tour-card:hover .branded-tour-share,
             .branded-tour-card.active .branded-tour-share {
@@ -2866,10 +2866,11 @@
                 card.innerHTML = `
                     <button class="branded-tour-share" title="Share">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/>
-                            <circle cx="18" cy="19" r="3"/>
-                            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
-                            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+                            <circle cx="18" cy="5" r="3"></circle>
+                            <circle cx="6" cy="12" r="3"></circle>
+                            <circle cx="18" cy="19" r="3"></circle>
+                            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
                         </svg>
                     </button>
                     <img src="${posterUrl}" alt="" class="branded-tour-poster" loading="lazy" onerror="this.style.display='none'">
