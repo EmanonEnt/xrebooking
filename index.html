@@ -916,7 +916,8 @@
             font-size: 16px;
             letter-spacing: 2px;
         }
-.share-modal {
+        /* 分享弹窗 */
+        .share-modal {
             display: none;
             position: fixed;
             top: 0;
@@ -927,16 +928,12 @@
             z-index: 10000;
             justify-content: center;
             align-items: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        
-            touch-action: pan-y;
-            overscroll-behavior: contain;
         }
+
         .share-modal.active {
             display: flex;
-            opacity: 1;
         }
+
         .share-modal-content {
             background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
             border: 2px solid var(--xre-dark-red);
@@ -947,6 +944,7 @@
             position: relative;
             box-shadow: 0 0 40px rgba(139, 0, 0, 0.5);
         }
+
         .share-modal-close {
             position: absolute;
             top: 10px;
@@ -958,9 +956,11 @@
             cursor: pointer;
             transition: color 0.3s;
         }
+
         .share-modal-close:hover {
-            color: var(--xre-red);
+            color: var(--xre-dark-red);
         }
+
         .share-modal-title {
             font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
             font-size: 20px;
@@ -969,38 +969,43 @@
             margin-bottom: 20px;
             letter-spacing: 1px;
         }
+
         .share-event-info {
             display: flex;
             gap: 15px;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             padding: 15px;
-            background: rgba(139, 0, 0, 0.15);
+            background: rgba(139, 0, 0, 0.1);
             border-radius: 8px;
-            border: 1px solid rgba(139, 0, 0, 0.3);
         }
+
         .share-event-img {
             width: 80px;
             height: 80px;
             object-fit: cover;
             border-radius: 4px;
-            border: 1px solid rgba(139, 0, 0, 0.3);
         }
+
         .share-event-details {
             flex: 1;
         }
+
         .share-event-name {
             font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
             font-size: 16px;
             color: #fff;
             margin-bottom: 5px;
         }
+
         .share-event-meta {
             font-size: 12px;
-            color: #c0c0c0;
+            color: var(--silver);
         }
+
         .share-event-tags {
             margin-top: 8px;
         }
+
         .share-tag {
             display: inline-block;
             padding: 2px 8px;
@@ -1014,11 +1019,13 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
+
         .share-platforms {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 15px;
         }
+
         .share-platform-btn {
             display: flex;
             flex-direction: column;
@@ -1032,19 +1039,23 @@
             cursor: pointer;
             transition: all 0.3s ease;
         }
+
         .share-platform-btn:hover {
             background: rgba(139, 0, 0, 0.2);
             border-color: var(--xre-dark-red);
             transform: translateY(-3px);
         }
+
         .share-platform-icon {
             width: 32px;
             height: 32px;
         }
+
         .share-platform-name {
             font-size: 11px;
             text-align: center;
         }
+
         .download-btn {
             display: flex;
             flex-direction: column;
@@ -1061,25 +1072,35 @@
             width: 100%;
             font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
         }
+
         .download-btn:hover {
             background: var(--xre-dark-red);
             transform: translateY(-3px);
             box-shadow: 0 10px 30px rgba(139, 0, 0, 0.4);
         }
+
+        .download-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
         .download-btn-icon {
             width: 28px;
             height: 28px;
         }
+
         .download-btn-text {
             font-size: 14px;
             font-weight: bold;
             letter-spacing: 1px;
         }
+
         .download-btn-subtext {
             font-size: 10px;
-            color: #c0c0c0;
+            color: var(--silver);
             margin-top: -5px;
         }
+
         /* WeChat QR弹窗 */
         .wechat-qr-modal {
             display: none;
@@ -1093,9 +1114,11 @@
             justify-content: center;
             align-items: center;
         }
+
         .wechat-qr-modal.active {
             display: flex;
         }
+
         .wechat-qr-content {
             background: #fff;
             border-radius: 12px;
@@ -1103,11 +1126,13 @@
             text-align: center;
             max-width: 300px;
         }
+
         .wechat-qr-title {
             font-size: 18px;
             color: #333;
             margin-bottom: 15px;
         }
+
         .wechat-qr-code {
             width: 200px;
             height: 200px;
@@ -1119,10 +1144,12 @@
             font-size: 12px;
             color: #666;
         }
+
         .wechat-qr-hint {
             font-size: 12px;
             color: #666;
         }
+
         .wechat-qr-close {
             margin-top: 15px;
             padding: 8px 24px;
@@ -1175,27 +1202,6 @@
             animation: shimmer 2s infinite;
         }
 
-        /* 分享弹窗响应式 */
-        @media (max-width: 768px) {
-            .share-platforms {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 10px;
-            }
-            .share-platform-btn {
-                padding: 10px 5px;
-            }
-            .share-platform-icon {
-                width: 24px;
-                height: 24px;
-            }
-            .share-platform-name {
-                font-size: 9px;
-            }
-            .share-modal-content {
-                padding: 20px;
-            }
-        }
-
 @media (max-width: 1024px) {
             nav { padding: 0 30px; height: 70px; }
             .logo-img { height: 40px; max-width: 180px; }
@@ -1219,6 +1225,27 @@
             }
             .copyright {
                 order: 2;
+            }
+        }
+
+        /* 分享弹窗响应式 */
+        @media (max-width: 768px) {
+            .share-platforms {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 10px;
+            }
+            .share-platform-btn {
+                padding: 10px 5px;
+            }
+            .share-platform-icon {
+                width: 24px;
+                height: 24px;
+            }
+            .share-platform-name {
+                font-size: 9px;
+            }
+            .share-modal-content {
+                padding: 20px;
             }
         }
 
@@ -1302,9 +1329,9 @@
             .branded-tour-card.active .branded-tour-share {
                 opacity: 1;
             }
-            .share-platforms { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+            .share-platforms { grid-template-columns: repeat(4, 1fr); gap: 8px; }
             .share-platform-btn { padding: 10px 5px; }
-            .share-platform-icon { width: 24px; height: 24px; }
+            .share-platform-icon { width: 22px; height: 22px; }
             .share-platform-name { font-size: 9px; }
         }
 
@@ -2412,22 +2439,6 @@
         if ('scrollRestoration' in history) {
             history.scrollRestoration = 'auto';
         }
-
-        // 检测是否是页面刷新，如果是则保留滚动位置
-        const isPageRefresh = performance.navigation && performance.navigation.type === 1;
-
-        if (!isPageRefresh && window.scrollY === 0) {
-            // 首次访问且未滚动时，确保从顶部开始
-            window.scrollTo(0, 0);
-        }
-
-        window.onload = function() {
-            // 仅在首次加载时滚动到顶部
-            if (!sessionStorage.getItem('pageLoaded')) {
-                window.scrollTo({ top: 0, behavior: 'instant' });
-                sessionStorage.setItem('pageLoaded', 'true');
-            }
-        };
 
         document.addEventListener('DOMContentLoaded', function() {
             // 隐藏加载动画
