@@ -2749,8 +2749,7 @@
                 displayedBrandedTours = 0;
                 renderBrandedTours();
                 bindMobileEvents();
-                window.brandedToursLoading=false;
-                window.brandedToursLoaded=true;
+                window.brandedToursLoading = false;
                 return;
             }
 
@@ -2817,9 +2816,8 @@
 
                 renderBrandedTours();
                 bindMobileEvents();
-                window.brandedToursLoading=false;
-                window.brandedToursLoaded=true;
-            }catch (error) {
+
+            } catch (error) {
                 console.error('Error loading branded tours:', error);
                 container.innerHTML = '<div class="branded-tours-empty">UNABLE TO LOAD TOURS.</div>';
             }
