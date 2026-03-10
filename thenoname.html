@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE NONAME無名 - XRE BOOKING</title>
+    <link rel="icon" type="image/png" href="./images/webtop.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Open Graph for Facebook/WeChat -->
+    <meta property="og:title" content="THE NONAME無名 - XRE BOOKING">
+    <meta property="og:description" content="Chinese punk rock institution with nearly 30 years of history. Book now for tours and events.">
+    <meta property="og:image" content="https://xrebooking.com/assets/artists/TheNoname.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:url" content="https://xrebooking.com/thenoname.html">
+    <meta property="og:type" content="profile">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="THE NONAME無名 - XRE BOOKING">
+    <meta name="twitter:description" content="Chinese punk rock institution with nearly 30 years of history. Book now for tours and events.">
+    <meta name="twitter:image" content="https://xrebooking.com/assets/artists/TheNoname.jpg">
+
+    <style>
+        :root { --xre-red: #ff0000; --xre-dark-red: #8b0000; --mad-silver: #e8e8e8; --black: #050505; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Impact, sans-serif; background: var(--black); color: #fff; }
+        .artist-hero { height: 100vh; position: relative; display: flex; justify-content: center; align-items: center; }
+        .hero-bg { position: absolute; inset: 0; background-size: cover; background-position: center; filter: brightness(0.7); }
+        .hero-content { position: relative; z-index: 10; text-align: center; }
+        .artist-name { font-size: clamp(48px, 10vw, 120px); letter-spacing: 10px; }
+        .content-wrapper { background: var(--mad-silver); color: #333; padding: 80px 50px; }
+        .bio-section { max-width: 900px; margin: 0 auto; text-align: center; }
+        .agent-info a { color: var(--xre-red); }
+        .bio-text { font-family: 'Courier New', monospace; text-align: left; margin-top: 30px; line-height: 1.8; }
+        .tour-section, .video-section, .media-section { padding: 60px 0; }
+        .section-title { text-align: center; font-size: 48px; color: #000; margin-bottom: 40px; }
+        .tour-table { width: 100%; background: #fff; }
+        .tour-table td { padding: 20px; border-bottom: 1px solid #ddd; }
+        .date { color: var(--xre-red); font-weight: bold; }
+        .ticket-btn { background: #000; color: #fff; padding: 10px 20px; text-decoration: none; }
+        .video-wrapper { position: relative; padding-bottom: 56.25%; }
+        .video-wrapper iframe { position: absolute; inset: 0; width: 100%; height: 100%; }
+        .neon-btn { background: var(--xre-dark-red); color: #fff; padding: 15px 30px; text-decoration: none; display: inline-block; margin: 10px; }
+        footer { background: #000; color: #c0c0c0; padding: 40px; text-align: center; }
+    
+        .og-toggle { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; padding: 12px; background: #e8f4fd; border-radius: 8px; cursor: pointer; }
+        .og-toggle input[type="checkbox"] { width: 20px; height: 20px; cursor: pointer; }
+        .og-toggle label { cursor: pointer; font-weight: 600; color: #1a1a2e; margin: 0; }
+        .og-image-preview { margin-top: 15px; padding: 15px; background: #f8f9fa; border-radius: 10px; display: none; }
+        .og-image-preview.show { display: block; }
+        .og-image-preview img { max-width: 100%; max-height: 200px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .og-image-preview .preview-label { font-size: 12px; color: #666; margin-bottom: 8px; }
+        .og-input-wrapper { transition: opacity 0.3s; }
+        .og-input-wrapper.disabled { opacity: 0.5; pointer-events: none; }
+
+    </style>
+</head>
+<body>
+    <section class="artist-hero">
+        <div class="hero-bg" style="background-image: url('./assets/artists/TheNoname.jpg')"></div>
+        <div class="hero-content">
+            <h1 class="artist-name">THE NONAME無名</h1>
+            <div class="social-links"><a href="https://facebook.com/nonamepunks" target="_blank">facebook</a> <a href="https://instagram.com/nonamepunks" target="_blank">instagram</a> <a href="https://open.spotify.com/artist/1QjEg19ZiCoWuyUSFdbVhu" target="_blank">spotify</a> <a href="https://youtube.com/thenoname" target="_blank">youtube</a> <a href="https://x.com/nonamepunks" target="_blank">twitter</a> <a href="http://ticktok.com/nonamepunks" target="_blank">tiktok</a> <a href="https://music.163.com/#/artist?id=12463" target="_blank">netease</a> <a href="http://nonamepunks.com" target="_blank">website</a> </div>
+        </div>
+    </section>
+    <div class="content-wrapper">
+        <section class="bio-section">
+            <div class="agent-info">— BOOKINGS VIA <a href="mailto:XREbooking@Hotmail.com">XREbooking@Hotmail.com</a></div>
+            <div class="bio-text">The NONAME is a Chinese punk rock institution with nearly 30 years of history. Here comes a blast of the hottest punk rock import from the Far East—straight from Xi’an, China! Masterminded by vocalist and band head honcho Ray, who is sick and tired of the ruling order, he finds his kind of freedom in music by starting his own revolution against all false hope in the world. Furthermore, these maniacs show their tough attitude straight to people’s faces and fight against all limits. Their music can be described as a mix between pure 1980s punk rock and straight hardcore, with heavy guitars, groovy bass lines, and powerful vocals. THE NONAME creates a wall of sound to scream along with; this music is the kind of revolution Ray wanted and hoped would never stop inspiring.</div>
+        </section>
+        
+        
+        <section class="video-section">
+            <h2 class="section-title">VIDEO</h2>
+            <div class="video-container"><div class="video-wrapper"><iframe src="https://www.youtube.com/embed/CFZik0yVglc" allowfullscreen></iframe></div></div>
+        </section>
+        
+    </div>
+    <footer>
+        <p>XRE BOOKING - xrebooking@hotmail.com</p>
+    </footer>
+</body>
+</html>
