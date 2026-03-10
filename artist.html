@@ -3,31 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XRE BOOKING - Artist</title>
+        <title>XRE BOOKING - Artist</title>
 
-    <!-- Open Graph Meta Tags - Dynamic Update for Social Sharing -->
+    <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="XRE BOOKING - Artist" id="ogTitle">
-    <meta property="og:description" content="Book professional artists for your events. XRE BOOKING represents top international and local talent." id="ogDesc">
-    <meta property="og:image" content="https://emanonent.github.io/xrebooking/images/default-og.jpg" id="ogImage">
+    <meta property="og:description" content="Book professional artists for your events" id="ogDesc">
+    <meta property="og:image" content="" id="ogImage">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:url" content="" id="ogUrl">
-    <meta property="og:type" content="profile">
+    <meta property="og:type" content="website">
     <meta property="og:site_name" content="XRE BOOKING">
-    <meta property="profile:first_name" content="" id="ogFirstName">
-    <meta property="profile:last_name" content="" id="ogLastName">
 
-    <!-- Twitter Card Meta Tags -->
+    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="XRE BOOKING - Artist" id="twitterTitle">
-    <meta name="twitter:description" content="Book professional artists for your events." id="twitterDesc">
-    <meta name="twitter:image" content="https://emanonent.github.io/xrebooking/images/default-og.jpg" id="twitterImage">
-    <meta name="twitter:site" content="@xrebooking">
-
-    <!-- WeChat/QQ Meta Tags -->
-    <meta itemprop="name" content="XRE BOOKING - Artist" id="wechatTitle">
-    <meta itemprop="description" content="Book professional artists for your events." id="wechatDesc">
-    <meta itemprop="image" content="https://emanonent.github.io/xrebooking/images/default-og.jpg" id="wechatImage">
+    <meta name="twitter:description" content="Book professional artists" id="twitterDesc">
+    <meta name="twitter:image" content="" id="twitterImage">
     <link rel="icon" type="image/png" href="./images/webtop.png">
     <style>
 
@@ -1186,7 +1178,7 @@
             }
 
             try {
-                const response = await fetch('https://emanonent.github.io/xrebooking/artists-data.json');
+                const response = await fetch('./artists-data.json');
                 const data = await response.json();
                 const artist = data[id.toLowerCase()];
 
@@ -1198,9 +1190,6 @@
 
                 currentArtist = artist;
                 document.title = artist.name + ' - XRE BOOKING';
-
-                // 更新 Open Graph 和社交分享元标签
-                updateMetaTags(artist);
 
                 updateHeroLayout();
 
@@ -1286,6 +1275,9 @@
                     }
                 }
 
+                // 更新OG标签
+                updateMetaTags(artist);
+
                 setTimeout(() => {
                     document.getElementById('loading').classList.add('hidden');
                 }, 500);
@@ -1306,77 +1298,43 @@
             loadArtist();
         });
 
-        // 更新 Open Graph 和社交分享元标签
+        // 更新 Open Graph 元标签
         function updateMetaTags(artist) {
             const artistName = artist.name || 'Artist';
+            const pageUrl = window.location.href;
 
-            // 处理艺人名称（分离 first/last name）
-            const nameParts = artistName.split(' ');
-            const firstName = nameParts[0] || '';
-            const lastName = nameParts.slice(1).join(' ') || '';
-
-            // 处理描述文字（去除 HTML 标签，限制长度）
-            let artistBio = 'Book ' + artistName + ' for your event. Professional artist represented by XRE BOOKING.';
-            if (artist.bio) {
-                artistBio = artist.bio.replace(/<[^>]*>/g, '').substring(0, 200);
-                if (artist.bio.replace(/<[^>]*>/g, '').length > 200) {
-                    artistBio += '...';
+            // 处理图片 URL
+            let imageUrl = artist.ogImage || artist.heroImage || '';
+            if (imageUrl && !imageUrl.startsWith('http')) {
+                // 转换为绝对 URL
+                if (imageUrl.startsWith('./')) {
+                    imageUrl = window.location.origin + '/' + imageUrl.substring(2);
+                } else if (imageUrl.startsWith('/')) {
+                    imageUrl = window.location.origin + imageUrl;
+                } else {
+                    imageUrl = window.location.origin + '/' + imageUrl;
                 }
             }
 
-            // 处理图片 URL - 优先使用 ogImage，其次 heroImage，最后默认图
-            let imageUrl = artist.ogImage || artist.heroImage || 'https://emanonent.github.io/xrebooking/images/default-og.jpg';
-
-            // 确保图片 URL 是绝对路径 (Facebook/微信等需要完整URL)
-            if (imageUrl.startsWith('./')) {
-                // ./assets/artists/xxx.jpg -> GitHub Pages 完整路径
-                imageUrl = 'https://emanonent.github.io/xrebooking/' + imageUrl.substring(2);
-            } else if (imageUrl.startsWith('/')) {
-                imageUrl = 'https://emanonent.github.io/xrebooking' + imageUrl;
-            } else if (!imageUrl.startsWith('http')) {
-                imageUrl = 'https://emanonent.github.io/xrebooking/' + imageUrl;
-            }
-
-            console.log('[OG Image] Final URL:', imageUrl);
-
-            // 当前页面 URL
-            const pageUrl = window.location.href;
-
-            // 更新 Open Graph 标签
+            // 更新 OG 标签
             const ogTitle = document.getElementById('ogTitle');
             const ogDesc = document.getElementById('ogDesc');
             const ogImage = document.getElementById('ogImage');
             const ogUrl = document.getElementById('ogUrl');
-            const ogFirstName = document.getElementById('ogFirstName');
-            const ogLastName = document.getElementById('ogLastName');
 
             if (ogTitle) ogTitle.setAttribute('content', artistName + ' - XRE BOOKING');
-            if (ogDesc) ogDesc.setAttribute('content', artistBio);
-            if (ogImage) ogImage.setAttribute('content', imageUrl);
+            if (ogDesc) ogDesc.setAttribute('content', 'Book ' + artistName + ' for your event');
+            if (ogImage && imageUrl) ogImage.setAttribute('content', imageUrl);
             if (ogUrl) ogUrl.setAttribute('content', pageUrl);
-            if (ogFirstName) ogFirstName.setAttribute('content', firstName);
-            if (ogLastName) ogLastName.setAttribute('content', lastName);
 
-            // 更新 Twitter Card 标签
+            // 更新 Twitter Card
             const twitterTitle = document.getElementById('twitterTitle');
             const twitterDesc = document.getElementById('twitterDesc');
             const twitterImage = document.getElementById('twitterImage');
 
             if (twitterTitle) twitterTitle.setAttribute('content', artistName + ' - XRE BOOKING');
-            if (twitterDesc) twitterDesc.setAttribute('content', artistBio);
-            if (twitterImage) twitterImage.setAttribute('content', imageUrl);
-
-            // 更新 WeChat/QQ 标签 (itemprop)
-            const wechatTitle = document.getElementById('wechatTitle');
-            const wechatDesc = document.getElementById('wechatDesc');
-            const wechatImage = document.getElementById('wechatImage');
-
-            if (wechatTitle) wechatTitle.setAttribute('content', artistName + ' - XRE BOOKING');
-            if (wechatDesc) wechatDesc.setAttribute('content', artistBio);
-            if (wechatImage) wechatImage.setAttribute('content', imageUrl);
-
-            console.log('[OG Tags] Updated for:', artistName);
-            console.log('[OG Tags] Image:', imageUrl);
+            if (twitterDesc) twitterDesc.setAttribute('content', 'Book ' + artistName + ' for your event');
+            if (twitterImage && imageUrl) twitterImage.setAttribute('content', imageUrl);
         }
     </script>
 </body>
