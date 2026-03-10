@@ -1573,7 +1573,11 @@
             <p class="wechat-qr-hint">Content copied to clipboard.<br>Open WeChat and paste to share.</p>
             <button class="wechat-qr-close" onclick="closeWeChatQR()">Got it</button>
         </div>
-    </div>
+    </div><!-- WeChat QR Modal -->
+    <div class="wechat-qr-modal" id="wechatQRModal" onclick="if(event.target === this) closeWeChatQR();">
+        <div class="wechat-qr-content">
+            <h3 class="wechat-qr-title">Scan to Share on WeChat</h3>
+            <div class="wechat-qr-code" id="wechatQRCode"></div>
             <p class="wechat-qr-hint">Content copied to clipboard.<br>Open WeChat and paste to share.</p>
             <button class="wechat-qr-close" onclick="closeWeChatQR()">Got it</button>
         </div>
@@ -1779,13 +1783,13 @@
             const tags = [];
             const fullText = (title + ' ' + (subtitle || '') + ' ' + city + ' ' + (date || '') + ' ' + (link || '')).toLowerCase();
 
-            // ä»æ é¢åå¯æ é¢æåå³é®è¯ä½ä¸ºTAG
+            // 从标题和副标题提取关键词作为TAG
             const allText = title + ' ' + (subtitle || '');
             const titleWords = allText.toLowerCase().split(/[\s\-'"]+/).filter(w => w.length >= 3);
             const commonWords = new Set(['the', 'and', 'for', 'with', 'live', 'show', 'gig', 'band', 'new', 'year', 'party']);
 
             titleWords.forEach(word => {
-                // è¿æ»¤æåªåå«ç¹æ®å­ç¬¦ææ°å­çè¯
+                // 过滤掉只包含特殊字符或数字的词
                 const cleanWord = word.replace(/[^a-z0-9]/g, '');
                 if (cleanWord.length < 2) return;
                 if (commonWords.has(cleanWord)) return;
@@ -1796,7 +1800,7 @@
                 }
             });
 
-            // é³ä¹é£æ ¼æ ç­¾
+            // 音乐风格标签
             const genreKeywords = {
                 'punk': 'Punk', 'metal': 'Metal', 'rock': 'Rock', 'hardcore': 'Hardcore',
                 'slam': 'SlamMetal', 'death': 'DeathMetal', 'black': 'BlackMetal',
@@ -1847,7 +1851,7 @@
                 'tribal': 'Tribal', 'guaracha': 'Guaracha', 'riddim': 'Riddim'
             };
 
-            // æ´»å¨ç±»åæ ç­¾
+            // 活动类型标签
             const eventKeywords = {
                 'fest': 'Festival', 'festival': 'Festival', 'tour': 'Tour', 'show': 'LiveShow',
                 'gig': 'Gig', 'concert': 'Concert', 'party': 'Party', 'warmup': 'WarmUp',
@@ -1875,7 +1879,7 @@
                 'winter': 'Winter', 'spring': 'Spring', 'fall': 'Fall', 'autumn': 'Autumn'
             };
 
-            // å°åºæ ç­¾
+            // 地区标签
             const regionKeywords = {
                 'asia': 'Asia', 'china': 'China', 'hongkong': 'HongKong', 'hong kong': 'HongKong', 'taiwan': 'Taiwan',
                 'macau': 'Macau', 'japan': 'Japan', 'tokyo': 'Tokyo', 'osaka': 'Osaka', 'korea': 'Korea', 'seoul': 'Seoul',
@@ -1901,7 +1905,7 @@
                 'morocco': 'Morocco', 'southafrica': 'SouthAfrica', 'nigeria': 'Nigeria', 'kenya': 'Kenya'
             };
 
-            // æåæ ç­¾
+            // 提取标签
             Object.entries(genreKeywords).forEach(([keyword, tag]) => {
                 if (fullText.includes(keyword) && !tags.includes(tag)) {
                     tags.push(tag);
@@ -1920,15 +1924,15 @@
                 }
             });
 
-            // ç¡®ä¿æè¶³å¤æ°éçTAGï¼è³å°3ä¸ªï¼
+            // 确保有足够数量的TAG（至少3个）
             if (tags.length === 0) tags.push('LiveMusic');
             if (tags.length < 2) tags.push('LiveEvent');
             if (tags.length < 3) tags.push('Concert');
 
-            // å§ç»æ·»å åçTAG
+            // 始终添加品牌TAG
             tags.push('LiveGigsAsia');
 
-            // éå¶æå¤æ¾ç¤º6ä¸ªTAG
+            // 限制最多显示6个TAG
             return tags.slice(0, 6);
         }
 
@@ -1944,7 +1948,7 @@
             eventName.textContent = title;
             eventMeta.textContent = date + (city ? ' | ' + city : '');
 
-            const tags = generateTags(title, city, date, link);
+            const tags = generateTags(title, city, date, link, subtitle);
             eventTags.innerHTML = tags.map(tag => '<span class="share-tag">' + tag + '</span>').join('');
 
             modal.dataset.title = title;
@@ -1954,14 +1958,185 @@
             modal.dataset.link = link;
 
             modal.classList.add('active');
-
-            // æ·»å ESCé®çå¬
             document.addEventListener('keydown', handleShareModalKeydown);
         }
 
-        
+        function closeShareModal() {
+            document.getElementById('shareModal').classList.remove('active');
+            document.removeEventListener('keydown', handleShareModalKeydown);
+        }
 
-        // ä¸è½½æµ·æ¥å°æ¬å°
+        function handleShareModalKeydown(e) {
+            if (e.key === 'Escape' || e.keyCode === 27) {
+                closeShareModal();
+            }
+        }
+
+        function handleShareModalClick(e) {
+            if (e.target === e.currentTarget) {
+                closeShareModal();
+            }
+        }
+
+        function closeWeChatQR() {
+            document.getElementById('wechatQRModal').classList.remove('active');
+            document.removeEventListener('keydown', handleWechatModalKeydown);
+        }
+
+        function handleWechatModalKeydown(e) {
+            if (e.key === 'Escape' || e.keyCode === 27) {
+                closeWeChatQR();
+            }
+        }
+
+        function handleWechatModalClick(e) {
+            if (e.target === e.currentTarget) {
+                closeWeChatQR();
+            }
+        }
+
+        function shareToPlatform(platform) {
+            const modal = document.getElementById('shareModal');
+            const title = modal.dataset.title || '';
+            const city = modal.dataset.city || '';
+            const date = modal.dataset.date || '';
+            const image = modal.dataset.image || '';
+            const link = modal.dataset.link || '';
+
+            const tags = generateTags(title, city, date, link);
+            const tagsStr = tags.map(function(t) { return '#' + t; }).join(' ');
+
+            let shareText = title;
+            if (city) shareText += ' - ' + city;
+            if (date) shareText += ' (' + date + ')';
+            shareText += '\n\n' + tagsStr;
+            if (image) shareText += '\n\nPoster: ' + image;
+            shareText += '\n\nCheck out more events at ' + LIVEGIGS_URL;
+            if (link) shareText += '\nEvent link: ' + link;
+
+            const shareUrl = encodeURIComponent(LIVEGIGS_URL);
+            const encodedText = encodeURIComponent(shareText);
+            const encodedTitle = encodeURIComponent(title);
+            const encodedTags = encodeURIComponent(tagsStr);
+
+            let url = '';
+
+            switch(platform) {
+                case 'facebook':
+                    url = 'https://www.facebook.com/sharer/sharer.php?u=' + shareUrl + '&quote=' + encodedTags;
+                    window.open(url, '_blank', 'width=600,height=400');
+                    break;
+
+                case 'instagram':
+                    copyToClipboard(shareText);
+                    alert('Content copied to clipboard!\n\nPlease open Instagram app and paste to share.\n\nContent includes:\n- Event title, city, date\n- Tags\n- Poster image URL\n- LiveGigs link');
+                    break;
+
+                case 'whatsapp':
+                    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+                    if (isMobile) {
+                        url = 'whatsapp://send?text=' + encodedText;
+                        window.location.href = url;
+                        setTimeout(function() {
+                            window.open('https://wa.me/?text=' + encodedText, '_blank');
+                        }, 3000);
+                    } else {
+                        url = 'https://wa.me/?text=' + encodedText;
+                        window.open(url, '_blank');
+                    }
+                    break;
+
+                case 'reddit':
+                    url = 'https://reddit.com/submit?url=' + shareUrl + '&title=' + encodedTitle;
+                    window.open(url, '_blank', 'width=600,height=400');
+                    break;
+
+                case 'telegram':
+                    url = 'https://t.me/share/url?url=' + shareUrl + '&text=' + encodedText;
+                    window.open(url, '_blank');
+                    break;
+
+                case 'line':
+                    url = 'https://social-plugins.line.me/lineit/share?url=' + shareUrl;
+                    window.open(url, '_blank');
+                    break;
+
+                case 'wechat-friend':
+                case 'wechat-moments':
+                    handleWeChatShare(shareText, image);
+                    break;
+            }
+
+            closeShareModal();
+        }
+
+        function handleWeChatShare(text, image) {
+            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+            const isWeChat = /MicroMessenger/i.test(navigator.userAgent);
+
+            let shareContent = text;
+            if (image && !text.includes(image)) {
+                shareContent += '\n\nPoster: ' + image;
+            }
+
+            if (isWeChat) {
+                copyToClipboard(shareContent);
+                alert('You are in WeChat!\n\nContent copied to clipboard.\nPlease use WeChat\'s native share button (top right menu) to share this event.\n\nContent includes event details and poster image URL.');
+            } else if (isMobile) {
+                copyToClipboard(shareContent);
+                const wechatUrl = 'weixin://';
+                window.location.href = wechatUrl;
+                setTimeout(function() {
+                    alert('Content copied to clipboard!\n\nIf WeChat didn\'t open automatically, please:\n1. Open WeChat app manually\n2. Paste the copied content to share\n\nContent includes event details and poster image URL.');
+                }, 1000);
+            } else {
+                copyToClipboard(shareContent);
+                const qrModal = document.getElementById('wechatQRModal');
+                const qrHint = qrModal.querySelector('.wechat-qr-hint');
+                if (qrHint) {
+                    qrHint.innerHTML = 'Content copied to clipboard!<br>Open WeChat on your phone and paste to share.<br><br>Content includes: Event details, tags, and poster image URL.';
+                }
+                generateWeChatQR(shareContent);
+                qrModal.classList.add('active');
+            }
+        }
+
+        function generateWeChatQR(content) {
+            const qrContainer = document.getElementById('wechatQRCode');
+            if (!qrContainer) return;
+            qrContainer.innerHTML = '';
+            const qrUrl = 'https://chart.googleapis.com/chart?cht=qr&chs=200x200&chld=M|0&chl=' + encodeURIComponent(content);
+            const qrImg = document.createElement('img');
+            qrImg.src = qrUrl;
+            qrImg.alt = 'WeChat Share QR Code';
+            qrImg.style.width = '150px';
+            qrImg.style.height = '150px';
+            qrImg.style.display = 'block';
+            qrImg.style.margin = '0 auto';
+            qrContainer.appendChild(qrImg);
+        }
+
+        function copyToClipboard(text) {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).catch(function() {
+                    fallbackCopy(text);
+                });
+            } else {
+                fallbackCopy(text);
+            }
+        }
+
+        function fallbackCopy(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+        }
+
         async function downloadPoster() {
             const modal = document.getElementById('shareModal');
             const imageUrl = modal.dataset.image;
@@ -1973,20 +2148,17 @@
             }
 
             try {
-                // æ¾ç¤ºä¸è½½ä¸­æç¤º
                 const btn = document.getElementById('downloadPosterBtn');
                 const originalText = btn.innerHTML;
                 btn.innerHTML = '<span class="download-btn-text">DOWNLOADING...</span>';
                 btn.disabled = true;
 
-                // è·åå¾çblob
                 const response = await fetch(imageUrl, { mode: 'cors' });
                 if (!response.ok) throw new Error('Network response was not ok');
 
                 const blob = await response.blob();
                 const blobUrl = window.URL.createObjectURL(blob);
 
-                // åå»ºä¸è½½é¾æ¥
                 const link = document.createElement('a');
                 link.href = blobUrl;
                 link.download = title.replace(/[^a-z0-9]/gi, '_').toLowerCase() + '_poster.jpg';
@@ -1994,23 +2166,18 @@
                 link.click();
                 document.body.removeChild(link);
 
-                // æ¸ç
                 window.URL.revokeObjectURL(blobUrl);
 
-                // æ¢å¤æé®
                 btn.innerHTML = originalText;
                 btn.disabled = false;
 
-                // æ¾ç¤ºæåæç¤º
                 showToast('Poster downloaded successfully!');
             } catch (error) {
                 console.error('Download failed:', error);
-                // å¦æfetchå¤±è´¥ï¼å¯è½æ¯è·¨åé®é¢ï¼ï¼å°è¯ä½¿ç¨canvasæ¹æ³
                 tryCanvasDownload(imageUrl, title);
             }
         }
 
-        // ä½¿ç¨Canvasä½ä¸ºå¤éä¸è½½æ¹æ³
         function tryCanvasDownload(imageUrl, title) {
             const img = new Image();
             img.crossOrigin = 'anonymous';
@@ -2037,21 +2204,19 @@
                     alert('Download failed. Please try right-clicking the image to save it manually.');
                 }
 
-                // æ¢å¤æé®
                 const btn = document.getElementById('downloadPosterBtn');
-                btn.innerHTML = '<svg class="download-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg><span class="download-btn-text">DOWNLOAD POSTER</span><span class="download-btn-subtext">Save to Device</span>';
+                btn.innerHTML = '<svg class="download-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg><span class="download-btn-text">DOWNLOAD POSTER</span><span class="download-btn-subtext">Save to Device</span>';
                 btn.disabled = false;
             };
             img.onerror = function() {
                 alert('Cannot download this image due to cross-origin restrictions. Please try right-clicking the image to save it manually.');
                 const btn = document.getElementById('downloadPosterBtn');
-                btn.innerHTML = '<svg class="download-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg><span class="download-btn-text">DOWNLOAD POSTER</span><span class="download-btn-subtext">Save to Device</span>';
+                btn.innerHTML = '<svg class="download-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg><span class="download-btn-text">DOWNLOAD POSTER</span><span class="download-btn-subtext">Save to Device</span>';
                 btn.disabled = false;
             };
             img.src = imageUrl;
         }
 
-        // æ¾ç¤ºæç¤ºæ¶æ¯
         function showToast(message) {
             const toast = document.createElement('div');
             toast.style.cssText = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:rgba(139,0,0,0.9);color:#fff;padding:12px 24px;border-radius:4px;font-family:Impact,Haettenschweiler,Arial Narrow Bold,sans-serif;letter-spacing:1px;z-index:100002;animation:fadeInUp 0.3s ease;';
@@ -2063,8 +2228,9 @@
             }, 3000);
         }
 
-        // æ·»å å¨ç»æ ·å¼
-        
+        const toastStyle = document.createElement('style');
+        toastStyle.textContent = '@keyframes fadeInUp { from { opacity:0; transform:translateX(-50%) translateY(20px); } to { opacity:1; transform:translateX(-50%) translateY(0); } } @keyframes fadeOut { from { opacity:1; } to { opacity:0; } }';
+        document.head.appendChild(toastStyle);
 
         // ================== Branded Tours// ================== Branded Tours - 修复版 ==================
         async function loadBrandedTours() {
