@@ -1,25 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- 预定义所有艺人的 OG 图片（Facebook 不执行 JS，但至少能看到默认图） -->
+    <script>
+        // 预定义艺人 OG 图片映射（会被下面的脚本覆盖）
+        window.ARTIST_OG_IMAGES = {
+            'thenoname': 'https://xrebooking.com/assets/artists/TheNoname.jpg',
+            'nonservium': 'https://xrebooking.com/assets/artists/NonServium.jpg',
+            'onikali': 'https://xrebooking.com/assets/artists/OnikaLi.jpg',
+            'bigd': 'https://xrebooking.com/assets/artists/BigD.jpg'
+        };
+
+        // 根据 URL 参数立即设置 OG 图片（在页面渲染前执行）
+        (function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const artistId = urlParams.get('name') || urlParams.get('id');
+            const defaultImage = 'https://xrebooking.com/assets/artists/TheNoname.jpg';
+            const ogImage = window.ARTIST_OG_IMAGES[artistId] || defaultImage;
+
+            // 立即更新 meta 标签
+            document.write('<meta property="og:image" content="' + ogImage + '">');
+            document.write('<meta property="og:image:width" content="1200">');
+            document.write('<meta property="og:image:height" content="630">');
+            document.write('<meta name="twitter:image" content="' + ogImage + '">');
+        })();
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>XRE BOOKING - Artist</title>
-
-    <!-- Open Graph Meta Tags -->
-    <meta property="og:title" content="XRE BOOKING - Artist" id="ogTitle">
-    <meta property="og:description" content="Book professional artists for your events" id="ogDesc">
-    <meta property="og:image" content="" id="ogImage">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:url" content="" id="ogUrl">
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="XRE BOOKING">
-
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="XRE BOOKING - Artist" id="twitterTitle">
-    <meta name="twitter:description" content="Book professional artists" id="twitterDesc">
-    <meta name="twitter:image" content="" id="twitterImage">
+    <title>XRE BOOKING - Artist</title>
     <link rel="icon" type="image/png" href="./images/webtop.png">
     <style>
 
@@ -1275,9 +1283,6 @@
                     }
                 }
 
-                // 更新OG标签
-                updateMetaTags(artist);
-
                 setTimeout(() => {
                     document.getElementById('loading').classList.add('hidden');
                 }, 500);
@@ -1297,45 +1302,6 @@
 
             loadArtist();
         });
-
-        // 更新 Open Graph 元标签
-        function updateMetaTags(artist) {
-            const artistName = artist.name || 'Artist';
-            const pageUrl = window.location.href;
-
-            // 处理图片 URL
-            let imageUrl = artist.ogImage || artist.heroImage || '';
-            if (imageUrl && !imageUrl.startsWith('http')) {
-                // 转换为绝对 URL
-                if (imageUrl.startsWith('./')) {
-                    imageUrl = window.location.origin + '/' + imageUrl.substring(2);
-                } else if (imageUrl.startsWith('/')) {
-                    imageUrl = window.location.origin + imageUrl;
-                } else {
-                    imageUrl = window.location.origin + '/' + imageUrl;
-                }
-            }
-
-            // 更新 OG 标签
-            const ogTitle = document.getElementById('ogTitle');
-            const ogDesc = document.getElementById('ogDesc');
-            const ogImage = document.getElementById('ogImage');
-            const ogUrl = document.getElementById('ogUrl');
-
-            if (ogTitle) ogTitle.setAttribute('content', artistName + ' - XRE BOOKING');
-            if (ogDesc) ogDesc.setAttribute('content', 'Book ' + artistName + ' for your event');
-            if (ogImage && imageUrl) ogImage.setAttribute('content', imageUrl);
-            if (ogUrl) ogUrl.setAttribute('content', pageUrl);
-
-            // 更新 Twitter Card
-            const twitterTitle = document.getElementById('twitterTitle');
-            const twitterDesc = document.getElementById('twitterDesc');
-            const twitterImage = document.getElementById('twitterImage');
-
-            if (twitterTitle) twitterTitle.setAttribute('content', artistName + ' - XRE BOOKING');
-            if (twitterDesc) twitterDesc.setAttribute('content', 'Book ' + artistName + ' for your event');
-            if (twitterImage && imageUrl) twitterImage.setAttribute('content', imageUrl);
-        }
     </script>
 </body>
 </html>
