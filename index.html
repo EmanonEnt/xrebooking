@@ -7,7 +7,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>XRE BOOKING - Artist Agency</title>
-    <meta name="description" content="XRE BOOKING - Artist Agency in Punkrock, Garage, Mod, Powerpop, Surf, Poppunk, RocknRoll, Hardcore, Metal">
     <link rel="icon" type="image/png" href="./images/webtop.png">
     <link rel="shortcut icon" type="image/png" href="./images/webtop.png">
     <link rel="apple-touch-icon" href="./images/webtop.png">
@@ -157,7 +156,7 @@
             background-repeat: no-repeat;
             filter: brightness(0.8) saturate(1.2);
             z-index: 0;
-            /* will-change removed for performance */
+            will-change: transform;
         }
 
         /* 桌面端使用fixed背景效果，移动端使用scroll避免卡顿 */
@@ -188,7 +187,7 @@
             height: 150%;
             background: radial-gradient(ellipse at center, rgba(255,255,255,0.03) 0%, transparent 50%);
             filter: blur(80px);
-            /* will-change removed for performance */
+            will-change: transform;
         }
         .smoke:nth-child(1) { top: -30%; left: -30%; animation: smokeFloat 20s ease-in-out infinite; }
         .smoke:nth-child(2) { top: 10%; right: -30%; animation: smokeFloat 25s ease-in-out infinite reverse; opacity: 0.5; }
@@ -255,7 +254,7 @@
             margin-bottom: 0;
             padding-bottom: 0;
             transform: translateZ(0);
-            /* will-change removed for performance */
+            will-change: transform;
         }
         .artists-section {
             width: 100%;
@@ -917,8 +916,7 @@
             font-size: 16px;
             letter-spacing: 2px;
         }
-        /* 分享弹窗 */
-        .share-modal {
+.share-modal {
             display: none;
             position: fixed;
             top: 0;
@@ -929,179 +927,174 @@
             z-index: 10000;
             justify-content: center;
             align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        
+            touch-action: pan-y;
+            overscroll-behavior: contain;
         }
-
         .share-modal.active {
             display: flex;
+            opacity: 1;
         }
-
         .share-modal-content {
-            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+            background: linear-gradient(135deg, #1a0000 0%, #0a0000 100%);
             border: 2px solid var(--xre-dark-red);
-            border-radius: 12px;
+            border-radius: 8px;
             padding: 30px;
-            max-width: 500px;
+            max-width: 480px;
             width: 90%;
             position: relative;
-            box-shadow: 0 0 40px rgba(139, 0, 0, 0.5);
+            box-shadow: 0 0 60px rgba(139, 0, 0, 0.6), inset 0 0 30px rgba(139, 0, 0, 0.1);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
         }
-
+        .share-modal.active .share-modal-content {
+            transform: scale(1);
+        }
         .share-modal-close {
             position: absolute;
             top: 10px;
             right: 15px;
-            background: none;
-            border: none;
+            background: rgba(139, 0, 0, 0.3);
+            border: 1px solid var(--xre-dark-red);
+            border-radius: 50%;
             color: #fff;
-            font-size: 24px;
-            cursor: pointer;
-            transition: color 0.3s;
-        }
-
-        .share-modal-close:hover {
-            color: var(--xre-dark-red);
-        }
-
-        .share-modal-title {
-            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
             font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 10;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .share-modal-close:hover {
+            background: var(--xre-red);
+            color: #fff;
+            transform: rotate(90deg);
+        }
+        .share-modal-title {
+            font-family: 'Orbitron', Impact, sans-serif;
+            font-size: 18px;
             color: #fff;
             text-align: center;
-            margin-bottom: 20px;
-            letter-spacing: 1px;
+            margin-bottom: 25px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
-
         .share-event-info {
             display: flex;
             gap: 15px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             padding: 15px;
-            background: rgba(139, 0, 0, 0.1);
+            background: rgba(139, 0, 0, 0.15);
             border-radius: 8px;
+            border: 1px solid rgba(139, 0, 0, 0.3);
         }
-
         .share-event-img {
             width: 80px;
             height: 80px;
             object-fit: cover;
             border-radius: 4px;
+            border: 1px solid rgba(139, 0, 0, 0.3);
         }
-
         .share-event-details {
             flex: 1;
         }
-
         .share-event-name {
-            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            font-family: 'Orbitron', Impact, sans-serif;
             font-size: 16px;
             color: #fff;
             margin-bottom: 5px;
+            letter-spacing: 1px;
         }
-
         .share-event-meta {
             font-size: 12px;
-            color: var(--silver);
+            color: rgba(255,255,255,0.7);
+            font-family: 'Courier New', monospace;
         }
-
         .share-event-tags {
             margin-top: 8px;
         }
-
         .share-tag {
             display: inline-block;
-            padding: 2px 8px;
-            background: var(--xre-dark-red);
+            padding: 3px 10px;
+            background: rgba(139, 0, 0, 0.6);
             color: #fff;
             font-size: 10px;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
             border-radius: 3px;
             margin-right: 5px;
             margin-bottom: 3px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
         }
-
         .share-platforms {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
         }
-
         .share-platform-btn {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 8px;
-            padding: 15px 10px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(139, 0, 0, 0.3);
-            border-radius: 8px;
+            padding: 12px 8px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(139, 0, 0, 0.4);
+            border-radius: 6px;
             color: #fff;
             cursor: pointer;
             transition: all 0.3s ease;
         }
-
         .share-platform-btn:hover {
-            background: rgba(139, 0, 0, 0.2);
-            border-color: var(--xre-dark-red);
+            background: rgba(139, 0, 0, 0.3);
+            border-color: var(--xre-red);
             transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(139, 0, 0, 0.3);
         }
-
         .share-platform-icon {
-            width: 32px;
-            height: 32px;
+            width: 28px;
+            height: 28px;
         }
-
         .share-platform-name {
-            font-size: 11px;
+            font-size: 10px;
             text-align: center;
+            letter-spacing: 0.5px;
         }
-
         .download-btn {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 8px;
             padding: 15px 20px;
-            margin-top: 20px;
+            margin-top: 25px;
             background: rgba(139, 0, 0, 0.2);
             border: 2px solid var(--xre-dark-red);
-            border-radius: 8px;
+            border-radius: 6px;
             color: #fff;
             cursor: pointer;
             transition: all 0.3s ease;
             width: 100%;
-            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            font-family: 'Orbitron', Impact, sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
-
         .download-btn:hover {
             background: var(--xre-dark-red);
             transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(139, 0, 0, 0.4);
+            box-shadow: 0 5px 20px rgba(139, 0, 0, 0.4);
         }
-
-        .download-btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
         .download-btn-icon {
-            width: 28px;
-            height: 28px;
+            width: 24px;
+            height: 24px;
         }
-
         .download-btn-text {
-            font-size: 14px;
+            font-size: 12px;
             font-weight: bold;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
         }
-
-        .download-btn-subtext {
-            font-size: 10px;
-            color: var(--silver);
-            margin-top: -5px;
-        }
-
         /* WeChat QR弹窗 */
         .wechat-qr-modal {
             display: none;
@@ -1114,51 +1107,73 @@
             z-index: 10001;
             justify-content: center;
             align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            cursor: pointer;
         }
-
+        .wechat-qr-modal > * {
+            cursor: default;
+        }
         .wechat-qr-modal.active {
             display: flex;
+            opacity: 1;
         }
-
         .wechat-qr-content {
-            background: #fff;
-            border-radius: 12px;
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+            border: 2px solid var(--xre-dark-red);
+            border-radius: 8px;
             padding: 30px;
             text-align: center;
-            max-width: 300px;
+            max-width: 320px;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
         }
-
+        .wechat-qr-modal.active .wechat-qr-content {
+            transform: scale(1);
+        }
         .wechat-qr-title {
-            font-size: 18px;
-            color: #333;
-            margin-bottom: 15px;
+            font-family: 'Orbitron', Impact, sans-serif;
+            font-size: 16px;
+            color: #fff;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
-
         .wechat-qr-code {
             width: 200px;
             height: 200px;
             margin: 0 auto 15px;
-            background: #f5f5f5;
+            background: #fff;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 12px;
             color: #666;
+            border-radius: 4px;
         }
-
         .wechat-qr-hint {
             font-size: 12px;
-            color: #666;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 15px;
+            line-height: 1.5;
         }
-
         .wechat-qr-close {
-            margin-top: 15px;
-            padding: 8px 24px;
-            background: #07c160;
+            margin-top: 10px;
+            padding: 10px 30px;
+            background: var(--xre-dark-red);
             color: #fff;
-            border: none;
+            border: 2px solid var(--xre-red);
             border-radius: 4px;
             cursor: pointer;
+            font-family: 'Orbitron', Impact, sans-serif;
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: all 0.3s;
+        }
+        .wechat-qr-close:hover {
+            background: var(--xre-red);
+            box-shadow: 0 0 20px rgba(139, 0, 0, 0.5);
         }
         /* Hero Logo */
         .hero-logo-bg {
@@ -1226,27 +1241,6 @@
             }
             .copyright {
                 order: 2;
-            }
-        }
-
-        /* 分享弹窗响应式 */
-        @media (max-width: 768px) {
-            .share-platforms {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 10px;
-            }
-            .share-platform-btn {
-                padding: 10px 5px;
-            }
-            .share-platform-icon {
-                width: 24px;
-                height: 24px;
-            }
-            .share-platform-name {
-                font-size: 9px;
-            }
-            .share-modal-content {
-                padding: 20px;
             }
         }
 
@@ -1622,7 +1616,7 @@
             height: calc(40% - 100px);
             min-height: 176px;
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
         }
 
         .player-btn {
@@ -1632,12 +1626,12 @@
             justify-content: space-between;
             padding: 20px 25px;
             text-decoration: none;
-            border: 2px solid rgba(139, 0, 0, 0.5);
+            border: none;
             transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
-            min-height: 276px;
-            max-height: 276px;
+            min-height: 176px;
+            width: 50%;
         }
 
         .player-btn::before {
@@ -1656,84 +1650,89 @@
         }
 
         .player-qq {
-            background: linear-gradient(135deg, rgba(49, 194, 124, 0.15) 0%, rgba(42, 168, 105, 0.15) 100%);
-            border-bottom: 1px solid rgba(139, 0, 0, 0.3);
+            background: linear-gradient(135deg, #31c27c 0%, #2aa86d 100%);
+            border-right: 1px solid rgba(0, 0, 0, 0.2);
         }
 
         .player-qq:hover {
-            border-color: #31c27c;
-            box-shadow: 0 0 20px rgba(49, 194, 124, 0.4);
+            background: linear-gradient(135deg, #3dd68a 0%, #31c27c 100%);
+            box-shadow: 0 0 30px rgba(49, 194, 124, 0.6);
         }
 
         .player-netease {
-            background: linear-gradient(135deg, rgba(198, 47, 47, 0.15) 0%, rgba(168, 42, 42, 0.15) 100%);
-            border-top: 1px solid rgba(139, 0, 0, 0.3);
+            background: linear-gradient(135deg, #c62f2f 0%, #a82a2a 100%);
         }
 
         .player-netease:hover {
-            border-color: #c62f2f;
-            box-shadow: 0 0 20px rgba(198, 47, 47, 0.4);
+            background: linear-gradient(135deg, #d63a3a 0%, #c62f2f 100%);
+            box-shadow: 0 0 30px rgba(198, 47, 47, 0.6);
         }
 
         .player-btn-content {
             display: flex;
             flex-direction: column;
-            gap: 5px;
+            gap: 4px;
             z-index: 2;
         }
 
         .player-platform {
             font-family: 'Orbitron', Impact, sans-serif;
-            font-size: 14px;
+            font-size: 16px;
             letter-spacing: 2px;
             color: #fff;
             text-transform: uppercase;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            font-weight: 600;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         .player-platform-logo {
-            width: 24px;
-            height: 24px;
-            opacity: 0.8;
+            width: 32px;
+            height: 32px;
+            opacity: 1;
         }
 
         .player-song {
             font-family: 'Courier New', monospace;
-            font-size: 13px;
-            color: rgba(255, 255, 255, 0.9);
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.95);
             font-weight: bold;
+            margin-top: 8px;
         }
 
         .player-artist {
             font-family: 'Courier New', monospace;
-            font-size: 11px;
-            color: rgba(255, 255, 255, 0.6);
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 4px;
         }
 
         .player-play-icon {
-            width: 50px;
-            height: 50px;
-            background: rgba(255, 255, 255, 0.9);
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 255, 255, 0.95);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
             z-index: 2;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
 
         .player-btn:hover .player-play-icon {
             transform: scale(1.1);
             background: #fff;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
         }
 
         .player-play-icon svg {
-            width: 24px;
-            height: 24px;
+            width: 28px;
+            height: 28px;
             fill: #000;
-            margin-left: 3px;
+            margin-left: 4px;
         }
 
         /* POSTER AD 响应式 - 移动端 (991px及以下) */
@@ -1939,10 +1938,7 @@
             .player-play-icon {
                 flex-shrink: 0 !important;
             }
-            .player-netease {
-                border-left: 1px solid rgba(139, 0, 0, 0.3) !important;
             }
-        }
 
             /* 第四排：QQ音乐 + 网易云并排（各50%，高度276px） */
             .player-bottom-container {
@@ -1974,10 +1970,7 @@
                 line-height: normal !important;
                 font-size: initial !important;
             }
-            .player-netease {
-                border-left: 1px solid rgba(139, 0, 0, 0.3) !important;
             }
-        }
 
         /* POSTER AD 响应式 - 小屏手机 (480px及以下) */
         @media (max-width: 480px) {
@@ -2025,10 +2018,10 @@
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('./sw.js')
                     .then((registration) => {
-                        // // console.log('SW registered:', registration.scope);
+                        console.log('SW registered:', registration.scope);
                     })
                     .catch((error) => {
-                        // // console.log('SW registration failed:', error);
+                        console.log('SW registration failed:', error);
                     });
             });
         }
@@ -2037,14 +2030,14 @@
 
 <body>
     <div class="loading" id="loading">
-        <img src="images/xrelogoL.png" alt="XRE BOOKING" style="height: 60px; animation: logoBreathe 2s ease-in-out infinite;" loading="lazy">
+        <img src="images/xrelogoL.png" alt="XRE BOOKING" style="height: 60px; animation: logoBreathe 2s ease-in-out infinite;">
     </div>
 
     
 
     <!-- 导航栏 -->
     <nav>
-        <img src="images/xrelogoL.png" alt="XRE BOOKING" class="logo-img" id="logo" onclick="location.href='./index.html'" loading="lazy">
+        <img src="images/xrelogoL.png" alt="XRE BOOKING" class="logo-img" id="logo" onclick="location.href='./index.html'">
         <div class="nav-links">
             <a href="https://www.livegigsasia.com/events.html">EVENTS</a>
             <a href="https://www.livegigsasia.com/partners.html">Partners</a>
@@ -2101,7 +2094,7 @@
                 <!-- 左侧海报 - 满屏高度，2:3比例 -->
                 <div class="poster-ad-left">
                     <div class="poster-wrapper">
-                        <img src="https://livegigsasia.com/image/1-b-2.jpg" alt="Punk Heart Fest" class="poster-ad-image" loading="lazy">
+                        <img src="https://livegigsasia.com/image/1-b-2.jpg" alt="Punk Heart Fest" class="poster-ad-image">
                     </div>
                 </div>
 
@@ -2143,8 +2136,8 @@
                 <!-- 右侧播放器区 -->
                 <div class="poster-ad-right">
                     <!-- Spotify 播放器 - 占50%+ -->
-                    <div class="player-spotify" id="spotifyContainer">
-                        <iframe data-src="https://open.spotify.com/embed/playlist/6xZPXG1qFVxlxZf8v63S0W?utm_source=generator&theme=0" 
+                    <div class="player-spotify">
+                        <iframe src="https://open.spotify.com/embed/playlist/6xZPXG1qFVxlxZf8v63S0W?utm_source=generator&theme=0" 
                                 width="100%" 
                                 height="100%" 
                                 frameborder="0" 
@@ -2260,7 +2253,7 @@
                         </div>
                         <div class="producer-section">
                             <div class="producer-label">Produced by</div>
-                            <img src="https://www.livegigsasia.com/image/emanonent-logo.png" alt="EMANON ENT." class="producer-logo" loading="lazy">
+                            <img src="https://www.livegigsasia.com/image/emanonent-logo.png" alt="EMANON ENT." class="producer-logo">
                         </div>
                     </div>
                     <div class="footer-contact-right">
@@ -2340,7 +2333,7 @@
             <button class="share-modal-close" onclick="closeShareModal()">&times;</button>
             <h3 class="share-modal-title">SHARE THIS EVENT</h3>
             <div class="share-event-info">
-                <img class="share-event-img" id="shareEventImg" src="" alt="" loading="lazy">
+                <img class="share-event-img" id="shareEventImg" src="" alt="">
                 <div class="share-event-details">
                     <div class="share-event-name" id="shareEventName"></div>
                     <div class="share-event-meta" id="shareEventMeta"></div>
@@ -2369,7 +2362,7 @@
                 </button>
                 <button class="share-platform-btn" onclick="shareToPlatform('whatsapp')">
                     <svg class="share-platform-icon" viewBox="0 0 24 24" fill="#25d366">
-                        <path d="M12.04 2C6.58 2 2.18 6.4 2.18 11.87c0 1.95.51 3.86 1.48 5.54L2 22l4.76-1.62a9.9 9.9 0 0 0 5.28 1.51c5.46 0 9.86-4.4 9.86-9.87S17.5 2 12.04 2zm5.14 13.86c-.23.64-1.32 1.18-1.85 1.25-.49.07-.97.22-3.25-.68-2.75-1.1-4.52-3.96-4.65-4.14-.13-.18-1.11-1.47-1.11-2.81s.7-2.01.96-2.29c.25-.28.55-.35.73-.35.18 0 .37 0 .53.01.17 0 .4-.06.62.48.23.55.79 1.91.86 2.05.07.14.01.29-.04.43-.05.13-.1.23-.15.35-.05.12-.1.25-.02.38.08.13.35.43.75.7 1.03.71 1.9.93 2.17 1.03.27.1.43.08.59-.05.16-.13.68-.79.86-1.06.19-.27.37-.23.62-.14.25.09 1.6.76 1.88.89.27.13.46.2.52.31.07.11.07.64-.16 1.28z"/>
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
                     </svg>
                     <span class="share-platform-name">WhatsApp</span>
                 </button>
@@ -2386,34 +2379,27 @@
                     <span class="share-platform-name">Telegram</span>
                 </button>
                 <button class="share-platform-btn" onclick="shareToPlatform('line')">
-                    <svg class="share-platform-icon" viewBox="0 0 24 24">
-                        <circle cx="12" cy="12" r="12" fill="#06c755"/>
-                        <text x="12" y="16" text-anchor="middle" fill="#fff" font-size="8" font-weight="bold" font-family="Arial, sans-serif">LINE</text>
+                    <svg class="share-platform-icon" viewBox="0 0 24 24" fill="#06c755">
+                        <path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zM12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2z"/>
                     </svg>
                     <span class="share-platform-name">LINE</span>
                 </button>
                 <button class="share-platform-btn" onclick="shareToPlatform('wechat-friend')">
                     <svg class="share-platform-icon" viewBox="0 0 24 24" fill="#07c160">
-                        <path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 0 1 .213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 0 0 .167-.054l1.903-1.114a.864.864 0 0 1 .717-.098 10.16 10.16 0 0 0 2.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348zM5.785 5.991c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178A1.17 1.17 0 0 1 4.623 7.17c0-.651.52-1.18 1.162-1.18zm5.813 0c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178 1.17 1.17 0 0 1-1.162-1.178c0-.651.52-1.18 1.162-1.18zm5.34 2.867c-1.797-.052-3.746.512-5.28 1.786-1.72 1.428-2.687 3.72-1.78 6.22.942 2.453 3.666 4.229 6.884 4.229.826 0 1.622-.12 2.361-.336a.722.722 0 0 1 .598.082l1.584.926a.272.272 0 0 0 .14.047c.134 0 .24-.111.24-.247 0-.06-.023-.12-.038-.177l-.327-1.233a.582.582 0 0 1-.023-.156.49.49 0 0 1 .201-.398C23.024 18.48 24 16.82 24 14.98c0-3.21-2.931-5.837-6.656-6.088V8.89c-.135-.01-.27-.027-.407-.032zm-2.53 3.274c.535 0 .969.44.969.982a.976.976 0 0 1-.969.983.976.976 0 0 1-.969-.983c0-.542.434-.982.97-.982zm4.844 0c.535 0 .969.44.969.982a.976.976 0 0 1-.969.983.976.976 0 0 1-.969-.983c0-.542.434-.982.969-.982z"/>
+                        <path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 0 1 .213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 0 0 .167-.054l1.903-1.114a.864.864 0 0 1 .717-.098 10.16 10.16 0 0 0 2.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348z"/>
                     </svg>
                     <span class="share-platform-name">WeChat</span>
                 </button>
                 <button class="share-platform-btn" onclick="shareToPlatform('wechat-moments')">
-                    <svg class="share-platform-icon" viewBox="0 0 24 24">
-                        <circle cx="12" cy="12" r="12" fill="#07c160"/>
-                        <path d="M6 12l6-4 6 4-6 4z" fill="#fff"/>
+                    <svg class="share-platform-icon" viewBox="0 0 24 24" fill="#07c160">
+                        <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm6.066 9.645h-2.77v-3.077h-3.69v3.077h-2.77V7.385h2.77v3.077h3.69V7.385h2.77v9.23z"/>
                     </svg>
                     <span class="share-platform-name">Moments</span>
                 </button>
             </div>
             <button class="download-btn" id="downloadPosterBtn" onclick="downloadPoster()">
-                <svg class="download-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                    <polyline points="7 10 12 15 17 10"></polyline>
-                    <line x1="12" y1="15" x2="12" y2="3"></line>
-                </svg>
+                <svg class="download-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                 <span class="download-btn-text">DOWNLOAD POSTER</span>
-                <span class="download-btn-subtext">Save to Device</span>
             </button>
         </div>
     </div>
@@ -2443,6 +2429,22 @@
             history.scrollRestoration = 'auto';
         }
 
+        // 检测是否是页面刷新，如果是则保留滚动位置
+        const isPageRefresh = performance.navigation && performance.navigation.type === 1;
+
+        if (!isPageRefresh && window.scrollY === 0) {
+            // 首次访问且未滚动时，确保从顶部开始
+            window.scrollTo(0, 0);
+        }
+
+        window.onload = function() {
+            // 仅在首次加载时滚动到顶部
+            if (!sessionStorage.getItem('pageLoaded')) {
+                window.scrollTo({ top: 0, behavior: 'instant' });
+                sessionStorage.setItem('pageLoaded', 'true');
+            }
+        };
+
         document.addEventListener('DOMContentLoaded', function() {
             // 隐藏加载动画
             setTimeout(() => {
@@ -2451,18 +2453,9 @@
             }, 300);
 
             renderArtists();
-
-            // 延迟加载 BRANDED TOURS（避免阻塞）
-            setTimeout(loadBrandedTours, 500);
-
-            // 延迟加载 Spotify（页面完全加载后）
-            window.addEventListener('load', () => {
-                setTimeout(() => {
-                    const spotifyIframe = document.querySelector('#spotifyContainer iframe');
-                    if (spotifyIframe && spotifyIframe.dataset.src) {
-                        spotifyIframe.src = spotifyIframe.dataset.src;
-                    }
-                }, 2000);
+            // 延迟加载BRANDED TOURS，避免阻塞首屏渲染
+            requestAnimationFrame(() => {
+                setTimeout(loadBrandedTours, 100);
             });
 
             // 绑定键盘事件
@@ -2485,7 +2478,7 @@
         const artistsData = [
             { name: "ACIDEZ (MX)", image: "./assets/artists/ACIDEZ.jpg", slug: "acidez" },
             { name: "BAOPIGOU豹皮狗", image: "./assets/artists/baopigou.jpg", slug: "baopigou" },
-            { name: "BIG D & THE KIDS TABLE (US)", image: "./assets/artists/bigd.jpg", slug: "bigd" },
+            { name: "BIG D & THE KIDS TABLE (US)", image: "./assets/artists/bigd.jpg", slug: "bigd", link: "./artist.html?name=bigdandthekidstable" },
             { name: "BRAIN FAILURE腦濁", image: "./assets/artists/BrainFailure.jpg", slug: "brainfailure" },
             { name: "MASSACHRIST", image: "./assets/artists/Massachrist.jpg", slug: "massachrist" },
             { name: "NON SERVIUM (ES)", image: "./assets/artists/NonServium.jpg", slug: "nonservium" },
@@ -2588,7 +2581,7 @@
 
             // 生成标签
             const tags = generateTags(title, city, date, link);
-            eventTags.innerHTML = tags.map(tag => '<span class="share-tag">' + escapeHtml(tag) + '</span>').join('');
+            eventTags.innerHTML = tags.map(tag => '<span class="share-tag">' + tag + '</span>').join('');
 
             // 存储数据到modal
             modal.dataset.title = title || '';
@@ -2823,7 +2816,7 @@
                 bindMobileEvents();
 
             } catch (error) {
-                // // console.error('Error loading branded tours:', error);
+                console.error('Error loading branded tours:', error);
                 container.innerHTML = '<div class="branded-tours-empty">UNABLE TO LOAD TOURS.</div>';
             }
         }
