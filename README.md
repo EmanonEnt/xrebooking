@@ -1,119 +1,85 @@
-# XRE BOOKING 完整修复版
+# XRE BOOKING 子域名系统说明
 
-## 🎯 主要修复内容
+## 文件列表
 
-### 1. 重复代码清理（删除约2.4KB冗余代码）
-- ✅ **基础样式**: 删除重复的 `.footer-legal` 定义（原文件连续定义2次）
-- ✅ **768px媒体查询**: 删除重复的 `.footer-legal` 和 `.copyright` 定义
-- ✅ **991px媒体查询**: 删除外部重复的整个播放器区域代码块
-- ✅ **480px/375px**: 删除重复的 `.player-btn` 样式定义
-- ✅ **全局**: 删除多余空行和注释
+### 1. index.html（艺人列表页）
+- ✅ 所有艺人链接已改为子域名格式：`https://xxxx.xrebooking.com`
+- ✅ 点击艺人卡片可分享，默认使用艺人照片
+- ✅ 分享按钮悬停显示（右上角红色圆圈）
 
-### 2. Hero区域修复
-```css
-/* 修复前 */
-background-image: url('https://livegigsasia.com/image/p-p-3.png');
+### 2. artist.html（艺人详情页）
+- ✅ 支持子域名自动识别（如 `thenoname.xrebooking.com` 自动加载 thenoname 数据）
+- ✅ 同时兼容 URL 参数格式（`artist.html?name=thenoname`）
 
-/* 修复后 */
-background-image: url('./images/p-p-3.jpg');
+### 3. artist-editor.html（艺人编辑器）
+- ✅ 添加子域名链接预览功能
+- ✅ 输入艺人ID时自动显示对应的子域名链接
+
+## 服务器配置要求
+
+要使子域名正常工作，需要以下配置：
+
+### 1. DNS 配置
+添加通配符 A 记录：
 ```
-- 更新了CSS中的背景图路径
-- 更新了`<link rel="preload">`标签
-- 更新了JavaScript图片加载检测
-
-### 3. 艺人区域逻辑修复
-
-#### 数据变更
-```javascript
-// ÖNIKA LI 添加链接（第7个艺人）
-{ name: "ÖNIKA LI", image: "./assets/artists/OnikaLi.jpg", 
-  slug: "onikali", link: "./artist.html?name=onikali" }
-
-// THE NONAME 保持链接（第12个艺人）
-{ name: "THE NONAME無名", image: "./assets/artists/TheNoname.jpg", 
-  slug: "thenoname", link: "./artist.html?name=thenoname" }
-
-// 其他艺人无link属性，不可点击但保留hover效果
+*.xrebooking.com → 你的服务器IP
 ```
 
-#### 渲染逻辑修复
-```javascript
-// 修复前：自动生成链接
-const link = hasLink ? artist.link : './artist/' + artist.slug + '.html';
+### 2. Web 服务器配置
 
-// 修复后：只有明确设置link的才能点击
-const hasLink = artist.link && artist.link !== '#' && artist.link !== '';
-const nameHtml = hasLink 
-    ? `<a href="${artist.link}">${artist.name}</a>`
-    : `<span class="artist-name-text">${artist.name}</span>`;
+#### Nginx 示例：
+```nginx
+server {
+    listen 80;
+    server_name *.xrebooking.com xrebooking.com;
+
+    location / {
+        root /var/www/xrebooking;
+        index index.html;
+        try_files $uri $uri/ /artist.html;
+    }
+}
 ```
 
-### 4. 性能优化
-- ✅ 所有艺人图片添加 `loading="lazy"` 和 `decoding="async"`
-- ✅ Branded Tours海报添加懒加载
-- ✅ 删除冗余代码，提升解析速度
-
-## 📁 文件结构
-```
-项目根目录/
-├── index.html (本文件)
-├── images/
-│   ├── p-p-3.jpg          ← Hero背景图（横版，必需）
-│   ├── xrelogoL.png       ← 导航栏logo
-│   └── webtop.png         ← Hero装饰logo
-├── assets/artists/        ← 艺人照片目录
-│   ├── ACIDEZ.jpg
-│   ├── baopigou.jpg
-│   ├── bigd.jpg
-│   ├── BrainFailure.jpg
-│   ├── Massachrist.jpg
-│   ├── NonServium.jpg
-│   ├── OnikaLi.jpg        ← ÖNIKA LI照片
-│   ├── yshc.jpg
-│   ├── SKARFACE.jpg
-│   ├── TheGreed.jpg
-│   ├── TheGTBitches.jpg
-│   ├── TheNoname.jpg      ← THE NONAME照片
-│   ├── TheSinoHeart.jpg
-│   ├── thestirrers.jpg
-│   └── NewArtistComing.webp
-└── artist.html            ← 艺人详情页（需支持?name=xxx参数）
+#### Apache 示例（.htaccess）：
+```apache
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^(.+)\.xrebooking\.com$ [NC]
+RewriteRule ^$ /artist.html [L]
 ```
 
-## 🔗 链接规则
+## 艺人子域名列表
 
-| 艺人 | 链接状态 | URL |
-|------|---------|-----|
-| THE NONAME無名 | ✅ 可点击 | `./artist.html?name=thenoname` |
-| ÖNIKA LI | ✅ 可点击 | `./artist.html?name=onikali` |
-| 其他13位艺人 | ❌ 不可点击 | 纯文字，hover变红 |
+| 艺人 | 子域名 |
+|------|--------|
+| ACIDEZ (MX) | acidez.xrebooking.com |
+| BAOPIGOU豹皮狗 | baopigou.xrebooking.com |
+| BIG D & THE KIDS TABLE | bigdandthekidstable.xrebooking.com |
+| BRAIN FAILURE腦濁 | brainfailure.xrebooking.com |
+| MASSACHRIST | massachrist.xrebooking.com |
+| NON SERVIUM (ES) | nonservium.xrebooking.com |
+| ÖNIKA LI | onikali.xrebooking.com |
+| SILVER ASH銀色灰塵 | silverash.xrebooking.com |
+| SKARFACE (FR) | skarface.xrebooking.com |
+| THE GREED (TH) | thegreed.xrebooking.com |
+| THE GT BITCHES | thegtbitches.xrebooking.com |
+| THE NONAME無名 | thenoname.xrebooking.com |
+| THE SINO HEARTS | thesinohearts.xrebooking.com |
+| THE STIRRERS | thestirrers.xrebooking.com |
 
-## 📱 响应式断点
-- **1024px**: 平板横屏，艺人3列→2列
-- **768px**: 平板竖屏，导航缩小
-- **480px**: 大屏手机，海报区域重排
-- **375px**: 小屏手机，字体缩小
+## 新增艺人流程
 
-## ✅ 部署检查清单
-- [ ] `./images/p-p-3.jpg` 已上传（横版海报）
-- [ ] `./images/xrelogoL.png` 存在
-- [ ] `./images/webtop.png` 存在
-- [ ] `./assets/artists/` 下所有15张艺人图片存在
-- [ ] `./artist.html` 已创建，能处理 `name` 查询参数
-- [ ] 移动端测试（iOS Safari, Android Chrome）
-- [ ] 桌面端测试（Chrome, Firefox, Safari）
+1. 打开 `artist-editor.html`
+2. 点击"添加新艺人"
+3. 填写艺人信息
+   - 艺人ID：用于子域名（如 `newartist` → `newartist.xrebooking.com`）
+   - 系统会自动预览子域名链接
+4. 保存并下载 `artists-data.json`
+5. 将 JSON 文件上传到服务器
+6. 在 DNS 添加对应的子域名记录（如果使用通配符则自动生效）
 
-## 📊 优化数据
-| 项目 | 数值 |
-|------|------|
-| 原始大小 | 130.1 KB |
-| 优化后大小 | 127.8 KB |
-| 减少体积 | 2.4 KB (1.8%) |
-| 删除重复规则 | 5处 |
-| 功能修复 | 3处 |
+## 注意事项
 
-## 🚀 快速部署
-1. 解压ZIP文件
-2. 确保所有图片资源存在
-3. 上传到服务器
-4. 清除浏览器缓存测试（Ctrl+F5）
+- 所有文件需要上传到同一目录
+- `artists-data.json` 需要与 HTML 文件在同一目录
+- 子域名访问时，会自动从 `artists-data.json` 查找对应艺人数据

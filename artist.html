@@ -1119,6 +1119,22 @@
 
         const getParam = name => new URLSearchParams(window.location.search).get(name);
 
+// 从子域名获取艺人ID (如: thenoname.xrebooking.com -> thenoname)
+function getArtistIdFromSubdomain() {
+    const hostname = window.location.hostname;
+    // 排除主域名和www
+    if (hostname === 'xrebooking.com' || hostname === 'www.xrebooking.com') {
+        return null;
+    }
+    // 提取子域名部分
+    const parts = hostname.split('.');
+    if (parts.length >= 3) {
+        // 格式: xxx.xrebooking.com
+        return parts[0];
+    }
+    return null;
+}
+
         function formatDate(dateStr) {
             if (!dateStr) return '';
             const parts = dateStr.split('.');
@@ -1154,7 +1170,8 @@
         }
 
         async function loadArtist() {
-            const id = getParam('name') || getParam('id');
+            // 优先从子域名获取艺人ID，其次是URL参数
+            const id = getArtistIdFromSubdomain() || getParam('name') || getParam('id');
             if (!id) {
                 document.getElementById('artistName').textContent = 'ARTIST NOT FOUND';
                 document.getElementById('loading').classList.add('hidden');
