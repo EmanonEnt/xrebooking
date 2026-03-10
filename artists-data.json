@@ -47,5 +47,26 @@
       "baidu": ""
     },
     "tourDates": []
+  },
+  "bigdandthekidstable": {
+    "name": "BIG D & THE KIDS TABLE",
+    "heroImage": "./assets/artists/bigd.jpg",
+    "bio": "Big D and the Kids Table is a ska punk band formed in October 1995 in Boston, Massachusetts, when its members converged in college.Their first release was on their own Fork in Hand Records label,but have since teamed with Springman Records and SideOneDummy. The band has been noted for its strict DIY work ethic,such as engineering, producing, and releasing their own albums and videos and self-promotion of their own shows.",
+    "agent": {
+      "name": "",
+      "email": "XREBooking@hotmail.com"
+    },
+    "social": {
+      "facebook": "https://www.facebook.com/bigdboston",
+      "instagram": "https://www.instagram.com/bigdandthekidstable",
+      "youtube": "https://www.youtube.com/channel/UCYaOKI1vdWxOiEfRcoLsV_g",
+      "website": "bigdandthekidstable.com"
+    },
+    "videoUrl": "https://www.youtube.com/watch?v=rJJ1DtOG2JM",
+    "mediaKit": {
+      "googleDrive": "",
+      "baidu": ""
+    },
+    "tourDates": []
   }
 }
