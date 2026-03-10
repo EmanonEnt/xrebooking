@@ -297,51 +297,10 @@
             height: 0;
             padding-bottom: 48% !important;
             overflow: hidden;
-            cursor: pointer;
+            cursor: default;
             transition: border-color 0.4s, box-shadow 0.4s;
             border: 2px solid transparent;
             transform: translateZ(0);
-        }
-
-        /* 艺人卡片分享按钮 */
-        .artist-share-btn {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            width: 40px;
-            height: 40px;
-            background: rgba(0, 0, 0, 0.7);
-            border: 2px solid var(--xre-red);
-            border-radius: 50%;
-            color: #fff;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 20;
-            opacity: 0;
-            transition: all 0.3s ease;
-            pointer-events: auto;
-        }
-        .artist-card:hover .artist-share-btn {
-            opacity: 1;
-        }
-        .artist-share-btn:hover {
-            background: var(--xre-red);
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
-            transform: scale(1.1);
-        }
-        .artist-share-btn svg {
-            width: 18px;
-            height: 18px;
-        }
-        @media (max-width: 768px) {
-            .artist-share-btn {
-                width: 36px;
-                height: 36px;
-                top: 10px;
-                right: 10px;
-            }
         }
         .artist-card img {
             position: absolute;
@@ -2517,20 +2476,20 @@
 
         // ================== 艺人数据 ==================
         const artistsData = [
-            { name: "ACIDEZ (MX)", image: "./assets/artists/ACIDEZ.jpg", slug: "acidez", link: "https://acidez.xrebooking.com" },
-            { name: "BAOPIGOU豹皮狗", image: "./assets/artists/baopigou.jpg", slug: "baopigou", link: "https://baopigou.xrebooking.com" },
-            { name: "BIG D & THE KIDS TABLE (US)", image: "./assets/artists/bigd.jpg", slug: "bigd", link: "https://bigdandthekidstable.xrebooking.com" },
-            { name: "BRAIN FAILURE腦濁", image: "./assets/artists/BrainFailure.jpg", slug: "brainfailure", link: "https://brainfailure.xrebooking.com" },
-            { name: "MASSACHRIST", image: "./assets/artists/Massachrist.jpg", slug: "massachrist", link: "https://massachrist.xrebooking.com" },
-            { name: "NON SERVIUM (ES)", image: "./assets/artists/NonServium.jpg", slug: "nonservium", link: "https://nonservium.xrebooking.com" },
-            { name: "ÖNIKA LI", image: "./assets/artists/OnikaLi.jpg", slug: "onikali", link: "https://onikali.xrebooking.com" },
-            { name: "SILVER ASH銀色灰塵", image: "./assets/artists/yshc.jpg", slug: "yshc", link: "https://silverash.xrebooking.com" },
-            { name: "SKARFACE (FR)", image: "./assets/artists/SKARFACE.jpg", slug: "skarface", link: "https://skarface.xrebooking.com" },
-            { name: "THE GREED (TH)", image: "./assets/artists/TheGreed.jpg", slug: "thegreed", link: "https://thegreed.xrebooking.com" },
-            { name: "THE GT BITCHES", image: "./assets/artists/TheGTBitches.jpg", slug: "thegtbitches", link: "https://thegtbitches.xrebooking.com" },
-            { name: "THE NONAME無名", image: "./assets/artists/TheNoname.jpg", slug: "thenoname", link: "https://thenoname.xrebooking.com" },
-            { name: "THE SINO HEART", image: "./assets/artists/TheSinoHeart.jpg", slug: "thesinoheart", link: "https://thesinohearts.xrebooking.com" },
-            { name: "THE STIRRERS", image: "./assets/artists/thestirrers.jpg", slug: "thestirrers", link: "https://thestirrers.xrebooking.com" },
+            { name: "ACIDEZ (MX)", image: "./assets/artists/ACIDEZ.jpg", slug: "acidez" },
+            { name: "BAOPIGOU豹皮狗", image: "./assets/artists/baopigou.jpg", slug: "baopigou" },
+            { name: "BIG D & THE KIDS TABLE (US)", image: "./assets/artists/bigd.jpg", slug: "bigd", link: "./artist.html?name=bigdandthekidstable" },
+            { name: "BRAIN FAILURE腦濁", image: "./assets/artists/BrainFailure.jpg", slug: "brainfailure" },
+            { name: "MASSACHRIST", image: "./assets/artists/Massachrist.jpg", slug: "massachrist" },
+            { name: "NON SERVIUM (ES)", image: "./assets/artists/NonServium.jpg", slug: "nonservium", link: "./artist.html?name=nonservium" },
+            { name: "ÖNIKA LI", image: "./assets/artists/OnikaLi.jpg", slug: "onikali", link: "./artist.html?name=onikali" },
+            { name: "SILVER ASH銀色灰塵", image: "./assets/artists/yshc.jpg", slug: "yshc" },
+            { name: "SKARFACE (FR)", image: "./assets/artists/SKARFACE.jpg", slug: "skarface" },
+            { name: "THE GREED (TH)", image: "./assets/artists/TheGreed.jpg", slug: "thegreed" },
+            { name: "THE GT BITCHES", image: "./assets/artists/TheGTBitches.jpg", slug: "thegtbitches" },
+            { name: "THE NONAME無名", image: "./assets/artists/TheNoname.jpg", slug: "thenoname", link: "./artist.html?name=thenoname" },
+            { name: "THE SINO HEARTS", image: "./assets/artists/TheSinoHeart.jpg", slug: "thesinoheart" },
+            { name: "THE STIRRERS", image: "./assets/artists/thestirrers.jpg", slug: "thestirrers" },
             { name: "NEW ARTIST COMING...", image: "./assets/artists/NewArtistComing.webp", slug: "#" }
         ];
 
@@ -2551,50 +2510,12 @@
                     : artist.name;
 
                 wrapper.innerHTML = `
-                    <div class="artist-card" data-artist-name="${artist.name}" data-artist-image="${artist.image}" data-artist-link="${artist.link || ''}">
-                        <button class="artist-share-btn" title="Share">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/>
-                                <circle cx="18" cy="19" r="3"/>
-                                <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
-                                <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
-                            </svg>
-                        </button>
+                    <div class="artist-card">
                         <img loading="lazy" src="${artist.image}" alt="${artist.name}" onerror="this.style.display='none'">
                         <div class="artist-overlay"></div>
                     </div>
                     <div class="artist-name-below">${nameHtml}</div>
                 `;
-
-                // 添加点击事件 - 点击艺人卡片打开分享弹窗
-                const card = wrapper.querySelector('.artist-card');
-                const shareBtn = wrapper.querySelector('.artist-share-btn');
-
-                function openArtistShare() {
-                    openShareModal(
-                        artist.name,
-                        '',  // city
-                        '',  // date
-                        artist.image,  // 使用艺人照片
-                        artist.link || '',
-                        ''   // subtitle
-                    );
-                }
-
-                // 点击卡片打开分享
-                card.addEventListener('click', function(e) {
-                    // 如果点击的是链接或分享按钮，不触发分享
-                    if (e.target.tagName === 'A' || e.target.closest('.artist-share-btn')) return;
-                    openArtistShare();
-                });
-
-                // 点击分享按钮打开分享
-                if (shareBtn) {
-                    shareBtn.addEventListener('click', function(e) {
-                        e.stopPropagation();
-                        openArtistShare();
-                    });
-                }
 
                 fragment.appendChild(wrapper);
             });
