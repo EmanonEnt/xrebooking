@@ -916,7 +916,8 @@
             font-size: 16px;
             letter-spacing: 2px;
         }
-.share-modal {
+        /* Share Modal - 修复版 */
+        .share-modal {
             display: none;
             position: fixed;
             top: 0;
@@ -927,173 +928,156 @@
             z-index: 10000;
             justify-content: center;
             align-items: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        
-            touch-action: pan-y;
-            overscroll-behavior: contain;
         }
         .share-modal.active {
             display: flex;
-            opacity: 1;
         }
         .share-modal-content {
-            background: linear-gradient(135deg, #1a0000 0%, #0a0000 100%);
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
             border: 2px solid var(--xre-dark-red);
-            border-radius: 8px;
+            border-radius: 12px;
             padding: 30px;
-            max-width: 480px;
+            max-width: 500px;
             width: 90%;
             position: relative;
-            box-shadow: 0 0 60px rgba(139, 0, 0, 0.6), inset 0 0 30px rgba(139, 0, 0, 0.1);
-            transform: scale(0.9);
-            transition: transform 0.3s ease;
-        }
-        .share-modal.active .share-modal-content {
-            transform: scale(1);
+            box-shadow: 0 0 40px rgba(139, 0, 0, 0.5);
         }
         .share-modal-close {
             position: absolute;
             top: 10px;
             right: 15px;
-            background: rgba(139, 0, 0, 0.3);
-            border: 1px solid var(--xre-dark-red);
-            border-radius: 50%;
+            background: none;
+            border: none;
             color: #fff;
-            font-size: 20px;
+            font-size: 24px;
             cursor: pointer;
-            transition: all 0.3s;
-            z-index: 10;
-            width: 32px;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            transition: color 0.3s;
         }
         .share-modal-close:hover {
-            background: var(--xre-red);
-            color: #fff;
-            transform: rotate(90deg);
+            color: var(--xre-red);
         }
         .share-modal-title {
-            font-family: 'Orbitron', Impact, sans-serif;
-            font-size: 18px;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            font-size: 20px;
             color: #fff;
             text-align: center;
-            margin-bottom: 25px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
         }
         .share-event-info {
             display: flex;
             gap: 15px;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             padding: 15px;
-            background: rgba(139, 0, 0, 0.15);
+            background: rgba(139, 0, 0, 0.1);
             border-radius: 8px;
-            border: 1px solid rgba(139, 0, 0, 0.3);
         }
         .share-event-img {
             width: 80px;
             height: 80px;
             object-fit: cover;
             border-radius: 4px;
-            border: 1px solid rgba(139, 0, 0, 0.3);
         }
         .share-event-details {
             flex: 1;
         }
         .share-event-name {
-            font-family: 'Orbitron', Impact, sans-serif;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
             font-size: 16px;
             color: #fff;
             margin-bottom: 5px;
-            letter-spacing: 1px;
         }
         .share-event-meta {
             font-size: 12px;
-            color: rgba(255,255,255,0.7);
-            font-family: 'Courier New', monospace;
+            color: var(--mad-silver);
         }
         .share-event-tags {
             margin-top: 8px;
         }
         .share-tag {
             display: inline-block;
-            padding: 3px 10px;
-            background: rgba(139, 0, 0, 0.6);
+            padding: 2px 8px;
+            background: var(--xre-dark-red);
             color: #fff;
             font-size: 10px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
             border-radius: 3px;
             margin-right: 5px;
             margin-bottom: 3px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
         }
         .share-platforms {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
         }
         .share-platform-btn {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 8px;
-            padding: 12px 8px;
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(139, 0, 0, 0.4);
-            border-radius: 6px;
+            padding: 15px 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(139, 0, 0, 0.3);
+            border-radius: 8px;
             color: #fff;
             cursor: pointer;
             transition: all 0.3s ease;
         }
         .share-platform-btn:hover {
-            background: rgba(139, 0, 0, 0.3);
+            background: rgba(139, 0, 0, 0.2);
             border-color: var(--xre-red);
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(139, 0, 0, 0.3);
         }
         .share-platform-icon {
-            width: 28px;
-            height: 28px;
+            width: 32px;
+            height: 32px;
         }
         .share-platform-name {
-            font-size: 10px;
+            font-size: 11px;
             text-align: center;
-            letter-spacing: 0.5px;
         }
+        /* 下载按钮样式 */
         .download-btn {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 8px;
             padding: 15px 20px;
-            margin-top: 25px;
+            margin-top: 20px;
             background: rgba(139, 0, 0, 0.2);
             border: 2px solid var(--xre-dark-red);
-            border-radius: 6px;
+            border-radius: 8px;
             color: #fff;
             cursor: pointer;
             transition: all 0.3s ease;
             width: 100%;
-            font-family: 'Orbitron', Impact, sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
         }
         .download-btn:hover {
             background: var(--xre-dark-red);
             transform: translateY(-3px);
-            box-shadow: 0 5px 20px rgba(139, 0, 0, 0.4);
+            box-shadow: 0 10px 30px rgba(139, 0, 0, 0.4);
+        }
+        .download-btn:disabled {
+            opacity: 0.6;
+            cursor: wait;
+            transform: none;
         }
         .download-btn-icon {
-            width: 24px;
-            height: 24px;
+            width: 28px;
+            height: 28px;
         }
         .download-btn-text {
-            font-size: 12px;
+            font-size: 14px;
             font-weight: bold;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
+        }
+        .download-btn-subtext {
+            font-size: 10px;
+            color: var(--mad-silver);
+            margin-top: -5px;
         }
         /* WeChat QR弹窗 */
         .wechat-qr-modal {
@@ -1107,910 +1091,77 @@
             z-index: 10001;
             justify-content: center;
             align-items: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            cursor: pointer;
-        }
-        .wechat-qr-modal > * {
-            cursor: default;
         }
         .wechat-qr-modal.active {
             display: flex;
-            opacity: 1;
         }
         .wechat-qr-content {
-            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
-            border: 2px solid var(--xre-dark-red);
-            border-radius: 8px;
+            background: #fff;
+            border-radius: 12px;
             padding: 30px;
             text-align: center;
-            max-width: 320px;
-            transform: scale(0.9);
-            transition: transform 0.3s ease;
-        }
-        .wechat-qr-modal.active .wechat-qr-content {
-            transform: scale(1);
+            max-width: 300px;
         }
         .wechat-qr-title {
-            font-family: 'Orbitron', Impact, sans-serif;
-            font-size: 16px;
-            color: #fff;
-            margin-bottom: 20px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 15px;
         }
         .wechat-qr-code {
             width: 200px;
             height: 200px;
             margin: 0 auto 15px;
-            background: #fff;
+            background: #f5f5f5;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 12px;
             color: #666;
-            border-radius: 4px;
         }
         .wechat-qr-hint {
             font-size: 12px;
-            color: rgba(255,255,255,0.7);
-            margin-bottom: 15px;
-            line-height: 1.5;
+            color: #666;
         }
         .wechat-qr-close {
-            margin-top: 10px;
-            padding: 10px 30px;
-            background: var(--xre-dark-red);
+            margin-top: 15px;
+            padding: 8px 24px;
+            background: #07c160;
             color: #fff;
-            border: 2px solid var(--xre-red);
+            border: none;
             border-radius: 4px;
             cursor: pointer;
-            font-family: 'Orbitron', Impact, sans-serif;
-            font-size: 12px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            transition: all 0.3s;
         }
-        .wechat-qr-close:hover {
-            background: var(--xre-red);
-            box-shadow: 0 0 20px rgba(139, 0, 0, 0.5);
-        }
-        /* Hero Logo */
-        .hero-logo-bg {
-            position: absolute;
-            top: 8%;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 1;
-            pointer-events: none;
-            animation: fadeIn 2s ease-in-out forwards;
-        }
-        .hero-logo-bg img {
-            width: 680px;
-            height: 680px;
-            object-fit: contain;
-            animation: heroLogoBreathe 4s ease-in-out infinite, fadeIn 2s ease-in-out forwards;
-            filter: drop-shadow(0 0 30px rgba(139, 0, 0, 0.6));
-            opacity: 0;
-        }
-        @keyframes fadeIn {
-            0% { opacity: 0; }
-            100% { opacity: 0.7; }
-        }
-        @keyframes heroLogoBreathe {
-            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 20px rgba(139, 0, 0, 0.4)); }
-            50% { transform: scale(1.08); filter: drop-shadow(0 0 50px rgba(255, 0, 0, 0.8)); }
-        }
-
-        /* 响应式 */
-                /* 响应式 - 1024px */
-        
-        @keyframes shimmer {
-            0% { background-position: -200% center; }
-            100% { background-position: 200% center; }
-        }
-        .title-underline.shimmer::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            background-size: 200% 100%;
-            animation: shimmer 2s infinite;
-        }
-
-@media (max-width: 1024px) {
-            nav { padding: 0 30px; height: 70px; }
-            .logo-img { height: 40px; max-width: 180px; }
-            .nav-links { gap: 25px; }
-            .hero-content { margin-top: 100px; }
-            .hero-title { font-size: clamp(70px, 13vw, 120px); }
-            .hero-subtitle { font-size: clamp(20px, 3vw, 32px); margin-top: 30px; }
-            .artists-grid { grid-template-columns: repeat(3, 1fr); gap: 15px; }
-            .footer-container { gap: 30px; flex-direction: column; text-align: center; }
-            .footer-contact-left, .footer-contact-right { text-align: center; width: 100%; }
-            .social-links { flex-wrap: wrap; justify-content: center; max-width: 300px; margin: 0 auto 25px; }
-            .hero-logo-bg img { width: 600px; height: 600px; }
-            .branded-tours-container { grid-template-columns: repeat(2, 1fr); }
-            .branded-tour-card { max-width: none; }
-            .footer-bottom {
-                flex-direction: column;
-                gap: 10px;
-            }
-            .footer-legal {
-                order: 1;
-            }
-            .copyright {
-                order: 2;
-            }
-        }
-
-        /* 响应式 - 768px */
+        /* 响应式调整 */
         @media (max-width: 768px) {
-            .footer-bottom {
-                flex-direction: column;
+            .share-platforms {
+                grid-template-columns: repeat(3, 1fr);
                 gap: 10px;
-                padding: 15px;
-                margin: 0;
             }
-            .footer-legal {
-                order: 1;
-                gap: 15px;
+            .share-platform-btn {
+                padding: 10px 5px;
             }
-            .copyright {
-                order: 2;
+            .share-platform-icon {
+                width: 24px;
+                height: 24px;
             }
-            .footer-legal {
-                order: 1;
-                justify-content: center;
-                gap: 15px;
+            .share-platform-name {
+                font-size: 9px;
             }
-            .copyright {
-                order: 2;
+            .share-modal-content {
+                padding: 20px;
             }
-            .footer-spacer {
-                display: none;
-            }
-            .artist-card { aspect-ratio: 750/360 !important; overflow: hidden; transform: translateZ(0); }
-            .artist-card img { width: 100% !important; height: 100% !important; object-fit: cover !important; }
-            .artist-card:hover img { filter: brightness(1.1) !important; }
-            .artist-card:active { transform: scale(0.98); }
-            nav { padding: 0 20px; height: 65px; }
-            .logo-img { height: 35px; max-width: 160px; }
-            .nav-links a { font-size: 11px; letter-spacing: 2px; }
-            .nav-links .neon-btn { padding: 8px 16px; font-size: 10px; }
-            .hero-content { margin-top: 80px; }
-            .hero-title { font-size: clamp(55px, 14vw, 80px); letter-spacing: 5px; }
-            .hero-subtitle { 
-                font-size: clamp(14px, 3.5vw, 20px); 
-                letter-spacing: 2px; 
+            .download-btn {
+                padding: 12px 15px;
                 margin-top: 15px;
-                text-align: center;
-                line-height: 1.5;
             }
-            .hero-subtitle .line1, .hero-subtitle .line2, .hero-subtitle .line3 {
-                display: block;
-                white-space: normal;
-                text-align: center;
+            .download-btn-icon {
+                width: 24px;
+                height: 24px;
             }
-
-            .artists-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 0 15px; }
-            .artist-name-below { font-size: 14px; }
-            .footer-gap { height: 100px; }
-            .footer-main { padding: 40px 30px 30px; }
-            .footer-container { flex-direction: column; gap: 30px; text-align: center; }
-            .footer-contact-left, .footer-contact-right { text-align: center; flex: 1; width: 100%; }
-            .form-row { grid-template-columns: 1fr; }
-            .hero-logo-bg img { width: 450px; height: 450px; }
-
-            /* BRANDED TOURS - 768px */
-            .branded-tours-container { grid-template-columns: 1fr; padding: 0 20px; }
-            .branded-tour-card { max-width: none; aspect-ratio: 2/3; }
-            .branded-tour-content { padding: 60px 20px 30px; }
-            .branded-tour-name { font-size: 18px; }
-            .branded-tour-details { font-size: 12px; }
-            .branded-tour-venue { font-size: 11px; }
-            .branded-tour-btn { padding: 10px 25px; font-size: 11px; }
-            .branded-tour-status { top: 15px; right: 15px; padding: 6px 12px; font-size: 11px; }
-            /* 移动端分享按钮默认隐藏，hover/active状态显示 */
-            .branded-tour-share { 
-                width: 40px; 
-                height: 40px; 
-                top: 15px; 
-                left: 15px; 
-                opacity: 0;
-                border: 2px solid var(--xre-red);
+            .download-btn-text {
+                font-size: 12px;
             }
-            .branded-tour-card:hover .branded-tour-share,
-            .branded-tour-card.active .branded-tour-share {
-                opacity: 1;
-            }
-            .share-platforms { grid-template-columns: repeat(4, 1fr); gap: 8px; }
-            .share-platform-btn { padding: 10px 5px; }
-            .share-platform-icon { width: 22px; height: 22px; }
-            .share-platform-name { font-size: 9px; }
-        }
-
-        /* 响应式 - 480px */
-        @media (max-width: 480px) {
-            .footer-bottom {
-                gap: 8px;
-            }
-            .artist-card { aspect-ratio: 750/360 !important; overflow: hidden; transform: translateZ(0); }
-            .artist-card img { width: 100% !important; height: 100% !important; object-fit: cover !important; }
-            .artist-card:hover img { filter: brightness(1.1) !important; }
-            .artist-card:active { transform: scale(0.98); }
-            nav { padding: 0 15px; height: 60px; }
-            .logo-img { height: 32px; max-width: 140px; }
-            .nav-links { gap: 12px; }
-            .nav-links a { font-size: 10px; letter-spacing: 1px; }
-            .nav-links .neon-btn { padding: 6px 14px; font-size: 9px; }
-            .hero-content { margin-top: 60px; }
-            .hero-title { font-size: clamp(45px, 13vw, 65px); letter-spacing: 4px; }
-            .hero-subtitle { 
-                font-size: clamp(11px, 3vw, 14px); 
-                letter-spacing: 1.5px; 
-                margin-top: 10px;
-                text-align: center;
-                line-height: 1.5;
-            }
-            .hero-subtitle .line1, .hero-subtitle .line2, .hero-subtitle .line3 {
-                display: block;
-                white-space: normal;
-                text-align: center;
-            }
-
-            .artists-grid { gap: 12px; padding: 0 10px; }
-            .artist-name-below { font-size: 12px; }
-            .footer-gap { height: 80px; }
-            .footer-main { padding: 35px 25px 25px; }
-            .footer-logo { font-size: 28px; }
-            .social-icon { width: 40px; height: 40px; }
-            .contact-item { font-size: 11px; }
-            .footer-legal a { font-size: 10px; }
-            .modal-content { padding: 30px 20px; }
-            .modal-content h2 { font-size: 22px; }
-            .hero-logo-bg img { width: 320px; height: 320px; }
-
-            /* BRANDED TOURS - 480px */
-            .branded-tours-section { padding: 60px 0; }
-            .branded-tour-card { aspect-ratio: 2/3; }
-            .branded-tour-content { padding: 50px 15px 25px; }
-            .branded-tour-name { font-size: 16px; }
-            .branded-tour-btn { padding: 10px 25px; font-size: 11px; }
-            .branded-tour-status { font-size: 10px; padding: 5px 10px; top: 10px; right: 10px; }
-            /* 移动端分享按钮默认隐藏，hover/active状态显示 */
-            .branded-tour-share { 
-                width: 36px; 
-                height: 36px; 
-                top: 10px; 
-                left: 10px; 
-                opacity: 0;
-                border: 2px solid var(--xre-red);
-            }
-            .branded-tour-card:hover .branded-tour-share,
-            .branded-tour-card.active .branded-tour-share {
-                opacity: 1;
-            }
-        }
-
-        /* 响应式 - 375px */
-        
-        
-
-@media (max-width: 375px) {
-            .hero-title { font-size: 38px; letter-spacing: 3px; }
-            .hero-subtitle { 
-                font-size: 10px; 
-                text-align: center;
-                line-height: 1.5;
-            }
-            .hero-subtitle .line1, .hero-subtitle .line2, .hero-subtitle .line3 {
-                display: block;
-                white-space: normal;
-                text-align: center;
-            }
-            .artists-grid { gap: 10px; padding: 0 8px; }
-            .footer-logo { font-size: 24px; }
-            .social-icon { width: 38px; height: 38px; }
-            .contact-item { font-size: 10px; }
-            .branded-tour-name { font-size: 16px; }
-        }
-        /* POSTER AD SECTION - 使用背景图 */
-        .poster-ad-section {
-            width: 100%;
-            padding: 0;
-            background-image: url('images/xre-adbg.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            position: relative;
-            border-top: none;
-        }
-
-        .poster-ad-container {
-            width: 100%;
-            max-width: none;
-            margin: 0;
-            display: grid;
-            grid-template-columns: 33.333% 33.333% 33.333%;
-            gap: 0;
-            padding: 0;
-            position: relative;
-            min-height: 100vh;
-        }
-
-        /* 左侧海报 - 满屏高度 */
-        .poster-ad-left {
-            position: relative;
-            display: flex;
-            align-items: stretch;
-            justify-content: center;
-            padding: 0;
-            background: transparent;
-            min-height: 100vh;
-            height: 100vh;
-            overflow: hidden;
-        }
-
-        .poster-wrapper {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            border: none;
-            box-shadow: none;
-            margin: 0;
-        }
-
-        .poster-ad-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
-            display: block;
-        }
-
-        /* 中间广告栏样式 */
-        .poster-ad-middle {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 0;
-            background: rgba(0, 0, 0, 0.2);
-            min-height: 100vh;
-        }
-
-        .middle-top, .middle-bottom {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 60px 40px;
-            position: relative;
-            align-items: center;
-            text-align: center;
-        }
-
-        .middle-top {
-            border-bottom: 1px solid rgba(139, 0, 0, 0.3);
-        }
-
-        .content-left, .content-right {
-            max-width: 90%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
-
-        .ad-underline {
-            width: 80px;
-            height: 3px;
-            background: var(--xre-red);
-            margin: 0 auto 25px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .ad-buttons {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .ad-title {
-            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            font-size: clamp(24px, 2.5vw, 36px);
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: #fff;
-            margin-bottom: 15px;
-            line-height: 1.1;
-            text-shadow: 0 0 20px rgba(139, 0, 0, 0.5);
-        }
-
-        .ad-description {
-            font-family: 'Courier New', monospace;
-            font-size: 13px;
-            line-height: 1.8;
-            color: rgba(255, 255, 255, 0.85);
-            margin-bottom: 30px;
-            letter-spacing: 0.5px;
-        }
-
-        .ad-btn {
-            display: inline-block;
-            background: rgba(139, 0, 0, 0.3);
-            color: #fff;
-            border: 2px solid var(--xre-dark-red);
-            padding: 12px 30px;
-            font-family: 'Orbitron', Impact, sans-serif;
-            font-size: 12px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            text-decoration: none;
-            cursor: pointer;
-            transition: all 0.4s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .ad-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        .ad-btn:hover::before {
-            left: 100%;
-        }
-
-        .ad-btn:hover {
-            background: var(--xre-dark-red);
-            border-color: var(--xre-red);
-            box-shadow: 0 0 30px rgba(139, 0, 0, 0.8);
-            transform: scale(1.05);
-            letter-spacing: 3px;
-        }
-
-        .ad-btn.disabled-btn {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .ad-btn.disabled-btn:hover {
-            background: rgba(139, 0, 0, 0.3);
-            border-color: var(--xre-dark-red);
-            box-shadow: none;
-            transform: none;
-            letter-spacing: 2px;
-        }
-
-        /* 右侧播放器区 */
-        .poster-ad-right {
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        .player-spotify {
-            flex: 0 0 calc(60% + 100px);
-            height: calc(60% + 100px);
-            background: #000;
-        }
-
-        .player-spotify iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        .player-bottom-container {
-            flex: 0 0 calc(40% - 100px);
-            height: calc(40% - 100px);
-            min-height: 176px;
-            display: flex;
-            flex-direction: row;
-        }
-
-        .player-btn {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 20px 25px;
-            text-decoration: none;
-            border: none;
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-            min-height: 176px;
-            width: 50%;
-        }
-
-        .player-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-            transition: left 0.5s;
-        }
-
-        .player-btn:hover::before {
-            left: 100%;
-        }
-
-        .player-qq {
-            background: linear-gradient(135deg, #31c27c 0%, #2aa86d 100%);
-            border-right: 1px solid rgba(0, 0, 0, 0.2);
-        }
-
-        .player-qq:hover {
-            background: linear-gradient(135deg, #3dd68a 0%, #31c27c 100%);
-            box-shadow: 0 0 30px rgba(49, 194, 124, 0.6);
-        }
-
-        .player-netease {
-            background: linear-gradient(135deg, #c62f2f 0%, #a82a2a 100%);
-        }
-
-        .player-netease:hover {
-            background: linear-gradient(135deg, #d63a3a 0%, #c62f2f 100%);
-            box-shadow: 0 0 30px rgba(198, 47, 47, 0.6);
-        }
-
-        .player-btn-content {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            z-index: 2;
-        }
-
-        .player-platform {
-            font-family: 'Orbitron', Impact, sans-serif;
-            font-size: 16px;
-            letter-spacing: 2px;
-            color: #fff;
-            text-transform: uppercase;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-weight: 600;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-        .player-platform-logo {
-            width: 32px;
-            height: 32px;
-            opacity: 1;
-        }
-
-        .player-song {
-            font-family: 'Courier New', monospace;
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.95);
-            font-weight: bold;
-            margin-top: 8px;
-        }
-
-        .player-artist {
-            font-family: 'Courier New', monospace;
-            font-size: 12px;
-            color: rgba(255, 255, 255, 0.8);
-            margin-top: 4px;
-        }
-
-        .player-play-icon {
-            width: 60px;
-            height: 60px;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            z-index: 2;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .player-btn:hover .player-play-icon {
-            transform: scale(1.1);
-            background: #fff;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
-        }
-
-        .player-play-icon svg {
-            width: 28px;
-            height: 28px;
-            fill: #000;
-            margin-left: 4px;
-        }
-
-        /* POSTER AD 响应式 - 移动端 (991px及以下) */
-        @media (max-width: 991px) {
-            .poster-ad-container {
-                display: block !important;
-                width: 100% !important;
-                margin: 0 !important;
-                padding: 0 !important;
-                line-height: 0 !important;
-                font-size: 0 !important;
-                min-height: auto !important;
-                height: auto !important;
-                grid-template-columns: none !important;
-            }
-
-            /* 第一排：海报（全屏宽度，等比例完整显示） */
-            .poster-ad-left {
-                width: 100% !important;
-                display: block !important;
-                padding: 0 !important;
-                margin: 0 !important;
-                float: none !important;
-                position: relative !important;
-                aspect-ratio: auto !important;
-                grid-column: auto !important;
-                grid-row: auto !important;
-                line-height: 0 !important;
-                font-size: 0 !important;
-                min-height: auto !important;
-                height: auto !important;
-            }
-            .poster-wrapper {
-                width: 100% !important;
-                height: auto !important;
-                display: block !important;
-                line-height: 0 !important;
-                font-size: 0 !important;
-                position: relative !important;
-            }
-            .poster-ad-image {
-                width: 100% !important;
-                height: auto !important;
-                object-fit: contain !important;
-                display: block !important;
-                margin: 0 !important;
-                padding: 0 !important;
-                border: none !important;
-                line-height: 0 !important;
-                font-size: 0 !important;
-                vertical-align: top !important;
-            }
-
-            /* 第二排：2个广告栏上下排列（全屏宽度） */
-            .poster-ad-middle {
-                width: 100% !important;
-                display: block !important;
-                margin: 0 !important;
-                padding: 0 !important;
-                float: none !important;
-                aspect-ratio: auto !important;
-                grid-column: auto !important;
-                grid-row: auto !important;
-                line-height: 0 !important;
-                font-size: 0 !important;
-                min-height: auto !important;
-                height: auto !important;
-            }
-            .middle-top, .middle-bottom {
-                width: 100% !important;
-                display: flex !important;
-                flex-direction: column !important;
-                align-items: center !important;
-                justify-content: center !important;
-                text-align: center !important;
-                padding: 30px 20px !important;
-                margin: 0 !important;
-                line-height: normal !important;
-                font-size: initial !important;
-                min-height: auto !important;
-                height: auto !important;
-                flex: none !important;
-            }
-            .middle-top {
-                border-bottom: 1px solid rgba(139, 0, 0, 0.3) !important;
-            }
-            .content-left, .content-right {
-                width: 100% !important;
-                max-width: 500px !important;
-            }
-            .ad-title {
-                font-size: clamp(20px, 5vw, 28px) !important;
-                margin: 0 0 10px 0 !important;
-                padding: 0 !important;
-                line-height: 1.2 !important;
-            }
-            .ad-underline {
-                margin: 0 auto 15px auto !important;
-                padding: 0 !important;
-                width: 60px !important;
-                height: 3px !important;
-                line-height: 0 !important;
-            }
-            .ad-description {
-                font-size: clamp(13px, 3vw, 16px) !important;
-                margin: 0 0 20px 0 !important;
-                padding: 0 !important;
-                line-height: 1.6 !important;
-            }
-            .ad-buttons {
-                display: flex !important;
-                gap: 15px !important;
-                justify-content: center !important;
-                flex-wrap: wrap !important;
-                margin: 0 !important;
-                padding: 0 !important;
-                line-height: normal !important;
-            }
-            .ad-btn {
-                padding: 12px 25px !important;
-                font-size: clamp(12px, 2.5vw, 14px) !important;
-                margin: 0 !important;
-                line-height: normal !important;
-            }
-
-            /* 第三排：Spotify播放器（全屏宽度，高度276px） */
-            .poster-ad-right {
-                width: 100% !important;
-                display: block !important;
-                margin: 0 !important;
-                padding: 0 !important;
-                grid-column: auto !important;
-                grid-row: auto !important;
-                line-height: 0 !important;
-                font-size: 0 !important;
-                min-height: auto !important;
-                height: auto !important;
-            }
-            .player-spotify {
-                width: 100% !important;
-                height: 552px !important;
-                min-height: 552px !important;
-                max-height: 552px !important;
-                display: block !important;
-                margin: 0 !important;
-                padding: 0 !important;
-                border: none !important;
-                line-height: 0 !important;
-                font-size: 0 !important;
-                vertical-align: top !important;
-            }
-            .player-spotify iframe {
-                width: 100% !important;
-                height: 552px !important;
-                min-height: 552px !important;
-                max-height: 552px !important;
-                display: block !important;
-                margin: 0 !important;
-                padding: 0 !important;
-                border: none !important;
-                line-height: 0 !important;
-                font-size: 0 !important;
-                vertical-align: top !important;
-            }
-
-            /* 第四排：QQ音乐 + 网易云并排（各50%，高度276px） */
-            .player-bottom-container {
-                width: 100% !important;
-                height: 276px !important;
-                min-height: 276px !important;
-                max-height: 276px !important;
-                display: flex !important;
-                flex-direction: row !important;
-                margin: 0 !important;
-                padding: 0 !important;
-                line-height: 0 !important;
-                font-size: 0 !important;
-                overflow: hidden !important;
-            }
-            .player-btn {
-                width: 50% !important;
-                height: 276px !important;
-                min-height: 276px !important;
-                max-height: 276px !important;
-                display: flex !important;
-                align-items: center !important;
-                justify-content: space-between !important;
-                padding: 20px !important;
-                margin: 0 !important;
-                box-sizing: border-box !important;
-                flex: none !important;
-                border: 2px solid rgba(139, 0, 0, 0.5) !important;
-                border-top: none !important;
-                line-height: normal !important;
-                font-size: initial !important;
-                overflow: hidden !important;
-                position: relative !important;
-            }
-            .player-btn-content {
-                max-height: 100% !important;
-                overflow: hidden !important;
-            }
-            .player-play-icon {
-                flex-shrink: 0 !important;
-            }
-            }
-
-            /* 第四排：QQ音乐 + 网易云并排（各50%，高度276px） */
-            .player-bottom-container {
-                width: 100% !important;
-                height: 276px !important;
-                min-height: 276px !important;
-                max-height: 276px !important;
-                display: flex !important;
-                flex-direction: row !important;
-                margin: 0 !important;
-                padding: 0 !important;
-                line-height: 0 !important;
-                font-size: 0 !important;
-            }
-            .player-btn {
-                width: 50% !important;
-                height: 276px !important;
-                min-height: 276px !important;
-                max-height: 276px !important;
-                display: flex !important;
-                align-items: center !important;
-                justify-content: space-between !important;
-                padding: 20px !important;
-                margin: 0 !important;
-                box-sizing: border-box !important;
-                flex: none !important;
-                border: 2px solid rgba(139, 0, 0, 0.5) !important;
-                border-top: none !important;
-                line-height: normal !important;
-                font-size: initial !important;
-            }
-            }
-
-        /* POSTER AD 响应式 - 小屏手机 (480px及以下) */
-        @media (max-width: 480px) {
-            .middle-top, .middle-bottom {
-                padding: 25px 15px !important;
-            }
-            .ad-title {
-                font-size: 18px !important;
-            }
-            .ad-description {
-                font-size: 12px !important;
-            }
-            .ad-btn {
-                padding: 10px 20px !important;
-                font-size: 11px !important;
-            }
-            /* 播放器样式继承991px定义 */
-        }
-
-        /* POSTER AD 响应式 - 超小屏手机 (375px及以下) */
-        @media (max-width: 375px) {
-            .middle-top, .middle-bottom {
-                padding: 20px 15px !important;
-            }
-            .ad-title {
-                font-size: 16px !important;
-            }
-            .ad-description {
-                font-size: 11px !important;
-            }
-            .ad-btn {
-                padding: 8px 16px !important;
-                font-size: 10px !important;
-            }
-            /* 播放器样式继承991px定义 */
-        }
-
-
-        
-</style>
+        }</style>
 
     <!-- Service Worker 注册 -->
     <script>
@@ -2328,7 +1479,8 @@
     </div>
 
     <!-- Share Modal - 修复版 -->
-    <div class="share-modal" id="shareModal" onclick="if(event.target === this) closeShareModal();">
+    <!-- Share Modal -->
+    <div class="share-modal" id="shareModal" onclick="handleShareModalClick(event)">
         <div class="share-modal-content">
             <button class="share-modal-close" onclick="closeShareModal()">&times;</button>
             <h3 class="share-modal-title">SHARE THIS EVENT</h3>
@@ -2350,25 +1502,25 @@
                 <button class="share-platform-btn" onclick="shareToPlatform('instagram')">
                     <svg class="share-platform-icon" viewBox="0 0 24 24">
                         <defs>
-                            <linearGradient id="igGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+                            <linearGradient id="ig-gradient" x1="0%" y1="100%" x2="100%" y2="0%">
                                 <stop offset="0%" style="stop-color:#feda75"/>
                                 <stop offset="50%" style="stop-color:#d62976"/>
                                 <stop offset="100%" style="stop-color:#4f5bd5"/>
                             </linearGradient>
                         </defs>
-                        <path fill="url(#igGrad)" d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                        <path fill="url(#ig-gradient)" d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
                     </svg>
                     <span class="share-platform-name">Instagram</span>
                 </button>
                 <button class="share-platform-btn" onclick="shareToPlatform('whatsapp')">
                     <svg class="share-platform-icon" viewBox="0 0 24 24" fill="#25d366">
-                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
                     </svg>
                     <span class="share-platform-name">WhatsApp</span>
                 </button>
                 <button class="share-platform-btn" onclick="shareToPlatform('reddit')">
                     <svg class="share-platform-icon" viewBox="0 0 24 24" fill="#ff4500">
-                        <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701z"/>
+                        <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/>
                     </svg>
                     <span class="share-platform-name">Reddit</span>
                 </button>
@@ -2380,35 +1532,48 @@
                 </button>
                 <button class="share-platform-btn" onclick="shareToPlatform('line')">
                     <svg class="share-platform-icon" viewBox="0 0 24 24" fill="#06c755">
-                        <path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zM12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2z"/>
+                        <path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63.346 0 .628.285.628.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.629-.629.629M24 10.314C24 4.943 18.615.572 12 .572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/>
                     </svg>
                     <span class="share-platform-name">LINE</span>
                 </button>
                 <button class="share-platform-btn" onclick="shareToPlatform('wechat-friend')">
                     <svg class="share-platform-icon" viewBox="0 0 24 24" fill="#07c160">
-                        <path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 0 1 .213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 0 0 .167-.054l1.903-1.114a.864.864 0 0 1 .717-.098 10.16 10.16 0 0 0 2.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348z"/>
+                        <path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 0 1 .213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 0 0 .167-.054l1.903-1.114a.864.864 0 0 1 .717-.098 10.16 10.16 0 0 0 2.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348zM5.785 5.991c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178A1.17 1.17 0 0 1 4.623 7.17c0-.651.52-1.18 1.162-1.18zm5.813 0c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178 1.17 1.17 0 0 1-1.162-1.178c0-.651.52-1.18 1.162-1.18zm5.34 2.867c-1.797-.052-3.746.512-5.28 1.786-1.72 1.428-2.687 3.72-1.78 6.22.942 2.453 3.666 4.229 6.884 4.229.826 0 1.622-.12 2.361-.336a.722.722 0 0 1 .598.082l1.584.926a.272.272 0 0 0 .14.047c.134 0 .24-.111.24-.247 0-.06-.023-.12-.038-.177l-.327-1.233a.582.582 0 0 1-.023-.156.49.49 0 0 1 .201-.398C23.024 18.48 24 16.82 24 14.98c0-3.21-2.931-5.837-6.656-6.088V8.89c-.135-.01-.27-.027-.407-.03zm-2.53 3.274c.535 0 .969.44.969.982a.976.976 0 0 1-.969.983.976.976 0 0 1-.969-.983c0-.542.434-.982.97-.982zm4.844 0c.535 0 .969.44.969.982a.976.976 0 0 1-.969.983.976.976 0 0 1-.969-.983c0-.542.434-.982.969-.982z"/>
                     </svg>
-                    <span class="share-platform-name">WeChat</span>
+                    <span class="share-platform-name">WeChat Friend</span>
                 </button>
                 <button class="share-platform-btn" onclick="shareToPlatform('wechat-moments')">
                     <svg class="share-platform-icon" viewBox="0 0 24 24" fill="#07c160">
-                        <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm6.066 9.645h-2.77v-3.077h-3.69v3.077h-2.77V7.385h2.77v3.077h3.69V7.385h2.77v9.23z"/>
+                        <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm6.066 9.645l-1.605 7.485c-.121.568-.462.707-.936.44l-2.587-1.913-1.25 1.209c-.138.14-.253.257-.518.257l.185-2.623 4.795-4.374c.208-.186-.045-.29-.324-.104l-5.927 3.76-2.554-.807c-.555-.175-.568-.555.116-.822l9.98-3.871c.463-.175.868.104.745.763z"/>
                     </svg>
-                    <span class="share-platform-name">Moments</span>
+                    <span class="share-platform-name">WeChat Moments</span>
                 </button>
             </div>
+
+            <!-- Download Poster Button -->
             <button class="download-btn" id="downloadPosterBtn" onclick="downloadPoster()">
-                <svg class="download-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                <svg class="download-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
                 <span class="download-btn-text">DOWNLOAD POSTER</span>
+                <span class="download-btn-subtext">Save to Device</span>
             </button>
         </div>
     </div>
 
     <!-- WeChat QR Modal -->
-    <div class="wechat-qr-modal" id="wechatQRModal" onclick="if(event.target === this) closeWeChatQR();">
+    <div class="wechat-qr-modal" id="wechatQRModal" onclick="handleWechatModalClick(event)">
         <div class="wechat-qr-content">
             <h3 class="wechat-qr-title">Scan to Share on WeChat</h3>
-            <div class="wechat-qr-code" id="wechatQRCode"></div>
+            <div class="wechat-qr-code" id="wechatQRCode">
+                <!-- 二维码将在这里动态生成 -->
+            </div>
+            <p class="wechat-qr-hint">Content copied to clipboard.<br>Open WeChat and paste to share.</p>
+            <button class="wechat-qr-close" onclick="closeWeChatQR()">Got it</button>
+        </div>
+    </div>
             <p class="wechat-qr-hint">Content copied to clipboard.<br>Open WeChat and paste to share.</p>
             <button class="wechat-qr-close" onclick="closeWeChatQR()">Got it</button>
         </div>
@@ -2607,96 +1772,497 @@
             }
         }
 
-        function generateTags(title, city, date, link) {
-            const tags = [];
-            const fullText = ((title || '') + ' ' + (city || '') + ' ' + (date || '')).toLowerCase();
+        // ================== 分享功能 ==================
+        const LIVEGIGS_URL = 'https://livegigsasia.com';
 
-            // 音乐风格标签
-            const genres = {
+        function generateTags(title, city, date, link, subtitle) {
+            const tags = [];
+            const fullText = (title + ' ' + (subtitle || '') + ' ' + city + ' ' + (date || '') + ' ' + (link || '')).toLowerCase();
+
+            // ä»æ é¢åå¯æ é¢æåå³é®è¯ä½ä¸ºTAG
+            const allText = title + ' ' + (subtitle || '');
+            const titleWords = allText.toLowerCase().split(/[\s\-'"]+/).filter(w => w.length >= 3);
+            const commonWords = new Set(['the', 'and', 'for', 'with', 'live', 'show', 'gig', 'band', 'new', 'year', 'party']);
+
+            titleWords.forEach(word => {
+                // è¿æ»¤æåªåå«ç¹æ®å­ç¬¦ææ°å­çè¯
+                const cleanWord = word.replace(/[^a-z0-9]/g, '');
+                if (cleanWord.length < 2) return;
+                if (commonWords.has(cleanWord)) return;
+
+                const capitalized = cleanWord.charAt(0).toUpperCase() + cleanWord.slice(1);
+                if (!tags.includes(capitalized)) {
+                    tags.push(capitalized);
+                }
+            });
+
+            // é³ä¹é£æ ¼æ ç­¾
+            const genreKeywords = {
                 'punk': 'Punk', 'metal': 'Metal', 'rock': 'Rock', 'hardcore': 'Hardcore',
-                'slam': 'Slam', 'death': 'DeathMetal', 'black': 'BlackMetal',
-                'thrash': 'Thrash', 'grind': 'Grindcore', 'crust': 'Crust',
-                'emo': 'Emo', 'indie': 'Indie', 'alternative': 'AltRock'
+                'slam': 'SlamMetal', 'death': 'DeathMetal', 'black': 'BlackMetal',
+                'thrash': 'ThrashMetal', 'grind': 'Grindcore', 'crust': 'Crust',
+                'emo': 'Emo', 'indie': 'Indie', 'alternative': 'AltRock',
+                'post': 'PostRock', 'progressive': 'ProgRock', 'psychedelic': 'Psychedelic',
+                'stoner': 'Stoner', 'doom': 'DoomMetal', 'gothic': 'Gothic',
+                'industrial': 'Industrial', 'electronic': 'Electronic', 'synth': 'Synth',
+                'noise': 'Noise', 'experimental': 'Experimental', 'ambient': 'Ambient',
+                'jazz': 'Jazz', 'blues': 'Blues', 'folk': 'Folk', 'country': 'Country',
+                'reggae': 'Reggae', 'ska': 'Ska', 'funk': 'Funk', 'soul': 'Soul',
+                'hiphop': 'HipHop', 'rap': 'Rap', 'trap': 'Trap',
+                'edm': 'EDM', 'techno': 'Techno', 'house': 'House', 'trance': 'Trance',
+                'dubstep': 'Dubstep', 'drumnbass': 'DnB', 'garage': 'Garage', 'grime': 'Grime',
+                'grindcore': 'Grindcore', 'deathcore': 'Deathcore', 'metalcore': 'Metalcore',
+                'skatepunk': 'SkatePunk', 'streetpunk': 'StreetPunk', 'oipunk': 'Oi',
+                'anarchopunk': 'AnarchoPunk', 'crustpunk': 'CrustPunk',
+                'poppunk': 'PopPunk', 'melodichardcore': 'MelodicHardcore',
+                'folkmetal': 'FolkMetal', 'viking': 'VikingMetal', 'pagan': 'PaganMetal',
+                'powermetal': 'PowerMetal', 'speedmetal': 'SpeedMetal', 'glam': 'GlamMetal',
+                'nwobhm': 'NWOBHM', 'heavymetal': 'HeavyMetal', 'numetal': 'NuMetal',
+                'rapmetal': 'RapMetal', 'funkmetal': 'FunkMetal', 'altmetal': 'AltMetal',
+                'industrialmetal': 'IndustrialMetal', 'gothicmetal': 'GothicMetal',
+                'doommetal': 'DoomMetal', 'stonermetal': 'StonerMetal', 'sludge': 'Sludge',
+                'postmetal': 'PostMetal', 'avantgarde': 'AvantGarde', 'mathrock': 'MathRock',
+                'midwestemo': 'MidwestEmo', 'screamo': 'Screamo', 'skramz': 'Skramz',
+                'easycore': 'Easycore', 'positive': 'PositiveHardcore',
+                'youthcrew': 'YouthCrew', 'straightedge': 'StraightEdge',
+                'garagepunk': 'GaragePunk', 'psychobilly': 'Psychobilly', 'horrorpunk': 'HorrorPunk',
+                'deathrock': 'Deathrock', 'goth': 'Goth', 'darkwave': 'Darkwave',
+                'coldwave': 'Coldwave', 'minimal': 'Minimal', 'synthpunk': 'SynthPunk',
+                'electropunk': 'ElectroPunk', 'digital': 'DigitalHardcore', 'breakcore': 'Breakcore',
+                'jungle': 'Jungle', 'hardstyle': 'Hardstyle', 'hardcoretechno': 'HardcoreTechno',
+                'gabber': 'Gabber', 'speedcore': 'Speedcore', 'extratone': 'Extratone',
+                'industrialtechno': 'IndustrialTechno', 'ebm': 'EBM', 'darktechno': 'DarkTechno',
+                'acid': 'Acid', 'detroit': 'DetroitTechno', 'berlin': 'BerlinTechno',
+                'deep': 'DeepHouse', 'progressivehouse': 'ProgHouse', 'techhouse': 'TechHouse',
+                'ukgarage': 'UKGarage', 'bassline': 'Bassline', 'dub': 'Dub',
+                'reggaeton': 'Reggaeton', 'dancehall': 'Dancehall', 'soca': 'Soca',
+                'calypso': 'Calypso', 'zouk': 'Zouk', 'compas': 'Compas',
+                'afrobeat': 'Afrobeat', 'highlife': 'Highlife', 'juju': 'Juju',
+                'world': 'WorldMusic', 'ethnic': 'Ethnic', 'traditional': 'Traditional',
+                'celtic': 'Celtic', 'balkan': 'Balkan', 'klezmer': 'Klezmer',
+                'gypsy': 'GypsyPunk', 'flamenco': 'Flamenco', 'fado': 'Fado',
+                'tango': 'Tango', 'samba': 'Samba', 'bossanova': 'BossaNova',
+                'mpb': 'MPB', 'cumbia': 'Cumbia', 'salsa': 'Salsa', 'merengue': 'Merengue',
+                'bachata': 'Bachata', 'dembow': 'Dembow', 'moombahton': 'Moombahton',
+                'tribal': 'Tribal', 'guaracha': 'Guaracha', 'riddim': 'Riddim'
             };
 
-            Object.entries(genres).forEach(([keyword, tag]) => {
+            // æ´»å¨ç±»åæ ç­¾
+            const eventKeywords = {
+                'fest': 'Festival', 'festival': 'Festival', 'tour': 'Tour', 'show': 'LiveShow',
+                'gig': 'Gig', 'concert': 'Concert', 'party': 'Party', 'warmup': 'WarmUp',
+                'revival': 'Revival', 'reunion': 'Reunion', 'anniversary': 'Anniversary',
+                'benefit': 'Benefit', 'charity': 'Charity', 'release': 'ReleaseParty',
+                'album': 'AlbumRelease', 'ep': 'EPRelease', 'single': 'SingleRelease',
+                'premiere': 'Premiere', 'screening': 'Screening', 'exhibition': 'Exhibition',
+                'market': 'Market', 'fair': 'Fair', 'convention': 'Convention',
+                'conference': 'Conference', 'seminar': 'Seminar', 'workshop': 'Workshop',
+                'masterclass': 'Masterclass', 'competition': 'Competition', 'contest': 'Contest',
+                'battle': 'Battle', 'jam': 'JamSession', 'openmic': 'OpenMic',
+                'audition': 'Audition', 'casting': 'Casting', 'meetup': 'Meetup',
+                'gathering': 'Gathering', 'rally': 'Rally', 'protest': 'Protest',
+                'march': 'March', 'demonstration': 'Demonstration', 'fundraiser': 'Fundraiser',
+                'auction': 'Auction', 'sale': 'Sale', 'popup': 'PopUp', 'launch': 'Launch',
+                'opening': 'Opening', 'closing': 'Closing', 'finale': 'GrandFinale',
+                'ceremony': 'Ceremony', 'awards': 'Awards', 'nomination': 'Nomination',
+                'voting': 'Voting', 'election': 'Election', 'rave': 'Rave',
+                'warehouse': 'WarehouseParty', 'underground': 'Underground',
+                'secret': 'SecretParty', 'private': 'PrivateEvent', 'vip': 'VIP',
+                'exclusive': 'Exclusive', 'limited': 'Limited', 'special': 'SpecialEvent',
+                'annual': 'Annual', 'monthly': 'Monthly', 'weekly': 'Weekly', 'daily': 'Daily',
+                'seasonal': 'Seasonal', 'holiday': 'Holiday', 'christmas': 'Christmas',
+                'newyear': 'NewYear', 'halloween': 'Halloween', 'summer': 'Summer',
+                'winter': 'Winter', 'spring': 'Spring', 'fall': 'Fall', 'autumn': 'Autumn'
+            };
+
+            // å°åºæ ç­¾
+            const regionKeywords = {
+                'asia': 'Asia', 'china': 'China', 'hongkong': 'HongKong', 'hong kong': 'HongKong', 'taiwan': 'Taiwan',
+                'macau': 'Macau', 'japan': 'Japan', 'tokyo': 'Tokyo', 'osaka': 'Osaka', 'korea': 'Korea', 'seoul': 'Seoul',
+                'thailand': 'Thailand', 'bangkok': 'Bangkok', 'singapore': 'Singapore',
+                'malaysia': 'Malaysia', 'indonesia': 'Indonesia', 'philippines': 'Philippines',
+                'vietnam': 'Vietnam', 'cambodia': 'Cambodia', 'myanmar': 'Myanmar', 'laos': 'Laos',
+                'brunei': 'Brunei', 'india': 'India', 'nepal': 'Nepal', 'bangladesh': 'Bangladesh',
+                'srilanka': 'SriLanka', 'pakistan': 'Pakistan', 'australia': 'Australia',
+                'newzealand': 'NewZealand', 'usa': 'USA', 'uk': 'UK', 'europe': 'Europe',
+                'germany': 'Germany', 'france': 'France', 'italy': 'Italy', 'spain': 'Spain',
+                'netherlands': 'Netherlands', 'belgium': 'Belgium', 'switzerland': 'Switzerland',
+                'austria': 'Austria', 'sweden': 'Sweden', 'norway': 'Norway', 'denmark': 'Denmark',
+                'finland': 'Finland', 'poland': 'Poland', 'czech': 'Czech', 'hungary': 'Hungary',
+                'romania': 'Romania', 'bulgaria': 'Bulgaria', 'greece': 'Greece', 'turkey': 'Turkey',
+                'russia': 'Russia', 'ukraine': 'Ukraine', 'canada': 'Canada', 'mexico': 'Mexico',
+                'brazil': 'Brazil', 'argentina': 'Argentina', 'chile': 'Chile', 'peru': 'Peru',
+                'colombia': 'Colombia', 'venezuela': 'Venezuela', 'ecuador': 'Ecuador',
+                'bolivia': 'Bolivia', 'paraguay': 'Paraguay', 'uruguay': 'Uruguay',
+                'latin': 'LatinAmerica', 'southamerica': 'SouthAmerica', 'northamerica': 'NorthAmerica',
+                'centralamerica': 'CentralAmerica', 'caribbean': 'Caribbean', 'africa': 'Africa',
+                'middleeast': 'MiddleEast', 'dubai': 'Dubai', 'uae': 'UAE', 'qatar': 'Qatar',
+                'saudi': 'SaudiArabia', 'israel': 'Israel', 'iran': 'Iran', 'egypt': 'Egypt',
+                'morocco': 'Morocco', 'southafrica': 'SouthAfrica', 'nigeria': 'Nigeria', 'kenya': 'Kenya'
+            };
+
+            // æåæ ç­¾
+            Object.entries(genreKeywords).forEach(([keyword, tag]) => {
                 if (fullText.includes(keyword) && !tags.includes(tag)) {
                     tags.push(tag);
                 }
             });
 
+            Object.entries(eventKeywords).forEach(([keyword, tag]) => {
+                if (fullText.includes(keyword) && !tags.includes(tag)) {
+                    tags.push(tag);
+                }
+            });
+
+            Object.entries(regionKeywords).forEach(([keyword, tag]) => {
+                if (fullText.includes(keyword) && !tags.includes(tag)) {
+                    tags.push(tag);
+                }
+            });
+
+            // ç¡®ä¿æè¶³å¤æ°éçTAGï¼è³å°3ä¸ªï¼
             if (tags.length === 0) tags.push('LiveMusic');
-            if (tags.length < 2) tags.push('Concert');
-            tags.push('XRE');
+            if (tags.length < 2) tags.push('LiveEvent');
+            if (tags.length < 3) tags.push('Concert');
+
+            // å§ç»æ·»å åçTAG
+            tags.push('LiveGigsAsia');
+
+            // éå¶æå¤æ¾ç¤º6ä¸ªTAG
             return tags.slice(0, 6);
+        }
+
+        function openShareModal(title, city, date, image, link, subtitle) {
+            const modal = document.getElementById('shareModal');
+            const eventImg = document.getElementById('shareEventImg');
+            const eventName = document.getElementById('shareEventName');
+            const eventMeta = document.getElementById('shareEventMeta');
+            const eventTags = document.getElementById('shareEventTags');
+
+            eventImg.src = image;
+            eventImg.onerror = function() { this.src = './image/asia-asiaad.jpg'; };
+            eventName.textContent = title;
+            eventMeta.textContent = date + (city ? ' | ' + city : '');
+
+            const tags = generateTags(title, city, date, link);
+            eventTags.innerHTML = tags.map(tag => '<span class="share-tag">' + tag + '</span>').join('');
+
+            modal.dataset.title = title;
+            modal.dataset.city = city;
+            modal.dataset.date = date;
+            modal.dataset.image = image;
+            modal.dataset.link = link;
+
+            modal.classList.add('active');
+
+            // æ·»å ESCé®çå¬
+            document.addEventListener('keydown', handleShareModalKeydown);
+        }
+
+        
+
+        // ä¸è½½æµ·æ¥å°æ¬å°
+        async function downloadPoster() {
+            const modal = document.getElementById('shareModal');
+            const imageUrl = modal.dataset.image;
+            const title = modal.dataset.title || 'poster';
+
+            if (!imageUrl) {
+                alert('No poster image available');
+                return;
+            }
+
+            try {
+                // æ¾ç¤ºä¸è½½ä¸­æç¤º
+                const btn = document.getElementById('downloadPosterBtn');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '<span class="download-btn-text">DOWNLOADING...</span>';
+                btn.disabled = true;
+
+                // è·åå¾çblob
+                const response = await fetch(imageUrl, { mode: 'cors' });
+                if (!response.ok) throw new Error('Network response was not ok');
+
+                const blob = await response.blob();
+                const blobUrl = window.URL.createObjectURL(blob);
+
+                // åå»ºä¸è½½é¾æ¥
+                const link = document.createElement('a');
+                link.href = blobUrl;
+                link.download = title.replace(/[^a-z0-9]/gi, '_').toLowerCase() + '_poster.jpg';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
+                // æ¸ç
+                window.URL.revokeObjectURL(blobUrl);
+
+                // æ¢å¤æé®
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+
+                // æ¾ç¤ºæåæç¤º
+                showToast('Poster downloaded successfully!');
+            } catch (error) {
+                console.error('Download failed:', error);
+                // å¦æfetchå¤±è´¥ï¼å¯è½æ¯è·¨åé®é¢ï¼ï¼å°è¯ä½¿ç¨canvasæ¹æ³
+                tryCanvasDownload(imageUrl, title);
+            }
+        }
+
+        // ä½¿ç¨Canvasä½ä¸ºå¤éä¸è½½æ¹æ³
+        function tryCanvasDownload(imageUrl, title) {
+            const img = new Image();
+            img.crossOrigin = 'anonymous';
+            img.onload = function() {
+                const canvas = document.createElement('canvas');
+                canvas.width = img.naturalWidth;
+                canvas.height = img.naturalHeight;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0);
+
+                try {
+                    canvas.toBlob(function(blob) {
+                        const blobUrl = window.URL.createObjectURL(blob);
+                        const link = document.createElement('a');
+                        link.href = blobUrl;
+                        link.download = title.replace(/[^a-z0-9]/gi, '_').toLowerCase() + '_poster.jpg';
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                        window.URL.revokeObjectURL(blobUrl);
+                        showToast('Poster downloaded successfully!');
+                    }, 'image/jpeg', 0.9);
+                } catch (e) {
+                    alert('Download failed. Please try right-clicking the image to save it manually.');
+                }
+
+                // æ¢å¤æé®
+                const btn = document.getElementById('downloadPosterBtn');
+                btn.innerHTML = '<svg class="download-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg><span class="download-btn-text">DOWNLOAD POSTER</span><span class="download-btn-subtext">Save to Device</span>';
+                btn.disabled = false;
+            };
+            img.onerror = function() {
+                alert('Cannot download this image due to cross-origin restrictions. Please try right-clicking the image to save it manually.');
+                const btn = document.getElementById('downloadPosterBtn');
+                btn.innerHTML = '<svg class="download-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg><span class="download-btn-text">DOWNLOAD POSTER</span><span class="download-btn-subtext">Save to Device</span>';
+                btn.disabled = false;
+            };
+            img.src = imageUrl;
+        }
+
+        // æ¾ç¤ºæç¤ºæ¶æ¯
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.style.cssText = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:rgba(139,0,0,0.9);color:#fff;padding:12px 24px;border-radius:4px;font-family:Impact,Haettenschweiler,Arial Narrow Bold,sans-serif;letter-spacing:1px;z-index:100002;animation:fadeInUp 0.3s ease;';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.style.animation = 'fadeOut 0.3s ease';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // æ·»å å¨ç»æ ·å¼
+        const toastStyle = document.createElement('style');
+        toastStyle.textContent = '@keyframes fadeInUp { from { opacity:0; transform:translateX(-50%) translateY(20px); } to { opacity:1; transform:translateX(-50%) translateY(0); } } @keyframes fadeOut { from { opacity:1; } to { opacity:0; } }';
+        document.head.appendChild(toastStyle);
+    
+
+        function closeShareModal() {
+            document.getElementById('shareModal').classList.remove('active');
+            // ç§»é¤ESCé®çå¬
+            document.removeEventListener('keydown', handleShareModalKeydown);
+        }
+        // å¤çåäº«å¼¹çªé®çäºä»¶ï¼ESCå³é­ï¼
+        function handleShareModalKeydown(e) {
+            if (e.key === 'Escape' || e.keyCode === 27) {
+                closeShareModal();
+            }
+        }
+
+        // å¤çåäº«å¼¹çªç¹å»äºä»¶ï¼ç¹å»ç©ºç½åºåå³é­ï¼
+        
+        // å¤çå¾®ä¿¡å¼¹çªé®çäºä»¶ï¼ESCå³é­ï¼
+        function handleWechatModalKeydown(e) {
+            if (e.key === 'Escape' || e.keyCode === 27) {
+                closeWeChatQR();
+            }
+        }
+        // å¤çå¾®ä¿¡å¼¹çªç¹å»äºä»¶ï¼ç¹å»ç©ºç½åºåå³é­ï¼
+        function handleWechatModalClick(e) {
+            if (e.target === e.currentTarget) {
+                closeWeChatQR();
+            }
+        }
+
+function handleShareModalClick(e) {
+            // å¦æç¹å»çæ¯å¼¹çªèæ¯ï¼ä¸æ¯åå®¹åºåï¼ï¼åå³é­
+            if (e.target === e.currentTarget) {
+                closeShareModal();
+            }
+        }
+
+
+        function closeWeChatQR() {
+            document.getElementById('wechatQRModal').classList.remove('active');
+            // ç§»é¤ESCé®çå¬
+            document.removeEventListener('keydown', handleWechatModalKeydown);
         }
 
         function shareToPlatform(platform) {
             const modal = document.getElementById('shareModal');
-            if (!modal) return;
-
             const title = modal.dataset.title || '';
             const city = modal.dataset.city || '';
             const date = modal.dataset.date || '';
+            const image = modal.dataset.image || '';
             const link = modal.dataset.link || '';
 
+            const tags = generateTags(title, city, date, link);
+            const tagsStr = tags.map(function(t) { return '#' + t; }).join(' ');
+
+            // æå»ºåäº«ææ¬ï¼åå«ææä¿¡æ¯
             let shareText = title;
             if (city) shareText += ' - ' + city;
             if (date) shareText += ' (' + date + ')';
-            shareText += '\n\nCheck out more at ' + LIVEGIGS_URL;
-            if (link) shareText += '\nEvent: ' + link;
+            shareText += '\n\n' + tagsStr;
+            if (image) shareText += '\n\nPoster: ' + image;
+            shareText += '\n\nCheck out more events at ' + LIVEGIGS_URL;
+            if (link) shareText += '\nEvent link: ' + link;
 
+            const shareUrl = encodeURIComponent(LIVEGIGS_URL);
             const encodedText = encodeURIComponent(shareText);
+            const encodedTitle = encodeURIComponent(title);
+            const encodedTags = encodeURIComponent(tagsStr);
+
+            let url = '';
 
             switch(platform) {
                 case 'facebook':
-                    window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(LIVEGIGS_URL), '_blank', 'width=600,height=400');
+                    // Facebookåäº« - åªåäº«tagsï¼æ æå­æè¿°
+                    url = 'https://www.facebook.com/sharer/sharer.php?u=' + shareUrl + '&quote=' + encodedTags;
+                    window.open(url, '_blank', 'width=600,height=400');
                     break;
+
                 case 'instagram':
+                    // Instagramæ²¡æç´æ¥åäº«URLï¼å¤å¶åå®¹å°åªè´´æ¿
                     copyToClipboard(shareText);
-                    alert('Content copied! Open Instagram app to share.');
+                    alert('Content copied to clipboard!\n\nPlease open Instagram app and paste to share.\n\nContent includes:\n- Event title, city, date\n- Tags\n- Poster image URL\n- LiveGigs link');
                     break;
+
                 case 'whatsapp':
-                    window.open('https://wa.me/?text=' + encodedText, '_blank');
+                    // æ£æµç§»å¨è®¾å¤å¹¶ä½¿ç¨éå½çåäº«æ¹å¼
+                    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+                    if (isMobile) {
+                        // ç§»å¨ç«¯ä½¿ç¨whatsapp://åè®®
+                        url = 'whatsapp://send?text=' + encodedText;
+                        window.location.href = url;
+                        // å¦æåè®®æ æ³æå¼ï¼3ç§åå°è¯webçæ¬
+                        setTimeout(function() {
+                            window.open('https://wa.me/?text=' + encodedText, '_blank');
+                        }, 3000);
+                    } else {
+                        // æ¡é¢ç«¯ä½¿ç¨webçæ¬
+                        url = 'https://wa.me/?text=' + encodedText;
+                        window.open(url, '_blank');
+                    }
                     break;
+
                 case 'reddit':
-                    window.open('https://reddit.com/submit?url=' + encodeURIComponent(LIVEGIGS_URL) + '&title=' + encodeURIComponent(title), '_blank');
+                    url = 'https://reddit.com/submit?url=' + shareUrl + '&title=' + encodedTitle;
+                    window.open(url, '_blank', 'width=600,height=400');
                     break;
+
                 case 'telegram':
-                    window.open('https://t.me/share/url?url=' + encodeURIComponent(LIVEGIGS_URL) + '&text=' + encodedText, '_blank');
+                    url = 'https://t.me/share/url?url=' + shareUrl + '&text=' + encodedText;
+                    window.open(url, '_blank');
                     break;
+
                 case 'line':
-                    window.open('https://social-plugins.line.me/lineit/share?url=' + encodeURIComponent(LIVEGIGS_URL), '_blank');
+                    url = 'https://social-plugins.line.me/lineit/share?url=' + shareUrl;
+                    window.open(url, '_blank');
                     break;
+
                 case 'wechat-friend':
                 case 'wechat-moments':
-                    handleWeChatShare(shareText);
+                    handleWeChatShare(shareText, image);
                     break;
             }
+
             closeShareModal();
         }
 
-        function handleWeChatShare(text) {
-            copyToClipboard(text);
-            const qrModal = document.getElementById('wechatQRModal');
-            if (qrModal) {
+        function handleWeChatShare(text, image) {
+            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+            const isWeChat = /MicroMessenger/i.test(navigator.userAgent);
+
+            // åå¤åäº«åå®¹
+            let shareContent = text;
+            if (image && !text.includes(image)) {
+                shareContent += '\n\nPoster: ' + image;
+            }
+
+            if (isWeChat) {
+                // å·²ç»å¨å¾®ä¿¡åï¼æç¤ºç¨æ·ä½¿ç¨å¾®ä¿¡åçåäº«
+                copyToClipboard(shareContent);
+                alert('You are in WeChat!\n\nContent copied to clipboard.\nPlease use WeChat\'s native share button (top right menu) to share this event.\n\nContent includes event details and poster image URL.');
+            } else if (isMobile) {
+                // ç§»å¨ç«¯ä½ä¸å¨å¾®ä¿¡å
+                copyToClipboard(shareContent);
+
+                // å°è¯æå¼å¾®ä¿¡
+                const wechatUrl = 'weixin://';
+                window.location.href = wechatUrl;
+
+                setTimeout(function() {
+                    alert('Content copied to clipboard!\n\nIf WeChat didn\'t open automatically, please:\n1. Open WeChat app manually\n2. Paste the copied content to share\n\nContent includes event details and poster image URL.');
+                }, 1000);
+            } else {
+                // æ¡é¢ç«¯ - ä½¿ç¨Google Chart APIçæçæ­£çäºç»´ç 
+                copyToClipboard(shareContent);
+
+                // æ´æ°æç¤ºææ¬
+                const qrModal = document.getElementById('wechatQRModal');
+                const qrHint = qrModal.querySelector('.wechat-qr-hint');
+                if (qrHint) {
+                    qrHint.innerHTML = 'Content copied to clipboard!<br>Open WeChat on your phone and paste to share.<br><br>Content includes: Event details, tags, and poster image URL.';
+                }
+
+                // çæäºç»´ç 
+                generateWeChatQR(shareContent);
+
                 qrModal.classList.add('active');
-                isWechatModalOpen = true;
             }
         }
 
-        function closeWeChatQR() {
-            const qrModal = document.getElementById('wechatQRModal');
-            if (qrModal) {
-                qrModal.classList.remove('active');
-                isWechatModalOpen = false;
-                document.body.style.overflow = 'auto';
-            }
+        // çæå¾®ä¿¡åäº«äºç»´ç 
+        function generateWeChatQR(content) {
+            const qrContainer = document.getElementById('wechatQRCode');
+            if (!qrContainer) return;
+
+            // æ¸ç©ºå®¹å¨
+            qrContainer.innerHTML = '';
+
+            // ä½¿ç¨Google Chart APIçæäºç»´ç 
+            const qrUrl = 'https://chart.googleapis.com/chart?cht=qr&chs=200x200&chld=M|0&chl=' + encodeURIComponent(content);
+
+            // åå»ºäºç»´ç å¾ç
+            const qrImg = document.createElement('img');
+            qrImg.src = qrUrl;
+            qrImg.alt = 'WeChat Share QR Code';
+            qrImg.style.width = '150px';
+            qrImg.style.height = '150px';
+            qrImg.style.display = 'block';
+            qrImg.style.margin = '0 auto';
+
+            qrContainer.appendChild(qrImg);
         }
 
         function copyToClipboard(text) {
             if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(text).catch(() => fallbackCopy(text));
+                navigator.clipboard.writeText(text).catch(function() {
+                    fallbackCopy(text);
+                });
             } else {
                 fallbackCopy(text);
             }
@@ -2713,26 +2279,14 @@
             document.body.removeChild(textarea);
         }
 
-        async function downloadPoster() {
-            const modal = document.getElementById('shareModal');
-            if (!modal?.dataset.image) return alert('No poster image available');
+        // ç¹å»å¼¹çªå¤é¨å³é­
+        document.getElementById('shareModal').addEventListener('click', function(e) {
+            if (e.target === this) closeShareModal();
+        });
 
-            try {
-                const res = await fetch(modal.dataset.image);
-                if (!res.ok) throw new Error();
-                const blob = await res.blob();
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = (modal.dataset.title || 'poster').replace(/[^\w]/g, '_').toLowerCase() + '_poster.jpg';
-                a.click();
-                URL.revokeObjectURL(url);
-            } catch {
-                alert('Download failed. Please right-click the image to save manually.');
-            }
-        }
-
-        // ================== Branded Tours - 修复版 ==================
+        document.getElementById('wechatQRModal').addEventListener('click', function(e) {
+            if (e.target === this) closeWeChatQR();
+        });// ================== Branded Tours// ================== Branded Tours - 修复版 ==================
         async function loadBrandedTours() {
             const container = document.getElementById('brandedToursContainer');
             const loadMoreContainer = document.getElementById('brandedToursLoadMore');
