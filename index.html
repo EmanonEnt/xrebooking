@@ -2085,20 +2085,7 @@
             });
         }
     </script>
-    <!-- 阻止缩放但保留滚动 -->
-    <style>
-        html, body {
-            touch-action: pan-y pinch-zoom;
-            -webkit-text-size-adjust: 100%;
-        }
-        .artist-card {
-            touch-action: manipulation;
-            -webkit-tap-highlight-color: transparent;
-        }
-        .artist-card img {
-            pointer-events: none;
-        }
-    </style>
+
 </head>
 
 <body>
@@ -3083,18 +3070,48 @@
             renderBrandedTours();
         }
     </script>
-    <!-- 简单阻止双击缩放 -->
+
+    <!-- 检测滑动方向，阻止横向缩放 -->
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var lastTouchEnd = 0;
-            document.addEventListener('touchend', function(e) {
-                var now = Date.now();
-                if (now - lastTouchEnd <= 300) {
+        (function() {
+            var startX, startY, startTime;
+            var isScrolling = false;
+
+            document.addEventListener('touchstart', function(e) {
+                startX = e.touches[0].clientX;
+                startY = e.touches[0].clientY;
+                startTime = Date.now();
+                isScrolling = false;
+            }, { passive: true });
+
+            document.addEventListener('touchmove', function(e) {
+                if (!startX || !startY) return;
+
+                var x = e.touches[0].clientX;
+                var y = e.touches[0].clientY;
+                var diffX = Math.abs(x - startX);
+                var diffY = Math.abs(y - startY);
+
+                // 如果横向移动大于纵向，认为是缩放操作
+                if (diffX > diffY && diffX > 10) {
                     e.preventDefault();
                 }
-                lastTouchEnd = now;
+
+                // 如果纵向移动大，标记为滚动
+                if (diffY > diffX && diffY > 10) {
+                    isScrolling = true;
+                }
             }, { passive: false });
-        });
+
+            document.addEventListener('touchend', function(e) {
+                // 阻止双击缩放
+                var now = Date.now();
+                if (now - startTime < 300 && !isScrolling) {
+                    e.preventDefault();
+                }
+                startX = startY = null;
+            }, { passive: false });
+        })();
     </script>
 </body>
 </html>
