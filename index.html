@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- iOS 防止自動縮放 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>XRE BOOKING - Artist Agency</title>
     <meta name="description" content="XRE BOOKING - Artist Agency in Punkrock, Garage, Mod, Powerpop, Surf, Poppunk, RocknRoll, Hardcore, Metal">
     <link rel="icon" type="image/png" href="./images/webtop.png">
@@ -664,7 +665,7 @@
             background: rgba(0, 0, 0, 0.6);
             border: 2px solid var(--xre-red);
             color: #fff;
-            font-size: 14px;
+            font-size: 16px;
             letter-spacing: 1px;
             font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
         }
@@ -1310,7 +1311,10 @@
                 display: none;
             }
             .artist-card { 
-                aspect-ratio: 750/360 !important; 
+                position: relative;
+                width: 100%;
+                height: 0;
+                padding-bottom: 48% !important;
                 overflow: hidden; 
                 transform: translateZ(0);
                 touch-action: manipulation !important;
@@ -1319,17 +1323,21 @@
                 -webkit-tap-highlight-color: transparent !important;
             }
             .artist-card img { 
+                position: absolute;
+                top: 0;
+                left: 0;
                 width: 100% !important; 
                 height: 100% !important; 
                 object-fit: cover !important;
                 pointer-events: none;
             }
             .artist-card:hover img { filter: brightness(1.1) !important; }
-            .artist-card:active { transform: scale(0.98); }
+            .artist-card:active { transform: scale(0.98) !important; }
             .artist-card-wrapper {
                 touch-action: manipulation !important;
                 -webkit-touch-callout: none !important;
                 -webkit-user-select: none !important;
+                -webkit-tap-highlight-color: transparent !important;
             }
             nav { padding: 0 20px; height: 65px; }
             .logo-img { height: 35px; max-width: 160px; }
@@ -1393,7 +1401,10 @@
                 gap: 8px;
             }
             .artist-card { 
-                aspect-ratio: 750/360 !important; 
+                position: relative;
+                width: 100%;
+                height: 0;
+                padding-bottom: 48% !important;
                 overflow: hidden; 
                 transform: translateZ(0);
                 touch-action: manipulation !important;
@@ -1402,17 +1413,21 @@
                 -webkit-tap-highlight-color: transparent !important;
             }
             .artist-card img { 
+                position: absolute;
+                top: 0;
+                left: 0;
                 width: 100% !important; 
                 height: 100% !important; 
                 object-fit: cover !important;
                 pointer-events: none;
             }
             .artist-card:hover img { filter: brightness(1.1) !important; }
-            .artist-card:active { transform: scale(0.98); }
+            .artist-card:active { transform: scale(0.98) !important; }
             .artist-card-wrapper {
                 touch-action: manipulation !important;
                 -webkit-touch-callout: none !important;
                 -webkit-user-select: none !important;
+                -webkit-tap-highlight-color: transparent !important;
             }
             nav { padding: 0 15px; height: 60px; }
             .logo-img { height: 32px; max-width: 140px; }
@@ -2086,7 +2101,11 @@
 
 
         
-</style>
+        /* 強制防止縮放 */
+        * {
+            -webkit-text-size-adjust: none !important;
+        }
+    </style>
 
     <!-- Service Worker 注册 -->
     <script>
@@ -2498,34 +2517,136 @@
     </div>
 
     <script>
-        // 阻止 iOS 雙擊縮放
+        // 阻止 iOS 雙擊縮放和自動縮放
         (function() {
             let lastTouchEnd = 0;
+            let lastTouchY = 0;
+
+            // 強制重置縮放
+            function forceResetZoom() {
+                const viewport = document.querySelector('meta[name="viewport"]');
+                if (viewport) {
+                    viewport.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';
+                }
+            }
+
+            // 定時重置縮放（每500毫秒檢查一次）
+            setInterval(function() {
+                const viewport = document.querySelector('meta[name="viewport"]');
+                if (viewport && !viewport.content.includes('user-scalable=no')) {
+                    viewport.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';
+                }
+            }, 500);
+
+            // 滾動時重置縮放
+            let scrollTimeout;
+            window.addEventListener('scroll', function() {
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(function() {
+                    forceResetZoom();
+                }, 100);
+            }, { passive: true });
+
+            // 頁面加載時重置
+            window.addEventListener('load', forceResetZoom);
+            window.addEventListener('resize', forceResetZoom);
+
+            // 阻止 touchend 雙擊
             document.addEventListener('touchend', function(event) {
                 const now = Date.now();
                 if (now - lastTouchEnd <= 300) {
                     event.preventDefault();
+                    event.stopPropagation();
+                    forceResetZoom();
                 }
                 lastTouchEnd = now;
+            }, { passive: false });
+
+            // 阻止 touchstart 上的縮放
+            document.addEventListener('touchstart', function(event) {
+                if (event.touches.length > 1) {
+                    event.preventDefault();
+                    forceResetZoom();
+                }
+                lastTouchY = event.touches[0].clientY;
+            }, { passive: false });
+
+            // 阻止 touchmove 上的縮放
+            document.addEventListener('touchmove', function(event) {
+                if (event.scale !== 1) {
+                    event.preventDefault();
+                    forceResetZoom();
+                }
             }, { passive: false });
 
             // 阻止雙擊事件
             document.addEventListener('dblclick', function(event) {
                 event.preventDefault();
+                event.stopPropagation();
+                forceResetZoom();
             }, { passive: false });
 
             // 阻止手勢縮放
             document.addEventListener('gesturestart', function(event) {
                 event.preventDefault();
+                forceResetZoom();
             }, { passive: false });
 
             document.addEventListener('gesturechange', function(event) {
                 event.preventDefault();
+                forceResetZoom();
             }, { passive: false });
 
             document.addEventListener('gestureend', function(event) {
                 event.preventDefault();
+                forceResetZoom();
             }, { passive: false });
+
+            // 特別處理藝人卡片
+            function setupArtistCards() {
+                const artistCards = document.querySelectorAll('.artist-card, .artist-card-wrapper');
+                artistCards.forEach(function(card) {
+                    // 移除所有事件監聽器並重新添加
+                    card.style.touchAction = 'manipulation';
+                    card.style.webkitTouchCallout = 'none';
+                    card.style.webkitUserSelect = 'none';
+                    card.style.userSelect = 'none';
+
+                    card.addEventListener('touchstart', function(e) {
+                        if (e.touches.length > 1) {
+                            e.preventDefault();
+                        }
+                        forceResetZoom();
+                    }, { passive: false });
+
+                    card.addEventListener('touchend', function(e) {
+                        const now = Date.now();
+                        if (now - lastTouchEnd <= 300) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                        }
+                        lastTouchEnd = now;
+                        forceResetZoom();
+                    }, { passive: false });
+
+                    card.addEventListener('touchmove', function(e) {
+                        forceResetZoom();
+                    }, { passive: true });
+                });
+            }
+
+            // 初始設置
+            setupArtistCards();
+
+            // DOM 變化時重新設置
+            const observer = new MutationObserver(function(mutations) {
+                setupArtistCards();
+            });
+
+            observer.observe(document.body, {
+                childList: true,
+                subtree: true
+            });
         })();
 
         // ================== 全局变量 ==================
@@ -2628,6 +2749,26 @@
 
             grid.innerHTML = '';
             grid.appendChild(fragment);
+
+            // 防止圖片加載導致的縮放
+            const images = grid.querySelectorAll('img');
+            images.forEach(function(img) {
+                img.addEventListener('load', function() {
+                    // 強制重置視口
+                    const viewport = document.querySelector('meta[name="viewport"]');
+                    if (viewport) {
+                        viewport.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';
+                    }
+                });
+
+                // 如果圖片已經加載，立即執行
+                if (img.complete) {
+                    const viewport = document.querySelector('meta[name="viewport"]');
+                    if (viewport) {
+                        viewport.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no';
+                    }
+                }
+            });
         }
 
         // ================== Booking Modal ==================
