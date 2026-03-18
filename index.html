@@ -20,6 +20,19 @@
             --black: #050505;
         }
 
+        /* 防止 iOS 雙擊縮放 */
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* 藝人區域特定樣式 */
+        .artists-section {
+            touch-action: pan-y pinch-zoom;
+        }
+
+        .artists-section * {
+            touch-action: manipulation;
+        }
         .loading {
             position: fixed;
             top: 0;
@@ -54,9 +67,9 @@
             min-height: 100vh;
             position: relative;
             width: 100%;
-            /* 防止移动端双击缩放 */
-            touch-action: manipulation;
-            -webkit-text-size-adjust: 100%;
+            touch-action: pan-y pinch-zoom;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
         }
         nav {
             position: fixed;
@@ -265,9 +278,6 @@
             padding: 100px 0;
             background: var(--mad-silver);
             position: relative;
-            /* 防止触摸缩放问题 */
-            touch-action: manipulation;
-            -webkit-tap-highlight-color: transparent;
         }
         .section-title {
             text-align: center;
@@ -293,10 +303,15 @@
             max-width: 95%;
             margin: 0 auto;
             padding: 0 20px;
+            touch-action: pan-y pinch-zoom;
         }
         .artist-card-wrapper { 
             text-align: center; 
             position: relative;
+            touch-action: manipulation;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
         .artist-card {
             position: relative;
@@ -308,6 +323,10 @@
             transition: border-color 0.4s, box-shadow 0.4s;
             border: 2px solid transparent;
             transform: translateZ(0);
+            touch-action: manipulation;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
         .artist-card img {
             position: absolute;
@@ -372,6 +391,10 @@
             transition: all 0.3s;
             display: inline-block;
             font-weight: normal;
+            touch-action: manipulation;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
         .artist-name-below:hover {
             color: var(--xre-red);
@@ -380,6 +403,10 @@
         }
         .artist-name-link {
             transition: color 0.3s, text-shadow 0.3s;
+            touch-action: manipulation;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -webkit-tap-highlight-color: transparent;
         }
         .artist-name-link:hover {
             color: var(--xre-red);
@@ -1286,28 +1313,23 @@
                 aspect-ratio: 750/360 !important; 
                 overflow: hidden; 
                 transform: translateZ(0);
-                -webkit-tap-highlight-color: transparent;
-                touch-action: manipulation;
-                -webkit-touch-callout: none;
-                -webkit-user-select: none;
-                user-select: none;
+                touch-action: manipulation !important;
+                -webkit-touch-callout: none !important;
+                -webkit-user-select: none !important;
+                -webkit-tap-highlight-color: transparent !important;
             }
             .artist-card img { 
                 width: 100% !important; 
                 height: 100% !important; 
                 object-fit: cover !important;
                 pointer-events: none;
-                -webkit-user-drag: none;
             }
             .artist-card:hover img { filter: brightness(1.1) !important; }
             .artist-card:active { transform: scale(0.98); }
-            /* 防止FB/INS内置浏览器无限放大 */
             .artist-card-wrapper {
-                -webkit-tap-highlight-color: transparent;
-                touch-action: manipulation;
-            }
-            .artist-card-wrapper * {
-                -webkit-tap-highlight-color: transparent;
+                touch-action: manipulation !important;
+                -webkit-touch-callout: none !important;
+                -webkit-user-select: none !important;
             }
             nav { padding: 0 20px; height: 65px; }
             .logo-img { height: 35px; max-width: 160px; }
@@ -1374,28 +1396,23 @@
                 aspect-ratio: 750/360 !important; 
                 overflow: hidden; 
                 transform: translateZ(0);
-                -webkit-tap-highlight-color: transparent;
-                touch-action: manipulation;
-                -webkit-touch-callout: none;
-                -webkit-user-select: none;
-                user-select: none;
+                touch-action: manipulation !important;
+                -webkit-touch-callout: none !important;
+                -webkit-user-select: none !important;
+                -webkit-tap-highlight-color: transparent !important;
             }
             .artist-card img { 
                 width: 100% !important; 
                 height: 100% !important; 
                 object-fit: cover !important;
                 pointer-events: none;
-                -webkit-user-drag: none;
             }
             .artist-card:hover img { filter: brightness(1.1) !important; }
             .artist-card:active { transform: scale(0.98); }
-            /* 防止FB/INS内置浏览器无限放大 */
             .artist-card-wrapper {
-                -webkit-tap-highlight-color: transparent;
-                touch-action: manipulation;
-            }
-            .artist-card-wrapper * {
-                -webkit-tap-highlight-color: transparent;
+                touch-action: manipulation !important;
+                -webkit-touch-callout: none !important;
+                -webkit-user-select: none !important;
             }
             nav { padding: 0 15px; height: 60px; }
             .logo-img { height: 32px; max-width: 140px; }
@@ -2085,16 +2102,6 @@
             });
         }
     </script>
-    <!-- 修复 iOS 缩放问题 -->
-    <style>
-        html, body {
-            touch-action: pan-y;
-            -webkit-text-size-adjust: 100%;
-        }
-        .artist-card img {
-            pointer-events: none;
-        }
-    </style>
 </head>
 
 <body>
@@ -2491,6 +2498,36 @@
     </div>
 
     <script>
+        // 阻止 iOS 雙擊縮放
+        (function() {
+            let lastTouchEnd = 0;
+            document.addEventListener('touchend', function(event) {
+                const now = Date.now();
+                if (now - lastTouchEnd <= 300) {
+                    event.preventDefault();
+                }
+                lastTouchEnd = now;
+            }, { passive: false });
+
+            // 阻止雙擊事件
+            document.addEventListener('dblclick', function(event) {
+                event.preventDefault();
+            }, { passive: false });
+
+            // 阻止手勢縮放
+            document.addEventListener('gesturestart', function(event) {
+                event.preventDefault();
+            }, { passive: false });
+
+            document.addEventListener('gesturechange', function(event) {
+                event.preventDefault();
+            }, { passive: false });
+
+            document.addEventListener('gestureend', function(event) {
+                event.preventDefault();
+            }, { passive: false });
+        })();
+
         // ================== 全局变量 ==================
         const LIVEGIGS_URL = 'https://livegigsasia.com';
         let allBrandedTours = [];
@@ -2514,9 +2551,6 @@
 
             renderArtists();
 
-            // 修复FB/INS内置浏览器艺人卡片无限放大问题
-            initArtistCardTouchFix();
-
             // 延迟加载 BRANDED TOURS（避免阻塞）
             setTimeout(loadBrandedTours, 500);
 
@@ -2533,42 +2567,6 @@
             // 绑定键盘事件
             document.addEventListener('keydown', handleKeydown);
         });
-
-        // 艺人卡片触摸修复 - 防止FB/INS等内置浏览器无限放大
-        function initArtistCardTouchFix() {
-            const artistsGrid = document.getElementById('artistsGrid');
-            if (!artistsGrid) return;
-
-            // 使用事件委托处理触摸事件
-            artistsGrid.addEventListener('touchstart', function(e) {
-                const card = e.target.closest('.artist-card');
-                if (card) {
-                    // 阻止默认的缩放行为
-                    e.preventDefault();
-                    card.style.transform = 'scale(0.98)';
-                    card.style.transition = 'transform 0.1s ease';
-                }
-            }, { passive: false });
-
-            artistsGrid.addEventListener('touchend', function(e) {
-                const card = e.target.closest('.artist-card');
-                if (card) {
-                    e.preventDefault();
-                    card.style.transform = '';
-                    card.style.transition = 'border-color 0.4s, box-shadow 0.4s';
-                }
-            }, { passive: false });
-
-            // 阻止双击缩放
-            let lastTouchEnd = 0;
-            artistsGrid.addEventListener('touchend', function(e) {
-                const now = Date.now();
-                if (now - lastTouchEnd <= 300) {
-                    e.preventDefault();
-                }
-                lastTouchEnd = now;
-            }, { passive: false });
-        }
 
         function handleKeydown(e) {
             if (e.key === 'Escape') {
@@ -3078,29 +3076,6 @@
         function loadMoreBrandedTours() {
             renderBrandedTours();
         }
-    </script>
-
-    <!-- 最终方案：阻止缩放 -->
-    <script>
-        (function() {
-            // 阻止多指触摸（捏合缩放）
-            document.addEventListener('touchstart', function(e) {
-                if (e.touches.length > 1) {
-                    e.preventDefault();
-                }
-            }, { passive: false });
-
-            // 阻止手势事件
-            document.addEventListener('gesturestart', function(e) {
-                e.preventDefault();
-            }, { passive: false });
-            document.addEventListener('gesturechange', function(e) {
-                e.preventDefault();
-            }, { passive: false });
-            document.addEventListener('gestureend', function(e) {
-                e.preventDefault();
-            }, { passive: false });
-        })();
     </script>
 </body>
 </html>
