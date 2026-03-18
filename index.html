@@ -54,6 +54,9 @@
             min-height: 100vh;
             position: relative;
             width: 100%;
+            /* 防止移动端双击缩放 */
+            touch-action: manipulation;
+            -webkit-text-size-adjust: 100%;
         }
         nav {
             position: fixed;
@@ -262,6 +265,9 @@
             padding: 100px 0;
             background: var(--mad-silver);
             position: relative;
+            /* 防止触摸缩放问题 */
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
         }
         .section-title {
             text-align: center;
@@ -1276,10 +1282,33 @@
             .footer-spacer {
                 display: none;
             }
-            .artist-card { aspect-ratio: 750/360 !important; overflow: hidden; transform: translateZ(0); }
-            .artist-card img { width: 100% !important; height: 100% !important; object-fit: cover !important; }
+            .artist-card { 
+                aspect-ratio: 750/360 !important; 
+                overflow: hidden; 
+                transform: translateZ(0);
+                -webkit-tap-highlight-color: transparent;
+                touch-action: manipulation;
+                -webkit-touch-callout: none;
+                -webkit-user-select: none;
+                user-select: none;
+            }
+            .artist-card img { 
+                width: 100% !important; 
+                height: 100% !important; 
+                object-fit: cover !important;
+                pointer-events: none;
+                -webkit-user-drag: none;
+            }
             .artist-card:hover img { filter: brightness(1.1) !important; }
             .artist-card:active { transform: scale(0.98); }
+            /* 防止FB/INS内置浏览器无限放大 */
+            .artist-card-wrapper {
+                -webkit-tap-highlight-color: transparent;
+                touch-action: manipulation;
+            }
+            .artist-card-wrapper * {
+                -webkit-tap-highlight-color: transparent;
+            }
             nav { padding: 0 20px; height: 65px; }
             .logo-img { height: 35px; max-width: 160px; }
             .nav-links a { font-size: 11px; letter-spacing: 2px; }
@@ -1341,10 +1370,33 @@
             .footer-bottom {
                 gap: 8px;
             }
-            .artist-card { aspect-ratio: 750/360 !important; overflow: hidden; transform: translateZ(0); }
-            .artist-card img { width: 100% !important; height: 100% !important; object-fit: cover !important; }
+            .artist-card { 
+                aspect-ratio: 750/360 !important; 
+                overflow: hidden; 
+                transform: translateZ(0);
+                -webkit-tap-highlight-color: transparent;
+                touch-action: manipulation;
+                -webkit-touch-callout: none;
+                -webkit-user-select: none;
+                user-select: none;
+            }
+            .artist-card img { 
+                width: 100% !important; 
+                height: 100% !important; 
+                object-fit: cover !important;
+                pointer-events: none;
+                -webkit-user-drag: none;
+            }
             .artist-card:hover img { filter: brightness(1.1) !important; }
             .artist-card:active { transform: scale(0.98); }
+            /* 防止FB/INS内置浏览器无限放大 */
+            .artist-card-wrapper {
+                -webkit-tap-highlight-color: transparent;
+                touch-action: manipulation;
+            }
+            .artist-card-wrapper * {
+                -webkit-tap-highlight-color: transparent;
+            }
             nav { padding: 0 15px; height: 60px; }
             .logo-img { height: 32px; max-width: 140px; }
             .nav-links { gap: 12px; }
@@ -2452,6 +2504,9 @@
 
             renderArtists();
 
+            // 修复FB/INS内置浏览器艺人卡片无限放大问题
+            initArtistCardTouchFix();
+
             // 延迟加载 BRANDED TOURS（避免阻塞）
             setTimeout(loadBrandedTours, 500);
 
@@ -2468,6 +2523,42 @@
             // 绑定键盘事件
             document.addEventListener('keydown', handleKeydown);
         });
+
+        // 艺人卡片触摸修复 - 防止FB/INS等内置浏览器无限放大
+        function initArtistCardTouchFix() {
+            const artistsGrid = document.getElementById('artistsGrid');
+            if (!artistsGrid) return;
+
+            // 使用事件委托处理触摸事件
+            artistsGrid.addEventListener('touchstart', function(e) {
+                const card = e.target.closest('.artist-card');
+                if (card) {
+                    // 阻止默认的缩放行为
+                    e.preventDefault();
+                    card.style.transform = 'scale(0.98)';
+                    card.style.transition = 'transform 0.1s ease';
+                }
+            }, { passive: false });
+
+            artistsGrid.addEventListener('touchend', function(e) {
+                const card = e.target.closest('.artist-card');
+                if (card) {
+                    e.preventDefault();
+                    card.style.transform = '';
+                    card.style.transition = 'border-color 0.4s, box-shadow 0.4s';
+                }
+            }, { passive: false });
+
+            // 阻止双击缩放
+            let lastTouchEnd = 0;
+            artistsGrid.addEventListener('touchend', function(e) {
+                const now = Date.now();
+                if (now - lastTouchEnd <= 300) {
+                    e.preventDefault();
+                }
+                lastTouchEnd = now;
+            }, { passive: false });
+        }
 
         function handleKeydown(e) {
             if (e.key === 'Escape') {
