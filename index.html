@@ -1,11 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- 绝对阻止缩放 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <style>
+        html, body {
+            touch-action: pan-y !important;
+            -webkit-text-size-adjust: none !important;
+            text-size-adjust: none !important;
+        }
+        .artist-card, .artist-card * {
+            touch-action: pan-y !important;
+            pointer-events: auto !important;
+        }
+        .artist-card img {
+            pointer-events: none !important;
+        }
+    </style>
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>XRE BOOKING - Artist Agency</title>
     <meta name="description" content="XRE BOOKING - Artist Agency in Punkrock, Garage, Mod, Powerpop, Surf, Poppunk, RocknRoll, Hardcore, Metal">
     <link rel="icon" type="image/png" href="./images/webtop.png">
@@ -2085,23 +2101,6 @@
             });
         }
     </script>
-    <!-- iOS 专用：阻止缩放但保留滚动 -->
-    <style>
-        @supports (-webkit-touch-callout: none) {
-            html, body {
-                touch-action: pan-y pinch-zoom;
-            }
-            .artist-card {
-                touch-action: pan-y !important;
-                -webkit-user-select: none !important;
-                user-select: none !important;
-            }
-            .artist-card img {
-                pointer-events: none !important;
-                -webkit-user-drag: none !important;
-            }
-        }
-    </style>
 </head>
 
 <body>
@@ -2541,7 +2540,41 @@
             document.addEventListener('keydown', handleKeydown);
         });
 
+        // 艺人卡片触摸修复 - 防止FB/INS等内置浏览器无限放大
+        function initArtistCardTouchFix() {
+            const artistsGrid = document.getElementById('artistsGrid');
+            if (!artistsGrid) return;
 
+            // 使用事件委托处理触摸事件
+            artistsGrid.addEventListener('touchstart', function(e) {
+                const card = e.target.closest('.artist-card');
+                if (card) {
+                    // 阻止默认的缩放行为
+                    e.preventDefault();
+                    card.style.transform = 'scale(0.98)';
+                    card.style.transition = 'transform 0.1s ease';
+                }
+            }, { passive: false });
+
+            artistsGrid.addEventListener('touchend', function(e) {
+                const card = e.target.closest('.artist-card');
+                if (card) {
+                    e.preventDefault();
+                    card.style.transform = '';
+                    card.style.transition = 'border-color 0.4s, box-shadow 0.4s';
+                }
+            }, { passive: false });
+
+            // 阻止双击缩放
+            let lastTouchEnd = 0;
+            artistsGrid.addEventListener('touchend', function(e) {
+                const now = Date.now();
+                if (now - lastTouchEnd <= 300) {
+                    e.preventDefault();
+                }
+                lastTouchEnd = now;
+            }, { passive: false });
+        }
 
         function handleKeydown(e) {
             if (e.key === 'Escape') {
@@ -3051,6 +3084,40 @@
         function loadMoreBrandedTours() {
             renderBrandedTours();
         }
+    </script>
+    <!-- 阻止艺人卡片缩放 -->
+    <script>
+        (function() {
+            var grid = document.getElementById('artistsGrid');
+            if (!grid) return;
+
+            // 阻止多点触摸
+            grid.addEventListener('touchstart', function(e) {
+                if (e.touches.length > 1) {
+                    e.preventDefault();
+                }
+            }, { passive: false });
+
+            // iOS 手势阻止
+            grid.addEventListener('gesturestart', function(e) {
+                e.preventDefault();
+            }, { passive: false });
+
+            // 点击效果
+            grid.addEventListener('touchstart', function(e) {
+                var card = e.target.closest('.artist-card');
+                if (card) {
+                    card.style.transform = 'scale(0.98)';
+                }
+            }, { passive: true });
+
+            grid.addEventListener('touchend', function(e) {
+                var card = e.target.closest('.artist-card');
+                if (card) {
+                    card.style.transform = '';
+                }
+            }, { passive: true });
+        })();
     </script>
 </body>
 </html>
