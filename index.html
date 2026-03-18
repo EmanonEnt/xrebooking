@@ -5,7 +5,7 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, shrink-to-fit=no">
     <title>XRE BOOKING - Artist Agency</title>
     <meta name="description" content="XRE BOOKING - Artist Agency in Punkrock, Garage, Mod, Powerpop, Surf, Poppunk, RocknRoll, Hardcore, Metal">
     <link rel="icon" type="image/png" href="./images/webtop.png">
@@ -316,10 +316,11 @@
             cursor: default;
             transition: border-color 0.4s, box-shadow 0.4s;
             border: 2px solid transparent;
-            transform: translateZ(0);
             -webkit-tap-highlight-color: transparent;
-            touch-action: none;
-            -webkit-touch-callout: none;
+            touch-action: none !important;
+            -webkit-touch-callout: none !important;
+            -webkit-user-select: none !important;
+            user-select: none !important;
         }
         .artist-card img {
             position: absolute;
@@ -1300,12 +1301,13 @@
             .artist-card { 
                 aspect-ratio: 750/360 !important; 
                 overflow: hidden; 
-                transform: translateZ(0);
                 -webkit-tap-highlight-color: transparent;
                 touch-action: none !important;
                 -webkit-touch-callout: none !important;
                 -webkit-user-select: none !important;
                 user-select: none !important;
+                -webkit-transform: none !important;
+                transform: none !important;
             }
             .artist-card img { 
                 width: 100% !important; 
@@ -1316,7 +1318,10 @@
                 -webkit-touch-callout: none !important;
             }
             .artist-card:hover img { filter: brightness(1.1) !important; }
-            .artist-card:active { transform: scale(0.98) !important; }
+            .artist-card:active { 
+                -webkit-transform: scale(0.98) !important; 
+                transform: scale(0.98) !important; 
+            }
             /* 严格防止FB/INS内置浏览器无限放大 */
             .artist-card-wrapper {
                 -webkit-tap-highlight-color: transparent;
@@ -1398,12 +1403,13 @@
             .artist-card { 
                 aspect-ratio: 750/360 !important; 
                 overflow: hidden; 
-                transform: translateZ(0);
                 -webkit-tap-highlight-color: transparent;
                 touch-action: none !important;
                 -webkit-touch-callout: none !important;
                 -webkit-user-select: none !important;
                 user-select: none !important;
+                -webkit-transform: none !important;
+                transform: none !important;
             }
             .artist-card img { 
                 width: 100% !important; 
@@ -1414,7 +1420,10 @@
                 -webkit-touch-callout: none !important;
             }
             .artist-card:hover img { filter: brightness(1.1) !important; }
-            .artist-card:active { transform: scale(0.98) !important; }
+            .artist-card:active { 
+                -webkit-transform: scale(0.98) !important; 
+                transform: scale(0.98) !important; 
+            }
             /* 严格防止FB/INS内置浏览器无限放大 */
             .artist-card-wrapper {
                 -webkit-tap-highlight-color: transparent;
@@ -2113,21 +2122,39 @@
             });
         }
     </script>
-    <!-- 严格阻止所有触摸缩放 -->
+    <!-- 严格阻止所有触摸缩放 - iOS 专用 -->
     <style>
         * {
             -webkit-touch-callout: none;
             -webkit-tap-highlight-color: transparent;
             -webkit-user-select: none;
             user-select: none;
+            -webkit-text-size-adjust: none;
+            text-size-adjust: none;
+        }
+        html {
+            -webkit-text-size-adjust: none;
+            text-size-adjust: none;
+            touch-action: manipulation;
         }
         img, video {
             -webkit-user-drag: none;
             pointer-events: none;
+            touch-action: none;
         }
         a, button {
             -webkit-user-select: none;
             user-select: none;
+            touch-action: manipulation;
+        }
+        /* iOS 专用：阻止双击缩放 */
+        @supports (-webkit-touch-callout: none) {
+            * {
+                touch-action: pan-y pinch-zoom !important;
+            }
+            .artist-card, .artist-card * {
+                touch-action: none !important;
+            }
         }
     </style>
 </head>
@@ -2541,14 +2568,9 @@
         }
 
         document.addEventListener('DOMContentLoaded', function() {
-            // 全局阻止缩放
+            // iOS: 只阻止多指缩放，保留单指滚动
             document.addEventListener('touchstart', function(e) {
-                if (e.touches.length > 1) {
-                    e.preventDefault();
-                }
-            }, { passive: false });
-
-            document.addEventListener('touchmove', function(e) {
+                // 阻止多指触摸（捏合缩放）
                 if (e.touches.length > 1) {
                     e.preventDefault();
                 }
@@ -2562,6 +2584,17 @@
                     e.preventDefault();
                 }
                 lastTouchEnd = now;
+            }, { passive: false });
+
+            // iOS: 阻止手势缩放
+            document.addEventListener('gesturestart', function(e) {
+                e.preventDefault();
+            }, { passive: false });
+            document.addEventListener('gesturechange', function(e) {
+                e.preventDefault();
+            }, { passive: false });
+            document.addEventListener('gestureend', function(e) {
+                e.preventDefault();
             }, { passive: false });
 
             // 隐藏加载动画
@@ -2592,61 +2625,66 @@
             document.addEventListener('keydown', handleKeydown);
         });
 
-        // 艺人卡片触摸修复 - 严格防止FB/INS等内置浏览器无限放大
+        // 艺人卡片触摸修复 - iOS/FB/INS 专用
         function initArtistCardTouchFix() {
             const artistsGrid = document.getElementById('artistsGrid');
             if (!artistsGrid) return;
 
-            // 阻止所有默认触摸行为
+            let isTouching = false;
+            let touchStartTime = 0;
+
+            // iOS: 使用 touch-action 配合 JS 阻止
+            artistsGrid.style.touchAction = 'none';
+
             artistsGrid.addEventListener('touchstart', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
+                isTouching = true;
+                touchStartTime = Date.now();
+
                 const card = e.target.closest('.artist-card');
                 if (card) {
+                    // iOS: 只阻止默认，不阻止传播，避免滚动失效
+                    e.preventDefault();
                     card.style.transform = 'scale(0.98)';
+                    card.style.transition = 'transform 0.1s';
                 }
-            }, { passive: false, capture: true });
+            }, { passive: false });
 
             artistsGrid.addEventListener('touchmove', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-            }, { passive: false, capture: true });
+                if (isTouching) {
+                    e.preventDefault();
+                }
+            }, { passive: false });
 
             artistsGrid.addEventListener('touchend', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
+                isTouching = false;
+
                 const card = e.target.closest('.artist-card');
                 if (card) {
                     card.style.transform = '';
+                    card.style.transition = '';
                 }
-            }, { passive: false, capture: true });
 
-            // 阻止双击缩放
-            let lastTouchEnd = 0;
-            artistsGrid.addEventListener('touchend', function(e) {
+                // 阻止双击缩放检测
                 const now = Date.now();
-                if (now - lastTouchEnd <= 300) {
+                if (now - touchStartTime < 300) {
                     e.preventDefault();
-                    e.stopPropagation();
                 }
-                lastTouchEnd = now;
-            }, { passive: false, capture: true });
+            }, { passive: false });
 
-            // 阻止手势事件
-            artistsGrid.addEventListener('gesturestart', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-            }, { passive: false, capture: true });
+            artistsGrid.addEventListener('touchcancel', function(e) {
+                isTouching = false;
+                const cards = artistsGrid.querySelectorAll('.artist-card');
+                cards.forEach(card => {
+                    card.style.transform = '';
+                });
+            }, { passive: false });
 
-            artistsGrid.addEventListener('gesturechange', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-            }, { passive: false, capture: true });
-
-            artistsGrid.addEventListener('gestureend', function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-            }, { passive: false, capture: true });
+            // iOS: 阻止点击事件的默认行为（防止放大）
+            artistsGrid.addEventListener('click', function(e) {
+                if (e.target.closest('.artist-card')) {
+                    e.preventDefault();
+                }
+            }, { passive: false });
         }
 
         function handleKeydown(e) {
