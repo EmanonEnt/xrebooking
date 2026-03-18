@@ -383,9 +383,11 @@
             color: var(--black);
             cursor: pointer;
             transition: all 0.3s;
-            display: inline-block;
+            display: block;
+            width: 100%;
             font-weight: normal;
-            padding: 10px 20px;
+            padding: 10px 0;
+            text-align: center;
         }
         .artist-name-below:hover {
             color: var(--xre-red);
@@ -393,11 +395,12 @@
             text-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
         }
         .artist-name-link {
-            display: inline-block;
-            padding: 10px 20px;
-            min-width: 120px;
+            display: block;
+            width: 100%;
+            padding: 5px 0;
             text-decoration: none;
             color: inherit;
+            text-align: center;
         }
         .artist-name-link:hover {
             color: var(--xre-red);
