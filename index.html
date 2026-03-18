@@ -309,12 +309,7 @@
         .artist-card-wrapper { 
             text-align: center; 
             position: relative;
-            touch-action: manipulation;
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            -webkit-tap-highlight-color: transparent;
-        
-            pointer-events: auto;
+            touch-action: auto;
         }
         .artist-card {
             position: relative;
@@ -322,14 +317,10 @@
             height: 0;
             padding-bottom: 48% !important;
             overflow: hidden;
-            cursor: default;
+            cursor: pointer;
             transition: border-color 0.4s, box-shadow 0.4s;
             border: 2px solid transparent;
             transform: translateZ(0);
-            touch-action: manipulation;
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            -webkit-tap-highlight-color: transparent;
         }
         .artist-card img {
             position: absolute;
@@ -394,17 +385,7 @@
             transition: all 0.3s;
             display: inline-block;
             font-weight: normal;
-            touch-action: auto;
-            -webkit-touch-callout: default;
-            -webkit-user-select: text;
-            -webkit-tap-highlight-color: transparent;
             padding: 10px 20px;
-            position: relative;
-        }
-        .artist-name-below:hover {
-            color: var(--xre-red);
-            font-weight: bold;
-            text-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
         }
         .artist-name-below:hover {
             color: var(--xre-red);
@@ -414,16 +395,13 @@
         .artist-name-link {
             display: inline-block;
             padding: 10px 20px;
-            transition: color 0.3s, text-shadow 0.3s;
-            touch-action: auto !important;
-            -webkit-touch-callout: default;
-            -webkit-user-select: text;
-            -webkit-tap-highlight-color: rgba(0,0,0,0.1);
-            position: relative;
             min-width: 120px;
-            text-decoration: none !important;
-            color: inherit !important;
-            z-index: 100;
+            text-decoration: none;
+            color: inherit;
+        }
+        .artist-name-link:hover {
+            color: var(--xre-red);
+            text-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
         }
         .artist-name-link:hover {
             color: var(--xre-red);
@@ -1333,10 +1311,6 @@
                 padding-bottom: 48% !important;
                 overflow: hidden; 
                 transform: translateZ(0);
-                touch-action: manipulation !important;
-                -webkit-touch-callout: none !important;
-                -webkit-user-select: none !important;
-                -webkit-tap-highlight-color: transparent !important;
             }
             .artist-card img { 
                 position: absolute;
@@ -1375,16 +1349,7 @@
             }
 
             .artists-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 0 15px; }
-            .artist-name-below { 
-                font-size: 14px; 
-                padding: 10px 15px;
-            }
-            .artist-name-link {
-                padding: 8px 16px;
-                min-width: 100px;
-                touch-action: auto !important;
-                -webkit-tap-highlight-color: rgba(0,0,0,0.1);
-            }
+            .artist-name-below { font-size: 14px; }
             .footer-gap { height: 100px; }
             .footer-main { padding: 40px 30px 30px; }
             .footer-container { flex-direction: column; gap: 30px; text-align: center; }
@@ -1432,10 +1397,6 @@
                 padding-bottom: 48% !important;
                 overflow: hidden; 
                 transform: translateZ(0);
-                touch-action: manipulation !important;
-                -webkit-touch-callout: none !important;
-                -webkit-user-select: none !important;
-                -webkit-tap-highlight-color: transparent !important;
             }
             .artist-card img { 
                 position: absolute;
@@ -1475,15 +1436,7 @@
             }
 
             .artists-grid { gap: 12px; padding: 0 10px; }
-            .artist-name-below { 
-                font-size: 12px; 
-                padding: 8px 12px;
-            }
-            .artist-name-link {
-                padding: 6px 12px;
-                min-width: 80px;
-                touch-action: auto !important;
-            }
+            .artist-name-below { font-size: 12px; }
             .footer-gap { height: 80px; }
             .footer-main { padding: 35px 25px 25px; }
             .footer-logo { font-size: 28px; }
@@ -2584,25 +2537,7 @@
             window.addEventListener('load', forceResetZoom);
             window.addEventListener('resize', forceResetZoom);
 
-            // 阻止 touchend 雙擊（但不阻止链接点击）
-            document.addEventListener('touchend', function(event) {
-                const now = Date.now();
-                // 检查是否点击的是链接或其子元素
-                const isLink = event.target.closest('a');
-
-                // 如果是链接，完全不干预
-                if (isLink) {
-                    lastTouchEnd = now;
-                    return;
-                }
-
-                if (now - lastTouchEnd <= 300) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                    forceResetZoom();
-                }
-                lastTouchEnd = now;
-            }, { passive: false });
+            /* touchend listener removed to allow link clicks */
 
             // 阻止 touchstart 上的縮放
             document.addEventListener('touchstart', function(event) {
@@ -2661,15 +2596,7 @@
                         forceResetZoom();
                     }, { passive: false });
 
-                    card.addEventListener('touchend', function(e) {
-                        const now = Date.now();
-                        if (now - lastTouchEnd <= 300) {
-                            e.preventDefault();
-                            e.stopPropagation();
-                        }
-                        lastTouchEnd = now;
-                        forceResetZoom();
-                    }, { passive: false });
+                    /* card touchend removed */
 
                     card.addEventListener('touchmove', function(e) {
                         forceResetZoom();
