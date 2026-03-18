@@ -1,6 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- 绝对阻止所有缩放 - iOS 极端方案 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <style>
+        /* 全局禁止触摸操作 */
+        * {
+            -webkit-tap-highlight-color: transparent !important;
+            touch-action: none !important;
+        }
+        /* 只允许 body 滚动 */
+        html, body {
+            touch-action: pan-y !important;
+            overflow-x: hidden !important;
+        }
+        /* 艺人区域完全禁止触摸，只允许点击 */
+        .artists-section, .artists-section * {
+            touch-action: none !important;
+        }
+        .artist-card {
+            pointer-events: auto !important;
+            cursor: pointer !important;
+        }
+        .artist-card img {
+            pointer-events: none !important;
+            -webkit-user-drag: none !important;
+        }
+        /* 艺人名字链接 */
+        .artist-name-below, .artist-name-link {
+            pointer-events: auto !important;
+            cursor: pointer !important;
+        }
+    </style>
     <!-- 绝对阻止缩放 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <style>
@@ -3085,38 +3116,92 @@
             renderBrandedTours();
         }
     </script>
-    <!-- 阻止艺人卡片缩放 -->
+
+    <!-- iOS 极端方案：完全控制触摸 -->
     <script>
         (function() {
             var grid = document.getElementById('artistsGrid');
             if (!grid) return;
 
-            // 阻止多点触摸
-            grid.addEventListener('touchstart', function(e) {
-                if (e.touches.length > 1) {
-                    e.preventDefault();
-                }
-            }, { passive: false });
+            var lastTouchTime = 0;
+            var isTouching = false;
 
-            // iOS 手势阻止
-            grid.addEventListener('gesturestart', function(e) {
+            // 完全接管触摸事件
+            grid.addEventListener('touchstart', function(e) {
+                isTouching = true;
+                // 阻止所有默认行为
                 e.preventDefault();
-            }, { passive: false });
+                e.stopPropagation();
 
-            // 点击效果
-            grid.addEventListener('touchstart', function(e) {
+                // 视觉反馈
                 var card = e.target.closest('.artist-card');
                 if (card) {
                     card.style.transform = 'scale(0.98)';
                 }
-            }, { passive: true });
+
+                return false;
+            }, { passive: false, capture: true });
+
+            grid.addEventListener('touchmove', function(e) {
+                if (!isTouching) return;
+                e.preventDefault();
+                e.stopPropagation();
+                return false;
+            }, { passive: false, capture: true });
 
             grid.addEventListener('touchend', function(e) {
+                isTouching = false;
+                e.preventDefault();
+                e.stopPropagation();
+
                 var card = e.target.closest('.artist-card');
                 if (card) {
                     card.style.transform = '';
                 }
-            }, { passive: true });
+
+                // 检查是否为双击（300ms内）
+                var now = Date.now();
+                var timeDiff = now - lastTouchTime;
+                lastTouchTime = now;
+
+                if (timeDiff > 300) {
+                    // 单击 - 执行跳转
+                    var wrapper = e.target.closest('.artist-card-wrapper');
+                    if (wrapper) {
+                        var link = wrapper.querySelector('a.artist-name-link');
+                        if (link) {
+                            // 延迟执行，避免和双击冲突
+                            setTimeout(function() {
+                                if (Date.now() - lastTouchTime > 250) {
+                                    window.location.href = link.href;
+                                }
+                            }, 280);
+                        }
+                    }
+                }
+
+                return false;
+            }, { passive: false, capture: true });
+
+            grid.addEventListener('touchcancel', function(e) {
+                isTouching = false;
+                var cards = grid.querySelectorAll('.artist-card');
+                cards.forEach(function(card) {
+                    card.style.transform = '';
+                });
+            }, { passive: false, capture: true });
+
+            // 阻止手势
+            grid.addEventListener('gesturestart', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }, { passive: false, capture: true });
+
+            // 阻止双击缩放
+            grid.addEventListener('dblclick', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }, { passive: false, capture: true });
         })();
     </script>
 </body>
