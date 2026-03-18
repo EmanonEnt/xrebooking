@@ -388,7 +388,7 @@
             letter-spacing: 2px;
             text-transform: uppercase;
             color: var(--black);
-            cursor: default;
+            cursor: pointer;
             transition: all 0.3s;
             display: inline-block;
             font-weight: normal;
@@ -396,6 +396,8 @@
             -webkit-touch-callout: none;
             -webkit-user-select: none;
             -webkit-tap-highlight-color: transparent;
+            padding: 5px 10px;
+            position: relative;
         }
         .artist-name-below:hover {
             color: var(--xre-red);
@@ -403,11 +405,16 @@
             text-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
         }
         .artist-name-link {
+            display: block;
+            padding: 10px 20px;
+            margin: -5px -10px;
             transition: color 0.3s, text-shadow 0.3s;
             touch-action: manipulation;
             -webkit-touch-callout: none;
             -webkit-user-select: none;
             -webkit-tap-highlight-color: transparent;
+            position: relative;
+            z-index: 10;
         }
         .artist-name-link:hover {
             color: var(--xre-red);
@@ -1359,7 +1366,14 @@
             }
 
             .artists-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; padding: 0 15px; }
-            .artist-name-below { font-size: 14px; }
+            .artist-name-below { 
+                font-size: 14px; 
+                padding: 8px 15px;
+            }
+            .artist-name-link {
+                padding: 8px 15px;
+                margin: -5px -10px;
+            }
             .footer-gap { height: 100px; }
             .footer-main { padding: 40px 30px 30px; }
             .footer-container { flex-direction: column; gap: 30px; text-align: center; }
@@ -1450,7 +1464,14 @@
             }
 
             .artists-grid { gap: 12px; padding: 0 10px; }
-            .artist-name-below { font-size: 12px; }
+            .artist-name-below { 
+                font-size: 12px; 
+                padding: 6px 12px;
+            }
+            .artist-name-link {
+                padding: 6px 12px;
+                margin: -4px -8px;
+            }
             .footer-gap { height: 80px; }
             .footer-main { padding: 35px 25px 25px; }
             .footer-logo { font-size: 28px; }
