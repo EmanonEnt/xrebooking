@@ -3079,16 +3079,26 @@
             renderBrandedTours();
         }
     </script>
-    <!-- 阻止双击缩放 -->
+
+    <!-- 最终方案：阻止缩放 -->
     <script>
         (function() {
-            var lastTouchEnd = 0;
-            document.addEventListener('touchend', function(e) {
-                var now = Date.now();
-                if (now - lastTouchEnd <= 300) {
+            // 阻止多指触摸（捏合缩放）
+            document.addEventListener('touchstart', function(e) {
+                if (e.touches.length > 1) {
                     e.preventDefault();
                 }
-                lastTouchEnd = now;
+            }, { passive: false });
+
+            // 阻止手势事件
+            document.addEventListener('gesturestart', function(e) {
+                e.preventDefault();
+            }, { passive: false });
+            document.addEventListener('gesturechange', function(e) {
+                e.preventDefault();
+            }, { passive: false });
+            document.addEventListener('gestureend', function(e) {
+                e.preventDefault();
             }, { passive: false });
         })();
     </script>
